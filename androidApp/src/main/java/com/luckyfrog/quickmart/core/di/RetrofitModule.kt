@@ -4,7 +4,6 @@ import android.content.Context
 import com.luckyfrog.quickmart.core.network.AuthAuthenticator
 import com.luckyfrog.quickmart.core.network.AuthInterceptor
 import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthApi
-import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductApi
 import com.luckyfrog.quickmart.utils.TokenManager
 import com.luckyfrog.quickmart.utils.helper.Constants
 import com.squareup.moshi.Moshi
@@ -80,10 +79,5 @@ object RetrofitModule {
     fun providesAuthApi(retrofit: Retrofit): AuthApi =
         retrofit.create(AuthApi::class.java)
 
-    // Provides ProductApi from the Retrofit instance
-    @Singleton
-    @Provides
-    fun providesProductApi(retrofit: Retrofit): ProductApi =
-        retrofit.create(ProductApi::class.java)
 
 }

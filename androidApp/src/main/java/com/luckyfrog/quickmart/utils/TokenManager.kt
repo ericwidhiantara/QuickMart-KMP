@@ -2,6 +2,8 @@ package com.luckyfrog.quickmart.utils
 
 
 import android.content.Context
+import com.luckyfrog.quickmart.core.app.AppPreferences.ACCESS_TOKEN
+import com.luckyfrog.quickmart.core.app.AppPreferences.REFRESH_TOKEN
 import io.paperdb.Paper
 
 class TokenManager(private val context: Context) {
