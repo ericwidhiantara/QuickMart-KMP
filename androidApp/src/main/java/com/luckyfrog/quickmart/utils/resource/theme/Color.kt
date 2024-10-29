@@ -2,8 +2,6 @@ package com.luckyfrog.quickmart.utils.resource.theme
 
 import androidx.compose.ui.graphics.Color
 
-val colorPrimary = Color(0xff21D4B4)
-val colorPrimaryDark = Color(0xff21D4B4)
 val colorSecondary = Color(0xFF2567E8)
 
 val colorBlack = Color(0xFF1C1B1B)
@@ -14,8 +12,8 @@ val colorWhite100 = Color(0xFFE7E7E7)
 
 val colorGrayDark = Color(0xFF0E141C)
 
-val colorCyan = Color(0xFF00E676)
-val colorCyan50 = Color(0xFF00E676)
+val colorCyan = Color(0xff21D4B4)
+val colorCyan50 = Color(0xFFF4FDFA)
 val colorCyan50Dark = Color(0xFF212322)
 
 val colorGrey50 = Color(0xFFF4F5FD)

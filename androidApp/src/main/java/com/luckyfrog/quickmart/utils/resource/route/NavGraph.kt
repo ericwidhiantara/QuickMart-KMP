@@ -5,23 +5,35 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.luckyfrog.quickmart.core.app.AppPreferences.ACCESS_TOKEN
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
-import com.luckyfrog.quickmart.features.general.presentation.BottomNavBar
+import com.luckyfrog.quickmart.features.general.presentation.main.BottomNavBar
+import com.luckyfrog.quickmart.features.general.presentation.onboarding.OnboardingScreen
+import com.luckyfrog.quickmart.features.general.presentation.splash.SplashScreen
 import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
-import io.paperdb.Paper
 
 @Composable
 fun NavGraph(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = if (Paper.book()
-                .read(ACCESS_TOKEN, "")!! == ""
-        ) AppScreen.LoginScreen.route else AppScreen.MainScreen.route
+        startDestination = AppScreen.OnboardingScreen.route
     ) {
+        composable(route = AppScreen.SplashScreen.route) {
+            SplashScreen(
+                mainViewModel = mainViewModel,
+                navController = navController
+            )
+        }
+
+        composable(route = AppScreen.OnboardingScreen.route) {
+            OnboardingScreen(
+                mainViewModel = mainViewModel,
+                navController = navController,
+
+                )
+        }
         composable(route = AppScreen.LoginScreen.route) {
             LoginScreen(
                 mainViewModel = mainViewModel,

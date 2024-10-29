@@ -18,7 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.luckyfrog.quickmart.R
+import com.luckyfrog.quickmart.core.resources.Images
 
 @Composable
 fun CustomTopBar(
@@ -41,7 +41,7 @@ fun CustomTopBar(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(id = R.string.back),
+                    contentDescription = stringResource(id = Images.icArrowBack),
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
             }

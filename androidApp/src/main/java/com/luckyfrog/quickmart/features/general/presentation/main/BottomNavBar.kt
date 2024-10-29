@@ -1,4 +1,4 @@
-package com.luckyfrog.quickmart.features.general.presentation
+package com.luckyfrog.quickmart.features.general.presentation.main
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

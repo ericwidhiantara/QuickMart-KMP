@@ -5,6 +5,7 @@
     <string name="strFetchingDataFromServer">Fetching data from server</string>
     <string name="strOriginalLanguage">Original Language</string>
     <string name="strNoData">No data found</string>
+    <string name="skip_for_now">Skip for now</string>
     <string name="onboarding_title_1">Explore a wide range of products</string>
     <string name="onboarding_subtitle_1">Explore a wide range of products at your fingertips. QuickMart offers an extensive collection to suit your needs.</string>
     <string name="onboarding_title_2">Unlock exclusive offers and discounts</string>

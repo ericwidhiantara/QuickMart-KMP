@@ -33,7 +33,7 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             CustomTopBar(
-                title = stringResource(R.string.product_detail),
+                title = stringResource(R.string.app_name),
                 navController = navController
             )
         },

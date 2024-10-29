@@ -2,6 +2,7 @@ package com.luckyfrog.quickmart.core.resources
 
 object Images {
     val icArrowBack = com.luckyfrog.quickmart.R.drawable.ic_arrow_back
+    val icArrowForward = com.luckyfrog.quickmart.R.drawable.ic_arrow_forward
     val icChangePassword = com.luckyfrog.quickmart.R.drawable.ic_change_password
     val icDarkMode = com.luckyfrog.quickmart.R.drawable.ic_dark_mode
     val icDeleteCart = com.luckyfrog.quickmart.R.drawable.ic_delete_cart
