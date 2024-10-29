@@ -2,6 +2,7 @@ package com.luckyfrog.quickmart.features.general.presentation.splash
 
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -41,7 +42,7 @@ fun SplashScreen(
                 when (mainViewModel.stateApp.theme) {
                     AppTheme.Light -> Images.icSplashDark
                     AppTheme.Dark -> Images.icSplashLight
-                    AppTheme.Default -> Images.icSplashDark
+                    AppTheme.Default -> if (isSystemInDarkTheme()) Images.icSplashLight else Images.icSplashDark
                 }
             ),
             contentDescription = "Logo",

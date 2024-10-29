@@ -3,8 +3,6 @@ package com.luckyfrog.quickmart.features.auth.presentation.login
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,7 +11,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
@@ -32,16 +29,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,6 +55,7 @@ import com.luckyfrog.quickmart.utils.TokenManager
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import com.luckyfrog.quickmart.utils.resource.theme.colorBlack
+import com.luckyfrog.quickmart.utils.resource.theme.colorBlue
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 
@@ -247,12 +246,7 @@ fun LoginScreen(
             Spacer(
                 modifier = Modifier.height(81.dp)
             )
-            Text(
-                text = stringResource(R.string.login_terms_and_conditions),
-                fontSize = 14.sp,
-                textAlign = TextAlign.Center,
-
-                )
+            LoginTermsAndPrivacyText()
             Spacer(
                 modifier = Modifier.height(16.dp)
             )
@@ -266,27 +260,48 @@ fun LoginScreen(
 fun LoginTermsAndPrivacyText() {
     val annotated = buildAnnotatedString {
         withStyle(MaterialTheme.typography.bodyMedium.toSpanStyle()) {
-            append(stringResource(id = R.string.login_terms_and_conditions))
+            append(stringResource(id = R.string.login_terms_and_conditions) + " ")
         }
-        append("Eric ")
-        withStyle(
-            MaterialTheme.typography.bodyMedium.toSpanStyle().copy(fontWeight = FontWeight.Bold)
+        withLink(
+            link = LinkAnnotation.Clickable(
+                tag = "TAG",
+                linkInteractionListener = {
+                    Log.d("LoginTermsAndPrivacyText", "privacy_policy")
+                },
+            ),
         ) {
-            append("Widhi ")
+            withStyle(
+                MaterialTheme.typography.bodyMedium.toSpanStyle()
+                    .copy(fontWeight = FontWeight.Bold, color = colorBlue)
+            ) {
+                append(stringResource(id = R.string.privacy_policy))
+            }
         }
         withStyle(MaterialTheme.typography.bodyMedium.toSpanStyle()) {
-            append("Antara")
+            append(" " + stringResource(id = R.string.and) + " ")
+        }
+
+        withLink(
+            link = LinkAnnotation.Clickable(
+                tag = "TAG",
+                linkInteractionListener = {
+                    Log.d("LoginTermsAndPrivacyText", "terms_conditions")
+                },
+            ),
+        ) {
+            withStyle(
+                MaterialTheme.typography.bodyMedium.toSpanStyle()
+                    .copy(fontWeight = FontWeight.Bold, color = colorBlue)
+            ) {
+                append(stringResource(id = R.string.terms_and_conditions))
+            }
         }
     }
 
-
-
     Text(
-        text = "$annotated",
+        text = annotated,
         modifier = Modifier
-            .background(Color.Green, shape = RoundedCornerShape(12.dp))
-            .padding(16.dp)
-            .clickable { Log.d("lol", "clicked") },
-
-        )
+            .padding(16.dp),
+        textAlign = TextAlign.Center
+    )
 }
