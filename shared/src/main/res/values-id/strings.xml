@@ -5,21 +5,43 @@
     <string name="strFetchingDataFromServer">Mengambil data dari server</string>
     <string name="strOriginalLanguage">Bahasa Sistem</string>
     <string name="strNoData">Tidak ada data yang ditemukan</string>
-    <string name="product_detail">Detail Produk</string>
-    <string name="back">Kembali</string>
-    <string name="login_description">Masuk ke Akun Anda</string>
-    <string name="login_using_username">Masukkan username dan kata sandi Anda untuk masuk </string>
-    <string name="username">Username</string>
-    <string name="username_label">Masukan username anda</string>
-    <string name="password">Kata Sandi</string>
-    <string name="forgot_password">Lupa Kata Sandi ?</string>
+    <string name="onboarding_title_1">Jelajahi berbagai macam produk</string>
+    <string name="onboarding_subtitle_1">Jelajahi berbagai macam produk di ujung jari Anda. QuickMart menawarkan koleksi lengkap untuk memenuhi kebutuhan Anda.</string>
+    <string name="onboarding_title_2">Dapatkan penawaran dan diskon eksklusif</string>
+    <string name="onboarding_subtitle_2">Dapatkan akses ke penawaran waktu terbatas dan promosi khusus yang hanya tersedia untuk pelanggan kami yang berharga.</string>
+    <string name="onboarding_title_3">Pembayaran yang aman dan terjamin</string>
+    <string name="onboarding_subtitle_3">QuickMart menggunakan enkripsi terdepan di industri dan gateway pembayaran tepercaya untuk menjaga informasi keuangan Anda.</string>
+    <string name="next">Berikutnya</string>
+    <string name="get_started">Mulai</string>
     <string name="login">Masuk</string>
-    <string name="or">Atau</string>
-    <string name="login_google">Lanjutkan dengan Google</string>
-    <string name="login_facebook">Lanjutkan dengan Facebook</string>
+    <string name="signup">Daftar</string>
+    <string name="already_have_account">Sudah punya akun?</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="full_name_placeholder">Masukkan data lengkap Anda name</string>
+    <string name="email">Email</string>
+    <string name="email_placeholder">Masukkan email Anda</string>
+    <string name="password">Kata Sandi</string>
+    <string name="password_placeholder">Masukkan kata sandi Anda</string>
+    <string name="confirm_password">Konfirmasi Kata Sandi</string>
+    <string name="confirm_password_placeholder">Konfirmasi kata sandi Anda</string>
+    <string name="create_account">Buat Akun</string>
+    <string name="signup_with_google">Daftar dengan Google</string>
+    <string name="verification_code_sent">Kode Verifikasi 6 digit telah dikirim ke alamat email Anda.</string>
+    <string name="email_verification">Verifikasi Email</string>
+    <string name="enter_verification_code">Masukkan kode verifikasi 6 digit yang dikirim ke alamat email Anda.</string>
+    <string name="resend_code">Kirim Ulang Kode</string>
+    <string name="proceed">Lanjutkan</string>
     <string name="dont_have_account">Tidak punya akun?</string>
-    <string name="register">Daftar</string>
-    <string name="login_success">Login berhasil, mengarahkan ke dashboard</string>
-
+    <string name="forgot_password">Lupa Kata Sandi</string>
+    <string name="login_with_google">Masuk dengan Google</string>
+    <string name="login_terms_and_conditions">Dengan masuk, Anda setuju dengan <string name="privacy_policy">Kebijakan Privasi</string> dan <string name="terms_and_conditions">Syarat dan Ketentuan</string></string>
+    <string name="confirm_email">Email Konfirmasi</string>
+    <string name="confirm_desc">Masukkan alamat email Anda untuk verifikasi.</string>
+    <string name="send">Kirim</string>
+    <string name="new_password">Kata Sandi Baru</string>
+    <string name="new_password_desc">Masukkan kata sandi baru Anda dan ingatlah.</string>
+    <string name="save">Simpan</string>
+    <string name="change_password_success">Kata sandi baru berhasil ditetapkan</string>
+    <string name="change_password_success_desc">Selamat! Kata sandi Anda telah berhasil ditetapkan, sekarang Anda dapat masuk ke akun Anda dengan kata sandi baru.</string>
 
 </resources>

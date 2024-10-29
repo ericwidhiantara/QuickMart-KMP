@@ -20,7 +20,7 @@ enum class AppTheme {
 }
 
 private val DarkColorScheme = darkColorScheme(
-    primary = colorPrimary,
+    primary = colorPrimaryDark,
     onPrimary = colorWhite,
     secondary = colorSecondary,
     onSecondary = colorWhite,
@@ -28,6 +28,7 @@ private val DarkColorScheme = darkColorScheme(
     onBackground = colorWhite,
     surface = colorGrayDark,
     onSurface = colorWhite100
+    
 )
 
 private val LightColorScheme = lightColorScheme(
