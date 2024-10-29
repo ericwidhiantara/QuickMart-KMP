@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
-import com.luckyfrog.ecommerce.core.app.MainActivity
+import com.luckyfrog.quickmart.core.app.MainActivity
 import java.util.Locale
 
 object LocalizationUtils {

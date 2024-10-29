@@ -5,12 +5,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.luckyfrog.ecommerce.core.app.AppPreferences.ACCESS_TOKEN
-import com.luckyfrog.ecommerce.core.app.MainViewModel
-import com.luckyfrog.ecommerce.features.auth.presentation.login.LoginScreen
-import com.luckyfrog.ecommerce.features.auth.presentation.login.UserViewModel
-import com.luckyfrog.ecommerce.features.general.presentation.BottomNavBar
-import com.luckyfrog.ecommerce.features.settings.presentation.SettingsScreen
+import com.luckyfrog.quickmart.core.app.AppPreferences.ACCESS_TOKEN
+import com.luckyfrog.quickmart.core.app.MainViewModel
+import com.luckyfrog.quickmart.features.auth.presentation.login.LoginScreen
+import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
+import com.luckyfrog.quickmart.features.general.presentation.BottomNavBar
+import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
 import io.paperdb.Paper
 
 @Composable

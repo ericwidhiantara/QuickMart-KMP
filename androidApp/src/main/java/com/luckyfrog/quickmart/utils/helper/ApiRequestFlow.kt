@@ -2,7 +2,7 @@ package com.luckyfrog.quickmart.utils.helper
 
 import android.util.Log
 import com.google.gson.Gson
-import com.luckyfrog.ecommerce.core.generic.dto.ErrorResponse
+import com.luckyfrog.quickmart.core.generic.dto.ErrorResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
