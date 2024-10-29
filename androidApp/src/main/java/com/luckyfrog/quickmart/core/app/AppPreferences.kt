@@ -46,7 +46,7 @@ object AppPreferences {
     const val APP_THEME = "AppTheme"
     const val ACCESS_TOKEN = "AccessToken"
     const val REFRESH_TOKEN = "RefreshToken"
-
+    const val FIRST_TIME = "FirstTime"
 
     fun setTheme(theme: AppTheme) {
         Paper.book().write(APP_THEME, theme)
@@ -56,5 +56,13 @@ object AppPreferences {
         return Paper.book().read(APP_THEME, AppTheme.Default)!!
     }
 
+
+    fun setFirstTime(value: Boolean) {
+        Paper.book().write(FIRST_TIME, value)
+    }
+
+    fun getFirstTime(): Boolean {
+        return Paper.book().read(FIRST_TIME, false)!!
+    }
     //endregion
 }

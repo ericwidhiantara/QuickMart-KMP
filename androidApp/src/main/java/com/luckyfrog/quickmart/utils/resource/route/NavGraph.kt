@@ -5,6 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.luckyfrog.quickmart.core.app.AppPreferences
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
@@ -16,9 +17,10 @@ import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
 @Composable
 fun NavGraph(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
+    val isFirstTime = AppPreferences.getFirstTime()
     NavHost(
         navController = navController,
-        startDestination = AppScreen.OnboardingScreen.route
+        startDestination = AppScreen.SplashScreen.route
     ) {
         composable(route = AppScreen.SplashScreen.route) {
             SplashScreen(

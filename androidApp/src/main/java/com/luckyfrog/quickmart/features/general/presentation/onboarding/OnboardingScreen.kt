@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
+import com.luckyfrog.quickmart.core.app.AppPreferences
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
@@ -76,10 +77,11 @@ fun OnboardingScreen(
         Images.icOnboarding2,
         Images.icOnboarding3
     )
-    Scaffold {
+    Scaffold { innerPadding ->
         Column(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 24.dp)
+                .padding(innerPadding)
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
 
@@ -104,10 +106,10 @@ fun OnboardingScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier.fillMaxWidth()
                             ) {
-                                if (currentIndex.value != 0)
+                                if (currentIndex.intValue != 0)
                                     IconButton(
                                         onClick = {
-                                            currentIndex.value -= 1
+                                            currentIndex.intValue -= 1
                                         }, // Navigate back
                                     ) {
                                         Icon(
@@ -134,8 +136,9 @@ fun OnboardingScreen(
                                         contentDescription = "Logo"
                                     )
 
-                                if (currentIndex.value < arraySize - 1)
+                                if (currentIndex.intValue < arraySize - 1)
                                     TextButton(onClick = {
+                                        AppPreferences.setFirstTime(false)
                                         navController.navigate(AppScreen.LoginScreen.route) {
                                             popUpTo(AppScreen.OnboardingScreen.route) {
                                                 inclusive = true
@@ -152,7 +155,7 @@ fun OnboardingScreen(
                             Spacer(modifier = Modifier.height(51.dp))
                             Image(
                                 painter = painterResource(
-                                    images[currentIndex.value]
+                                    images[currentIndex.intValue]
                                 ),
 
                                 contentDescription = "Onboarding",
@@ -170,20 +173,20 @@ fun OnboardingScreen(
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = stringResource(titles[currentIndex.value]),
+                text = stringResource(titles[currentIndex.intValue]),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = stringResource(subtitles[currentIndex.value]),
+                text = stringResource(subtitles[currentIndex.intValue]),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(16.dp))
-            if (currentIndex.value == arraySize - 1)
+            if (currentIndex.intValue == arraySize - 1)
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -194,14 +197,17 @@ fun OnboardingScreen(
                             buttonTextColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onPrimaryContainer,
                             modifier = Modifier.width(screenWidth * 0.45F),
                             onClick = {
-                                if (currentIndex.value == arraySize - 1)
+                                if (currentIndex.intValue == arraySize - 1) {
+                                    AppPreferences.setFirstTime(false)
+
                                     navController.navigate(AppScreen.LoginScreen.route) {
                                         popUpTo(AppScreen.OnboardingScreen.route) {
                                             inclusive = true
                                         }
                                     }
-                                else
-                                    currentIndex.value++
+                                } else {
+                                    currentIndex.intValue++
+                                }
 
                             },
                             buttonBorderColor = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -214,14 +220,17 @@ fun OnboardingScreen(
                             isWithIcon = true,
                             buttonIcon = painterResource(Images.icArrowForward),
                             onClick = {
-                                if (currentIndex.value == arraySize - 1)
+                                if (currentIndex.intValue == arraySize - 1) {
+                                    AppPreferences.setFirstTime(false)
+
                                     navController.navigate(AppScreen.LoginScreen.route) {
                                         popUpTo(AppScreen.OnboardingScreen.route) {
                                             inclusive = true
                                         }
                                     }
-                                else
-                                    currentIndex.value++
+                                } else {
+                                    currentIndex.intValue++
+                                }
 
                             },
                             buttonContainerColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimaryContainer,
@@ -233,13 +242,14 @@ fun OnboardingScreen(
                 CustomOutlinedButton(
                     buttonText = stringResource(R.string.next),
                     onClick = {
-                        if (currentIndex.value == arraySize - 1)
+                        if (currentIndex.intValue == arraySize - 1) {
+                            AppPreferences.setFirstTime(false)
                             navController.navigate(AppScreen.LoginScreen.route) {
                                 popUpTo(AppScreen.OnboardingScreen.route) { inclusive = true }
                             }
-                        else
-                            currentIndex.value++
-
+                        } else {
+                            currentIndex.intValue++
+                        }
                     },
                     buttonContainerColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimaryContainer,
                 )
@@ -265,7 +275,7 @@ fun OnboardingScreen(
                                 .width(10.dp)
                                 .height(10.dp)
                                 .background(
-                                    color = if (index == currentIndex.value) colorCyan else MaterialTheme.colorScheme.onBackground,
+                                    color = if (index == currentIndex.intValue) colorCyan else MaterialTheme.colorScheme.onBackground,
                                     shape = CircleShape
                                 ),
                         )
