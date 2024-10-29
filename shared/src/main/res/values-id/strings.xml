@@ -35,7 +35,10 @@
     <string name="dont_have_account">Tidak punya akun?</string>
     <string name="forgot_password">Lupa Kata Sandi</string>
     <string name="login_with_google">Masuk dengan Google</string>
-    <string name="login_terms_and_conditions">Dengan masuk, Anda setuju dengan <string name="privacy_policy">Kebijakan Privasi</string> dan <string name="terms_and_conditions">Syarat dan Ketentuan</string></string>
+    <string name="login_terms_and_conditions">Dengan masuk, Anda setuju dengan </string>
+    <string name="privacy_policy">Kebijakan Privasi</string>
+    <string name="and">dan</string>
+    <string name="terms_and_conditions">Syarat dan Ketentuan</string>
     <string name="confirm_email">Email Konfirmasi</string>
     <string name="confirm_desc">Masukkan alamat email Anda untuk verifikasi.</string>
     <string name="send">Kirim</string>

@@ -14,6 +14,7 @@ object Images {
     val icLightMode = com.luckyfrog.quickmart.R.drawable.ic_light_mode
     val icLock = com.luckyfrog.quickmart.R.drawable.ic_lock
     val icLogoDark = com.luckyfrog.quickmart.R.drawable.ic_logo_dark
+    val icLogoGoogle = com.luckyfrog.quickmart.R.drawable.ic_logo_google
     val icLogoGooglePay = com.luckyfrog.quickmart.R.drawable.ic_logo_google_pay
     val icLogoLight = com.luckyfrog.quickmart.R.drawable.ic_logo_light
     val icLogoPaypal = com.luckyfrog.quickmart.R.drawable.ic_logo_paypal

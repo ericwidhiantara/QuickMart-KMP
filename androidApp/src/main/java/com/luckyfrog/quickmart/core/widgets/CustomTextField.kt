@@ -3,6 +3,7 @@ package com.luckyfrog.quickmart.core.widgets
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.text.KeyboardActions
@@ -13,12 +14,14 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.luckyfrog.quickmart.utils.resource.theme.colorRed
 
 @Composable
 fun CustomTextField(
@@ -47,14 +50,26 @@ fun CustomTextField(
     minLines: Int = 1,
     interactionSource: MutableInteractionSource? = null,
     shape: Shape = TextFieldDefaults.shape,
-    colors: TextFieldColors = TextFieldDefaults.colors()
+    colors: TextFieldColors = TextFieldDefaults.colors(),
+    required: Boolean = true
 ) {
 
     Column {
-        Text(
-            text = titleLabel,
-            fontSize = titleLabelFontSize
-        )
+        Row(
+            modifier = Modifier,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = titleLabel,
+                fontSize = titleLabelFontSize
+            )
+            if (required)
+                Text(
+                    text = " *",
+                    fontSize = titleLabelFontSize,
+                    color = colorRed
+                )
+        }
         Box(
             modifier = Modifier.height(3.dp)
         )

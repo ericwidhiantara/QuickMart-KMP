@@ -35,7 +35,10 @@
     <string name="dont_have_account">Don\'t have an account?</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="login_with_google">Login with Google</string>
-    <string name="login_terms_and_conditions">By logging in, you agree to our <string name="privacy_policy">Privacy Policy</string> and <string name="terms_and_conditions">Terms and Conditions</string></string>
+    <string name="login_terms_and_conditions">By logging in, you agree to our </string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="and">and</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="confirm_email">Confirmation Email</string>
     <string name="confirm_desc">Enter your email address for verification.</string>
     <string name="send">Send</string>
