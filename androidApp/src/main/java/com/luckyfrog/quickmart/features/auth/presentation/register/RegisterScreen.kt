@@ -1,11 +1,8 @@
-package com.luckyfrog.quickmart.features.auth.presentation.login
+package com.luckyfrog.quickmart.features.auth.presentation.register
 
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,56 +19,43 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withLink
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTextField
-import com.luckyfrog.quickmart.features.auth.data.models.response.LoginFormRequestDto
-import com.luckyfrog.quickmart.utils.TokenManager
-import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import com.luckyfrog.quickmart.utils.resource.theme.colorBlack
-import com.luckyfrog.quickmart.utils.resource.theme.colorBlue
-import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
-import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 
 @Composable
-fun LoginScreen(
+fun RegisterScreen(
     mainViewModel: MainViewModel,
-    loginViewModel: LoginViewModel = hiltViewModel(),
     navController: NavController,
-    tokenManager: TokenManager = TokenManager(LocalContext.current),
 ) {
+    val fullNameController =
+        remember { mutableStateOf("") }
     val emailController =
         remember { mutableStateOf("") }
     val passwordController = remember { mutableStateOf("") }
+    val passwordConfirmController = remember { mutableStateOf("") }
     var passwordVisibility: Boolean by remember { mutableStateOf(false) }
-    // Collect login result state from the ViewModel
-    val loginState by loginViewModel.loginState.collectAsState()
+    var passwordConfirmVisibility: Boolean by remember { mutableStateOf(false) }
 
     Scaffold { innerPadding ->
         Column(
@@ -93,7 +77,7 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = stringResource(R.string.login),
+                text = stringResource(R.string.signup),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -103,13 +87,15 @@ fun LoginScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 content = {
                     Text(
-                        text = stringResource(R.string.dont_have_account),
+                        text = stringResource(R.string.already_have_account),
                         fontSize = 14.sp,
                         textAlign = TextAlign.Center
                     )
-                    TextButton(onClick = { /*TODO*/ }) {
+                    TextButton(onClick = {
+                        
+                    }) {
                         Text(
-                            text = stringResource(R.string.signup),
+                            text = stringResource(R.string.login),
                             fontSize = 14.sp,
                             textAlign = TextAlign.Center
                         )
@@ -117,6 +103,16 @@ fun LoginScreen(
                 }
             )
             Spacer(modifier = Modifier.height(32.dp))
+            CustomTextField(
+                value = fullNameController.value,
+                onValueChange = { newText ->
+                    fullNameController.value = newText
+                },
+                titleLabel = stringResource(R.string.full_name),
+                titleLabelFontSize = 12.sp,
+                placeholder = stringResource(R.string.full_name_placeholder),
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             CustomTextField(
                 value = emailController.value,
                 onValueChange = { newText ->
@@ -151,88 +147,49 @@ fun LoginScreen(
                     }
                 }
             )
-            Spacer(
-                modifier = Modifier.height(24.dp)
-            )
-            TextButton(
-                onClick = {
-
+            Spacer(modifier = Modifier.height(16.dp))
+            CustomTextField(
+                value = passwordConfirmController.value,
+                onValueChange = { newText ->
+                    passwordConfirmController.value = newText
                 },
-                modifier = Modifier.align(
-                    alignment = Alignment.End
-                )
-            ) {
-                Text(
-                    text = stringResource(R.string.forgot_password),
-                    fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-            }
-            Spacer(
-                modifier = Modifier.height(24.dp)
-            )
-            CustomOutlinedButton(
-                buttonText = stringResource(R.string.login),
-                onClick = {
-                    // Create the LoginFormRequestDto from the user inputs
-                    val loginFormRequest = LoginFormRequestDto(
-                        username = emailController.value,
-                        password = passwordController.value,
-                        expiresInMins = 30,
-                    )
-                    Log.d("LoginScreen", "loginFormRequest: $loginFormRequest")
-                    // Trigger the login action
-                    loginViewModel.login(loginFormRequest)
-                }
-            )
+                titleLabel = stringResource(R.string.confirm_password),
+                titleLabelFontSize = 12.sp,
+                placeholder = stringResource(R.string.confirm_password_placeholder),
+                visualTransformation = if (passwordConfirmVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                trailingIcon = {
+                    val image = if (passwordConfirmVisibility)
+                        Icons.Filled.Visibility
+                    else Icons.Filled.VisibilityOff
 
-            // Handling the login result (success or failure)
-            when (val state = loginState) {
+                    // Please provide localized description for accessibility services
+                    val description =
+                        if (passwordConfirmVisibility) "Hide password" else "Show password"
 
-                is LoginState.Success -> {
-                    SweetSuccess(
-                        message = "",
-                        duration = Toast.LENGTH_LONG,
-                        padding = PaddingValues(top = 16.dp),
-                        contentAlignment = Alignment.TopCenter
-                    )
-                    tokenManager.saveToken(state.data.accessToken ?: "")
-                    tokenManager.saveRefreshToken(state.data.refreshToken ?: "")
-                    // Login success, navigate to the next screen
-                    // Navigate to the product list screen and clear the previous stack
-                    navController.navigate(AppScreen.MainScreen.route) {
-                        popUpTo(navController.graph.startDestinationId) {
-                            inclusive = true
-                        }
-                        launchSingleTop = true
+                    IconButton(onClick = {
+                        passwordConfirmVisibility = !passwordConfirmVisibility
+                    }) {
+                        Icon(imageVector = image, description)
                     }
                 }
-
-                is LoginState.Error -> {
-                    Log.d("LoginScreen", "Error: ${state.message}")
-                    // Show a toast with the error message
-                    // on below line we are displaying a custom toast message on below line
-                    SweetError(
-                        message = state.message,
-                        duration = Toast.LENGTH_SHORT,
-                        padding = PaddingValues(top = 16.dp),
-                        contentAlignment = Alignment.TopCenter
-                    )
-                }
-
-                is LoginState.Loading -> {
-                    // Show a loading spinner or something similar if you want
-                }
-
-                is LoginState.Idle -> {
-                    // No action yet
-                }
-            }
+            )
             Spacer(
                 modifier = Modifier.height(24.dp)
             )
             CustomOutlinedButton(
-                buttonText = stringResource(R.string.login_with_google),
+                buttonText = stringResource(R.string.create_account),
+                onClick = {
+
+                }
+            )
+
+
+            Spacer(
+                modifier = Modifier.height(24.dp)
+            )
+            CustomOutlinedButton(
+                buttonText = stringResource(R.string.signup_with_google),
                 buttonTextColor = colorBlack,
                 isWithIcon = true,
                 buttonIcon = painterResource(
@@ -246,62 +203,9 @@ fun LoginScreen(
             Spacer(
                 modifier = Modifier.height(81.dp)
             )
-            LoginTermsAndPrivacyText()
-            Spacer(
-                modifier = Modifier.height(16.dp)
-            )
+
         }
     }
 
 }
 
-
-@Composable
-fun LoginTermsAndPrivacyText() {
-    val annotated = buildAnnotatedString {
-        withStyle(MaterialTheme.typography.bodyMedium.toSpanStyle()) {
-            append(stringResource(id = R.string.login_terms_and_conditions) + " ")
-        }
-        withLink(
-            link = LinkAnnotation.Clickable(
-                tag = "TAG",
-                linkInteractionListener = {
-                    Log.d("LoginTermsAndPrivacyText", "privacy_policy")
-                },
-            ),
-        ) {
-            withStyle(
-                MaterialTheme.typography.bodyMedium.toSpanStyle()
-                    .copy(fontWeight = FontWeight.Bold, color = colorBlue)
-            ) {
-                append(stringResource(id = R.string.privacy_policy))
-            }
-        }
-        withStyle(MaterialTheme.typography.bodyMedium.toSpanStyle()) {
-            append(" " + stringResource(id = R.string.and) + " ")
-        }
-
-        withLink(
-            link = LinkAnnotation.Clickable(
-                tag = "TAG",
-                linkInteractionListener = {
-                    Log.d("LoginTermsAndPrivacyText", "terms_conditions")
-                },
-            ),
-        ) {
-            withStyle(
-                MaterialTheme.typography.bodyMedium.toSpanStyle()
-                    .copy(fontWeight = FontWeight.Bold, color = colorBlue)
-            ) {
-                append(stringResource(id = R.string.terms_and_conditions))
-            }
-        }
-    }
-
-    Text(
-        text = annotated,
-        modifier = Modifier
-            .padding(16.dp),
-        textAlign = TextAlign.Center
-    )
-}

@@ -5,10 +5,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.luckyfrog.quickmart.core.app.AppPreferences
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
+import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterScreen
 import com.luckyfrog.quickmart.features.general.presentation.main.BottomNavBar
 import com.luckyfrog.quickmart.features.general.presentation.onboarding.OnboardingScreen
 import com.luckyfrog.quickmart.features.general.presentation.splash.SplashScreen
@@ -17,10 +17,9 @@ import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
 @Composable
 fun NavGraph(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
-    val isFirstTime = AppPreferences.getFirstTime()
     NavHost(
         navController = navController,
-        startDestination = AppScreen.SplashScreen.route
+        startDestination = AppScreen.RegisterScreen.route
     ) {
         composable(route = AppScreen.SplashScreen.route) {
             SplashScreen(
@@ -38,6 +37,13 @@ fun NavGraph(mainViewModel: MainViewModel) {
         }
         composable(route = AppScreen.LoginScreen.route) {
             LoginScreen(
+                mainViewModel = mainViewModel,
+                navController = navController
+            )
+        }
+
+        composable(route = AppScreen.RegisterScreen.route) {
+            RegisterScreen(
                 mainViewModel = mainViewModel,
                 navController = navController
             )
