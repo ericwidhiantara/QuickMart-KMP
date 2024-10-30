@@ -48,5 +48,11 @@
     <string name="save">Save</string>
     <string name="change_password_success">New password set successfully</string>
     <string name="change_password_success_desc">Congratulations! Your password has been set successfully, now you can login to your account with the new password.</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_categories">Categories</string>
+    <string name="menu_my_cart">My Cart</string>
+    <string name="menu_wishlist">Wishlist</string>
+    <string name="menu_profile">Profile</string>
+
 
 </resources>

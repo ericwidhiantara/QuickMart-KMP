@@ -9,12 +9,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.core.app.AppPreferences
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
+import com.luckyfrog.quickmart.utils.TokenManager
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import kotlinx.coroutines.delay
@@ -26,12 +28,18 @@ fun SplashScreen(
 ) {
     val isFirstTime = AppPreferences.getFirstTime()
     Log.d("SplashScreen", "isFirstTime: $isFirstTime")
+    val token = TokenManager(LocalContext.current).getToken()
     // This block will be triggered when the SplashScreen composable is first composed
     LaunchedEffect(Unit) {
         // Simulate a delay for the splash screen (e.g., 2 seconds)
         delay(3000)
         // Navigate to the login screen
-        navController.navigate(if (isFirstTime) AppScreen.OnboardingScreen.route else AppScreen.LoginScreen.route) {
+        navController.navigate(
+            when (isFirstTime) {
+                true -> AppScreen.OnboardingScreen.route
+                false -> if (token == "") AppScreen.LoginScreen.route else AppScreen.MainScreen.route
+            }
+        ) {
             // Remove the splash screen from the back stack to prevent returning to it
             popUpTo(AppScreen.SplashScreen.route) { inclusive = true }
         }

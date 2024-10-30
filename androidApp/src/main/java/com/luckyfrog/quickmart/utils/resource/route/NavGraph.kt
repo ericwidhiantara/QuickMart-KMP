@@ -17,6 +17,7 @@ import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterScree
 import com.luckyfrog.quickmart.features.general.presentation.main.BottomNavBar
 import com.luckyfrog.quickmart.features.general.presentation.onboarding.OnboardingScreen
 import com.luckyfrog.quickmart.features.general.presentation.splash.SplashScreen
+import com.luckyfrog.quickmart.features.home.presentation.dashboard.HomeScreen
 import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
 
 @Composable
@@ -24,8 +25,9 @@ fun NavGraph(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppScreen.PasswordCreatedScreen.route
+        startDestination = AppScreen.SplashScreen.route
     ) {
+        /// GENERAL
         composable(route = AppScreen.SplashScreen.route) {
             SplashScreen(
                 mainViewModel = mainViewModel,
@@ -40,6 +42,14 @@ fun NavGraph(mainViewModel: MainViewModel) {
             )
         }
 
+        composable(route = AppScreen.MainScreen.route) {
+            BottomNavBar(
+                mainViewModel = mainViewModel,
+                navController = navController
+            )
+        }
+
+        /// AUTH
         composable(route = AppScreen.LoginScreen.route) {
             LoginScreen(
                 mainViewModel = mainViewModel,
@@ -89,14 +99,15 @@ fun NavGraph(mainViewModel: MainViewModel) {
             )
         }
 
-        composable(route = AppScreen.MainScreen.route) {
-            BottomNavBar(
+        /// HOME
+        composable(route = AppScreen.HomeScreen.route) {
+            HomeScreen(
                 mainViewModel = mainViewModel,
                 navController = navController
             )
         }
 
-
+        /// PROFILE
         composable(route = AppScreen.SettingsScreen.route) {
             val userViewModel = hiltViewModel<UserViewModel>()
 

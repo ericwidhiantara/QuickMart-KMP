@@ -48,5 +48,10 @@
     <string name="save">Simpan</string>
     <string name="change_password_success">Kata sandi baru berhasil ditetapkan</string>
     <string name="change_password_success_desc">Selamat! Kata sandi Anda telah berhasil ditetapkan, sekarang Anda dapat masuk ke akun Anda dengan kata sandi baru.</string>
+    <string name="menu_home">Beranda</string>
+    <string name="menu_categories">Kategori</string>
+    <string name="menu_my_cart">Keranjang Saya</string>
+    <string name="menu_wishlist">Wishlist</string>
+    <string name="menu_profile">Profil</string>
 
 </resources>

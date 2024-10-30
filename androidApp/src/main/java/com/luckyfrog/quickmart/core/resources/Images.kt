@@ -20,9 +20,15 @@ object Images {
     val icLogoPaypal = com.luckyfrog.quickmart.R.drawable.ic_logo_paypal
     val icLogout = com.luckyfrog.quickmart.R.drawable.ic_logout
     val icMenuCategories = com.luckyfrog.quickmart.R.drawable.ic_menu_categories
+    val icMenuCategoriesActive = com.luckyfrog.quickmart.R.drawable.ic_menu_categories_active
     val icMenuHome = com.luckyfrog.quickmart.R.drawable.ic_menu_home
+    val icMenuHomeActive = com.luckyfrog.quickmart.R.drawable.ic_menu_home_active
     val icMenuMyCart = com.luckyfrog.quickmart.R.drawable.ic_menu_my_cart
+    val icMenuMyCartActive = com.luckyfrog.quickmart.R.drawable.ic_menu_my_cart_active
+    val icMenuWishlist = com.luckyfrog.quickmart.R.drawable.ic_menu_wishlist
+    val icMenuWishlistActive = com.luckyfrog.quickmart.R.drawable.ic_menu_wishlist_active
     val icMenuProfile = com.luckyfrog.quickmart.R.drawable.ic_menu_profile
+    val icMenuProfileActive = com.luckyfrog.quickmart.R.drawable.ic_menu_profile_active
     val icOnboarding1 = com.luckyfrog.quickmart.R.drawable.ic_onboarding_1
     val icOnboarding2 = com.luckyfrog.quickmart.R.drawable.ic_onboarding_2
     val icOnboarding3 = com.luckyfrog.quickmart.R.drawable.ic_onboarding_3
