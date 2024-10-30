@@ -1,5 +1,7 @@
 package com.luckyfrog.quickmart.core.widgets
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,14 +26,16 @@ import com.luckyfrog.quickmart.core.resources.Images
 @Composable
 fun CustomTopBar(
     title: String,
-    navController: NavController
+    navController: NavController,
+    actions: @Composable () -> Unit = {}
 ) {
     Column(modifier = Modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             // Automatically show back button if there's a backstack entry
             if (navController.previousBackStackEntry != null) {
@@ -55,6 +59,11 @@ fun CustomTopBar(
                     .padding(vertical = 16.dp, horizontal = 16.dp),
                 textAlign = TextAlign.Center
             )
+            Box(
+                modifier = Modifier.padding(end = 16.dp)
+            ) {
+                actions()
+            }
         }
         HorizontalDivider()
     }
