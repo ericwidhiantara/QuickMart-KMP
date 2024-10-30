@@ -10,6 +10,7 @@ import com.luckyfrog.quickmart.features.auth.presentation.email_verification.Ema
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.CreatePasswordScreen
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.ForgotPasswordEmailConfirmationScreen
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.ForgotPasswordVerifyCodeScreen
+import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.PasswordCreatedScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterScreen
@@ -23,7 +24,7 @@ fun NavGraph(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppScreen.LoginScreen.route
+        startDestination = AppScreen.PasswordCreatedScreen.route
     ) {
         composable(route = AppScreen.SplashScreen.route) {
             SplashScreen(
@@ -76,6 +77,13 @@ fun NavGraph(mainViewModel: MainViewModel) {
 
         composable(route = AppScreen.CreatePasswordScreen.route) {
             CreatePasswordScreen(
+                mainViewModel = mainViewModel,
+                navController = navController
+            )
+        }
+
+        composable(route = AppScreen.PasswordCreatedScreen.route) {
+            PasswordCreatedScreen(
                 mainViewModel = mainViewModel,
                 navController = navController
             )

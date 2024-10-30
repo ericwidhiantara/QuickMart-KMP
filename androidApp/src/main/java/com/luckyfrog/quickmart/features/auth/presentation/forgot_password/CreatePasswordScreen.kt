@@ -36,6 +36,7 @@ import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTextField
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
+import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 
 @Composable
 fun CreatePasswordScreen(
@@ -152,6 +153,11 @@ fun CreatePasswordScreen(
             CustomOutlinedButton(
                 buttonText = stringResource(R.string.save),
                 onClick = {
+                    navController.navigate(AppScreen.PasswordCreatedScreen.route) {
+                        popUpTo(AppScreen.CreatePasswordScreen.route) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
 
