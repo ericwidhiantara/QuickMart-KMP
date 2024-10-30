@@ -27,10 +27,11 @@
     <string name="confirm_password_placeholder">Confirm your password</string>
     <string name="create_account">Create Account</string>
     <string name="signup_with_google">Signup with Google</string>
-    <string name="verification_code_sent">6-digit Verification code has been send to your email address.</string>
+    <string name="verification_code_sent">6-digit verification code has been sent to your email address.</string>
     <string name="email_verification">Email Verification</string>
     <string name="enter_verification_code">Enter the 6-digit verification code send to your email address.</string>
     <string name="resend_code">Resend Code</string>
+    <string name="resend_code_timer">Resend code in</string>
     <string name="proceed">Proceed</string>
     <string name="dont_have_account">Don\'t have an account?</string>
     <string name="forgot_password">Forgot Password</string>

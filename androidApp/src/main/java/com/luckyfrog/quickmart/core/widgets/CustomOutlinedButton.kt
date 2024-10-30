@@ -34,16 +34,18 @@ fun CustomOutlinedButton(
     buttonBorderColor: Color = buttonContainerColor,
     onClick: () -> Unit,
     isWithIcon: Boolean = false,
-    buttonIcon: Painter? = null
+    buttonIcon: Painter? = null,
+    isButtonEnabled: Boolean = true,
 ) {
     OutlinedButton(
+        enabled = isButtonEnabled,
         onClick = onClick,
         modifier = modifier
             .fillMaxWidth()
             .height(height),
         border = BorderStroke(
             1.dp,
-            color = buttonBorderColor,
+            color = if (isButtonEnabled) buttonBorderColor else Color.Gray,
         ),
         colors = ButtonDefaults.buttonColors(
             containerColor = buttonContainerColor

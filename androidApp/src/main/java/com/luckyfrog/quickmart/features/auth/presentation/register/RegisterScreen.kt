@@ -186,11 +186,9 @@ fun RegisterScreen(
             CustomOutlinedButton(
                 buttonText = stringResource(R.string.create_account),
                 onClick = {
-
+                    navController.navigate(AppScreen.EmailVerificationScreen.route)
                 }
             )
-
-
             Spacer(
                 modifier = Modifier.height(24.dp)
             )

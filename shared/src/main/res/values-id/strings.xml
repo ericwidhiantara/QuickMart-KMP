@@ -31,6 +31,7 @@
     <string name="email_verification">Verifikasi Email</string>
     <string name="enter_verification_code">Masukkan kode verifikasi 6 digit yang dikirim ke alamat email Anda.</string>
     <string name="resend_code">Kirim Ulang Kode</string>
+    <string name="resend_code_timer">Kirim ulang kode dalam</string>
     <string name="proceed">Lanjutkan</string>
     <string name="dont_have_account">Tidak punya akun?</string>
     <string name="forgot_password">Lupa Kata Sandi</string>
