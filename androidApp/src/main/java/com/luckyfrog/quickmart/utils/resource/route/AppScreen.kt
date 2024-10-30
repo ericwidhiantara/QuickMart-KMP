@@ -12,6 +12,8 @@ sealed class AppScreen(val route: String) {
     data object ForgotPasswordVerifyCodeScreen :
         AppScreen(ConstantAppScreenName.FORGOT_PASSWORD_VERIFY_CODE_SCREEN)
 
+    data object CreatePasswordScreen : AppScreen(ConstantAppScreenName.CREATE_PASSWORD_SCREEN)
+
     data object MainScreen : AppScreen(ConstantAppScreenName.MAIN_SCREEN)
     data object SettingsScreen : AppScreen(ConstantAppScreenName.SETTINGS_SCREEN)
 }
@@ -25,6 +27,7 @@ object ConstantAppScreenName {
     const val FORGOT_PASSWORD_EMAIL_CONFIRMATION_SCREEN =
         "forgot_password_email_confirmation_screen"
     const val FORGOT_PASSWORD_VERIFY_CODE_SCREEN = "forgot_password_verify_code_screen"
+    const val CREATE_PASSWORD_SCREEN = "create_password_screen"
     const val MAIN_SCREEN = "main_screen"
 
     const val SETTINGS_SCREEN = "settings_screen"

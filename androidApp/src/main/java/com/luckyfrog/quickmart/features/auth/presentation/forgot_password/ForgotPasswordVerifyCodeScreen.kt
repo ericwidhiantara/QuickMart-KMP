@@ -33,6 +33,7 @@ import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.widgets.CustomOTPInput
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
+import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 import kotlinx.coroutines.delay
 
@@ -164,7 +165,7 @@ fun ForgotPasswordVerifyCodeScreen(
                 isButtonEnabled = otpCode.length == 6,
                 buttonText = stringResource(R.string.proceed),
                 onClick = {
-
+                    navController.navigate(AppScreen.CreatePasswordScreen.route)
                 }
             )
 
