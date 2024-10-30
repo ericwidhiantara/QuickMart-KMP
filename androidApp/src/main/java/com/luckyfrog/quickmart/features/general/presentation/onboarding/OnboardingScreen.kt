@@ -139,7 +139,7 @@ fun OnboardingScreen(
                                 if (currentIndex.intValue < arraySize - 1)
                                     TextButton(onClick = {
                                         AppPreferences.setFirstTime(false)
-                                        navController.navigate(AppScreen.LoginScreen.route) {
+                                        navController.navigate(AppScreen.RegisterScreen.route) {
                                             popUpTo(AppScreen.OnboardingScreen.route) {
                                                 inclusive = true
                                             }
@@ -223,7 +223,7 @@ fun OnboardingScreen(
                                 if (currentIndex.intValue == arraySize - 1) {
                                     AppPreferences.setFirstTime(false)
 
-                                    navController.navigate(AppScreen.LoginScreen.route) {
+                                    navController.navigate(AppScreen.RegisterScreen.route) {
                                         popUpTo(AppScreen.OnboardingScreen.route) {
                                             inclusive = true
                                         }

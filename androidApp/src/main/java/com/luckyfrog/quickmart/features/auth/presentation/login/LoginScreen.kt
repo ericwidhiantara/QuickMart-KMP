@@ -107,7 +107,14 @@ fun LoginScreen(
                         fontSize = 14.sp,
                         textAlign = TextAlign.Center
                     )
-                    TextButton(onClick = { /*TODO*/ }) {
+                    TextButton(onClick = {
+                        // Navigate to RegisterScreen
+                        navController.navigate(AppScreen.RegisterScreen.route) {
+                            popUpTo(AppScreen.LoginScreen.route) {
+                                inclusive = true
+                            }  // Clear back stack
+                        }
+                    }) {
                         Text(
                             text = stringResource(R.string.signup),
                             fontSize = 14.sp,
@@ -244,7 +251,7 @@ fun LoginScreen(
                 }
             )
             Spacer(
-                modifier = Modifier.height(81.dp)
+                modifier = Modifier.height(61.dp)
             )
             LoginTermsAndPrivacyText()
             Spacer(

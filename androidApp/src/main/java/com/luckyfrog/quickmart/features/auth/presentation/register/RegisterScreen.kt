@@ -40,6 +40,7 @@ import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTextField
+import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import com.luckyfrog.quickmart.utils.resource.theme.colorBlack
 
@@ -92,7 +93,12 @@ fun RegisterScreen(
                         textAlign = TextAlign.Center
                     )
                     TextButton(onClick = {
-                        
+                        // Navigate to LoginScreen
+                        navController.navigate(AppScreen.LoginScreen.route) {
+                            popUpTo(AppScreen.LoginScreen.route) {
+                                inclusive = true
+                            }  // Clear back stack
+                        }
                     }) {
                         Text(
                             text = stringResource(R.string.login),
