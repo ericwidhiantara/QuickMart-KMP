@@ -163,7 +163,7 @@ fun LoginScreen(
             )
             TextButton(
                 onClick = {
-                    navController.navigate(AppScreen.EmailConfirmationScreen.route)
+                    navController.navigate(AppScreen.ForgotPasswordEmailConfirmationScreen.route)
                 },
                 modifier = Modifier.align(
                     alignment = Alignment.End

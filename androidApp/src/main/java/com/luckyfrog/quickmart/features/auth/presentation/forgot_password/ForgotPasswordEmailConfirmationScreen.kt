@@ -25,12 +25,12 @@ import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTextField
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
+import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 
 @Composable
-fun EmailConfirmationScreen(
+fun ForgotPasswordEmailConfirmationScreen(
     mainViewModel: MainViewModel,
-    navController: NavController,
-    timerDuration: Long = 60000L // 60 seconds for the timer
+    navController: NavController
 ) {
     val emailController =
         remember { mutableStateOf("") }
@@ -97,6 +97,7 @@ fun EmailConfirmationScreen(
             CustomOutlinedButton(
                 buttonText = stringResource(R.string.send),
                 onClick = {
+                    navController.navigate(AppScreen.ForgotPasswordVerifyCodeScreen.route)
                 }
             )
 

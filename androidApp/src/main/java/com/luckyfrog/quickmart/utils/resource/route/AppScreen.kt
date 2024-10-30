@@ -6,7 +6,12 @@ sealed class AppScreen(val route: String) {
     data object LoginScreen : AppScreen(ConstantAppScreenName.LOGIN_SCREEN)
     data object RegisterScreen : AppScreen(ConstantAppScreenName.REGISTER_SCREEN)
     data object EmailVerificationScreen : AppScreen(ConstantAppScreenName.EMAIL_VERIFICATION_SCREEN)
-    data object EmailConfirmationScreen : AppScreen(ConstantAppScreenName.EMAIL_CONFIRMATION_SCREEN)
+    data object ForgotPasswordEmailConfirmationScreen :
+        AppScreen(ConstantAppScreenName.FORGOT_PASSWORD_EMAIL_CONFIRMATION_SCREEN)
+
+    data object ForgotPasswordVerifyCodeScreen :
+        AppScreen(ConstantAppScreenName.FORGOT_PASSWORD_VERIFY_CODE_SCREEN)
+
     data object MainScreen : AppScreen(ConstantAppScreenName.MAIN_SCREEN)
     data object SettingsScreen : AppScreen(ConstantAppScreenName.SETTINGS_SCREEN)
 }
@@ -17,7 +22,9 @@ object ConstantAppScreenName {
     const val LOGIN_SCREEN = "login_screen"
     const val REGISTER_SCREEN = "register_screen"
     const val EMAIL_VERIFICATION_SCREEN = "email_verification_screen"
-    const val EMAIL_CONFIRMATION_SCREEN = "email_confirmation_screen"
+    const val FORGOT_PASSWORD_EMAIL_CONFIRMATION_SCREEN =
+        "forgot_password_email_confirmation_screen"
+    const val FORGOT_PASSWORD_VERIFY_CODE_SCREEN = "forgot_password_verify_code_screen"
     const val MAIN_SCREEN = "main_screen"
 
     const val SETTINGS_SCREEN = "settings_screen"

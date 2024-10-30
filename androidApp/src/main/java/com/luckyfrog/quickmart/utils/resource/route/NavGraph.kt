@@ -7,7 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.email_verification.EmailVerificationScreen
-import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.EmailConfirmationScreen
+import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.ForgotPasswordEmailConfirmationScreen
+import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.ForgotPasswordVerifyCodeScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterScreen
@@ -34,9 +35,9 @@ fun NavGraph(mainViewModel: MainViewModel) {
             OnboardingScreen(
                 mainViewModel = mainViewModel,
                 navController = navController,
-
-                )
+            )
         }
+
         composable(route = AppScreen.LoginScreen.route) {
             LoginScreen(
                 mainViewModel = mainViewModel,
@@ -57,8 +58,16 @@ fun NavGraph(mainViewModel: MainViewModel) {
                 navController = navController
             )
         }
-        composable(route = AppScreen.EmailConfirmationScreen.route) {
-            EmailConfirmationScreen(
+
+        composable(route = AppScreen.ForgotPasswordEmailConfirmationScreen.route) {
+            ForgotPasswordEmailConfirmationScreen(
+                mainViewModel = mainViewModel,
+                navController = navController
+            )
+        }
+
+        composable(route = AppScreen.ForgotPasswordVerifyCodeScreen.route) {
+            ForgotPasswordVerifyCodeScreen(
                 mainViewModel = mainViewModel,
                 navController = navController
             )
