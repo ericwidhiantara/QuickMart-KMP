@@ -65,7 +65,7 @@ fun UserResponseDto.toEntity() = UserEntity(
 )
 
 /**
- * Mapping from com.luckyfrog.ecommerce.features.auth.domain.entities.UserEntity to UserResponseDto
+ * Mapping from com.luckyfrog.quickmart.features.auth.domain.entities.UserEntity to UserResponseDto
  */
 fun UserEntity.toDto() = UserResponseDto(
     id = this.id ?: 0,
@@ -112,7 +112,7 @@ fun UserEntity.toDto() = UserResponseDto(
 )
 
 /**
- * Mapping for HairResponseDto and com.luckyfrog.ecommerce.features.auth.domain.entities.HairEntity
+ * Mapping for HairResponseDto and com.luckyfrog.quickmart.features.auth.domain.entities.HairEntity
  */
 fun HairResponseDto.toEntity() = HairEntity(
     id = 0,
@@ -126,7 +126,7 @@ fun HairEntity.toDto() = HairResponseDto(
 )
 
 /**
- * Mapping for AddressResponseDto and com.luckyfrog.ecommerce.features.auth.domain.entities.AddressEntity
+ * Mapping for AddressResponseDto and com.luckyfrog.quickmart.features.auth.domain.entities.AddressEntity
  */
 fun AddressResponseDto.toEntity() = AddressEntity(
     id = 0,
@@ -150,7 +150,7 @@ fun AddressEntity.toDto() = AddressResponseDto(
 )
 
 /**
- * Mapping for CoordinatesResponseDto and com.luckyfrog.ecommerce.features.auth.domain.entities.CoordinatesEntity
+ * Mapping for CoordinatesResponseDto and com.luckyfrog.quickmart.features.auth.domain.entities.CoordinatesEntity
  */
 fun CoordinatesResponseDto.toEntity() = CoordinatesEntity(
     id = 0,
@@ -164,7 +164,7 @@ fun CoordinatesEntity.toDto() = CoordinatesResponseDto(
 )
 
 /**
- * Mapping for BankResponseDto and com.luckyfrog.ecommerce.features.auth.domain.entities.BankEntity
+ * Mapping for BankResponseDto and com.luckyfrog.quickmart.features.auth.domain.entities.BankEntity
  */
 fun BankResponseDto.toEntity() = BankEntity(
     id = 0,
@@ -184,7 +184,7 @@ fun BankEntity.toDto() = BankResponseDto(
 )
 
 /**
- * Mapping for CompanyResponseDto and com.luckyfrog.ecommerce.features.auth.domain.entities.CompanyEntity
+ * Mapping for CompanyResponseDto and com.luckyfrog.quickmart.features.auth.domain.entities.CompanyEntity
  */
 fun CompanyResponseDto.toEntity() = CompanyEntity(
     id = 0,
@@ -210,7 +210,7 @@ fun CompanyEntity.toDto() = CompanyResponseDto(
 )
 
 /**
- * Mapping for CryptoResponseDto and com.luckyfrog.ecommerce.features.auth.domain.entities.CryptoEntity
+ * Mapping for CryptoResponseDto and com.luckyfrog.quickmart.features.auth.domain.entities.CryptoEntity
  */
 fun CryptoResponseDto.toEntity() = CryptoEntity(
     id = 0,

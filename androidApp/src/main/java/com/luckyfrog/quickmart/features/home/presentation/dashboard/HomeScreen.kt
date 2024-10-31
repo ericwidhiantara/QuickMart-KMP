@@ -45,6 +45,7 @@ import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.Ca
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CarouselWithOverlay
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CategoryList
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.ProfileImage
+import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import java.util.Locale
 
@@ -179,6 +180,33 @@ fun HomeScreen(
             }
             Spacer(modifier = Modifier.height(12.dp))
             CategoryList()
+            Spacer(modifier = Modifier.height(24.dp))
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = stringResource(R.string.latest_products),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
+                TextButton(
+                    onClick = {}
+                ) {
+                    Text(
+                        text = stringResource(R.string.see_all).uppercase(Locale.getDefault()),
+                        fontSize = 12.sp
+                    )
+                }
+
+            }
+            Spacer(modifier = Modifier.height(24.dp))
+            ProductListScreen(
+                mainViewModel = mainViewModel,
+                navController = navController,
+                isFromHomeScreen = true,
+            )
         }
     }
 }

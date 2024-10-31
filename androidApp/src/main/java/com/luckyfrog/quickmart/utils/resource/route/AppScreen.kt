@@ -18,9 +18,15 @@ sealed class AppScreen(val route: String) {
 
     data object CreatePasswordScreen : AppScreen(ConstantAppScreenName.CREATE_PASSWORD_SCREEN)
     data object PasswordCreatedScreen : AppScreen(ConstantAppScreenName.PASSWORD_CREATED_SCREEN)
-    
+
     /// HOME
     data object HomeScreen : AppScreen(ConstantAppScreenName.HOME_SCREEN)
+
+
+    /// PRODUCT
+    data object ProductListScreen : AppScreen(ConstantAppScreenName.PRODUCT_LIST_SCREEN)
+    data object ProductDetailScreen : AppScreen(ConstantAppScreenName.PRODUCT_DETAIL_SCREEN)
+
 
     /// PROFILE
     data object SettingsScreen : AppScreen(ConstantAppScreenName.SETTINGS_SCREEN)
@@ -44,6 +50,10 @@ object ConstantAppScreenName {
 
     /// HOME
     const val HOME_SCREEN = "home_screen"
+
+    /// PRODUCT
+    const val PRODUCT_LIST_SCREEN = "product_list_screen"
+    const val PRODUCT_DETAIL_SCREEN = "product_detail_screen"
 
     /// PROFILE
     const val SETTINGS_SCREEN = "settings_screen"
