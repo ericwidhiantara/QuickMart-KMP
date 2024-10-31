@@ -17,6 +17,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,6 +43,7 @@ import com.luckyfrog.quickmart.features.auth.presentation.login.UserState
 import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CarouselData
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CarouselWithOverlay
+import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CategoryList
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.ProfileImage
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import java.util.Locale
@@ -102,7 +105,8 @@ fun HomeScreen(
                         IconButton(onClick = { /*TODO*/ }) {
                             Image(
                                 painter = painterResource(Images.icSearch),
-                                contentDescription = "Search"
+                                contentDescription = "Search",
+                                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
                             )
                         }
                         Spacer(modifier = Modifier.width(12.dp))
@@ -173,6 +177,8 @@ fun HomeScreen(
                 }
 
             }
+            Spacer(modifier = Modifier.height(12.dp))
+            CategoryList()
         }
     }
 }
