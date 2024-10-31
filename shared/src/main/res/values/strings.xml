@@ -53,6 +53,9 @@
     <string name="menu_my_cart">My Cart</string>
     <string name="menu_wishlist">Wishlist</string>
     <string name="menu_profile">Profile</string>
+    <string name="categories">Categories</string>
+    <string name="see_all">See All</string>
+    <string name="latest_products">Latest Products</string>
 
 
 </resources>

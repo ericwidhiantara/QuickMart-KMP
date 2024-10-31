@@ -126,5 +126,7 @@ dependencies {
     // Toast
     implementation(libs.composablesweettoast)
 
+    // Async Image
+    implementation("com.google.accompanist:accompanist-coil:0.15.0")
 
 }
