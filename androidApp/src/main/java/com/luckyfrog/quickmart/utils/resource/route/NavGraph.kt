@@ -16,6 +16,7 @@ import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.Passwo
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterScreen
+import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListScreen
 import com.luckyfrog.quickmart.features.general.presentation.main.BottomNavBar
 import com.luckyfrog.quickmart.features.general.presentation.onboarding.OnboardingScreen
 import com.luckyfrog.quickmart.features.general.presentation.splash.SplashScreen
@@ -30,7 +31,7 @@ fun NavGraph(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppScreen.HomeScreen.route
+        startDestination = AppScreen.CategoryListScreen.route
     ) {
         /// GENERAL
         composable(route = AppScreen.SplashScreen.route) {
@@ -117,7 +118,7 @@ fun NavGraph(mainViewModel: MainViewModel) {
                 userViewModel = userViewModel
             )
         }
-        
+
         /// PRODUCT
         composable(route = AppScreen.ProductListScreen.route) {
             ProductListScreen(
@@ -144,6 +145,12 @@ fun NavGraph(mainViewModel: MainViewModel) {
             )
         }
 
+        /// CATEGORY
+        composable(route = AppScreen.CategoryListScreen.route) {
+            CategoryListScreen(
+                mainViewModel = mainViewModel, navController = navController
+            )
+        }
 
         /// PROFILE
         composable(route = AppScreen.SettingsScreen.route) {
