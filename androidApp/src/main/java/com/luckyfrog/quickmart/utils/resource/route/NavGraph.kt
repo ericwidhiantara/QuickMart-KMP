@@ -31,7 +31,7 @@ fun NavGraph(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppScreen.CategoryListScreen.route
+        startDestination = AppScreen.MainScreen.route
     ) {
         /// GENERAL
         composable(route = AppScreen.SplashScreen.route) {
@@ -49,12 +49,10 @@ fun NavGraph(mainViewModel: MainViewModel) {
         }
 
         composable(route = AppScreen.MainScreen.route) {
-            val userViewModel = hiltViewModel<UserViewModel>()
 
             BottomNavBar(
                 mainViewModel = mainViewModel,
                 navController = navController,
-                userViewModel = userViewModel
             )
         }
 

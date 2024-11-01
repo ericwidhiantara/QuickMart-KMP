@@ -19,12 +19,11 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
-import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
+import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListScreen
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.HomeScreen
 import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
 
@@ -33,7 +32,6 @@ import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
 fun BottomNavBar(
     mainViewModel: MainViewModel,
     navController: NavController,
-    userViewModel: UserViewModel = hiltViewModel()
 ) {
     val currentIndex = remember {
         mutableIntStateOf(0)
@@ -116,10 +114,13 @@ fun BottomNavBar(
                 0 -> HomeScreen(
                     mainViewModel = mainViewModel,
                     navController = navController,
-                    userViewModel = userViewModel
                 )
 
-                1 -> Text("Categories")
+                1 -> CategoryListScreen(
+                    mainViewModel = mainViewModel,
+                    navController = navController
+                )
+
                 2 -> Text("My Cart")
                 3 -> Text("Wishlist")
                 4 -> SettingsScreen(navController = navController)

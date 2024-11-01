@@ -35,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
@@ -53,7 +54,7 @@ import java.util.Locale
 fun HomeScreen(
     mainViewModel: MainViewModel,
     navController: NavController,
-    userViewModel: UserViewModel
+    userViewModel: UserViewModel = hiltViewModel()
 ) {
     val items = listOf(
         CarouselData(
@@ -201,7 +202,7 @@ fun HomeScreen(
                 }
 
             }
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(12.dp))
             ProductListScreen(
                 mainViewModel = mainViewModel,
                 navController = navController,

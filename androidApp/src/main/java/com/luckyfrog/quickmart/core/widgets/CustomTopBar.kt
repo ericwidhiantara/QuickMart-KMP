@@ -27,6 +27,7 @@ import com.luckyfrog.quickmart.core.resources.Images
 fun CustomTopBar(
     title: String,
     navController: NavController,
+    centeredTitle: Boolean = false,
     actions: @Composable () -> Unit = {}
 ) {
     Column(modifier = Modifier) {
@@ -35,7 +36,7 @@ fun CustomTopBar(
                 .fillMaxWidth()
                 .wrapContentHeight(),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = if (centeredTitle) Arrangement.Center else Arrangement.SpaceBetween
         ) {
             // Automatically show back button if there's a backstack entry
             if (navController.previousBackStackEntry != null) {
