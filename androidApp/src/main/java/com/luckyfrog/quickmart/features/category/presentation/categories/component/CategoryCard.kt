@@ -1,6 +1,7 @@
 package com.luckyfrog.quickmart.features.category.presentation.categories.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.features.category.domain.entities.CategoryEntity
+import com.luckyfrog.quickmart.utils.resource.theme.borderColor
 
 @Composable
 fun CategoryCard(
@@ -32,6 +34,11 @@ fun CategoryCard(
         modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
             .padding(6.dp)
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.borderColor,
+                shape = RoundedCornerShape(8.dp)
+            )
             .clickable { onClick() },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(

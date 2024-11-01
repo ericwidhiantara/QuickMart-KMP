@@ -34,7 +34,7 @@ private val DarkColorScheme = darkColorScheme(
     tertiaryContainer = colorGrey50Dark,
     onTertiaryContainer = colorPurple,
 
-    background = colorGrey50Dark,
+    background = colorBackgroundDark,
     onBackground = Color.White, // White for readable text on dark background
 
     surface = colorGrey50Dark,
@@ -81,7 +81,7 @@ private val LightColorScheme = lightColorScheme(
     tertiaryContainer = colorGrey50,
     onTertiaryContainer = colorPurple,
 
-    background = colorGrey50,
+    background = colorBackground,
     onBackground = Color.Black, // Black for readable text on light background
 
     surface = Color.White, // Default light surface
