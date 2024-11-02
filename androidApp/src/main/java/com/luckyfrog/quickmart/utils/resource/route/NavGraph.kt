@@ -118,9 +118,12 @@ fun NavGraph(mainViewModel: MainViewModel) {
         }
 
         /// PRODUCT
-        composable(route = AppScreen.ProductListScreen.route) {
+        composable(route = AppScreen.ProductListScreen.route + "?title={title}") {
+            val title = it.arguments?.getString("title")
+                ?: ""
             ProductListScreen(
-                mainViewModel = mainViewModel, navController = navController
+                mainViewModel = mainViewModel, navController = navController,
+                topBarTitle = title
             )
         }
 

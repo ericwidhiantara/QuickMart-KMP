@@ -1,7 +1,6 @@
 package com.luckyfrog.quickmart.core.widgets
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,43 +26,66 @@ import com.luckyfrog.quickmart.core.resources.Images
 fun CustomTopBar(
     title: String,
     navController: NavController,
-    centeredTitle: Boolean = false,
-    actions: @Composable () -> Unit = {}
+    centeredTitle: Boolean = true,
+    actions: @Composable (() -> Unit)? = null
 ) {
     Column(modifier = Modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .wrapContentHeight(),
+                .wrapContentHeight()
+                .padding(horizontal = 16.dp, vertical = 12.dp), // Padding for spacing
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = if (centeredTitle) Arrangement.Center else Arrangement.SpaceBetween
+            horizontalArrangement = if (centeredTitle && navController.previousBackStackEntry == null && actions == null) {
+                Arrangement.Center
+            } else {
+                Arrangement.SpaceBetween
+            }
         ) {
-            // Automatically show back button if there's a backstack entry
-            if (navController.previousBackStackEntry != null) {
-                IconButton(
-                    onClick = { navController.popBackStack() }, // Navigate back
-                    modifier = Modifier
-                        .padding(16.dp)
+            // Left side with back button (only if available) and title
+            if (navController.previousBackStackEntry != null || !centeredTitle) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
                 ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(id = Images.icArrowBack),
-                        tint = MaterialTheme.colorScheme.onBackground
+                    if (navController.previousBackStackEntry != null) {
+                        IconButton(
+                            onClick = { navController.popBackStack() },
+                        ) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = stringResource(id = Images.icArrowBack),
+                                tint = MaterialTheme.colorScheme.onBackground
+                            )
+                        }
+                    }
+
+                    Text(
+                        text = title,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        modifier = Modifier.padding(start = if (navController.previousBackStackEntry != null) 8.dp else 0.dp), // Space if back button is present
+                        style = MaterialTheme.typography.titleMedium
                     )
                 }
+            } else {
+                // Center the title if no back button or actions and centeredTitle is true
+                Text(
+                    text = title,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    modifier = Modifier,
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
 
-            Text(
-                text = title,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier
-                    .padding(vertical = 16.dp, horizontal = 16.dp),
-                textAlign = TextAlign.Center
-            )
-            Box(
-                modifier = Modifier.padding(end = 16.dp)
-            ) {
-                actions()
+            // Right side actions (only if provided)
+            if (actions != null) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    actions()
+                }
             }
         }
         HorizontalDivider()

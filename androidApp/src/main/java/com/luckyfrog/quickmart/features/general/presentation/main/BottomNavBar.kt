@@ -11,14 +11,13 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
@@ -32,10 +31,11 @@ import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
 fun BottomNavBar(
     mainViewModel: MainViewModel,
     navController: NavController,
+    navBarViewModel: NavBarViewModel = hiltViewModel(), // Inject NavBarViewModel
+
 ) {
-    val currentIndex = remember {
-        mutableIntStateOf(0)
-    }
+    val currentIndex = navBarViewModel.currentIndex.value // Observe currentIndex
+
 
     val navbarItems: Array<BottomNavigationItem> = arrayOf(
         BottomNavigationItem(
@@ -77,10 +77,10 @@ fun BottomNavBar(
                     NavigationBarItem(
                         icon = {
                             Image(
-                                painter = painterResource(if (currentIndex.intValue == i) item.iconActive else item.icon),
+                                painter = painterResource(if (currentIndex == i) item.iconActive else item.icon),
                                 contentDescription = stringResource(item.title),
                                 colorFilter = ColorFilter.tint(
-                                    if (currentIndex.intValue == i) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
+                                    if (currentIndex == i) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
                                     blendMode = BlendMode.SrcIn
                                 ),
                             )
@@ -88,12 +88,12 @@ fun BottomNavBar(
                         label = {
                             Text(
                                 stringResource(item.title),
-                                color = if (currentIndex.intValue == i) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
+                                color = if (currentIndex == i) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
                             )
                         },
-                        selected = currentIndex.intValue == i,
+                        selected = currentIndex == i,
                         onClick = {
-                            currentIndex.intValue = i
+                            navBarViewModel.updateIndex(i)
                         }
                     )
                 }
@@ -110,7 +110,7 @@ fun BottomNavBar(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            when (currentIndex.intValue) {
+            when (currentIndex) {
                 0 -> HomeScreen(
                     mainViewModel = mainViewModel,
                     navController = navController,

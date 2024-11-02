@@ -1,21 +1,31 @@
 package com.luckyfrog.quickmart.features.product.presentation.product_list
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
+import com.luckyfrog.quickmart.core.resources.Images
+import com.luckyfrog.quickmart.core.widgets.CustomTopBar
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
 import com.luckyfrog.quickmart.features.product.presentation.product_list.component.ProductCard
 import com.luckyfrog.quickmart.utils.ErrorMessage
@@ -29,12 +39,48 @@ fun ProductListScreen(
     mainViewModel: MainViewModel,
     navController: NavController,
     viewModel: ProductListViewModel = hiltViewModel(),
-    isFromHomeScreen: Boolean = false
+    isFromHomeScreen: Boolean = false,
+    topBarTitle: String = stringResource(R.string.app_name)
 ) {
     val productPagingItems: LazyPagingItems<ProductEntity> =
         viewModel.productsState.collectAsLazyPagingItems()
 
-    Scaffold {
+    Scaffold(
+
+        topBar = {
+            if (!isFromHomeScreen) {
+                CustomTopBar(
+                    navController = navController,
+                    title = topBarTitle,
+                    centeredTitle = false,
+                    actions = {
+
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp),
+                            content = {
+                                IconButton(onClick = { /*TODO*/ }) {
+                                    Image(
+                                        painter = painterResource(Images.icFilter),
+                                        contentDescription = "Filter",
+                                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
+                                    )
+                                }
+
+                                IconButton(onClick = { /*TODO*/ }) {
+                                    Image(
+                                        painter = painterResource(Images.icSearch),
+                                        contentDescription = "Search",
+                                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
+                                    )
+                                }
+                            }
+                        )
+                    },
+                )
+            }
+
+        }
+    ) {
         productPagingItems.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {

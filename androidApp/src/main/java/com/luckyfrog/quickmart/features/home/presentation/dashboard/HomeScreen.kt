@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -43,11 +44,13 @@ import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.features.auth.presentation.login.UserState
 import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
+import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CarouselData
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CarouselWithOverlay
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CategoryList
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.ProfileImage
 import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListScreen
+import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import java.util.Locale
 
@@ -55,7 +58,8 @@ import java.util.Locale
 fun HomeScreen(
     mainViewModel: MainViewModel,
     navController: NavController,
-    userViewModel: UserViewModel = hiltViewModel()
+    userViewModel: UserViewModel = hiltViewModel(),
+    navBarViewModel: NavBarViewModel = hiltViewModel(),
 ) {
     val items = listOf(
         CarouselData(
@@ -175,7 +179,9 @@ fun HomeScreen(
                     fontSize = 18.sp
                 )
                 TextButton(
-                    onClick = {}
+                    onClick = {
+                        navBarViewModel.updateIndex(1)
+                    }
                 ) {
                     Text(
                         text = stringResource(R.string.see_all).uppercase(Locale.getDefault()),
@@ -185,7 +191,7 @@ fun HomeScreen(
 
             }
             Spacer(modifier = Modifier.height(12.dp))
-            CategoryList()
+            CategoryList(navController = navController)
             Spacer(modifier = Modifier.height(24.dp))
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -197,8 +203,16 @@ fun HomeScreen(
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp
                 )
+                val context = LocalContext.current
+
+                val title = context.getString(R.string.latest_products)
                 TextButton(
-                    onClick = {}
+                    onClick = {
+
+                        navController.navigate(
+                            "${AppScreen.ProductListScreen.route}?title=$title"
+                        )
+                    }
                 ) {
                     Text(
                         text = stringResource(R.string.see_all).uppercase(Locale.getDefault()),

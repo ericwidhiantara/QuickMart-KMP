@@ -13,13 +13,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListViewModel
 import com.luckyfrog.quickmart.features.category.presentation.categories.component.CategoryCard
 import com.luckyfrog.quickmart.utils.PageLoader
+import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 
 @Composable
 fun CategoryList(
     viewModel: CategoryListViewModel = hiltViewModel(),
+    navController: NavController,
 ) {
 
     // Trigger the category fetch
@@ -52,6 +55,9 @@ fun CategoryList(
                     CategoryCard(
                         itemEntity = data!![index],
                         onClick = {
+                            navController.navigate(
+                                "${AppScreen.ProductListScreen.route}?title=${data!![index].name}"
+                            )
                         }
                     )
                 }
