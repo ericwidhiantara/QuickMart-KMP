@@ -48,6 +48,7 @@ import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
+import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTextField
 import com.luckyfrog.quickmart.features.auth.data.models.response.LoginFormRequestDto
@@ -72,6 +73,9 @@ fun LoginScreen(
     var passwordVisibility: Boolean by remember { mutableStateOf(false) }
     // Collect login result state from the ViewModel
     val loginState by loginViewModel.loginState.collectAsState()
+
+    val isLoading = loginState is LoginState.Loading
+    val showDialog = remember { mutableStateOf(false) }
 
     Scaffold { innerPadding ->
         Column(
@@ -179,6 +183,7 @@ fun LoginScreen(
                 modifier = Modifier.height(24.dp)
             )
             CustomOutlinedButton(
+                isButtonEnabled = !isLoading,
                 buttonText = stringResource(R.string.login),
                 onClick = {
                     // Create the LoginFormRequestDto from the user inputs
@@ -187,6 +192,7 @@ fun LoginScreen(
                         password = passwordController.value,
                         expiresInMins = 30,
                     )
+
                     Log.d("LoginScreen", "loginFormRequest: $loginFormRequest")
                     // Trigger the login action
                     loginViewModel.login(loginFormRequest)
@@ -197,6 +203,7 @@ fun LoginScreen(
             when (val state = loginState) {
 
                 is LoginState.Success -> {
+                    showDialog.value = false
                     SweetSuccess(
                         message = "",
                         duration = Toast.LENGTH_LONG,
@@ -216,6 +223,7 @@ fun LoginScreen(
                 }
 
                 is LoginState.Error -> {
+                    showDialog.value = false
                     Log.d("LoginScreen", "Error: ${state.message}")
                     // Show a toast with the error message
                     // on below line we are displaying a custom toast message on below line
@@ -228,10 +236,14 @@ fun LoginScreen(
                 }
 
                 is LoginState.Loading -> {
-                    // Show a loading spinner or something similar if you want
+                    showDialog.value = true // Show loading dialog
+                    CustomLoadingDialog(
+                        showDialog = showDialog,
+                    )
                 }
 
                 is LoginState.Idle -> {
+                    showDialog.value = false
                     // No action yet
                 }
             }
@@ -239,6 +251,7 @@ fun LoginScreen(
                 modifier = Modifier.height(24.dp)
             )
             CustomOutlinedButton(
+                isButtonEnabled = !isLoading,
                 buttonText = stringResource(R.string.login_with_google),
                 buttonTextColor = colorBlack,
                 isWithIcon = true,

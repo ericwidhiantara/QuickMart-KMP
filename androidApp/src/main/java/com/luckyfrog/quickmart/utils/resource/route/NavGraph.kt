@@ -31,7 +31,7 @@ fun NavGraph(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppScreen.MainScreen.route
+        startDestination = AppScreen.LoginScreen.route
     ) {
         /// GENERAL
         composable(route = AppScreen.SplashScreen.route) {

@@ -56,5 +56,7 @@
     <string name="categories">Kategori</string>
     <string name="see_all">Lihat Semua</string>
     <string name="latest_products">Produk Terbaru</string>
-    
+    <string name="loading">Sedang memuat…</string>
+    <string name="please_wait">Mohon tunggu</string>
+
 </resources>
