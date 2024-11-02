@@ -10,6 +10,12 @@ interface ProductRemoteDataSource {
         skip: Int
     ): ResponseDto<List<ProductResponseDto>>
 
+    suspend fun getProductsByCategory(
+        limit: Int,
+        skip: Int,
+        category: String
+    ): ResponseDto<List<ProductResponseDto>>
+
 
     suspend fun getProductDetail(
         id: Int

@@ -24,6 +24,7 @@ import com.luckyfrog.quickmart.features.home.presentation.dashboard.HomeScreen
 import com.luckyfrog.quickmart.features.product.presentation.product_detail.ProductDetailScreen
 import com.luckyfrog.quickmart.features.product.presentation.product_detail.ProductDetailViewModel
 import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListScreen
+import com.luckyfrog.quickmart.features.product.presentation.product_list_by_category.ProductListByCategoryScreen
 import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
 
 @Composable
@@ -121,9 +122,22 @@ fun NavGraph(mainViewModel: MainViewModel) {
         composable(route = AppScreen.ProductListScreen.route + "?title={title}") {
             val title = it.arguments?.getString("title")
                 ?: ""
+
             ProductListScreen(
                 mainViewModel = mainViewModel, navController = navController,
-                topBarTitle = title
+                topBarTitle = title,
+            )
+        }
+
+        composable(route = AppScreen.ProductListByCategoryScreen.route + "?title={title}&slug={slug}") {
+            val title = it.arguments?.getString("title")
+                ?: ""
+            val slug = it.arguments?.getString("slug")
+                ?: ""
+            ProductListByCategoryScreen(
+                mainViewModel = mainViewModel, navController = navController,
+                topBarTitle = title,
+                categorySlug = slug,
             )
         }
 

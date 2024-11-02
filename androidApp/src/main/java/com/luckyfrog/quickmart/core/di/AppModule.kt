@@ -19,6 +19,7 @@ import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductR
 import com.luckyfrog.quickmart.features.product.data.repositories.ProductRepositoryImpl
 import com.luckyfrog.quickmart.features.product.domain.repositories.ProductRepository
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductDetailUseCase
+import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsByCategoryUseCase
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCase
 import dagger.Module
 import dagger.Provides
@@ -119,6 +120,15 @@ object UseCaseModule {
     ): GetProductsUseCase {
         return GetProductsUseCase(repository)
     }
+
+    @Singleton
+    @Provides
+    fun providesGetProductsByCategoryUseCase(
+        repository: ProductRepository
+    ): GetProductsByCategoryUseCase {
+        return GetProductsByCategoryUseCase(repository)
+    }
+
 
     @Singleton
     @Provides

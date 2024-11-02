@@ -15,6 +15,14 @@ class ProductRemoteDataSourceImpl @Inject constructor(
         return api.getProducts(limit = limit, skip = skip)
     }
 
+    override suspend fun getProductsByCategory(
+        limit: Int,
+        skip: Int,
+        category: String
+    ): ResponseDto<List<ProductResponseDto>> {
+        return api.getProductsByCategory(limit = limit, skip = skip, category = category)
+    }
+
 
     override suspend fun getProductDetail(id: Int): ProductResponseDto {
         return api.getProductDetail(id = id)

@@ -21,6 +21,7 @@ import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
 import com.luckyfrog.quickmart.features.category.presentation.categories.component.CategoryCard
 import com.luckyfrog.quickmart.utils.PageLoader
+import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 
 @Composable
 fun CategoryListScreen(
@@ -71,6 +72,9 @@ fun CategoryListScreen(
                         CategoryCard(
                             itemEntity = data!![index],
                             onClick = {
+                                navController.navigate(
+                                    "${AppScreen.ProductListByCategoryScreen.route}?title=${data!![index].name}&slug=${data!![index].slug}"
+                                )
                             }
                         )
                     }

@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductRemoteDataSource
 import com.luckyfrog.quickmart.features.product.data.models.mapper.toEntity
+import com.luckyfrog.quickmart.features.product.data.repositories.paging.ProductByCategoryPagingSource
 import com.luckyfrog.quickmart.features.product.data.repositories.paging.ProductPagingSource
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
 import com.luckyfrog.quickmart.features.product.domain.repositories.ProductRepository
@@ -21,6 +22,15 @@ class ProductRepositoryImpl @Inject constructor(
             config = PagingConfig(pageSize = Constants.MAX_PAGE_SIZE, prefetchDistance = 2),
             pagingSourceFactory = {
                 ProductPagingSource(remoteDataSource)
+            }
+        ).flow
+    }
+
+    override suspend fun getProductsByCategory(category: String): Flow<PagingData<ProductEntity>> {
+        return Pager(
+            config = PagingConfig(pageSize = Constants.MAX_PAGE_SIZE, prefetchDistance = 2),
+            pagingSourceFactory = {
+                ProductByCategoryPagingSource(remoteDataSource, category)
             }
         ).flow
     }

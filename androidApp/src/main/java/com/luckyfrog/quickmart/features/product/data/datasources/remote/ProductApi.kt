@@ -14,6 +14,13 @@ interface ProductApi {
         @Query("skip") skip: Int
     ): ResponseDto<List<ProductResponseDto>>
 
+    @GET("products/category/{category_name}")
+    suspend fun getProductsByCategory(
+        @Path("category_name") category: String,
+        @Query("limit") limit: Int,
+        @Query("skip") skip: Int,
+    ): ResponseDto<List<ProductResponseDto>>
+
     @GET("products/{id}")
     suspend fun getProductDetail(
         @Path("id") id: Int

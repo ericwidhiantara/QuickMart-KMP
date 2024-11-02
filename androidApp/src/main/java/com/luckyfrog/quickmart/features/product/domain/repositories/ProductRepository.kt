@@ -8,5 +8,7 @@ interface ProductRepository {
 
     suspend fun getProducts(): Flow<PagingData<ProductEntity>>
 
+    suspend fun getProductsByCategory(category: String): Flow<PagingData<ProductEntity>>
+
     suspend fun getProductDetail(id: Int): ProductEntity
 }
