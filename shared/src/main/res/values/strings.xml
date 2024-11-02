@@ -58,6 +58,12 @@
     <string name="latest_products">Latest Products</string>
     <string name="loading">Loading…</string>
     <string name="please_wait">Please wait</string>
-
+    <string name="invalid_input">Invalid input</string>
+    <string name="field_required">This field is required</string>
+    <string name="field_length">This field must be at least %1$d characters</string>
+    <string name="field_max_length">This field must be at most %1$d characters</string>
+    <string name="field_email">This field must be a valid email address</string>
+    <string name="field_password">This field must be at least %1$d characters, including at least one uppercase letter, one lowercase letter, and one number</string>
+    <string name="field_confirm_password">This field must be at least %1$d characters, including at least one uppercase letter, one lowercase letter, and one number</string>
 
 </resources>

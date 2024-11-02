@@ -48,6 +48,9 @@ import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
+import com.luckyfrog.quickmart.core.validators.EmailValidator
+import com.luckyfrog.quickmart.core.validators.PasswordValidator
+import com.luckyfrog.quickmart.core.validators.isLoginInputValid
 import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTextField
@@ -76,6 +79,11 @@ fun LoginScreen(
 
     val isLoading = loginState is LoginState.Loading
     val showDialog = remember { mutableStateOf(false) }
+
+    var shouldValidate by remember { mutableStateOf(false) }
+// Create your validators
+    val emailValidator = EmailValidator()
+    val passwordValidator = PasswordValidator()
 
     Scaffold { innerPadding ->
         Column(
@@ -129,6 +137,11 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(32.dp))
             CustomTextField(
+                validator = emailValidator,
+                errorMessage = if (emailController.value.isEmpty()) stringResource(R.string.field_required) else stringResource(
+                    R.string.field_email
+                ),
+                shouldValidate = shouldValidate,
                 value = emailController.value,
                 onValueChange = { newText ->
                     emailController.value = newText
@@ -139,6 +152,11 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             CustomTextField(
+                validator = passwordValidator,
+                errorMessage = if (passwordController.value.isEmpty()) stringResource(R.string.field_required) else stringResource(
+                    R.string.field_length, 6
+                ),
+                shouldValidate = shouldValidate,
                 value = passwordController.value,
                 onValueChange = { newText ->
                     passwordController.value = newText
@@ -186,6 +204,24 @@ fun LoginScreen(
                 isButtonEnabled = !isLoading,
                 buttonText = stringResource(R.string.login),
                 onClick = {
+                    shouldValidate = true
+
+                    if (emailController.value.isEmpty() || passwordController.value.isEmpty()) {
+                        showDialog.value = true
+                        return@CustomOutlinedButton
+                    }
+
+                    if (!isLoginInputValid(
+                            emailController.value,
+                            passwordController.value,
+                            emailValidator,
+                            passwordValidator
+                        )
+                    ) {
+                        showDialog.value = true
+                        return@CustomOutlinedButton
+                    }
+
                     // Create the LoginFormRequestDto from the user inputs
                     val loginFormRequest = LoginFormRequestDto(
                         username = emailController.value,
@@ -196,6 +232,7 @@ fun LoginScreen(
                     Log.d("LoginScreen", "loginFormRequest: $loginFormRequest")
                     // Trigger the login action
                     loginViewModel.login(loginFormRequest)
+
                 }
             )
 
@@ -260,6 +297,16 @@ fun LoginScreen(
                 ),
                 buttonContainerColor = MaterialTheme.colorScheme.onPrimary,
                 onClick = {
+                    if (!isLoginInputValid(
+                            emailController.value,
+                            passwordController.value,
+                            emailValidator,
+                            passwordValidator
+                        )
+                    ) {
+                        showDialog.value = true
+                        return@CustomOutlinedButton
+                    }
 
                 }
             )
