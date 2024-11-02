@@ -297,16 +297,16 @@ fun LoginScreen(
                 ),
                 buttonContainerColor = MaterialTheme.colorScheme.onPrimary,
                 onClick = {
-                    if (!isLoginInputValid(
-                            emailController.value,
-                            passwordController.value,
-                            emailValidator,
-                            passwordValidator
-                        )
-                    ) {
-                        showDialog.value = true
-                        return@CustomOutlinedButton
-                    }
+                    // Create the LoginFormRequestDto from the user inputs
+                    val loginFormRequest = LoginFormRequestDto(
+                        username = emailController.value,
+                        password = passwordController.value,
+                        expiresInMins = 30,
+                    )
+
+                    Log.d("LoginScreen", "loginFormRequest: $loginFormRequest")
+                    // Trigger the login action
+                    loginViewModel.login(loginFormRequest)
 
                 }
             )
