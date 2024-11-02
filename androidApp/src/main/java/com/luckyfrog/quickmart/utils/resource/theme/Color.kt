@@ -29,7 +29,7 @@ val colorGrey150 = Color(0xFF6F7384)
 val colorGrey150Dark = Color(0xFFA2A2A6)
 
 val borderColorDark = Color(0xff282828)
-val borderColor = Color(0xffF4F5FD)
+val borderColorLight = Color(0xffF4F5FD)
 
 val colorRed = Color(0xFFEE4D4D)
 val colorGreen = Color(0xFF08E488)
@@ -43,4 +43,4 @@ val colorPink = Color(0xFFCE1DEB)
 
 val ColorScheme.borderColor: Color
     @Composable
-    get() = if (isSystemInDarkTheme()) borderColorDark else borderColor
+    get() = if (isSystemInDarkTheme()) borderColorDark else borderColorLight
