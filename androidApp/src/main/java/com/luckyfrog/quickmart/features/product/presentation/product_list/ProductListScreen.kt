@@ -66,7 +66,9 @@ fun ProductListScreen(
                                     )
                                 }
 
-                                IconButton(onClick = { /*TODO*/ }) {
+                                IconButton(onClick = {
+                                    navController.navigate(AppScreen.SearchScreen.route)
+                                }) {
                                     Image(
                                         painter = painterResource(Images.icSearch),
                                         contentDescription = "Search",

@@ -65,4 +65,14 @@
     <string name="field_email">Kolom ini harus berisi alamat email yang valid</string>
     <string name="field_password">Kolom ini minimal harus berisi %1$d karakter, termasuk minimal satu huruf besar, satu huruf kecil, dan satu angka</string>
     <string name="field_confirm_password">Kolom ini minimal harus berisi %1$d karakter, termasuk minimal satu huruf besar, satu huruf kecil, dan satu angka</string>
+    <string name="search">Cari</string>
+    <string name="recent_search">Pencarian Terkini</string>,
+    <string name="filter">Filter</string>,
+    <string name="filter_price_low_to_high">Harga (Terendah ke Tertinggi)</string>,
+    <string name="filter_price_high_to_low">Harga (Tertinggi ke Terendah)</string>,
+    <string name="filter_a_to_z">A-Z</string>
+    <string name="filter_z_to_a">Z-A</string>
+    <string name="apply">Terapkan</string>
+
+
 </resources>

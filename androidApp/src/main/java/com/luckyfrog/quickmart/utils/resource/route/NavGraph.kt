@@ -25,6 +25,7 @@ import com.luckyfrog.quickmart.features.product.presentation.product_detail.Prod
 import com.luckyfrog.quickmart.features.product.presentation.product_detail.ProductDetailViewModel
 import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListScreen
 import com.luckyfrog.quickmart.features.product.presentation.product_list_by_category.ProductListByCategoryScreen
+import com.luckyfrog.quickmart.features.product.presentation.search.SearchScreen
 import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
 
 @Composable
@@ -157,6 +158,12 @@ fun NavGraph(mainViewModel: MainViewModel) {
                 productId = productId,
                 viewModel = viewModel,
                 navController = navController
+            )
+        }
+
+        composable(route = AppScreen.SearchScreen.route) {
+            SearchScreen(
+                mainViewModel = mainViewModel, navController = navController
             )
         }
 
