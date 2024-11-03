@@ -8,10 +8,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -25,6 +32,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
+import com.luckyfrog.quickmart.core.widgets.CustomFilterBottomSheet
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
 import com.luckyfrog.quickmart.features.product.presentation.product_list.component.ProductCard
@@ -34,6 +42,7 @@ import com.luckyfrog.quickmart.utils.NoData
 import com.luckyfrog.quickmart.utils.PageLoader
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductListScreen(
     mainViewModel: MainViewModel,
@@ -44,7 +53,10 @@ fun ProductListScreen(
 ) {
     val productPagingItems: LazyPagingItems<ProductEntity> =
         viewModel.productsState.collectAsLazyPagingItems()
+    val sheetState = rememberModalBottomSheetState()
+    var selectedFilter by remember { mutableStateOf("") }
 
+    var showBottomSheet by remember { mutableStateOf(false) }
     Scaffold(
 
         topBar = {
@@ -58,7 +70,9 @@ fun ProductListScreen(
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             content = {
-                                IconButton(onClick = { /*TODO*/ }) {
+                                IconButton(onClick = {
+                                    showBottomSheet = true
+                                }) {
                                     Image(
                                         painter = painterResource(Images.icFilter),
                                         contentDescription = "Filter",
@@ -83,6 +97,27 @@ fun ProductListScreen(
 
         }
     ) {
+
+        if (showBottomSheet) {
+
+            ModalBottomSheet(
+                containerColor = MaterialTheme.colorScheme.background,
+                onDismissRequest = {
+                    showBottomSheet = false
+                },
+                sheetState = sheetState
+            ) {
+                CustomFilterBottomSheet(
+                    selectedFilter = selectedFilter,
+                    onFilterSelected = { value ->
+                        selectedFilter = value
+                    },
+                    onApply = {
+                        showBottomSheet = false
+                    }
+                )
+            }
+        }
         productPagingItems.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {
