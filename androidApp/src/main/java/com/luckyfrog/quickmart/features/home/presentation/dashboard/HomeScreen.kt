@@ -45,8 +45,7 @@ import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.features.auth.presentation.login.UserState
 import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
 import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
-import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CarouselData
-import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CarouselWithOverlay
+import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.Carousel
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CategoryList
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.ProfileImage
 import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListScreen
@@ -61,23 +60,6 @@ fun HomeScreen(
     userViewModel: UserViewModel = hiltViewModel(),
     navBarViewModel: NavBarViewModel = hiltViewModel(),
 ) {
-    val items = listOf(
-        CarouselData(
-            imageUrl = "https://via.placeholder.com/348x148",
-            title = "On Headphones",
-            subtitle = "Exclusive Sales"
-        ),
-        CarouselData(
-            imageUrl = "https://via.placeholder.com/348x148",
-            title = "Title 2",
-            subtitle = "Subtitle 2"
-        ),
-        CarouselData(
-            imageUrl = "https://via.placeholder.com/348x148",
-            title = "Title 3",
-            subtitle = "Subtitle 3"
-        )
-    )
 
     val userState by userViewModel.userState.collectAsState()
 
@@ -166,7 +148,8 @@ fun HomeScreen(
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            CarouselWithOverlay(items = items)
+
+            Carousel()
             Spacer(modifier = Modifier.height(24.dp))
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,

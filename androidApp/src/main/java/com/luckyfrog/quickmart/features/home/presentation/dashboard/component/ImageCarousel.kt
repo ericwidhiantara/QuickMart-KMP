@@ -4,79 +4,110 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.luckyfrog.quickmart.utils.resource.theme.colorCyan
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+
+data class CarouselData(
+    val imageUrl: String,
+    val title: String,
+    val subtitle: String
+)
 
 @Composable
-fun CarouselWithOverlay(items: List<CarouselData>, modifier: Modifier = Modifier) {
-    val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
-    val currentIndex = remember { mutableStateOf(0) }
+fun Carousel(modifier: Modifier = Modifier) {
+    val items = listOf(
+        CarouselData(
+            imageUrl = "https://via.placeholder.com/348x148",
+            title = "On Headphones",
+            subtitle = "Exclusive Sales"
+        ),
+        CarouselData(
+            imageUrl = "https://via.placeholder.com/348x148",
+            title = "Title 2",
+            subtitle = "Subtitle 2"
+        ),
+        CarouselData(
+            imageUrl = "https://via.placeholder.com/348x148",
+            title = "Title 3",
+            subtitle = "Subtitle 3"
+        )
+    )
 
-    // Auto-scroll effect
+    val pagerState = rememberPagerState(
+        pageCount =
+        { items.size }
+    )
     LaunchedEffect(Unit) {
         while (true) {
-            delay(5000)  // Delay between scrolls (3 seconds in this case)
-            currentIndex.value = (currentIndex.value + 1) % items.size
-            coroutineScope.launch {
-                listState.animateScrollToItem(index = currentIndex.value)
-            }
+            delay(5000)
+            val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
+            pagerState.scrollToPage(nextPage)
         }
     }
 
-    LazyRow(
-        state = listState,
-        modifier = modifier
+    Column(
+        modifier
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center, // Center item horizontally without spacing
-        contentPadding = PaddingValues(0.dp) // No padding on the LazyRow
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(items.size) { index ->
-            CarouselItemWithOverlay(
-                item = items[index],
-                arraySize = items.size,
-                currentIndex = index
-            )
+        Box(
+            modifier = modifier
+
+        ) {
+            HorizontalPager(
+                state = pagerState,
+                modifier
+                    .fillMaxWidth()
+            ) { currentPage ->
+
+                CarouselItemWithOverlay(
+                    item = items[currentPage],
+                    arraySize = items.size,
+                    currentIndex = currentPage
+                )
+            }
         }
+
     }
 }
 
+
 @Composable
 fun CarouselItemWithOverlay(item: CarouselData, arraySize: Int, currentIndex: Int) {
+    // Get the screen height from LocalConfiguration
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
     Box(
         modifier = Modifier
-            .size(360.dp, 148.dp)
+            .width(screenWidth)
+            .height(148.dp) // Fixed height
             .background(Color.Gray, shape = RoundedCornerShape(24.dp))
             .clip(RoundedCornerShape(24.dp)) // Clip content to ensure rounded corners
     ) {
@@ -169,14 +200,7 @@ fun CarouselItemWithOverlay(item: CarouselData, arraySize: Int, currentIndex: In
                 }
             }
 
-
         }
 
     }
 }
-
-data class CarouselData(
-    val imageUrl: String,
-    val title: String,
-    val subtitle: String
-)
