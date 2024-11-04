@@ -2,18 +2,16 @@ package com.luckyfrog.quickmart.features.product.data.datasources.remote
 
 import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
 import com.luckyfrog.quickmart.features.product.data.models.response.ProductResponseDto
+import com.luckyfrog.quickmart.features.product.domain.entities.ProductFormParamsEntity
 
 interface ProductRemoteDataSource {
 
     suspend fun getProducts(
-        limit: Int,
-        skip: Int
+        params: ProductFormParamsEntity
     ): ResponseDto<List<ProductResponseDto>>
 
     suspend fun getProductsByCategory(
-        limit: Int,
-        skip: Int,
-        category: String
+        params: ProductFormParamsEntity
     ): ResponseDto<List<ProductResponseDto>>
 
 

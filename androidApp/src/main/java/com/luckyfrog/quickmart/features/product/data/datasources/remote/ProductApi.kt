@@ -11,7 +11,9 @@ interface ProductApi {
     @GET("products")
     suspend fun getProducts(
         @Query("limit") limit: Int,
-        @Query("skip") skip: Int
+        @Query("skip") skip: Int,
+        @Query("order") order: String = "asc",
+        @Query("sortBy") sortBy: String = "createdAt",
     ): ResponseDto<List<ProductResponseDto>>
 
     @GET("products/category/{category_name}")
@@ -19,6 +21,17 @@ interface ProductApi {
         @Path("category_name") category: String,
         @Query("limit") limit: Int,
         @Query("skip") skip: Int,
+        @Query("order") order: String = "asc",
+        @Query("sortBy") sortBy: String = "createdAt",
+    ): ResponseDto<List<ProductResponseDto>>
+
+    @GET("products/search")
+    suspend fun searchProduct(
+        @Query("limit") limit: Int,
+        @Query("skip") skip: Int,
+        @Query("order") order: String = "asc",
+        @Query("sortBy") sortBy: String = "createdAt",
+        @Query("q") q: String,
     ): ResponseDto<List<ProductResponseDto>>
 
     @GET("products/{id}")

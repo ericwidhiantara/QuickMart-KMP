@@ -8,6 +8,7 @@ import com.luckyfrog.quickmart.features.product.data.models.mapper.toEntity
 import com.luckyfrog.quickmart.features.product.data.repositories.paging.ProductByCategoryPagingSource
 import com.luckyfrog.quickmart.features.product.data.repositories.paging.ProductPagingSource
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
+import com.luckyfrog.quickmart.features.product.domain.entities.ProductFormParamsEntity
 import com.luckyfrog.quickmart.features.product.domain.repositories.ProductRepository
 import com.luckyfrog.quickmart.utils.helper.Constants
 import kotlinx.coroutines.flow.Flow
@@ -26,11 +27,11 @@ class ProductRepositoryImpl @Inject constructor(
         ).flow
     }
 
-    override suspend fun getProductsByCategory(category: String): Flow<PagingData<ProductEntity>> {
+    override suspend fun getProductsByCategory(params: ProductFormParamsEntity): Flow<PagingData<ProductEntity>> {
         return Pager(
             config = PagingConfig(pageSize = Constants.MAX_PAGE_SIZE, prefetchDistance = 2),
             pagingSourceFactory = {
-                ProductByCategoryPagingSource(remoteDataSource, category)
+                ProductByCategoryPagingSource(remoteDataSource, params)
             }
         ).flow
     }

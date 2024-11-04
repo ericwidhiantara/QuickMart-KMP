@@ -35,11 +35,13 @@ import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.widgets.CustomFilterBottomSheet
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
+import com.luckyfrog.quickmart.features.product.domain.entities.ProductFormParamsEntity
 import com.luckyfrog.quickmart.features.product.presentation.product_list.component.ProductCard
 import com.luckyfrog.quickmart.utils.ErrorMessage
 import com.luckyfrog.quickmart.utils.LoadingNextPageItem
 import com.luckyfrog.quickmart.utils.NoData
 import com.luckyfrog.quickmart.utils.PageLoader
+import com.luckyfrog.quickmart.utils.helper.Constants
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,7 +55,15 @@ fun ProductListByCategoryScreen(
 ) {
     // Call onEvent with the category slug to fetch products
     if (categorySlug != null) {
-        viewModel.onEvent(ProductListByCategory.GetProductsByCategory(categorySlug))
+        val params = ProductFormParamsEntity(
+            limit = Constants.MAX_PAGE_SIZE,
+            skip = 0,
+            category = categorySlug,
+            order = "asc",
+            sortBy = "createdAt",
+            q = null
+        )
+        viewModel.onEvent(ProductListByCategory.GetProductsByCategory(params))
     }
 
     val productPagingItems: LazyPagingItems<ProductEntity> =
@@ -117,7 +127,7 @@ fun ProductListByCategoryScreen(
                 )
             }
         }
-        
+
         productPagingItems.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {

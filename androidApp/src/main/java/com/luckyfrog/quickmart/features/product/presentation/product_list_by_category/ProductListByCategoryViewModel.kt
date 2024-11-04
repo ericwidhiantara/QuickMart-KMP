@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
+import com.luckyfrog.quickmart.features.product.domain.entities.ProductFormParamsEntity
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsByCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,21 +25,21 @@ class ProductListByCategoryViewModel @Inject constructor(
     val productsState = _productsState.asStateFlow()
 
     // Store the current category slug
-    private var currentCategorySlug: String? = null
+    private var productParams: ProductFormParamsEntity? = null
 
     fun onEvent(event: ProductListByCategory) {
         viewModelScope.launch {
             when (event) {
                 is ProductListByCategory.GetProductsByCategory -> {
-                    currentCategorySlug = event.category
-                    getProductsByCategory(event.category)
+                    productParams = event.params
+                    getProductsByCategory(event.params)
                 }
             }
         }
     }
 
-    private suspend fun getProductsByCategory(category: String) {
-        getProductsByCategoryUseCase.execute(category)
+    private suspend fun getProductsByCategory(params: ProductFormParamsEntity) {
+        getProductsByCategoryUseCase.execute(params)
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
             .collectLatest { pagingData ->
@@ -48,5 +49,5 @@ class ProductListByCategoryViewModel @Inject constructor(
 }
 
 sealed class ProductListByCategory {
-    data class GetProductsByCategory(val category: String) : ProductListByCategory()
+    data class GetProductsByCategory(val params: ProductFormParamsEntity) : ProductListByCategory()
 }

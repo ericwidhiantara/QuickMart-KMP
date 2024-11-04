@@ -6,6 +6,7 @@ import com.esotericsoftware.kryo.util.Util.log
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductRemoteDataSource
 import com.luckyfrog.quickmart.features.product.data.models.mapper.toEntityList
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
+import com.luckyfrog.quickmart.features.product.domain.entities.ProductFormParamsEntity
 import com.luckyfrog.quickmart.utils.helper.Constants
 import retrofit2.HttpException
 import java.io.IOException
@@ -17,9 +18,16 @@ class ProductPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ProductEntity> {
         return try {
             val currentPage = params.key ?: 1
-            val result = remoteDataSource.getProducts(
+            val form = ProductFormParamsEntity(
                 limit = Constants.MAX_PAGE_SIZE,
-                skip = (currentPage - 1) * Constants.MAX_PAGE_SIZE
+                skip = (currentPage - 1) * Constants.MAX_PAGE_SIZE,
+                category = null,
+                order = "asc",
+                sortBy = "createdAt",
+                q = null,
+            )
+            val result = remoteDataSource.getProducts(
+                params = form
             )
             log("result: $result", "ProductPagingSource")
             LoadResult.Page(
