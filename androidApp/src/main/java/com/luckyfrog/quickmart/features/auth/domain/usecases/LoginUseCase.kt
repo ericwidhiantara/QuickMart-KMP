@@ -15,10 +15,25 @@ class LoginUseCase @Inject constructor(
 
     override suspend fun execute(input: LoginFormRequestDto): Flow<ApiResponse<LoginEntity>> =
         flow {
+            // Collect the response from repository
             repository.login(input).collect { response ->
                 when (response) {
                     is ApiResponse.Loading -> emit(ApiResponse.Loading)
-                    is ApiResponse.Success -> emit(ApiResponse.Success(response.data))
+                    is ApiResponse.Success -> {
+                        // Extract LoginEntity from ResponseDto
+                        val loginEntity = response.data.data
+                        if (loginEntity != null) {
+                            emit(ApiResponse.Success(loginEntity))
+                        } else {
+                            emit(
+                                ApiResponse.Failure(
+                                    errorMessage = "Login data is null",
+                                    code = 400 // Or any appropriate error code
+                                )
+                            )
+                        }
+                    }
+
                     is ApiResponse.Failure -> emit(
                         ApiResponse.Failure(
                             response.errorMessage,

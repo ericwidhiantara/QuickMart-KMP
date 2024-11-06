@@ -1,12 +1,13 @@
 package com.luckyfrog.quickmart.features.auth.data.datasources.remote
 
+import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.LoginFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.LoginResponseDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.RefreshTokenFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDto
+import com.luckyfrog.quickmart.features.auth.domain.entities.CheckTokenFormParamsEntity
+import com.luckyfrog.quickmart.features.auth.domain.entities.RefreshTokenFormParamsEntity
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface AuthApi {
@@ -14,16 +15,15 @@ interface AuthApi {
     @POST("auth/login")
     suspend fun postLogin(
         @Body params: LoginFormRequestDto
+    ): Response<ResponseDto<LoginResponseDto>>
 
-    ): Response<LoginResponseDto>
-
-    @GET("auth/me")
+    @POST("auth/check-token")
     suspend fun getUserLogin(
-    ): Response<UserResponseDto>
+        @Body params: CheckTokenFormParamsEntity
+    ): Response<ResponseDto<UserResponseDto>>
 
     @POST("auth/refresh")
     suspend fun postRefreshToken(
-        @Body params: RefreshTokenFormRequestDto
-
-    ): Response<LoginResponseDto>
+        @Body params: RefreshTokenFormParamsEntity
+    ): Response<ResponseDto<LoginResponseDto>>
 }

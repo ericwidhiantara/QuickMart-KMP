@@ -21,6 +21,7 @@ import com.luckyfrog.quickmart.features.product.domain.repositories.ProductRepos
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductDetailUseCase
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsByCategoryUseCase
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCase
+import com.luckyfrog.quickmart.utils.TokenManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,9 +36,10 @@ object DataSourceModule {
     @Singleton
     @Provides
     fun providesAuthRemoteDataSource(
-        api: AuthApi
+        api: AuthApi,
+        tokenManager: TokenManager
     ): AuthRemoteDataSource {
-        return AuthRemoteDataSourceImpl(api)
+        return AuthRemoteDataSourceImpl(api, tokenManager)
     }
 
     @Singleton

@@ -224,9 +224,8 @@ fun LoginScreen(
 
                     // Create the LoginFormRequestDto from the user inputs
                     val loginFormRequest = LoginFormRequestDto(
-                        username = emailController.value,
+                        emailOrUsername = emailController.value,
                         password = passwordController.value,
-                        expiresInMins = 30,
                     )
 
                     Log.d("LoginScreen", "loginFormRequest: $loginFormRequest")
@@ -299,9 +298,8 @@ fun LoginScreen(
                 onClick = {
                     // Create the LoginFormRequestDto from the user inputs
                     val loginFormRequest = LoginFormRequestDto(
-                        username = emailController.value,
+                        emailOrUsername = emailController.value,
                         password = passwordController.value,
-                        expiresInMins = 30,
                     )
 
                     Log.d("LoginScreen", "loginFormRequest: $loginFormRequest")

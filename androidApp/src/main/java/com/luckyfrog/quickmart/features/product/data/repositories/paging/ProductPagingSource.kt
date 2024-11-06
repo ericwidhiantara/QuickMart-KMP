@@ -31,9 +31,9 @@ class ProductPagingSource(
             )
             log("result: $result", "ProductPagingSource")
             LoadResult.Page(
-                data = if (result.products != null) result.products.toEntityList() else emptyList(),
+                data = if (result.data != null) result.data.toEntityList() else emptyList(),
                 prevKey = if (currentPage == 1) null else -1,
-                nextKey = if (result.products!!.size < Constants.MAX_PAGE_SIZE) null else currentPage + 1
+                nextKey = if (result.data!!.size < Constants.MAX_PAGE_SIZE) null else currentPage + 1
             )
         } catch (exception: IOException) {
             return LoadResult.Error(exception)

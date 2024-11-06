@@ -1,6 +1,5 @@
 package com.luckyfrog.quickmart.features.auth.domain.usecases
 
-import android.util.Log
 import com.luckyfrog.quickmart.core.generic.usecase.UseCase
 import com.luckyfrog.quickmart.features.auth.domain.entities.UserEntity
 import com.luckyfrog.quickmart.features.auth.domain.repositories.AuthRepository
@@ -15,13 +14,25 @@ class GetUserUseCase @Inject constructor(
 
     override suspend fun execute(input: Unit): Flow<ApiResponse<UserEntity>> =
         flow {
+            // Collect the response from repository
             repository.getUserLogin().collect { response ->
-                Log.d("GetUserUseCase", "response: ${response}")
                 when (response) {
-
                     is ApiResponse.Loading -> emit(ApiResponse.Loading)
+                    is ApiResponse.Success -> {
+                        // Extract UserEntity from ResponseDto
+                        val userEntity = response.data.data
+                        if (userEntity != null) {
+                            emit(ApiResponse.Success(userEntity))
+                        } else {
+                            emit(
+                                ApiResponse.Failure(
+                                    errorMessage = "Get user data is null",
+                                    code = 400 // Or any appropriate error code
+                                )
+                            )
+                        }
+                    }
 
-                    is ApiResponse.Success -> emit(ApiResponse.Success(response.data))
                     is ApiResponse.Failure -> emit(
                         ApiResponse.Failure(
                             response.errorMessage,

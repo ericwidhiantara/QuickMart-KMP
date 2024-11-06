@@ -1,35 +1,13 @@
+// LoginResponseDto.kt
 package com.luckyfrog.quickmart.features.auth.data.models.response
 
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponseDto(
-    @SerializedName("id")
-    val id: Int?,
 
-    @SerializedName("username")
-    val username: String?,
-
-    @SerializedName("email")
-    val email: String?,
-
-    @SerializedName("firstName")
-    val firstName: String?,
-
-    @SerializedName("lastName")
-    val lastName: String?,
-
-    @SerializedName("gender")
-    val gender: String?,
-
-    @SerializedName("image")
-    val image: String?,
-
-    @SerializedName("accessToken")
+    @SerializedName("access_token")
     val accessToken: String?,
 
-    @SerializedName("refreshToken")
+    @SerializedName("refresh_token")
     val refreshToken: String?,
-
-    @SerializedName("message")
-    val message: String?,
 )

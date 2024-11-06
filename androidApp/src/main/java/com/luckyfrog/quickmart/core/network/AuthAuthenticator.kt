@@ -1,9 +1,10 @@
 package com.luckyfrog.quickmart.core.network
 
 import android.util.Log
+import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
 import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthApi
 import com.luckyfrog.quickmart.features.auth.data.models.response.LoginResponseDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.RefreshTokenFormRequestDto
+import com.luckyfrog.quickmart.features.auth.domain.entities.RefreshTokenFormParamsEntity
 import com.luckyfrog.quickmart.utils.TokenManager
 import com.luckyfrog.quickmart.utils.helper.Constants
 import kotlinx.coroutines.runBlocking
@@ -30,20 +31,20 @@ class AuthAuthenticator @Inject constructor(
 
             val newToken = getNewToken(token)
 
-            if (!newToken.isSuccessful || newToken.body()?.accessToken == "") { //Couldn't refresh the token, so restart the login process
+            if (!newToken.isSuccessful || newToken.body()?.data?.accessToken == "") { //Couldn't refresh the token, so restart the login process
                 tokenManager.clearTokens()
             }
 
             newToken.body()?.let {
-                tokenManager.saveToken(it.accessToken ?: "")
+                tokenManager.saveToken(it.data?.accessToken ?: "")
                 response.request.newBuilder()
-                    .header("Authorization", "Bearer ${it.accessToken}")
+                    .header("Authorization", "Bearer ${it.data?.accessToken ?: ""}")
                     .build()
             }
         }
     }
 
-    private suspend fun getNewToken(refreshToken: String?): retrofit2.Response<LoginResponseDto> {
+    private suspend fun getNewToken(refreshToken: String?): retrofit2.Response<ResponseDto<LoginResponseDto>> {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val okHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
@@ -54,9 +55,8 @@ class AuthAuthenticator @Inject constructor(
             .client(okHttpClient)
             .build()
         val service = retrofit.create(AuthApi::class.java)
-        val form = RefreshTokenFormRequestDto(
+        val form = RefreshTokenFormParamsEntity(
             refreshToken = refreshToken ?: "",
-            expiresInMins = 30,
         )
         return service.postRefreshToken(form)
     }

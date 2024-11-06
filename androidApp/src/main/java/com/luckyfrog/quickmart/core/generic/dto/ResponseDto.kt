@@ -2,16 +2,24 @@ package com.luckyfrog.quickmart.core.generic.dto
 
 import com.google.gson.annotations.SerializedName
 
-class ResponseDto<T : Any?> {
-    @SerializedName("products")
-    val products: T? = null
+data class ResponseDto<T>(
+    @SerializedName("meta")
+    val meta: MetaDto? = null,
 
-    @SerializedName("total")
-    val total: Int? = null
+    @SerializedName("data")
+    val data: T? = null
+)
 
-    @SerializedName("skip")
-    val skip: Int? = null
+data class MetaDto(
+    @SerializedName("code")
+    val code: Int? = null,
 
-    @SerializedName("limit")
-    val limit: Int? = null
-}
+    @SerializedName("error")
+    val error: Boolean = false,
+
+    @SerializedName("message")
+    val message: String? = null,
+
+    @SerializedName("error_detail")
+    val errorDetail: String? = null
+)

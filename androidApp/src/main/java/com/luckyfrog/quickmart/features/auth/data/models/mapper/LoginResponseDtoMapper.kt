@@ -3,33 +3,16 @@ package com.luckyfrog.quickmart.features.auth.data.models.mapper
 import com.luckyfrog.quickmart.features.auth.data.models.response.LoginResponseDto
 import com.luckyfrog.quickmart.features.auth.domain.entities.LoginEntity
 
-
 // Mapping from DTO to Entity
 fun LoginResponseDto.toEntity() = LoginEntity(
-    id = this.id,
-    username = this.username,
-    email = this.email,
-    firstName = this.firstName,
-    lastName = this.lastName,
-    gender = this.gender,
-    image = this.image,
     accessToken = this.accessToken,
-    refreshToken = this.refreshToken,
-    message = this.message
+    refreshToken = this.refreshToken
 )
 
 // Mapping from Entity to DTO
 fun LoginEntity.toDto() = LoginResponseDto(
-    id = this.id ?: 0,
-    username = this.username ?: "",
-    email = this.email ?: "",
-    firstName = this.firstName ?: "",
-    lastName = this.lastName ?: "",
-    gender = this.gender ?: "",
-    image = this.image ?: "",
-    accessToken = this.accessToken ?: "",
-    refreshToken = this.refreshToken ?: "",
-    message = this.message ?: ""
+    accessToken = this.accessToken,
+    refreshToken = this.refreshToken
 )
 
 // Mapping lists
