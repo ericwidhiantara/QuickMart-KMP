@@ -11,4 +11,5 @@ sealed class ApiResponse<out T> {
         val errorMessage: String,
         val code: Int,
     ) : ApiResponse<Nothing>()
+
 }

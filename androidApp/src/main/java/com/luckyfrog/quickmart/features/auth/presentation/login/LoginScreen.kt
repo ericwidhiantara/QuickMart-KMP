@@ -240,12 +240,7 @@ fun LoginScreen(
 
                 is LoginState.Success -> {
                     showDialog.value = false
-                    SweetSuccess(
-                        message = "",
-                        duration = Toast.LENGTH_LONG,
-                        padding = PaddingValues(top = 16.dp),
-                        contentAlignment = Alignment.TopCenter
-                    )
+                    
                     tokenManager.saveToken(state.data.accessToken ?: "")
                     tokenManager.saveRefreshToken(state.data.refreshToken ?: "")
                     // Login success, navigate to the next screen

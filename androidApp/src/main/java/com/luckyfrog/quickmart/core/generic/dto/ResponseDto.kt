@@ -21,5 +21,5 @@ data class MetaDto(
     val message: String? = null,
 
     @SerializedName("error_detail")
-    val errorDetail: String? = null
+    val errorDetail: Any? = null
 )

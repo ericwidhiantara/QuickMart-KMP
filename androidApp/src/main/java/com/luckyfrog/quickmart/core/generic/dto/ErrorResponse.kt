@@ -4,3 +4,7 @@ data class ErrorResponse(
     val code: Int,
     val message: String
 )
+
+data class FailureResponse(
+    val meta: MetaDto? = null,
+)

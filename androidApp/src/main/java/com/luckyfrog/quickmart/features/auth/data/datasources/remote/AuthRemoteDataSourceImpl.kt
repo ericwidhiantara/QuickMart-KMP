@@ -7,6 +7,7 @@ import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDt
 import com.luckyfrog.quickmart.features.auth.domain.entities.CheckTokenFormParamsEntity
 import com.luckyfrog.quickmart.features.auth.domain.entities.RefreshTokenFormParamsEntity
 import com.luckyfrog.quickmart.utils.TokenManager
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -16,7 +17,10 @@ class AuthRemoteDataSourceImpl @Inject constructor(
 ) : AuthRemoteDataSource {
 
     override suspend fun login(params: LoginFormRequestDto): Response<ResponseDto<LoginResponseDto>> {
-        return api.postLogin(params)
+        return api.postLogin(
+            emailOrUsername = params.emailOrUsername.toRequestBody(),
+            password = params.password.toRequestBody()
+        )
     }
 
     override suspend fun getUserLogin(): Response<ResponseDto<UserResponseDto>> {
@@ -26,10 +30,10 @@ class AuthRemoteDataSourceImpl @Inject constructor(
             accessToken = token ?: ""
         )
 
-        return api.getUserLogin(params)
+        return api.getUserLogin(params.accessToken.toRequestBody())
     }
 
     override suspend fun refreshToken(params: RefreshTokenFormParamsEntity): Response<ResponseDto<LoginResponseDto>> {
-        return api.postRefreshToken(params)
+        return api.postRefreshToken(params.refreshToken.toRequestBody())
     }
 }

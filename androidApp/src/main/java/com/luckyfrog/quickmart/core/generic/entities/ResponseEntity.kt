@@ -9,5 +9,5 @@ data class MetaEntity(
     val code: Int?,
     val error: Boolean,
     val message: String?,
-    val errorDetail: String?
+    val errorDetail: Any?
 )
