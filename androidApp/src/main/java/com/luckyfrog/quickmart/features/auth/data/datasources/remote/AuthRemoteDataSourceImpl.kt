@@ -18,7 +18,7 @@ class AuthRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun login(params: LoginFormRequestDto): Response<ResponseDto<LoginResponseDto>> {
         return api.postLogin(
-            emailOrUsername = params.emailOrUsername.toRequestBody(),
+            username = params.username.toRequestBody(),
             password = params.password.toRequestBody()
         )
     }

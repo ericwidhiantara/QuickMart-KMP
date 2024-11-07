@@ -8,8 +8,8 @@ interface FieldValidator<T> {
 fun isLoginInputValid(
     email: String,
     password: String,
-    emailValidator: EmailValidator,
+    usernameValidator: DefaultValidator,
     passwordValidator: PasswordValidator
 ): Boolean {
-    return emailValidator.validate(email) && passwordValidator.validate(password)
+    return usernameValidator.validate(email) && passwordValidator.validate(password)
 }

@@ -48,7 +48,7 @@ import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
-import com.luckyfrog.quickmart.core.validators.EmailValidator
+import com.luckyfrog.quickmart.core.validators.DefaultValidator
 import com.luckyfrog.quickmart.core.validators.PasswordValidator
 import com.luckyfrog.quickmart.core.validators.isLoginInputValid
 import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
@@ -61,7 +61,6 @@ import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import com.luckyfrog.quickmart.utils.resource.theme.colorBlack
 import com.luckyfrog.quickmart.utils.resource.theme.colorBlue
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
-import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 
 @Composable
 fun LoginScreen(
@@ -70,7 +69,7 @@ fun LoginScreen(
     navController: NavController,
     tokenManager: TokenManager = TokenManager(LocalContext.current),
 ) {
-    val emailController =
+    val usernameController =
         remember { mutableStateOf("") }
     val passwordController = remember { mutableStateOf("") }
     var passwordVisibility: Boolean by remember { mutableStateOf(false) }
@@ -82,7 +81,7 @@ fun LoginScreen(
 
     var shouldValidate by remember { mutableStateOf(false) }
 // Create your validators
-    val emailValidator = EmailValidator()
+    val usernameValidator = DefaultValidator()
     val passwordValidator = PasswordValidator()
 
     Scaffold { innerPadding ->
@@ -137,18 +136,18 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(32.dp))
             CustomTextField(
-                validator = emailValidator,
-                errorMessage = if (emailController.value.isEmpty()) stringResource(R.string.field_required) else stringResource(
-                    R.string.field_email
+                validator = usernameValidator,
+                errorMessage = if (usernameController.value.isEmpty()) stringResource(R.string.field_required) else stringResource(
+                    R.string.field_length, 2
                 ),
                 shouldValidate = shouldValidate,
-                value = emailController.value,
+                value = usernameController.value,
                 onValueChange = { newText ->
-                    emailController.value = newText
+                    usernameController.value = newText
                 },
-                titleLabel = stringResource(R.string.email),
+                titleLabel = stringResource(R.string.username),
                 titleLabelFontSize = 12.sp,
-                placeholder = stringResource(R.string.email_placeholder),
+                placeholder = stringResource(R.string.username_placeholder),
             )
             Spacer(modifier = Modifier.height(16.dp))
             CustomTextField(
@@ -206,15 +205,15 @@ fun LoginScreen(
                 onClick = {
                     shouldValidate = true
 
-                    if (emailController.value.isEmpty() || passwordController.value.isEmpty()) {
+                    if (usernameController.value.isEmpty() || passwordController.value.isEmpty()) {
                         showDialog.value = true
                         return@CustomOutlinedButton
                     }
 
                     if (!isLoginInputValid(
-                            emailController.value,
+                            usernameController.value,
                             passwordController.value,
-                            emailValidator,
+                            usernameValidator,
                             passwordValidator
                         )
                     ) {
@@ -224,7 +223,7 @@ fun LoginScreen(
 
                     // Create the LoginFormRequestDto from the user inputs
                     val loginFormRequest = LoginFormRequestDto(
-                        emailOrUsername = emailController.value,
+                        username = usernameController.value,
                         password = passwordController.value,
                     )
 
@@ -240,7 +239,7 @@ fun LoginScreen(
 
                 is LoginState.Success -> {
                     showDialog.value = false
-                    
+
                     tokenManager.saveToken(state.data.accessToken ?: "")
                     tokenManager.saveRefreshToken(state.data.refreshToken ?: "")
                     // Login success, navigate to the next screen
@@ -293,7 +292,7 @@ fun LoginScreen(
                 onClick = {
                     // Create the LoginFormRequestDto from the user inputs
                     val loginFormRequest = LoginFormRequestDto(
-                        emailOrUsername = emailController.value,
+                        username = usernameController.value,
                         password = passwordController.value,
                     )
 

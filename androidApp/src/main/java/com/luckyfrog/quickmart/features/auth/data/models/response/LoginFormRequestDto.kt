@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class LoginFormRequestDto(
     @SerializedName("email_or_username")
-    val emailOrUsername: String,
+    val username: String,
     val password: String,
 )

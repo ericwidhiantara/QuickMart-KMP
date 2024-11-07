@@ -14,7 +14,7 @@ interface AuthApi {
     @Multipart
     @POST("auth/login")
     suspend fun postLogin(
-        @Part("email_or_username") emailOrUsername: RequestBody,
+        @Part("username") username: RequestBody,
         @Part("password") password: RequestBody
     ): Response<ResponseDto<LoginResponseDto>>
 

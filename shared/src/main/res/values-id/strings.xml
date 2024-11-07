@@ -21,6 +21,8 @@
     <string name="full_name_placeholder">Masukkan data lengkap Anda name</string>
     <string name="email">Email</string>
     <string name="email_placeholder">Masukkan email Anda</string>
+    <string name="username">Username</string>
+    <string name="username_placeholder">Masukkan username Anda</string>
     <string name="password">Kata Sandi</string>
     <string name="password_placeholder">Masukkan kata sandi Anda</string>
     <string name="confirm_password">Konfirmasi Kata Sandi</string>
