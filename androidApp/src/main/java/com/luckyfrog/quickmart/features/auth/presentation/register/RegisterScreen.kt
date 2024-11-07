@@ -2,13 +2,16 @@ package com.luckyfrog.quickmart.features.auth.presentation.register
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -51,6 +54,8 @@ fun RegisterScreen(
 ) {
     val fullNameController =
         remember { mutableStateOf("") }
+    val usernameController =
+        remember { mutableStateOf("") }
     val emailController =
         remember { mutableStateOf("") }
     val passwordController = remember { mutableStateOf("") }
@@ -58,25 +63,36 @@ fun RegisterScreen(
     var passwordVisibility: Boolean by remember { mutableStateOf(false) }
     var passwordConfirmVisibility: Boolean by remember { mutableStateOf(false) }
 
-    Scaffold { innerPadding ->
+    Scaffold(
+        topBar = {
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 20.dp)
+            ) {
+                Image(
+                    painter = painterResource(
+                        when (mainViewModel.stateApp.theme) {
+                            AppTheme.Light -> Images.icLogoDark
+                            AppTheme.Dark -> Images.icLogoLight
+                            AppTheme.Default -> if (isSystemInDarkTheme()) Images.icLogoLight else Images.icLogoDark
+                        }
+                    ),
+                    modifier = Modifier.height(32.dp),
+                    contentDescription = "Logo"
+                )
+            }
+        }
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(horizontal = 16.dp, vertical = 20.dp),
-        ) {
-            Image(
-                painter = painterResource(
-                    when (mainViewModel.stateApp.theme) {
-                        AppTheme.Light -> Images.icLogoDark
-                        AppTheme.Dark -> Images.icLogoLight
-                        AppTheme.Default -> if (isSystemInDarkTheme()) Images.icLogoLight else Images.icLogoDark
-                    }
+                .padding(horizontal = 16.dp)
+                .verticalScroll(
+                    rememberScrollState()
                 ),
-                modifier = Modifier.height(32.dp),
-                contentDescription = "Logo"
-            )
-            Spacer(modifier = Modifier.height(24.dp))
+        ) {
+
             Text(
                 text = stringResource(R.string.signup),
                 fontSize = 24.sp,
@@ -117,6 +133,16 @@ fun RegisterScreen(
                 titleLabel = stringResource(R.string.full_name),
                 titleLabelFontSize = 12.sp,
                 placeholder = stringResource(R.string.full_name_placeholder),
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            CustomTextField(
+                value = usernameController.value,
+                onValueChange = { newText ->
+                    usernameController.value = newText
+                },
+                titleLabel = stringResource(R.string.username),
+                titleLabelFontSize = 12.sp,
+                placeholder = stringResource(R.string.username_placeholder),
             )
             Spacer(modifier = Modifier.height(16.dp))
             CustomTextField(
@@ -207,6 +233,7 @@ fun RegisterScreen(
             Spacer(
                 modifier = Modifier.height(81.dp)
             )
+
 
         }
     }
