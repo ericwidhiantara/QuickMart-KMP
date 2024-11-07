@@ -3,7 +3,7 @@ package com.luckyfrog.quickmart.features.auth.presentation.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.luckyfrog.quickmart.features.auth.data.models.response.LoginFormRequestDto
-import com.luckyfrog.quickmart.features.auth.domain.entities.LoginEntity
+import com.luckyfrog.quickmart.features.auth.domain.entities.AuthEntity
 import com.luckyfrog.quickmart.features.auth.domain.usecases.LoginUseCase
 import com.luckyfrog.quickmart.utils.helper.ApiResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,7 @@ import javax.inject.Inject
 sealed class LoginState {
     data object Idle : LoginState()
     data object Loading : LoginState()
-    data class Success(val data: LoginEntity) : LoginState()
+    data class Success(val data: AuthEntity) : LoginState()
     data class Error(val message: String) : LoginState()
 }
 

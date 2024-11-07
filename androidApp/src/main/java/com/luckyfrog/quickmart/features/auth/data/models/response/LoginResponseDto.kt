@@ -1,9 +1,9 @@
-// LoginResponseDto.kt
+// AuthResponseDto.kt
 package com.luckyfrog.quickmart.features.auth.data.models.response
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginResponseDto(
+data class AuthResponseDto(
 
     @SerializedName("access_token")
     val accessToken: String?,

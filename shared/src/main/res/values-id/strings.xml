@@ -66,7 +66,7 @@
     <string name="field_max_length">Kolom ini maksimal harus berisi %1$d karakter</string>
     <string name="field_email">Kolom ini harus berisi alamat email yang valid</string>
     <string name="field_password">Kolom ini minimal harus berisi %1$d karakter, termasuk minimal satu huruf besar, satu huruf kecil, dan satu angka</string>
-    <string name="field_confirm_password">Kolom ini minimal harus berisi %1$d karakter, termasuk minimal satu huruf besar, satu huruf kecil, dan satu angka</string>
+    <string name="field_confirm_password">Kolom ini harus sama dengan kata sandi</string>
     <string name="search">Cari</string>
     <string name="recent_search">Pencarian Terkini</string>,
     <string name="filter">Filter</string>,

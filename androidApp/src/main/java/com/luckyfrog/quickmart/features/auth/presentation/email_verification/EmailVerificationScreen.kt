@@ -75,7 +75,7 @@ fun EmailVerificationScreen(
         topBar = {
             CustomTopBar(
                 title = stringResource(R.string.email_verification),
-                navController = navController
+                navController = navController,
             )
         },
     ) { innerPadding ->

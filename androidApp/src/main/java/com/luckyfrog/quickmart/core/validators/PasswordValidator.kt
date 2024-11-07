@@ -6,3 +6,4 @@ class PasswordValidator : FieldValidator<String> {
         return value.length >= 6
     }
 }
+

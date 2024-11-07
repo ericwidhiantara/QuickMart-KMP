@@ -3,7 +3,7 @@ package com.luckyfrog.quickmart.core.network
 import android.util.Log
 import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
 import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthApi
-import com.luckyfrog.quickmart.features.auth.data.models.response.LoginResponseDto
+import com.luckyfrog.quickmart.features.auth.data.models.response.AuthResponseDto
 import com.luckyfrog.quickmart.features.auth.domain.entities.RefreshTokenFormParamsEntity
 import com.luckyfrog.quickmart.utils.TokenManager
 import com.luckyfrog.quickmart.utils.helper.Constants
@@ -45,7 +45,7 @@ class AuthAuthenticator @Inject constructor(
         }
     }
 
-    private suspend fun getNewToken(refreshToken: String?): retrofit2.Response<ResponseDto<LoginResponseDto>> {
+    private suspend fun getNewToken(refreshToken: String?): retrofit2.Response<ResponseDto<AuthResponseDto>> {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val okHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()

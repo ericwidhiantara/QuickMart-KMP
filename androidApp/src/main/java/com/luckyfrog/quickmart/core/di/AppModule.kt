@@ -7,6 +7,7 @@ import com.luckyfrog.quickmart.features.auth.data.repositories.AuthRepositoryImp
 import com.luckyfrog.quickmart.features.auth.domain.repositories.AuthRepository
 import com.luckyfrog.quickmart.features.auth.domain.usecases.GetUserUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.LoginUseCase
+import com.luckyfrog.quickmart.features.auth.domain.usecases.RegisterUseCase
 import com.luckyfrog.quickmart.features.category.data.datasources.remote.CategoryApi
 import com.luckyfrog.quickmart.features.category.data.datasources.remote.CategoryRemoteDataSource
 import com.luckyfrog.quickmart.features.category.data.repositories.CategoryRepositoryImpl
@@ -105,7 +106,14 @@ object UseCaseModule {
         return LoginUseCase(repository)
     }
 
-
+    @Singleton
+    @Provides
+    fun providesRegisterUseCase(
+        repository: AuthRepository
+    ): RegisterUseCase {
+        return RegisterUseCase(repository)
+    }
+    
     @Singleton
     @Provides
     fun providesGetUserUseCase(
