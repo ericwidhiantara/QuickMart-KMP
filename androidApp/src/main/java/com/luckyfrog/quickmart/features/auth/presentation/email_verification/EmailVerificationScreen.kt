@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,12 +26,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.widgets.CustomOTPInput
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
+import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 import kotlinx.coroutines.delay
 
@@ -38,8 +41,10 @@ import kotlinx.coroutines.delay
 fun EmailVerificationScreen(
     mainViewModel: MainViewModel,
     navController: NavController,
-    timerDuration: Long = 60000L // 60 seconds for the timer
+    emailVerificationViewModel: EmailVerificationViewModel = hiltViewModel(),
+    timerDuration: Long = 3000L // 60 seconds for the timer
 ) {
+    val viewState by emailVerificationViewModel.state.collectAsState()
 
     var isTimerFinished by remember { mutableStateOf(false) }
     var remainingTime by remember { mutableStateOf(timerDuration / 1000) }
@@ -47,6 +52,8 @@ fun EmailVerificationScreen(
     var otpCode by remember { mutableStateOf("") }
     // Timer logic with LaunchedEffect
     LaunchedEffect(key1 = timerKey) {
+        emailVerificationViewModel.sendOTP()
+
         isTimerFinished = false
         remainingTime = timerDuration / 1000 // Reset the timer duration
 
@@ -64,13 +71,45 @@ fun EmailVerificationScreen(
         remainingTime % 60       // seconds
     )
 
-    SweetSuccess(
-        message = stringResource(R.string.verification_code_sent),
-        duration = Toast.LENGTH_LONG,
-        padding = PaddingValues(top = 16.dp),
-        contentAlignment = Alignment.TopCenter
-    )
 
+
+    when (val state = viewState) {
+
+        is EmailVerificationState.Success -> {
+            // Show a toast with the success message
+            // on below line we are displaying a custom toast message on below line
+            SweetSuccess(
+                message = stringResource(R.string.verification_code_sent),
+                duration = Toast.LENGTH_LONG,
+                padding = PaddingValues(top = 16.dp),
+                contentAlignment = Alignment.TopCenter
+            )
+
+        }
+
+        is EmailVerificationState.Error -> {
+            // Show a toast with the error message
+            // on below line we are displaying a custom toast message on below line
+            SweetError(
+                message = state.message,
+                duration = Toast.LENGTH_SHORT,
+                padding = PaddingValues(top = 16.dp),
+                contentAlignment = Alignment.TopCenter
+            )
+            Log.d("EmailVerificationScreen", "Error State: $state")
+
+        }
+
+        is EmailVerificationState.Loading -> {
+            // Show a loading spinner or something similar if you want
+        }
+
+        is EmailVerificationState.Idle -> {
+            // No action yet
+        }
+
+
+    }
     Scaffold(
         topBar = {
             CustomTopBar(
@@ -112,6 +151,7 @@ fun EmailVerificationScreen(
                 TextButton(
                     onClick = {
                         // Resend OTP logic
+                        emailVerificationViewModel.sendOTP()
 
                         timerKey++  // Change the key to restart LaunchedEffect
                     },

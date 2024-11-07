@@ -28,6 +28,10 @@ interface AuthApi {
         @Part("confirm_password") confirmPassword: RequestBody
     ): Response<ResponseDto<AuthResponseDto>>
 
+    @POST("auth/verify-email/send-otp")
+    suspend fun postsendOTP(
+    ): Response<ResponseDto<Unit>>
+
     @Multipart
     @POST("auth/check-token")
     suspend fun getUserLogin(

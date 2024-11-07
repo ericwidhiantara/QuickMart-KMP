@@ -32,6 +32,12 @@ class AuthRepositoryImpl @Inject constructor(
             emit(processResponse(response) { it.data?.toEntity() })
         }
 
+    override suspend fun sendOTP(): Flow<ApiResponse<ResponseDto<Unit>>> = flow {
+        emit(ApiResponse.Loading)
+        val response = remoteDataSource.sendOTP()
+        emit(processResponse(response) { })
+    }
+
     override suspend fun getUserLogin(): Flow<ApiResponse<ResponseDto<UserEntity>>> = flow {
         emit(ApiResponse.Loading)
         val response = remoteDataSource.getUserLogin()

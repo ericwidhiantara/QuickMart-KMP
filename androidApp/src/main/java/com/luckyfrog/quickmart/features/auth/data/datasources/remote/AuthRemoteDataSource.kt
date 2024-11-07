@@ -13,6 +13,8 @@ interface AuthRemoteDataSource {
 
     suspend fun register(params: RegisterFormRequestDto): Response<ResponseDto<AuthResponseDto>>
 
+    suspend fun sendOTP(): Response<ResponseDto<Unit>>
+
     suspend fun getUserLogin(): Response<ResponseDto<UserResponseDto>>
 
     suspend fun refreshToken(params: RefreshTokenFormParamsEntity): Response<ResponseDto<AuthResponseDto>>

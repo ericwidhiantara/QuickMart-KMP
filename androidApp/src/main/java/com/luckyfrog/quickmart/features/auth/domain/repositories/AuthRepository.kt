@@ -13,5 +13,7 @@ interface AuthRepository {
 
     suspend fun register(params: RegisterFormRequestDto): Flow<ApiResponse<ResponseDto<AuthEntity>>>
 
+    suspend fun sendOTP(): Flow<ApiResponse<ResponseDto<Unit>>>
+    
     suspend fun getUserLogin(): Flow<ApiResponse<ResponseDto<UserEntity>>>
 }

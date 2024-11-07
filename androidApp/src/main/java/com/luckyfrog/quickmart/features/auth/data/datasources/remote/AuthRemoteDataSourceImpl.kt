@@ -34,6 +34,10 @@ class AuthRemoteDataSourceImpl @Inject constructor(
         )
     }
 
+    override suspend fun sendOTP(): Response<ResponseDto<Unit>> {
+        return api.postsendOTP()
+    }
+
     override suspend fun getUserLogin(): Response<ResponseDto<UserResponseDto>> {
         val token = tokenManager.getToken()
 

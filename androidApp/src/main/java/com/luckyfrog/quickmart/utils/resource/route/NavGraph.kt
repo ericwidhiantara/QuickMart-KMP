@@ -33,7 +33,7 @@ fun NavGraph(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppScreen.RegisterScreen.route
+        startDestination = AppScreen.EmailVerificationScreen.route
     ) {
         /// GENERAL
         composable(route = AppScreen.SplashScreen.route) {
