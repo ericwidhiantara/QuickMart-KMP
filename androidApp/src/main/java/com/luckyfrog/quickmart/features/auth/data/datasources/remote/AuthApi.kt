@@ -29,7 +29,13 @@ interface AuthApi {
     ): Response<ResponseDto<AuthResponseDto>>
 
     @POST("auth/verify-email/send-otp")
-    suspend fun postsendOTP(
+    suspend fun postSendOTP(
+    ): Response<ResponseDto<Unit>>
+
+    @Multipart
+    @POST("auth/verify-email/verify-otp")
+    suspend fun postVerifyOTP(
+        @Part("otp_code") otpCode: RequestBody
     ): Response<ResponseDto<Unit>>
 
     @Multipart

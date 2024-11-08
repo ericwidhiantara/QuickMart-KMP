@@ -5,6 +5,7 @@ import com.luckyfrog.quickmart.features.auth.data.models.response.AuthResponseDt
 import com.luckyfrog.quickmart.features.auth.data.models.response.LoginFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.RegisterFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDto
+import com.luckyfrog.quickmart.features.auth.data.models.response.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.entities.RefreshTokenFormParamsEntity
 import retrofit2.Response
 
@@ -14,6 +15,8 @@ interface AuthRemoteDataSource {
     suspend fun register(params: RegisterFormRequestDto): Response<ResponseDto<AuthResponseDto>>
 
     suspend fun sendOTP(): Response<ResponseDto<Unit>>
+
+    suspend fun verifyOTP(params: VerifyOTPFormRequestDto): Response<ResponseDto<Unit>>
 
     suspend fun getUserLogin(): Response<ResponseDto<UserResponseDto>>
 

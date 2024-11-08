@@ -6,6 +6,7 @@ import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthRemoteD
 import com.luckyfrog.quickmart.features.auth.data.models.mapper.toEntity
 import com.luckyfrog.quickmart.features.auth.data.models.response.LoginFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.RegisterFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.response.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.entities.AuthEntity
 import com.luckyfrog.quickmart.features.auth.domain.entities.UserEntity
 import com.luckyfrog.quickmart.features.auth.domain.repositories.AuthRepository
@@ -37,6 +38,14 @@ class AuthRepositoryImpl @Inject constructor(
         val response = remoteDataSource.sendOTP()
         emit(processResponse(response) { })
     }
+
+    override suspend fun verifyOTP(params: VerifyOTPFormRequestDto): Flow<ApiResponse<ResponseDto<Unit>>> =
+        flow {
+            emit(ApiResponse.Loading)
+            val response = remoteDataSource.verifyOTP(params)
+            emit(processResponse(response) { })
+        }
+
 
     override suspend fun getUserLogin(): Flow<ApiResponse<ResponseDto<UserEntity>>> = flow {
         emit(ApiResponse.Loading)

@@ -5,6 +5,7 @@ import com.luckyfrog.quickmart.features.auth.data.models.response.AuthResponseDt
 import com.luckyfrog.quickmart.features.auth.data.models.response.LoginFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.RegisterFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDto
+import com.luckyfrog.quickmart.features.auth.data.models.response.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.entities.CheckTokenFormParamsEntity
 import com.luckyfrog.quickmart.features.auth.domain.entities.RefreshTokenFormParamsEntity
 import com.luckyfrog.quickmart.utils.TokenManager
@@ -35,7 +36,13 @@ class AuthRemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun sendOTP(): Response<ResponseDto<Unit>> {
-        return api.postsendOTP()
+        return api.postSendOTP()
+    }
+
+    override suspend fun verifyOTP(params: VerifyOTPFormRequestDto): Response<ResponseDto<Unit>> {
+        return api.postVerifyOTP(
+            otpCode = params.otpCode.toRequestBody(),
+        )
     }
 
     override suspend fun getUserLogin(): Response<ResponseDto<UserResponseDto>> {

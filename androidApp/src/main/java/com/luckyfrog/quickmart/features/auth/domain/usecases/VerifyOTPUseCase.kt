@@ -3,20 +3,21 @@ package com.luckyfrog.quickmart.features.auth.domain.usecases
 import com.luckyfrog.quickmart.core.generic.entities.MetaEntity
 import com.luckyfrog.quickmart.core.generic.mapper.toEntity
 import com.luckyfrog.quickmart.core.generic.usecase.UseCase
+import com.luckyfrog.quickmart.features.auth.data.models.response.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.repositories.AuthRepository
 import com.luckyfrog.quickmart.utils.helper.ApiResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class SendOTPUseCase @Inject constructor(
+class VerifyOTPUseCase @Inject constructor(
     private val repository: AuthRepository
-) : UseCase<Unit, Flow<ApiResponse<MetaEntity>>> {
+) : UseCase<VerifyOTPFormRequestDto, Flow<ApiResponse<MetaEntity>>> {
 
-    override suspend fun execute(input: Unit): Flow<ApiResponse<MetaEntity>> =
+    override suspend fun execute(input: VerifyOTPFormRequestDto): Flow<ApiResponse<MetaEntity>> =
         flow {
             // Collect the response from repository
-            repository.sendOTP().collect { response ->
+            repository.verifyOTP(input).collect { response ->
                 when (response) {
                     is ApiResponse.Loading -> emit(ApiResponse.Loading)
                     is ApiResponse.Success -> {
@@ -27,7 +28,7 @@ class SendOTPUseCase @Inject constructor(
                         } else {
                             emit(
                                 ApiResponse.Failure(
-                                    errorMessage = "Send OTP is null",
+                                    errorMessage = "Verify OTP is null",
                                     code = 400 // Or any appropriate error code
                                 )
                             )

@@ -3,6 +3,7 @@ package com.luckyfrog.quickmart.features.auth.domain.repositories
 import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.LoginFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.RegisterFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.response.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.entities.AuthEntity
 import com.luckyfrog.quickmart.features.auth.domain.entities.UserEntity
 import com.luckyfrog.quickmart.utils.helper.ApiResponse
@@ -14,6 +15,8 @@ interface AuthRepository {
     suspend fun register(params: RegisterFormRequestDto): Flow<ApiResponse<ResponseDto<AuthEntity>>>
 
     suspend fun sendOTP(): Flow<ApiResponse<ResponseDto<Unit>>>
-    
+
+    suspend fun verifyOTP(params: VerifyOTPFormRequestDto): Flow<ApiResponse<ResponseDto<Unit>>>
+
     suspend fun getUserLogin(): Flow<ApiResponse<ResponseDto<UserEntity>>>
 }
