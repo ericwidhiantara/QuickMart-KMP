@@ -45,20 +45,20 @@ import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 fun ForgotPasswordEmailConfirmationScreen(
     mainViewModel: MainViewModel,
     navController: NavController,
-    viewModel: ForgotPasswordViewModel = hiltViewModel(),
+    viewModel: ForgotPasswordEmailConfirmationViewModel = hiltViewModel(),
 ) {
     val emailController =
         remember { mutableStateOf("") }
 
     val viewState by viewModel.state.collectAsState()
-    val isLoading = viewState is ForgotPasswordState.Loading
+    val isLoading = viewState is ForgotPasswordEmailConfirmationState.Loading
     val showDialog = remember { mutableStateOf(false) }
 
     var shouldValidate by remember { mutableStateOf(false) }
     val emailValidator = EmailValidator()
     when (val state = viewState) {
 
-        is ForgotPasswordState.Success -> {
+        is ForgotPasswordEmailConfirmationState.Success -> {
             showDialog.value = false
             // Show a toast with the success message
             // on below line we are displaying a custom toast message on below line
@@ -68,14 +68,14 @@ fun ForgotPasswordEmailConfirmationScreen(
                 padding = PaddingValues(top = 16.dp),
                 contentAlignment = Alignment.TopCenter
             )
-            
+
             // this will using asynchronous to navigate to the next screen
             LaunchedEffect(Unit) {
-                navController.navigate(AppScreen.ForgotPasswordVerifyCodeScreen.route)
+                navController.navigate(AppScreen.ForgotPasswordVerifyCodeScreen.route + "?email=${emailController.value}")
             }
         }
 
-        is ForgotPasswordState.Error -> {
+        is ForgotPasswordEmailConfirmationState.Error -> {
             showDialog.value = false
             // Show a toast with the error message
             // on below line we are displaying a custom toast message on below line
@@ -89,14 +89,14 @@ fun ForgotPasswordEmailConfirmationScreen(
 
         }
 
-        is ForgotPasswordState.Loading -> {
+        is ForgotPasswordEmailConfirmationState.Loading -> {
             showDialog.value = true // Show loading dialog
             CustomLoadingDialog(
                 showDialog = showDialog,
             )
         }
 
-        is ForgotPasswordState.Idle -> {
+        is ForgotPasswordEmailConfirmationState.Idle -> {
             // No action yet
         }
 

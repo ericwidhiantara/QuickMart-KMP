@@ -12,37 +12,37 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-sealed class ForgotPasswordState {
-    data object Idle : ForgotPasswordState()
-    data object Loading : ForgotPasswordState()
-    data class Success(val data: MetaEntity) : ForgotPasswordState()
-    data class Error(val message: String) : ForgotPasswordState()
+sealed class ForgotPasswordEmailConfirmationState {
+    data object Idle : ForgotPasswordEmailConfirmationState()
+    data object Loading : ForgotPasswordEmailConfirmationState()
+    data class Success(val data: MetaEntity) : ForgotPasswordEmailConfirmationState()
+    data class Error(val message: String) : ForgotPasswordEmailConfirmationState()
 }
 
 @HiltViewModel
-class ForgotPasswordViewModel @Inject constructor(
+class ForgotPasswordEmailConfirmationViewModel @Inject constructor(
     private val _usecase: ForgotPasswordSendOTPUseCase,
 ) : ViewModel() {
 
     private val _state =
-        MutableStateFlow<ForgotPasswordState>(ForgotPasswordState.Idle)
-    val state: StateFlow<ForgotPasswordState> = _state
+        MutableStateFlow<ForgotPasswordEmailConfirmationState>(ForgotPasswordEmailConfirmationState.Idle)
+    val state: StateFlow<ForgotPasswordEmailConfirmationState> = _state
 
     fun sendOTP(params: ForgotPasswordSendOTPFormRequestDto) {
         viewModelScope.launch {
             _usecase.execute(params).collect { response ->
                 when (response) {
                     is ApiResponse.Loading -> {
-                        _state.value = ForgotPasswordState.Loading
+                        _state.value = ForgotPasswordEmailConfirmationState.Loading
                     }
 
                     is ApiResponse.Success -> {
-                        _state.value = ForgotPasswordState.Success(response.data)
+                        _state.value = ForgotPasswordEmailConfirmationState.Success(response.data)
                     }
 
                     is ApiResponse.Failure -> {
                         _state.value =
-                            ForgotPasswordState.Error(response.errorMessage)
+                            ForgotPasswordEmailConfirmationState.Error(response.errorMessage)
                     }
                 }
             }

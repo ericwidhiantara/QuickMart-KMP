@@ -1,4 +1,4 @@
-package com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email_confirmation
+package com.luckyfrog.quickmart.features.auth.presentation.forgot_password.verify_code
 
 import android.util.Log
 import android.widget.Toast
@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
@@ -29,13 +30,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
+import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
 import com.luckyfrog.quickmart.core.widgets.CustomOTPInput
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
+import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordSendOTPFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordVerifyOTPFormRequestDto
+import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email_confirmation.ForgotPasswordEmailConfirmationViewModel
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
+import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 import kotlinx.coroutines.delay
 import java.util.Locale
@@ -44,9 +51,15 @@ import java.util.Locale
 fun ForgotPasswordVerifyCodeScreen(
     mainViewModel: MainViewModel,
     navController: NavController,
-    timerDuration: Long = 60000L // 60 seconds for the timer
+    timerDuration: Long = 60000L, // 60 seconds for the timer
+    email: String,
+    viewModel: ForgotPasswordVerifyCodeViewModel = hiltViewModel(),
+    emailViewModel: ForgotPasswordEmailConfirmationViewModel = hiltViewModel(),
 ) {
+    val viewState by viewModel.state.collectAsState()
 
+    val isLoading = viewState is ForgotPasswordVerifyCodeState.Loading
+    val showDialog = remember { mutableStateOf(false) }
     var isTimerFinished by remember { mutableStateOf(false) }
     var remainingTime by remember { mutableLongStateOf(timerDuration / 1000) }
     var timerKey by remember { mutableIntStateOf(0) }  // Unique key to reset the timer
@@ -71,12 +84,55 @@ fun ForgotPasswordVerifyCodeScreen(
         remainingTime % 60       // seconds
     )
 
-    SweetSuccess(
-        message = stringResource(R.string.verification_code_sent),
-        duration = Toast.LENGTH_LONG,
-        padding = PaddingValues(top = 16.dp),
-        contentAlignment = Alignment.TopCenter
+    val params = ForgotPasswordSendOTPFormRequestDto(
+        email = email,
     )
+
+    when (val state = viewState) {
+
+        is ForgotPasswordVerifyCodeState.Success -> {
+            showDialog.value = false
+           
+            LaunchedEffect(Unit) {
+                navController.navigate(AppScreen.CreatePasswordScreen.route) {
+                    popUpTo(AppScreen.ForgotPasswordVerifyCodeScreen.route) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
+
+            }
+
+        }
+
+        is ForgotPasswordVerifyCodeState.Error -> {
+            showDialog.value = false
+            // Show a toast with the error message
+            // on below line we are displaying a custom toast message on below line
+            SweetError(
+                message = state.message,
+                duration = Toast.LENGTH_SHORT,
+                padding = PaddingValues(top = 16.dp),
+                contentAlignment = Alignment.TopCenter
+            )
+            Log.d("EmailVerificationScreen", "Error State: $state")
+
+        }
+
+        is ForgotPasswordVerifyCodeState.Loading -> {
+            showDialog.value = true // Show loading dialog
+            CustomLoadingDialog(
+                showDialog = showDialog,
+            )
+        }
+
+        is ForgotPasswordVerifyCodeState.Idle -> {
+            // No action yet
+        }
+
+
+    }
+
 
     Scaffold(
         topBar = {
@@ -140,6 +196,7 @@ fun ForgotPasswordVerifyCodeScreen(
                 TextButton(
                     onClick = {
                         // Resend OTP logic
+                        emailViewModel.sendOTP(params)
 
                         timerKey++  // Change the key to restart LaunchedEffect
                     },
@@ -166,10 +223,19 @@ fun ForgotPasswordVerifyCodeScreen(
                 modifier = Modifier.height(24.dp)
             )
             CustomOutlinedButton(
-                isButtonEnabled = otpCode.length == 6,
+                isButtonEnabled = !isLoading && otpCode.length == 6,
                 buttonText = stringResource(R.string.proceed),
                 onClick = {
-                    navController.navigate(AppScreen.CreatePasswordScreen.route)
+                    if (otpCode.length != 6) {
+                        showDialog.value = true
+                        return@CustomOutlinedButton
+                    }
+
+                    val form = ForgotPasswordVerifyOTPFormRequestDto(
+                        otpCode = otpCode,
+                        email = email,
+                    )
+                    viewModel.verifyOTP(form)
                 }
             )
 

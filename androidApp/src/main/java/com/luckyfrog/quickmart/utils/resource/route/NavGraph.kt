@@ -12,7 +12,7 @@ import com.luckyfrog.quickmart.features.auth.presentation.email_verification.Ema
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.PasswordCreatedScreen
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.create_password.CreatePasswordScreen
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email_confirmation.ForgotPasswordEmailConfirmationScreen
-import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email_confirmation.ForgotPasswordVerifyCodeScreen
+import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.verify_code.ForgotPasswordVerifyCodeScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterScreen
@@ -87,10 +87,11 @@ fun NavGraph(mainViewModel: MainViewModel) {
             )
         }
 
-        composable(route = AppScreen.ForgotPasswordVerifyCodeScreen.route) {
+        composable(route = AppScreen.ForgotPasswordVerifyCodeScreen.route + "?email={email}") {
             ForgotPasswordVerifyCodeScreen(
                 mainViewModel = mainViewModel,
-                navController = navController
+                navController = navController,
+                email = it.arguments?.getString("email") ?: "",
             )
         }
 

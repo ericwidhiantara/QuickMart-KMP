@@ -2,6 +2,7 @@ package com.luckyfrog.quickmart.features.auth.data.datasources.remote
 
 import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.AuthResponseDto
+import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordVerifyCodeResponseDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDto
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -43,6 +44,13 @@ interface AuthApi {
     suspend fun postForgotPasswordSendOTP(
         @Part("email") email: RequestBody
     ): Response<ResponseDto<Unit>>
+
+    @Multipart
+    @POST("auth/forgot-password/verify-otp")
+    suspend fun postForgotPasswordVerifyOTP(
+        @Part("email") email: RequestBody,
+        @Part("otp_code") otpCode: RequestBody
+    ): Response<ResponseDto<ForgotPasswordVerifyCodeResponseDto>>
 
     @Multipart
     @POST("auth/check-token")
