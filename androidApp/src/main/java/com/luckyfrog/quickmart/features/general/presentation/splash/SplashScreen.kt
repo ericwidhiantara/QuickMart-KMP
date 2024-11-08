@@ -31,6 +31,8 @@ fun SplashScreen(
     val token = TokenManager(LocalContext.current).getToken()
     // This block will be triggered when the SplashScreen composable is first composed
     LaunchedEffect(Unit) {
+        Log.i("SplashScreen", "token : $token")
+        Log.i("SplashScreen", "is first time : $isFirstTime")
         // Simulate a delay for the splash screen (e.g., 2 seconds)
         delay(3000)
         // Navigate to the login screen
@@ -38,6 +40,7 @@ fun SplashScreen(
             when (isFirstTime) {
                 true -> AppScreen.OnboardingScreen.route
                 false -> if (token == "") AppScreen.LoginScreen.route else AppScreen.MainScreen.route
+                null -> AppScreen.OnboardingScreen.route
             }
         ) {
             // Remove the splash screen from the back stack to prevent returning to it

@@ -61,8 +61,8 @@ object AppPreferences {
         Paper.book().write(FIRST_TIME, value)
     }
 
-    fun getFirstTime(): Boolean {
-        return Paper.book().read(FIRST_TIME, false)!!
+    fun getFirstTime(): Boolean? {
+        return Paper.book().read(FIRST_TIME, null)
     }
     //endregion
 }
