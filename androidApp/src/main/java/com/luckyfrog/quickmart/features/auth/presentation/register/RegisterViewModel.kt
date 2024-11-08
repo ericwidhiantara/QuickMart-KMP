@@ -2,7 +2,7 @@ package com.luckyfrog.quickmart.features.auth.presentation.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.luckyfrog.quickmart.features.auth.data.models.response.RegisterFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.RegisterFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.entities.AuthEntity
 import com.luckyfrog.quickmart.features.auth.domain.usecases.RegisterUseCase
 import com.luckyfrog.quickmart.utils.helper.ApiResponse

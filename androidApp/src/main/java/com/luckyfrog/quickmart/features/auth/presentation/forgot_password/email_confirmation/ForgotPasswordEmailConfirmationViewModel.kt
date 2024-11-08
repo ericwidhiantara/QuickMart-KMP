@@ -3,7 +3,7 @@ package com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.luckyfrog.quickmart.core.generic.entities.MetaEntity
-import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordSendOTPFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordSendOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordSendOTPUseCase
 import com.luckyfrog.quickmart.utils.helper.ApiResponse
 import dagger.hilt.android.lifecycle.HiltViewModel

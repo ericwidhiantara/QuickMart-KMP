@@ -1,11 +1,11 @@
 package com.luckyfrog.quickmart.features.auth.domain.repositories
 
 import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordSendOTPFormRequestDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordVerifyOTPFormRequestDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.LoginFormRequestDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.RegisterFormRequestDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.VerifyOTPFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordSendOTPFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordVerifyOTPFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.LoginFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.RegisterFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.entities.AuthEntity
 import com.luckyfrog.quickmart.features.auth.domain.entities.ForgotPasswordVerifyCodeResponseEntity
 import com.luckyfrog.quickmart.features.auth.domain.entities.UserEntity

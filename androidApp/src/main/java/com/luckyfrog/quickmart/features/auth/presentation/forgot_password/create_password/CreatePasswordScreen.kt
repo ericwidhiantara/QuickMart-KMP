@@ -42,6 +42,7 @@ import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 fun CreatePasswordScreen(
     mainViewModel: MainViewModel,
     navController: NavController,
+    otpId: String,
 ) {
     val passwordController = remember { mutableStateOf("") }
     val passwordConfirmController = remember { mutableStateOf("") }

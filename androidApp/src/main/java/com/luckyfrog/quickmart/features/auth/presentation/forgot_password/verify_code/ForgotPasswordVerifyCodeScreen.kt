@@ -38,12 +38,11 @@ import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
 import com.luckyfrog.quickmart.core.widgets.CustomOTPInput
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
-import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordSendOTPFormRequestDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordVerifyOTPFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordSendOTPFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordVerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email_confirmation.ForgotPasswordEmailConfirmationViewModel
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
-import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 import kotlinx.coroutines.delay
 import java.util.Locale
 
@@ -92,9 +91,9 @@ fun ForgotPasswordVerifyCodeScreen(
 
         is ForgotPasswordVerifyCodeState.Success -> {
             showDialog.value = false
-           
+
             LaunchedEffect(Unit) {
-                navController.navigate(AppScreen.CreatePasswordScreen.route) {
+                navController.navigate(AppScreen.CreatePasswordScreen.route + "?otp_id=${state.data.otpId}") {
                     popUpTo(AppScreen.ForgotPasswordVerifyCodeScreen.route) {
                         inclusive = true
                     }

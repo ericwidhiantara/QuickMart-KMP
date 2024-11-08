@@ -1,7 +1,7 @@
 package com.luckyfrog.quickmart.features.auth.domain.usecases
 
 import com.luckyfrog.quickmart.core.generic.usecase.UseCase
-import com.luckyfrog.quickmart.features.auth.data.models.response.RegisterFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.RegisterFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.entities.AuthEntity
 import com.luckyfrog.quickmart.features.auth.domain.repositories.AuthRepository
 import com.luckyfrog.quickmart.utils.helper.ApiResponse

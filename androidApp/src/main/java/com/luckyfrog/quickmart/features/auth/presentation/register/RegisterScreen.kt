@@ -54,7 +54,7 @@ import com.luckyfrog.quickmart.core.validators.isRegisterInputValid
 import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTextField
-import com.luckyfrog.quickmart.features.auth.data.models.response.RegisterFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.RegisterFormRequestDto
 import com.luckyfrog.quickmart.utils.TokenManager
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme

@@ -3,7 +3,7 @@ package com.luckyfrog.quickmart.features.auth.domain.usecases
 import com.luckyfrog.quickmart.core.generic.entities.MetaEntity
 import com.luckyfrog.quickmart.core.generic.mapper.toEntity
 import com.luckyfrog.quickmart.core.generic.usecase.UseCase
-import com.luckyfrog.quickmart.features.auth.data.models.response.VerifyOTPFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.repositories.AuthRepository
 import com.luckyfrog.quickmart.utils.helper.ApiResponse
 import kotlinx.coroutines.flow.Flow

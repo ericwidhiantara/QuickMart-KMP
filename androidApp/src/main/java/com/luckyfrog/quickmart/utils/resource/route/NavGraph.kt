@@ -95,10 +95,11 @@ fun NavGraph(mainViewModel: MainViewModel) {
             )
         }
 
-        composable(route = AppScreen.CreatePasswordScreen.route) {
+        composable(route = AppScreen.CreatePasswordScreen.route + "?otp_id={otpId}") {
             CreatePasswordScreen(
                 mainViewModel = mainViewModel,
-                navController = navController
+                navController = navController,
+                otpId = it.arguments?.getString("otpId") ?: "",
             )
         }
 
