@@ -1,6 +1,7 @@
 package com.luckyfrog.quickmart.features.auth.data.datasources.remote
 
 import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordChangePasswordFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordSendOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordVerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.request.LoginFormRequestDto
@@ -24,6 +25,8 @@ interface AuthRemoteDataSource {
     suspend fun forgotPasswordSendOTP(params: ForgotPasswordSendOTPFormRequestDto): Response<ResponseDto<Unit>>
 
     suspend fun forgotPasswordVerifyOTP(params: ForgotPasswordVerifyOTPFormRequestDto): Response<ResponseDto<ForgotPasswordVerifyCodeResponseDto>>
+
+    suspend fun forgotPasswordChangePassword(params: ForgotPasswordChangePasswordFormRequestDto): Response<ResponseDto<Unit>>
 
     suspend fun getUserLogin(): Response<ResponseDto<UserResponseDto>>
 

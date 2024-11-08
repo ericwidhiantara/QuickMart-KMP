@@ -1,6 +1,7 @@
 package com.luckyfrog.quickmart.features.auth.domain.repositories
 
 import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordChangePasswordFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordSendOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordVerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.request.LoginFormRequestDto
@@ -24,6 +25,8 @@ interface AuthRepository {
     suspend fun forgotPasswordSendOTP(params: ForgotPasswordSendOTPFormRequestDto): Flow<ApiResponse<ResponseDto<Unit>>>
 
     suspend fun forgotPasswordVerifyOTP(params: ForgotPasswordVerifyOTPFormRequestDto): Flow<ApiResponse<ResponseDto<ForgotPasswordVerifyCodeResponseEntity>>>
+
+    suspend fun forgotPasswordChangePassword(params: ForgotPasswordChangePasswordFormRequestDto): Flow<ApiResponse<ResponseDto<Unit>>>
 
     suspend fun getUserLogin(): Flow<ApiResponse<ResponseDto<UserEntity>>>
 }

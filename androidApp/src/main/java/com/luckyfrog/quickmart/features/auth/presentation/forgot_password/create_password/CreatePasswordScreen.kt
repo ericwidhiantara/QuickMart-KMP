@@ -1,6 +1,9 @@
 package com.luckyfrog.quickmart.features.auth.presentation.forgot_password.create_password
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -15,10 +18,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
@@ -30,25 +36,90 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
+import com.luckyfrog.quickmart.core.validators.PasswordValidator
+import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTextField
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
+import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordChangePasswordFormRequestDto
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
+import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
+import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 
 @Composable
 fun CreatePasswordScreen(
     mainViewModel: MainViewModel,
     navController: NavController,
     otpId: String,
+    viewModel: CreatePasswordViewModel = hiltViewModel(),
 ) {
     val passwordController = remember { mutableStateOf("") }
     val passwordConfirmController = remember { mutableStateOf("") }
     var passwordVisibility: Boolean by remember { mutableStateOf(false) }
     var passwordConfirmVisibility: Boolean by remember { mutableStateOf(false) }
 
+    // Collect login result state from the ViewModel
+    val viewState by viewModel.state.collectAsState()
+
+    val isLoading = viewState is CreatePasswordState.Loading
+    val showDialog = remember { mutableStateOf(false) }
+
+    var shouldValidate by remember { mutableStateOf(false) }
+    // Create your validators
+    val passwordValidator = PasswordValidator()
+
+    when (val state = viewState) {
+
+        is CreatePasswordState.Success -> {
+            showDialog.value = false
+            // Show a toast with the success message
+            // on below line we are displaying a custom toast message on below line
+            SweetSuccess(
+                message = state.data.message ?: "",
+                duration = Toast.LENGTH_LONG,
+                padding = PaddingValues(top = 16.dp),
+                contentAlignment = Alignment.TopCenter
+            )
+            // this will using asynchronous to navigate to the next screen
+            LaunchedEffect(Unit) {
+                navController.navigate(AppScreen.PasswordCreatedScreen.route) {
+                    popUpTo(AppScreen.CreatePasswordScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }
+        }
+
+        is CreatePasswordState.Error -> {
+            showDialog.value = false
+            // Show a toast with the error message
+            // on below line we are displaying a custom toast message on below line
+            SweetError(
+                message = state.message,
+                duration = Toast.LENGTH_SHORT,
+                padding = PaddingValues(top = 16.dp),
+                contentAlignment = Alignment.TopCenter
+            )
+            Log.d("ForgotPasswordEmailConfirmationScreen", "Error State: $state")
+
+        }
+
+        is CreatePasswordState.Loading -> {
+            showDialog.value = true // Show loading dialog
+            CustomLoadingDialog(
+                showDialog = showDialog,
+            )
+        }
+
+        is CreatePasswordState.Idle -> {
+            // No action yet
+        }
+
+    }
 
     Scaffold(
         topBar = {
@@ -100,11 +171,16 @@ fun CreatePasswordScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             CustomTextField(
+                validator = passwordValidator,
+                errorMessage = if (passwordController.value.isEmpty()) stringResource(R.string.field_required) else stringResource(
+                    R.string.field_length, 6
+                ),
+                shouldValidate = shouldValidate,
                 value = passwordController.value,
                 onValueChange = { newText ->
                     passwordController.value = newText
                 },
-                titleLabel = stringResource(R.string.password),
+                titleLabel = stringResource(R.string.new_password),
                 titleLabelFontSize = 12.sp,
                 placeholder = stringResource(R.string.password_placeholder),
                 visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
@@ -125,6 +201,11 @@ fun CreatePasswordScreen(
             )
             Spacer(modifier = Modifier.height(16.dp))
             CustomTextField(
+                validator = passwordValidator,
+                errorMessage = if (passwordController.value.isEmpty()) stringResource(R.string.field_required) else if (passwordController.value != passwordConfirmController.value) stringResource(
+                    R.string.field_confirm_password,
+                ) else stringResource(R.string.field_length, 6),
+                shouldValidate = shouldValidate,
                 value = passwordConfirmController.value,
                 onValueChange = { newText ->
                     passwordConfirmController.value = newText
@@ -152,13 +233,26 @@ fun CreatePasswordScreen(
             )
             Spacer(modifier = Modifier.height(24.dp))
             CustomOutlinedButton(
+                isButtonEnabled = !isLoading,
                 buttonText = stringResource(R.string.save),
                 onClick = {
-                    navController.navigate(AppScreen.PasswordCreatedScreen.route) {
-                        popUpTo(AppScreen.CreatePasswordScreen.route) {
-                            inclusive = true
-                        }
+                    shouldValidate = true
+
+                    if (passwordController.value.isEmpty() || passwordConfirmController.value.isEmpty()) {
+                        showDialog.value = true
+                        return@CustomOutlinedButton
                     }
+                    
+                    // Create the RegisterFormRequestDto from the user inputs
+                    val params = ForgotPasswordChangePasswordFormRequestDto(
+                        otpId = otpId,
+                        newPassword = passwordController.value,
+                        confirmPassword = passwordConfirmController.value
+                    )
+
+                    // Trigger the login action
+                    viewModel.changePassword(params)
+
                 }
             )
 

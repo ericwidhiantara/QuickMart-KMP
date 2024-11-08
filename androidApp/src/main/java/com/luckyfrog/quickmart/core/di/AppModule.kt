@@ -5,6 +5,7 @@ import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthRemoteD
 import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthRemoteDataSourceImpl
 import com.luckyfrog.quickmart.features.auth.data.repositories.AuthRepositoryImpl
 import com.luckyfrog.quickmart.features.auth.domain.repositories.AuthRepository
+import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordChangePasswordUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordSendOTPUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordVerifyOTPUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.GetUserUseCase
@@ -148,6 +149,14 @@ object UseCaseModule {
         repository: AuthRepository
     ): ForgotPasswordVerifyOTPUseCase {
         return ForgotPasswordVerifyOTPUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun providesForgotPasswordChangePasswordUseCase(
+        repository: AuthRepository
+    ): ForgotPasswordChangePasswordUseCase {
+        return ForgotPasswordChangePasswordUseCase(repository)
     }
 
     @Singleton

@@ -53,6 +53,14 @@ interface AuthApi {
     ): Response<ResponseDto<ForgotPasswordVerifyCodeResponseDto>>
 
     @Multipart
+    @POST("auth/forgot-password/change-password")
+    suspend fun postForgotPasswordChangePassword(
+        @Part("otp_id") otpId: RequestBody,
+        @Part("new_password") newPassword: RequestBody,
+        @Part("confirm_password") confirmPassword: RequestBody
+    ): Response<ResponseDto<Unit>>
+
+    @Multipart
     @POST("auth/check-token")
     suspend fun getUserLogin(
         @Part("access_token") accessToken: RequestBody
