@@ -1,4 +1,4 @@
-package com.luckyfrog.quickmart.features.auth.presentation.forgot_password
+package com.luckyfrog.quickmart.features.auth.presentation.forgot_password.create_password
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

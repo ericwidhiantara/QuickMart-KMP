@@ -39,6 +39,12 @@ interface AuthApi {
     ): Response<ResponseDto<Unit>>
 
     @Multipart
+    @POST("auth/forgot-password/send-otp")
+    suspend fun postForgotPasswordSendOTP(
+        @Part("email") email: RequestBody
+    ): Response<ResponseDto<Unit>>
+
+    @Multipart
     @POST("auth/check-token")
     suspend fun getUserLogin(
         @Part("access_token") accessToken: RequestBody

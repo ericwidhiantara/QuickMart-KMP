@@ -2,6 +2,7 @@ package com.luckyfrog.quickmart.features.auth.data.datasources.remote
 
 import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.AuthResponseDto
+import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordSendOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.LoginFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.RegisterFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDto
@@ -42,6 +43,12 @@ class AuthRemoteDataSourceImpl @Inject constructor(
     override suspend fun verifyOTP(params: VerifyOTPFormRequestDto): Response<ResponseDto<Unit>> {
         return api.postVerifyOTP(
             otpCode = params.otpCode.toRequestBody(),
+        )
+    }
+
+    override suspend fun forgotPasswordSendOTP(params: ForgotPasswordSendOTPFormRequestDto): Response<ResponseDto<Unit>> {
+        return api.postForgotPasswordSendOTP(
+            email = params.email.toRequestBody(),
         )
     }
 

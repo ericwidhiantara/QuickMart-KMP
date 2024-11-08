@@ -1,4 +1,4 @@
-package com.luckyfrog.quickmart.features.auth.presentation.forgot_password
+package com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email_confirmation
 
 import android.util.Log
 import android.widget.Toast
@@ -15,6 +15,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -36,6 +38,7 @@ import com.luckyfrog.quickmart.core.widgets.CustomTopBar
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 import kotlinx.coroutines.delay
+import java.util.Locale
 
 @Composable
 fun ForgotPasswordVerifyCodeScreen(
@@ -45,8 +48,8 @@ fun ForgotPasswordVerifyCodeScreen(
 ) {
 
     var isTimerFinished by remember { mutableStateOf(false) }
-    var remainingTime by remember { mutableStateOf(timerDuration / 1000) }
-    var timerKey by remember { mutableStateOf(0) }  // Unique key to reset the timer
+    var remainingTime by remember { mutableLongStateOf(timerDuration / 1000) }
+    var timerKey by remember { mutableIntStateOf(0) }  // Unique key to reset the timer
     var otpCode by remember { mutableStateOf("") }
     // Timer logic with LaunchedEffect
     LaunchedEffect(key1 = timerKey) {
@@ -62,6 +65,7 @@ fun ForgotPasswordVerifyCodeScreen(
 
     // Function to format remaining time as MM:ss
     val formattedTime = String.format(
+        Locale.US,
         "%02d:%02d",
         remainingTime / 60,      // minutes
         remainingTime % 60       // seconds

@@ -4,6 +4,7 @@ import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
 import com.luckyfrog.quickmart.core.network.processResponse
 import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthRemoteDataSource
 import com.luckyfrog.quickmart.features.auth.data.models.mapper.toEntity
+import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordSendOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.LoginFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.RegisterFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.VerifyOTPFormRequestDto
@@ -46,7 +47,13 @@ class AuthRepositoryImpl @Inject constructor(
             emit(processResponse(response) { })
         }
 
-
+    override suspend fun forgotPasswordSendOTP(params: ForgotPasswordSendOTPFormRequestDto): Flow<ApiResponse<ResponseDto<Unit>>> =
+        flow {
+            emit(ApiResponse.Loading)
+            val response = remoteDataSource.forgotPasswordSendOTP(params)
+            emit(processResponse(response) { })
+        }
+    
     override suspend fun getUserLogin(): Flow<ApiResponse<ResponseDto<UserEntity>>> = flow {
         emit(ApiResponse.Loading)
         val response = remoteDataSource.getUserLogin()

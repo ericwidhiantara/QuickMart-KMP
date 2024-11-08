@@ -9,10 +9,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.email_verification.EmailVerificationScreen
-import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.CreatePasswordScreen
-import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.ForgotPasswordEmailConfirmationScreen
-import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.ForgotPasswordVerifyCodeScreen
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.PasswordCreatedScreen
+import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.create_password.CreatePasswordScreen
+import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email_confirmation.ForgotPasswordEmailConfirmationScreen
+import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email_confirmation.ForgotPasswordVerifyCodeScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterScreen
