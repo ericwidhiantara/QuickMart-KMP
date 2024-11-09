@@ -9,7 +9,6 @@ import com.luckyfrog.quickmart.features.category.data.datasources.remote.Categor
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductApi
 import com.luckyfrog.quickmart.utils.TokenManager
 import com.luckyfrog.quickmart.utils.helper.Constants
-import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,6 +23,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
+
     @Singleton
     @Provides
     fun provideTokenManager(@ApplicationContext context: Context): TokenManager =
@@ -39,34 +39,25 @@ object RetrofitModule {
     fun provideAuthAuthenticator(tokenManager: TokenManager): AuthAuthenticator =
         AuthAuthenticator(tokenManager)
 
-    // Provides Moshi for JSON parsing
-    @Singleton
-    @Provides
-    fun providesMoshi(): Moshi = Moshi.Builder().build()
-
-    // Provides OkHttpClient with necessary interceptors
     @Singleton
     @Provides
     fun providesOkHttpClient(
         authInterceptor: AuthInterceptor,
         authAuthenticator: AuthAuthenticator,
     ): OkHttpClient {
-//        val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
-//            level = HttpLoggingInterceptor.Level.BODY
-//        }
-
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
-//            .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(RetrofitInterceptor())
             .authenticator(authAuthenticator)
+            .followRedirects(false)
+            .followSslRedirects(false)
+            .retryOnConnectionFailure(true) // Changed to true to allow retry with new token
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
             .build()
     }
 
-    // Provides Retrofit instance
     @Singleton
     @Provides
     fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit =
@@ -76,19 +67,14 @@ object RetrofitModule {
             .client(okHttpClient)
             .build()
 
-    // Provides AuthApi from the Retrofit instance
     @Singleton
     @Provides
-    fun providesAuthApi(retrofit: Retrofit): AuthApi =
-        retrofit.create(AuthApi::class.java)
+    fun providesAuthApi(retrofit: Retrofit): AuthApi = retrofit.create(AuthApi::class.java)
 
-    // Provides ProductApi from the Retrofit instance
     @Singleton
     @Provides
-    fun providesProductApi(retrofit: Retrofit): ProductApi =
-        retrofit.create(ProductApi::class.java)
+    fun providesProductApi(retrofit: Retrofit): ProductApi = retrofit.create(ProductApi::class.java)
 
-    // Provides CategoryApi from the Retrofit instance
     @Singleton
     @Provides
     fun providesCategoryApi(retrofit: Retrofit): CategoryApi =

@@ -10,7 +10,6 @@ import com.luckyfrog.quickmart.features.auth.data.models.request.VerifyOTPFormRe
 import com.luckyfrog.quickmart.features.auth.data.models.response.AuthResponseDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordVerifyCodeResponseDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDto
-import com.luckyfrog.quickmart.features.auth.domain.entities.RefreshTokenFormParamsEntity
 import retrofit2.Response
 
 interface AuthRemoteDataSource {
@@ -29,6 +28,4 @@ interface AuthRemoteDataSource {
     suspend fun forgotPasswordChangePassword(params: ForgotPasswordChangePasswordFormRequestDto): Response<ResponseDto<Unit>>
 
     suspend fun getUserLogin(): Response<ResponseDto<UserResponseDto>>
-
-    suspend fun refreshToken(params: RefreshTokenFormParamsEntity): Response<ResponseDto<AuthResponseDto>>
 }

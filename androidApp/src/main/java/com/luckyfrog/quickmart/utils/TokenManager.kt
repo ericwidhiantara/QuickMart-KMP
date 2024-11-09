@@ -7,31 +7,47 @@ import com.luckyfrog.quickmart.core.app.AppPreferences.REFRESH_TOKEN
 import io.paperdb.Paper
 
 class TokenManager(private val context: Context) {
+    // In-memory cache for tokens
+    private var cachedAccessToken: String? = null
+    private var cachedRefreshToken: String? = null
+
     companion object {
         private const val TOKEN_KEY = ACCESS_TOKEN
         private const val REFRESH_TOKEN_KEY = REFRESH_TOKEN
     }
 
-    // Access Token Management
+    @Synchronized
     fun getToken(): String? {
-        return Paper.book().read(TOKEN_KEY, "")
+        if (cachedAccessToken == null) {
+            cachedAccessToken = Paper.book().read<String>(TOKEN_KEY, "")
+        }
+        return cachedAccessToken
     }
 
+    @Synchronized
     fun saveToken(token: String) {
+        cachedAccessToken = token
         Paper.book().write(TOKEN_KEY, token)
     }
 
-    // Refresh Token Management
+    @Synchronized
     fun getRefreshToken(): String? {
-        return Paper.book().read(REFRESH_TOKEN_KEY, "")
+        if (cachedRefreshToken == null) {
+            cachedRefreshToken = Paper.book().read<String>(REFRESH_TOKEN_KEY, "")
+        }
+        return cachedRefreshToken
     }
 
+    @Synchronized
     fun saveRefreshToken(refreshToken: String) {
+        cachedRefreshToken = refreshToken
         Paper.book().write(REFRESH_TOKEN_KEY, refreshToken)
     }
 
-    // Optional: Delete both tokens
+    @Synchronized
     fun clearTokens() {
+        cachedAccessToken = null
+        cachedRefreshToken = null
         Paper.book().delete(TOKEN_KEY)
         Paper.book().delete(REFRESH_TOKEN_KEY)
     }

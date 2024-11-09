@@ -79,8 +79,5 @@ class AuthRemoteDataSourceImpl @Inject constructor(
 
         return api.getUserLogin(params.accessToken.toRequestBody())
     }
-
-    override suspend fun refreshToken(params: RefreshTokenFormParamsEntity): Response<ResponseDto<AuthResponseDto>> {
-        return api.postRefreshToken(params.refreshToken.toRequestBody())
-    }
+    
 }

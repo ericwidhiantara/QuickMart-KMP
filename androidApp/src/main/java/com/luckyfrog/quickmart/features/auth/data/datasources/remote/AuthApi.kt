@@ -6,6 +6,8 @@ import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPassword
 import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDto
 import okhttp3.RequestBody
 import retrofit2.Response
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -66,9 +68,10 @@ interface AuthApi {
         @Part("access_token") accessToken: RequestBody
     ): Response<ResponseDto<UserResponseDto>>
 
-    @Multipart
+
+    @FormUrlEncoded
     @POST("auth/refresh-token")
     suspend fun postRefreshToken(
-        @Part("refresh_token") refreshToken: RequestBody
+        @Field("refresh_token") refreshToken: String
     ): Response<ResponseDto<AuthResponseDto>>
 }
