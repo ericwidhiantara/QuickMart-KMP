@@ -3,6 +3,7 @@ package com.luckyfrog.quickmart.core.di
 import android.content.Context
 import com.luckyfrog.quickmart.core.network.AuthAuthenticator
 import com.luckyfrog.quickmart.core.network.AuthInterceptor
+import com.luckyfrog.quickmart.core.network.RetrofitInterceptor
 import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthApi
 import com.luckyfrog.quickmart.features.category.data.datasources.remote.CategoryApi
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductApi
@@ -15,7 +16,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -51,13 +51,14 @@ object RetrofitModule {
         authInterceptor: AuthInterceptor,
         authAuthenticator: AuthAuthenticator,
     ): OkHttpClient {
-        val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
+//        val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
+//            level = HttpLoggingInterceptor.Level.BODY
+//        }
 
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
-            .addInterceptor(httpLoggingInterceptor)
+//            .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(RetrofitInterceptor())
             .authenticator(authAuthenticator)
             .readTimeout(60, TimeUnit.SECONDS)
             .connectTimeout(60, TimeUnit.SECONDS)

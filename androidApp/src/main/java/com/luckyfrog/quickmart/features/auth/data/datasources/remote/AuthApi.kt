@@ -67,7 +67,7 @@ interface AuthApi {
     ): Response<ResponseDto<UserResponseDto>>
 
     @Multipart
-    @POST("auth/refresh")
+    @POST("auth/refresh-token")
     suspend fun postRefreshToken(
         @Part("refresh_token") refreshToken: RequestBody
     ): Response<ResponseDto<AuthResponseDto>>

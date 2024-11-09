@@ -14,7 +14,6 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import okhttp3.Route
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
@@ -27,6 +26,9 @@ class AuthAuthenticator @Inject constructor(
         val token = runBlocking {
             tokenManager.getRefreshToken()
         }
+
+
+
         return runBlocking {
             Log.d("AuthAuthenticator", "Ini token: $token")
 
@@ -38,6 +40,7 @@ class AuthAuthenticator @Inject constructor(
 
             newToken.body()?.let {
                 tokenManager.saveToken(it.data?.accessToken ?: "")
+//                tokenManager.saveRefreshToken(it.data?.refreshToken ?: "")
                 response.request.newBuilder()
                     .header("Authorization", "Bearer ${it.data?.accessToken ?: ""}")
                     .build()
@@ -46,9 +49,12 @@ class AuthAuthenticator @Inject constructor(
     }
 
     private suspend fun getNewToken(refreshToken: String?): retrofit2.Response<ResponseDto<AuthResponseDto>> {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        val okHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
+//        val loggingInterceptor = HttpLoggingInterceptor()
+//        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        val okHttpClient = OkHttpClient.Builder()
+//            .addInterceptor(loggingInterceptor)
+            .addInterceptor(RetrofitInterceptor())
+            .build()
 
         val retrofit = Retrofit.Builder()
             .baseUrl(Constants.SERVER_URL)
@@ -59,6 +65,8 @@ class AuthAuthenticator @Inject constructor(
         val form = RefreshTokenFormParamsEntity(
             refreshToken = refreshToken ?: "",
         )
+        Log.i("AuthAuthenticator", "refresh token: ${form.refreshToken}")
+
         return service.postRefreshToken(form.refreshToken.toRequestBody())
     }
 }
