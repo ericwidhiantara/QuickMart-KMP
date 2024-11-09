@@ -19,47 +19,50 @@ import javax.inject.Inject
 class AuthAuthenticator @Inject constructor(
     private val tokenManager: TokenManager,
 ) : Authenticator {
-    @Synchronized
+    private val lock = Any()
+
     override fun authenticate(route: Route?, response: Response): Request? {
-        // Don't retry if we already tried to refresh the token
-        if (response.request.header("Retry-With-Refresh-Token") != null) {
-            return null
-        }
-
-        val refreshToken = tokenManager.getRefreshToken()
-        if (refreshToken.isNullOrEmpty()) {
-            tokenManager.clearTokens()
-            return null
-        }
-
-        return try {
-            // Execute refresh token network request synchronously
-            val newTokenResponse = runBlocking {
-                getNewToken(refreshToken)
+        synchronized(lock) {
+            // Don't retry if we already tried to refresh the token
+            if (response.request.header("Retry-With-Refresh-Token") != null) {
+                return null
             }
 
-            if (!newTokenResponse.isSuccessful || newTokenResponse.body()?.data?.accessToken.isNullOrEmpty()) {
+            val refreshToken = tokenManager.getRefreshToken()
+            if (refreshToken.isNullOrEmpty()) {
                 tokenManager.clearTokens()
                 return null
             }
 
-            newTokenResponse.body()?.data?.let { authData ->
-                // Save new tokens
-                tokenManager.saveToken(authData.accessToken ?: "")
-                authData.refreshToken?.let { newRefreshToken ->
-                    tokenManager.saveRefreshToken(newRefreshToken)
+            return try {
+                // Execute refresh token synchronously
+                val newTokenResponse = runBlocking {
+                    getNewToken(refreshToken)
                 }
 
-                // Create new request with new token
-                response.request.newBuilder()
-                    .removeHeader("Authorization")
-                    .addHeader("Authorization", "Bearer ${authData.accessToken}")
-                    .header("Retry-With-Refresh-Token", "true")
-                    .build()
+                if (!newTokenResponse.isSuccessful || newTokenResponse.body()?.data?.accessToken.isNullOrEmpty()) {
+                    tokenManager.clearTokens()
+                    return null
+                }
+
+                newTokenResponse.body()?.data?.let { authData ->
+                    // Save new tokens
+                    tokenManager.saveToken(authData.accessToken ?: "")
+                    authData.refreshToken?.let { newRefreshToken ->
+                        tokenManager.saveRefreshToken(newRefreshToken)
+                    }
+
+                    // Retry the original request with the new token
+                    response.request.newBuilder()
+                        .removeHeader("Authorization")
+                        .addHeader("Authorization", "Bearer ${authData.accessToken}")
+                        .header("Retry-With-Refresh-Token", "true")
+                        .build()
+                }
+            } catch (e: Exception) {
+                tokenManager.clearTokens()
+                null
             }
-        } catch (e: Exception) {
-            tokenManager.clearTokens()
-            null
         }
     }
 
