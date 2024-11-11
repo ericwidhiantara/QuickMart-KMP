@@ -23,3 +23,15 @@ data class MetaDto(
     @SerializedName("error_detail")
     val errorDetail: Any? = null
 )
+
+
+data class PaginationDto<T>(
+    val total: Int?,
+    @SerializedName("current_page")
+    val currentPage: Int?,
+    @SerializedName("page_total")
+    val pageTotal: Int?,
+    @SerializedName("page_num_list")
+    val pageNumList: List<Long>?,
+    val data: List<T>?
+)

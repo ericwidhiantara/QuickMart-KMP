@@ -5,18 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CategoryEntity(
-    val total: Int?,
-    @SerializedName("current_page")
-    val currentPage: Int?,
-    @SerializedName("page_total")
-    val pageTotal: Int?,
-    @SerializedName("page_num_list")
-    val pageNumList: List<Long>?,
-    val data: List<CategoryItemEntity>?
-)
-
-@Serializable
-data class CategoryItemEntity(
     val id: String?,
     @SerializedName("created_at")
     val createdAt: Int?,

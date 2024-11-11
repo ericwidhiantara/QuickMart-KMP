@@ -1,5 +1,6 @@
 package com.luckyfrog.quickmart.features.product.data.datasources.remote
 
+import com.luckyfrog.quickmart.core.generic.dto.PaginationDto
 import com.luckyfrog.quickmart.features.category.data.datasources.remote.CategoryApi
 import com.luckyfrog.quickmart.features.category.data.datasources.remote.CategoryRemoteDataSource
 import com.luckyfrog.quickmart.features.category.data.models.response.CategoryResponseDto
@@ -12,7 +13,7 @@ class CategoryRemoteDataSourceImpl @Inject constructor(
 ) : CategoryRemoteDataSource {
 
     override suspend fun getCategories(
-    ): CategoryResponseDto {
+    ): PaginationDto<CategoryResponseDto> {
         val params = CategoryFormParamsEntity(
             query = null,
             queryBy = "name",

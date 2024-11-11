@@ -2,7 +2,7 @@ package com.luckyfrog.quickmart.features.category.presentation.categories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.luckyfrog.quickmart.features.category.domain.entities.CategoryItemEntity
+import com.luckyfrog.quickmart.features.category.domain.entities.CategoryEntity
 import com.luckyfrog.quickmart.features.category.domain.usecases.GetCategoriesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,8 +15,8 @@ class CategoryListViewModel @Inject constructor(
     private val getCategoryUseCase: GetCategoriesUseCase
 ) : ViewModel() {
 
-    private val _data = MutableStateFlow<List<CategoryItemEntity>?>(null)
-    val data: StateFlow<List<CategoryItemEntity>?> = _data
+    private val _data = MutableStateFlow<List<CategoryEntity>?>(null)
+    val data: StateFlow<List<CategoryEntity>?> = _data
 
     fun fetchCategories() {
         viewModelScope.launch {

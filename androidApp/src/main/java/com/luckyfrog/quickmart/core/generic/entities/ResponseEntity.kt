@@ -11,3 +11,12 @@ data class MetaEntity(
     val message: String?,
     val errorDetail: Any?
 )
+
+
+data class PaginationEntity<T>(
+    val total: Int?,
+    val currentPage: Int?,
+    val pageTotal: Int?,
+    val pageNumList: List<Long>?,
+    val data: List<T>?
+)

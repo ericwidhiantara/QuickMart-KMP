@@ -22,12 +22,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.luckyfrog.quickmart.core.resources.Images
-import com.luckyfrog.quickmart.features.category.domain.entities.CategoryItemEntity
+import com.luckyfrog.quickmart.features.category.domain.entities.CategoryEntity
 import com.luckyfrog.quickmart.utils.resource.theme.borderColor
 
 @Composable
 fun CategoryCard(
-    itemEntity: CategoryItemEntity,
+    itemEntity: CategoryEntity,
     onClick: () -> Unit
 ) {
     Card(

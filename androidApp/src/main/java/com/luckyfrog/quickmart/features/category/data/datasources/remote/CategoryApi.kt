@@ -1,5 +1,6 @@
 package com.luckyfrog.quickmart.features.category.data.datasources.remote
 
+import com.luckyfrog.quickmart.core.generic.dto.PaginationDto
 import com.luckyfrog.quickmart.features.category.data.models.response.CategoryResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -14,6 +15,6 @@ interface CategoryApi {
         @Query("sort_order") order: String = "desc",
         @Query("page") page: Int?,
         @Query("limit") limit: Int?,
-    ): CategoryResponseDto
+    ): PaginationDto<CategoryResponseDto>
 
 }
