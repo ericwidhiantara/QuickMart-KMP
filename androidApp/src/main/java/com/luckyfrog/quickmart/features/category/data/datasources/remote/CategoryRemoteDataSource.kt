@@ -5,6 +5,6 @@ import com.luckyfrog.quickmart.features.category.data.models.response.CategoryRe
 interface CategoryRemoteDataSource {
 
     suspend fun getCategories(
-    ): List<CategoryResponseDto>
-    
+    ): CategoryResponseDto
+
 }

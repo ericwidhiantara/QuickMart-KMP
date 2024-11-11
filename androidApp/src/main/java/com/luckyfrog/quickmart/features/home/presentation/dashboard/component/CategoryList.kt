@@ -56,7 +56,7 @@ fun CategoryList(
                         itemEntity = data!![index],
                         onClick = {
                             navController.navigate(
-                                "${AppScreen.ProductListByCategoryScreen.route}?title=${data!![index].name}&slug=${data!![index].slug}"
+                                "${AppScreen.ProductListByCategoryScreen.route}?title=${data!![index].name}&slug=beauty}"
                             )
                         }
                     )

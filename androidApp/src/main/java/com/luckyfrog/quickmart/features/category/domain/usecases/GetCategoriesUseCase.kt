@@ -7,8 +7,8 @@ import javax.inject.Inject
 
 class GetCategoriesUseCase @Inject constructor(
     private val repository: CategoryRepository
-) : UseCase<Unit, List<CategoryEntity>> {
-    override suspend fun execute(input: Unit): List<CategoryEntity> {
+) : UseCase<Unit, CategoryEntity> {
+    override suspend fun execute(input: Unit): CategoryEntity {
         return repository.getCategories()
     }
 }
