@@ -15,5 +15,5 @@ object Constants {
     const val DEFAULT_SYSTEM_LOCALE_LANG = "def"
     const val MAX_PAGE_SIZE = 10
 
-    const val SERVER_URL = "https://surround-rec-guaranteed-forgotten.trycloudflare.com"
+    const val SERVER_URL = "https://evaluated-plus-dogs-statutory.trycloudflare.com"
 }
