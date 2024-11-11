@@ -4,6 +4,6 @@ import com.luckyfrog.quickmart.features.category.domain.entities.CategoryEntity
 
 interface CategoryRepository {
 
-    suspend fun getCategories(): List<CategoryEntity>
+    suspend fun getCategories(): CategoryEntity
 
 }
