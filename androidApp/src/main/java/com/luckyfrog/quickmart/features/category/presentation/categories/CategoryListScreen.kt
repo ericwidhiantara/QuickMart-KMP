@@ -36,7 +36,7 @@ fun CategoryListScreen(
     }
 
     // Observe the category from the ViewModel
-    val data by viewModel.data.collectAsState()
+    val data by viewModel.state.collectAsState()
 
     Scaffold(
         topBar = {
@@ -47,16 +47,9 @@ fun CategoryListScreen(
             )
         },
     ) {
-        when {
-            data == null -> {
-                // Loading or error state
-                // Loading or error state with centered CircularProgressIndicator
-                PageLoader(modifier = Modifier.fillMaxSize())
+        when (val state = data) {
 
-            }
-
-            else -> {
-                // Category is loaded, show its details
+            is CategoryState.Success -> {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier
@@ -64,16 +57,17 @@ fun CategoryListScreen(
                         .padding(horizontal = 16.dp, vertical = 12.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
-                    val itemCount = data?.size ?: 0
+                    val itemCount = state.data.data?.size ?: 0
                     val displayCount =
                         if (isFromHomeScreen) itemCount.coerceAtMost(4) else itemCount
 
                     items(displayCount) { index ->
+                        val item = state.data.data!![index]
                         CategoryCard(
-                            itemEntity = data!![index],
+                            itemEntity = item,
                             onClick = {
                                 navController.navigate(
-                                    "${AppScreen.ProductListByCategoryScreen.route}?title=${data!![index].name}&slug=beauty}"
+                                    "${AppScreen.ProductListByCategoryScreen.route}?title=${item.name}&slug=beauty}"
                                 )
                             }
                         )
@@ -81,8 +75,20 @@ fun CategoryListScreen(
                     item { Spacer(modifier = Modifier.padding(4.dp)) }
                 }
             }
+
+            is CategoryState.Error -> {
+
+            }
+
+            is CategoryState.Loading -> {
+                PageLoader(modifier = Modifier.fillMaxSize())
+
+            }
+
+            is CategoryState.Idle -> {
+
+                // No action yet
+            }
         }
-
-
     }
 }

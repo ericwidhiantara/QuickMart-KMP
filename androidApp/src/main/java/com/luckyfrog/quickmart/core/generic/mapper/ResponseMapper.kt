@@ -27,15 +27,24 @@ fun <T, R> List<T>.toEntityList(mapper: (T) -> R): List<R> {
     return this.map { mapper(it) }
 }
 
+
+fun <T, R> ResponseDto<PaginationDto<T>>.toEntity(mapper: (T) -> R): ResponseEntity<PaginationEntity<R>> {
+    return ResponseEntity(
+        meta = this.meta?.toEntity(),
+        data = this.data?.toEntity(mapper)
+    )
+}
+
 fun <T, R> PaginationDto<T>.toEntity(mapper: (T) -> R): PaginationEntity<R> {
     return PaginationEntity(
         total = this.total,
         pageTotal = this.pageTotal,
         currentPage = this.currentPage,
         pageNumList = this.pageNumList,
-        data = this.data?.toEntityList(mapper)
+        data = this.data?.map(mapper) ?: emptyList()
     )
 }
+
 
 fun <T> List<T>.toDtoList(): List<T> {
     return this.map {

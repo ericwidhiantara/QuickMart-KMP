@@ -2,8 +2,8 @@ package com.luckyfrog.quickmart.features.home.presentation.dashboard.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListViewModel
+import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryState
 import com.luckyfrog.quickmart.features.category.presentation.categories.component.CategoryCard
 import com.luckyfrog.quickmart.utils.PageLoader
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
@@ -31,38 +32,48 @@ fun CategoryList(
     }
 
     // Observe the category from the ViewModel
-    val data by viewModel.data.collectAsState()
-    when {
-        data == null -> {
-            // Loading or error state
-            // Loading or error state with centered CircularProgressIndicator
-            PageLoader(modifier = Modifier.height(60.dp))
-        }
+    val data by viewModel.state.collectAsState()
 
-        else -> {
+    when (val state = data) {
 
-            // Category is loaded, show its details
+        is CategoryState.Success -> {
             LazyRow(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
-                val itemCount = data?.size ?: 0
+                val itemCount = state.data.data?.size ?: 0
                 val displayCount =
                     itemCount.coerceAtMost(4)
 
                 items(displayCount) { index ->
+                    val item = state.data.data!![index]
                     CategoryCard(
-                        itemEntity = data!![index],
+                        itemEntity = item,
                         onClick = {
                             navController.navigate(
-                                "${AppScreen.ProductListByCategoryScreen.route}?title=${data!![index].name}&slug=beauty}"
+                                "${AppScreen.ProductListByCategoryScreen.route}?title=${item.name}&slug=beauty}"
                             )
                         }
                     )
                 }
                 item { Spacer(modifier = Modifier.padding(4.dp)) }
             }
+        }
+
+
+        is CategoryState.Error -> {
+
+        }
+
+        is CategoryState.Loading -> {
+            PageLoader(modifier = Modifier.fillMaxSize())
+
+        }
+
+        is CategoryState.Idle -> {
+
+            // No action yet
         }
     }
 

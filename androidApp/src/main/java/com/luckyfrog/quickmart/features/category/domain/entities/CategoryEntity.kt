@@ -11,9 +11,9 @@ data class CategoryEntity(
     @SerializedName("updated_at")
     val updatedAt: Int?,
     @SerializedName("created_by")
-    val createdBy: Int?,
+    val createdBy: String?,
     @SerializedName("updated_by")
-    val updatedBy: Int?,
+    val updatedBy: String?,
     val name: String?,
     val description: String? = null
 )

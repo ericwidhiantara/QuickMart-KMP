@@ -48,7 +48,6 @@ import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewMode
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.Carousel
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CategoryList
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.ProfileImage
-import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListScreen
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import java.util.Locale
@@ -207,11 +206,11 @@ fun HomeScreen(
 
             }
             Spacer(modifier = Modifier.height(12.dp))
-            ProductListScreen(
-                mainViewModel = mainViewModel,
-                navController = navController,
-                isFromHomeScreen = true,
-            )
+//            ProductListScreen(
+//                mainViewModel = mainViewModel,
+//                navController = navController,
+//                isFromHomeScreen = true,
+//            )
         }
     }
 }
