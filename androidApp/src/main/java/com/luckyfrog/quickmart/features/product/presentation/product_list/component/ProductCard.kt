@@ -55,7 +55,7 @@ fun ProductCard(
             defaultElevation = 8.dp
         )
     ) {
-        val painter = rememberAsyncImagePainter(itemEntity.thumbnail)
+        val painter = rememberAsyncImagePainter("https://picsum.photos/200/300")
         val transition by animateFloatAsState(
             targetValue = if (painter.state is AsyncImagePainter.State.Success) 1f else 0f,
             label = ""
@@ -95,7 +95,7 @@ fun ProductCard(
             }
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
             Text(
-                text = itemEntity.title,
+                text = itemEntity.name ?: "",
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.titleMedium,
                 fontSize = 14.sp,

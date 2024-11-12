@@ -3,21 +3,19 @@ package com.luckyfrog.quickmart.features.product.presentation.product_list_by_ca
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductFormParamsEntity
-import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsByCategoryUseCase
+import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ProductListByCategoryViewModel @Inject constructor(
-    private val getProductsByCategoryUseCase: GetProductsByCategoryUseCase,
+    private val getProductsByCategoryUseCase: GetProductsUseCase,
 ) : ViewModel() {
 
     private val _productsState: MutableStateFlow<PagingData<ProductEntity>> =
@@ -41,10 +39,10 @@ class ProductListByCategoryViewModel @Inject constructor(
     private suspend fun getProductsByCategory(params: ProductFormParamsEntity) {
         getProductsByCategoryUseCase.execute(params)
             .distinctUntilChanged()
-            .cachedIn(viewModelScope)
-            .collectLatest { pagingData ->
-                _productsState.value = pagingData
-            }
+//            .cachedIn(viewModelScope)
+//            .collectLatest { pagingData ->
+//                _productsState.value = pagingData
+//            }
     }
 }
 

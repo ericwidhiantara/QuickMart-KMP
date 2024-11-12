@@ -1,8 +1,10 @@
 package com.luckyfrog.quickmart.features.product.data.datasources.remote
 
+import com.luckyfrog.quickmart.core.generic.dto.PaginationDto
 import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
 import com.luckyfrog.quickmart.features.product.data.models.response.ProductResponseDto
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductFormParamsEntity
+import retrofit2.Response
 import javax.inject.Inject
 
 class ProductRemoteDataSourceImpl @Inject constructor(
@@ -11,24 +13,15 @@ class ProductRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getProducts(
         params: ProductFormParamsEntity
-    ): ResponseDto<List<ProductResponseDto>> {
+    ): Response<ResponseDto<PaginationDto<ProductResponseDto>>> {
         return api.getProducts(
-            limit = params.limit,
-            skip = params.skip,
-            order = params.order,
+            categoryId = params.categoryId,
+            query = params.query,
+            queryBy = params.queryBy,
             sortBy = params.sortBy,
-        )
-    }
-
-    override suspend fun getProductsByCategory(
-        params: ProductFormParamsEntity
-    ): ResponseDto<List<ProductResponseDto>> {
-        return api.getProductsByCategory(
+            order = params.sortOrder,
+            page = params.page,
             limit = params.limit,
-            skip = params.skip,
-            category = params.category ?: "",
-            order = params.order,
-            sortBy = params.sortBy,
         )
     }
 

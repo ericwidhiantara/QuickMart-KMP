@@ -19,21 +19,21 @@ class ProductPagingSource(
         return try {
             val currentPage = params.key ?: 1
             val form = ProductFormParamsEntity(
+                categoryId = null,
+                query = null,
+                queryBy = null,
+                sortBy = "created_at",
+                sortOrder = "asc",
                 limit = Constants.MAX_PAGE_SIZE,
-                skip = (currentPage - 1) * Constants.MAX_PAGE_SIZE,
-                category = null,
-                order = "asc",
-                sortBy = "createdAt",
-                q = null,
             )
             val result = remoteDataSource.getProducts(
                 params = form
             )
             log("result: $result", "ProductPagingSource")
             LoadResult.Page(
-                data = if (result.data != null) result.data.toEntityList() else emptyList(),
+                data = if (result.body()?.data != null) result.body()?.data?.data!!.toEntityList() else emptyList(),
                 prevKey = if (currentPage == 1) null else -1,
-                nextKey = if (result.data!!.size < Constants.MAX_PAGE_SIZE) null else currentPage + 1
+                nextKey = if (result.body()?.data?.data!!.size < Constants.MAX_PAGE_SIZE) null else currentPage + 1
             )
         } catch (exception: IOException) {
             return LoadResult.Error(exception)

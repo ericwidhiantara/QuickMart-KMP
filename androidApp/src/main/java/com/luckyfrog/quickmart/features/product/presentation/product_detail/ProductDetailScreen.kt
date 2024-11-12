@@ -100,7 +100,7 @@ fun ProductDetailScreen(
 fun ProductDetailContent(product: ProductEntity) {
     Column {
         Text(
-            text = "Product Name: ${product.title}",
+            text = "Product Name: ${product.name}",
             style = MaterialTheme.typography.headlineMedium
         )
         Text(text = "Product Price: ${product.price}", style = MaterialTheme.typography.bodyLarge)

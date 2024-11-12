@@ -3,10 +3,11 @@ package com.luckyfrog.quickmart.features.product.domain.entities
 import com.luckyfrog.quickmart.utils.helper.Constants
 
 data class ProductFormParamsEntity(
+    val categoryId: String?,
+    val query: String?,
+    val queryBy: String? = "name",
+    val sortBy: String = "created_at",
+    val sortOrder: String = "asc",
     val limit: Int = Constants.MAX_PAGE_SIZE,
-    val skip: Int = 0,
-    val category: String?,
-    val order: String = "asc",
-    val sortBy: String = "createdAt",
-    val q: String?,
+    val page: Int = 1,
 )

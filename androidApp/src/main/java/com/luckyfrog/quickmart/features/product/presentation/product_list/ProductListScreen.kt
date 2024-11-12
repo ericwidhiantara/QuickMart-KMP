@@ -15,6 +15,8 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,20 +28,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.widgets.CustomFilterBottomSheet
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
-import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
+import com.luckyfrog.quickmart.features.product.domain.entities.ProductFormParamsEntity
 import com.luckyfrog.quickmart.features.product.presentation.product_list.component.ProductCard
-import com.luckyfrog.quickmart.utils.ErrorMessage
-import com.luckyfrog.quickmart.utils.LoadingNextPageItem
-import com.luckyfrog.quickmart.utils.NoData
 import com.luckyfrog.quickmart.utils.PageLoader
+import com.luckyfrog.quickmart.utils.helper.Constants
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,12 +48,24 @@ fun ProductListScreen(
     isFromHomeScreen: Boolean = false,
     topBarTitle: String = stringResource(R.string.app_name)
 ) {
-    val productPagingItems: LazyPagingItems<ProductEntity> =
-        viewModel.productsState.collectAsLazyPagingItems()
+    val data by viewModel.state.collectAsState()
     val sheetState = rememberModalBottomSheetState()
     var selectedFilter by remember { mutableStateOf("") }
 
     var showBottomSheet by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        val params = ProductFormParamsEntity(
+            categoryId = null,
+            query = null,
+            queryBy = null,
+            sortBy = "created_at",
+            sortOrder = "asc",
+            limit = Constants.MAX_PAGE_SIZE,
+        )
+        viewModel.fetchProducts(params)
+    }
+
     Scaffold(
 
         topBar = {
@@ -118,59 +127,103 @@ fun ProductListScreen(
                 )
             }
         }
-        productPagingItems.apply {
-            when {
-                loadState.refresh is LoadState.Loading -> {
-                    PageLoader(modifier = Modifier.fillMaxSize())
-                }
+//        productPagingItems.apply {
+//            when {
+//                loadState.refresh is LoadState.Loading -> {
+//                    PageLoader(modifier = Modifier.fillMaxSize())
+//                }
+//
+//                loadState.refresh is LoadState.Error -> {
+//                    val error = productPagingItems.loadState.refresh as LoadState.Error
+//                    ErrorMessage(
+//                        modifier = Modifier,
+//                        message = error.error.localizedMessage!!,
+//                        onClickRetry = { retry() })
+//                }
+//
+//                loadState.append is LoadState.Loading -> {
+//                    LoadingNextPageItem(modifier = Modifier.fillMaxSize())
+//                }
+//
+//                loadState.append is LoadState.Error -> {
+//                    val error = productPagingItems.loadState.append as LoadState.Error
+//                    ErrorMessage(
+//                        modifier = Modifier,
+//                        message = error.error.localizedMessage!!,
+//                        onClickRetry = { retry() })
+//                }
+//
+//                loadState.append is LoadState.NotLoading && productPagingItems.itemCount == 0 -> {
+//                    NoData(modifier = Modifier.fillMaxSize())
+//                }
+//            }
+//        }
+//
+//        LazyVerticalGrid(
+//            columns = GridCells.Fixed(2),
+//            modifier = Modifier
+//                .padding(it),
+//            horizontalArrangement = Arrangement.spacedBy(8.dp),
+//        ) {
+//            val itemCount = productPagingItems.itemCount
+//            val displayCount = if (isFromHomeScreen) itemCount.coerceAtMost(10) else itemCount
+//
+//            items(displayCount) { index ->
+//                productPagingItems[index]?.let { product ->
+//                    ProductCard(
+//                        itemEntity = product,
+//                        onClick = {
+//                            val productId = product.id
+//                            navController.navigate("${AppScreen.ProductDetailScreen.route}/$productId")
+//                        }
+//                    )
+//                }
+//            }
+//            item { Spacer(modifier = Modifier.padding(4.dp)) }
+//        }
 
-                loadState.refresh is LoadState.Error -> {
-                    val error = productPagingItems.loadState.refresh as LoadState.Error
-                    ErrorMessage(
-                        modifier = Modifier,
-                        message = error.error.localizedMessage!!,
-                        onClickRetry = { retry() })
-                }
+        when (val state = data) {
 
-                loadState.append is LoadState.Loading -> {
-                    LoadingNextPageItem(modifier = Modifier.fillMaxSize())
-                }
+            is ProductState.Success -> {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    modifier = Modifier
+                        .padding(it)
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                ) {
+                    val itemCount = state.data.data?.size ?: 0
+                    val displayCount =
+                        if (isFromHomeScreen) itemCount.coerceAtMost(4) else itemCount
 
-                loadState.append is LoadState.Error -> {
-                    val error = productPagingItems.loadState.append as LoadState.Error
-                    ErrorMessage(
-                        modifier = Modifier,
-                        message = error.error.localizedMessage!!,
-                        onClickRetry = { retry() })
+                    items(displayCount) { index ->
+                        val item = state.data.data!![index]
+                        ProductCard(
+                            itemEntity = item,
+                            onClick = {
+                                val productId = item.id
+                                navController.navigate("${AppScreen.ProductDetailScreen.route}/$productId")
+                            }
+                        )
+                    }
+                    item { Spacer(modifier = Modifier.padding(4.dp)) }
                 }
+            }
 
-                loadState.append is LoadState.NotLoading && productPagingItems.itemCount == 0 -> {
-                    NoData(modifier = Modifier.fillMaxSize())
-                }
+            is ProductState.Error -> {
+
+            }
+
+            is ProductState.Loading -> {
+                PageLoader(modifier = Modifier.fillMaxSize())
+
+            }
+
+            is ProductState.Idle -> {
+
+                // No action yet
             }
         }
 
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            modifier = Modifier
-                .padding(it),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            val itemCount = productPagingItems.itemCount
-            val displayCount = if (isFromHomeScreen) itemCount.coerceAtMost(10) else itemCount
-
-            items(displayCount) { index ->
-                productPagingItems[index]?.let { product ->
-                    ProductCard(
-                        itemEntity = product,
-                        onClick = {
-                            val productId = product.id
-                            navController.navigate("${AppScreen.ProductDetailScreen.route}/$productId")
-                        }
-                    )
-                }
-            }
-            item { Spacer(modifier = Modifier.padding(4.dp)) }
-        }
     }
 }

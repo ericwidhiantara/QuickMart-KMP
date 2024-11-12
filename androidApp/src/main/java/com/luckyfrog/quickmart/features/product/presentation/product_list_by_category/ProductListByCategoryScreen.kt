@@ -56,12 +56,12 @@ fun ProductListByCategoryScreen(
     // Call onEvent with the category slug to fetch products
     if (categorySlug != null) {
         val params = ProductFormParamsEntity(
+            categoryId = null,
+            query = null,
+            queryBy = null,
+            sortBy = "created_at",
+            sortOrder = "asc",
             limit = Constants.MAX_PAGE_SIZE,
-            skip = 0,
-            category = categorySlug,
-            order = "asc",
-            sortBy = "createdAt",
-            q = null
         )
         viewModel.onEvent(ProductListByCategory.GetProductsByCategory(params))
     }
