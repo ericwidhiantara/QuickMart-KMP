@@ -110,7 +110,7 @@ fun ProductCard(
 
             Spacer(modifier = Modifier.padding(vertical = 4.dp))
             Text(
-                text = itemEntity.price.toString(),
+                text = itemEntity.localizedPrice ?: "",
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
                     .padding(bottom = 8.dp),

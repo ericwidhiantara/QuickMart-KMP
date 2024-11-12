@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.features.category.domain.entities.CategoryEntity
+import com.luckyfrog.quickmart.utils.helper.capitalizeWords
 import com.luckyfrog.quickmart.utils.resource.theme.borderColor
 
 @Composable
@@ -61,11 +62,10 @@ fun CategoryCard(
             )
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
             Text(
-                text = itemEntity.name ?: "-",
+                text = itemEntity.name?.capitalizeWords() ?: "-",
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-
-                )
+            )
 
         }
     }
