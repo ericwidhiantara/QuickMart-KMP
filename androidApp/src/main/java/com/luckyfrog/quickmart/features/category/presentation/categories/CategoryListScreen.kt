@@ -43,7 +43,7 @@ fun CategoryListScreen(
             query = null,
             queryBy = null,
             sortBy = "created_at",
-            sortOrder = "asc",
+            sortOrder = "desc",
             limit = Constants.MAX_PAGE_SIZE,
             page = 1,
         )
@@ -70,7 +70,7 @@ fun CategoryListScreen(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier
                         .padding(it)
-                        .padding(horizontal = 16.dp),
+                        .padding(horizontal = 16.dp, vertical = 20.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     val itemCount = if (isFromHomeScreen) {

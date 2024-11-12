@@ -23,7 +23,7 @@ class ProductPagingSource(
                 query = null,
                 queryBy = null,
                 sortBy = "created_at",
-                sortOrder = "asc",
+                sortOrder = "desc",
                 limit = Constants.MAX_PAGE_SIZE,
             )
             val result = remoteDataSource.getProducts(
