@@ -67,7 +67,7 @@ fun CategoryListScreen(
                             itemEntity = item,
                             onClick = {
                                 navController.navigate(
-                                    "${AppScreen.ProductListByCategoryScreen.route}?title=${item.name}&slug=beauty}"
+                                    "${AppScreen.ProductListByCategoryScreen.route}?id=${item.id}&title=${item.name}"
                                 )
                             }
                         )

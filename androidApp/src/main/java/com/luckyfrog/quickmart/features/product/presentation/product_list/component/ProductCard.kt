@@ -90,12 +90,10 @@ fun ProductCard(
                         tint = MaterialTheme.colorScheme.primaryContainer
                     )
                 }
-
-
             }
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
             Text(
-                text = itemEntity.name ?: "",
+                text = itemEntity.id ?: "",
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.titleMedium,
                 fontSize = 14.sp,

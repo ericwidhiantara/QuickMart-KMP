@@ -132,15 +132,15 @@ fun NavGraph(mainViewModel: MainViewModel) {
             )
         }
 
-        composable(route = AppScreen.ProductListByCategoryScreen.route + "?title={title}&slug={slug}") {
-            val title = it.arguments?.getString("title")
+        composable(route = AppScreen.ProductListByCategoryScreen.route + "?id={id}&title={title}") {
+            val id = it.arguments?.getString("id")
                 ?: ""
-            val slug = it.arguments?.getString("slug")
+            val title = it.arguments?.getString("title")
                 ?: ""
             ProductListByCategoryScreen(
                 mainViewModel = mainViewModel, navController = navController,
                 topBarTitle = title,
-                categorySlug = slug,
+                categoryId = id,
             )
         }
 
