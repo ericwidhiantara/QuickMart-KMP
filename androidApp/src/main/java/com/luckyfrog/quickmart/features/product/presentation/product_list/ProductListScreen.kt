@@ -188,9 +188,8 @@ fun ProductListScreen(
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier
-                        .padding(it)
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                        .padding(it),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     val itemCount = state.data.data?.size ?: 0
                     val displayCount =
