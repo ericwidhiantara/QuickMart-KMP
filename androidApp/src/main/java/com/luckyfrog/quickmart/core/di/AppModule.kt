@@ -15,10 +15,10 @@ import com.luckyfrog.quickmart.features.auth.domain.usecases.SendOTPUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.VerifyOTPUseCase
 import com.luckyfrog.quickmart.features.category.data.datasources.remote.CategoryApi
 import com.luckyfrog.quickmart.features.category.data.datasources.remote.CategoryRemoteDataSource
+import com.luckyfrog.quickmart.features.category.data.datasources.remote.CategoryRemoteDataSourceImpl
 import com.luckyfrog.quickmart.features.category.data.repositories.CategoryRepositoryImpl
 import com.luckyfrog.quickmart.features.category.domain.repositories.CategoryRepository
 import com.luckyfrog.quickmart.features.category.domain.usecases.GetCategoriesUseCase
-import com.luckyfrog.quickmart.features.product.data.datasources.remote.CategoryRemoteDataSourceImpl
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductApi
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductRemoteDataSource
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductRemoteDataSourceImpl
