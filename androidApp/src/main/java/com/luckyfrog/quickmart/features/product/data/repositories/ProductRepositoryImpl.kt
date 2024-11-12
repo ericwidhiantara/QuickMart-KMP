@@ -10,7 +10,6 @@ import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductFormParamsEntity
 import com.luckyfrog.quickmart.features.product.domain.repositories.ProductRepository
 import com.luckyfrog.quickmart.utils.helper.ApiResponse
-import com.luckyfrog.quickmart.utils.helper.Constants
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -22,15 +21,7 @@ class ProductRepositoryImpl @Inject constructor(
     override suspend fun getProducts(params: ProductFormParamsEntity): Flow<ApiResponse<ResponseDto<PaginationEntity<ProductEntity>>>> =
         flow {
             emit(ApiResponse.Loading)
-            val form = ProductFormParamsEntity(
-                categoryId = null,
-                query = null,
-                queryBy = null,
-                sortBy = "created_at",
-                sortOrder = "asc",
-                limit = Constants.MAX_PAGE_SIZE,
-            )
-            val response = remoteDataSource.getProducts(params = form)
+            val response = remoteDataSource.getProducts(params = params)
             emit(processResponse(response) { it ->
                 it.data?.toEntity(
                     mapper = { it.toEntity() }
