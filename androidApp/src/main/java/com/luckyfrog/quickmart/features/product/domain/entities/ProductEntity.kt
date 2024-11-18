@@ -10,23 +10,39 @@ data class ProductEntity(
     val createdBy: String?,
     val updatedBy: String?,
     val categoryId: String?,
-    val sku: String?,
     val name: String?,
-    val stock: Int?,
-    val price: Double?,
-    val localizedPrice: String?,
-    val tags: List<String>?,
-    val description: String?,
-    val discountPercentage: Double?,
     val brand: String?,
+    val description: String?,
+    val tags: List<String>?,
+    val images: List<String>?,
+    val variants: List<VariantEntity>?
+)
+
+@Serializable
+data class VariantEntity(
+    val id: String?,
+    val createdAt: Int?,
+    val updatedAt: Int?,
+    val createdBy: String?,
+    val updatedBy: String?,
+    val isMain: Boolean?,
+    val productId: String?,
+    val image: String?,
+    val sku: String?,
+    val price: Double?,
+    val discountPercentage: Double?,
     val weight: Int?,
     val dimensions: DimensionsEntity?,
-    val img: List<String>? = null
+    val stock: Int?,
+    val size: String?,
+    val model: String?,
+    val color: String?,
+    val localizedPrice: String?
 )
 
 @Serializable
 data class DimensionsEntity(
+    val depth: Double?,
     val width: Double?,
-    val height: Double?,
-    val depth: Double?
+    val height: Double?
 )

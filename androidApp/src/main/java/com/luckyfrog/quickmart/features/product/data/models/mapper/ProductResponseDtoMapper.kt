@@ -2,65 +2,99 @@ package com.luckyfrog.quickmart.features.product.data.models.mapper
 
 import com.luckyfrog.quickmart.features.product.data.models.response.DimensionsResponseDto
 import com.luckyfrog.quickmart.features.product.data.models.response.ProductResponseDto
+import com.luckyfrog.quickmart.features.product.data.models.response.VariantResponseDto
 import com.luckyfrog.quickmart.features.product.domain.entities.DimensionsEntity
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
+import com.luckyfrog.quickmart.features.product.domain.entities.VariantEntity
 
 // Mapping from DTO to Entity
 fun ProductResponseDto.toEntity() = ProductEntity(
-    id = this.id,
-    createdAt = this.createdAt,
-    updatedAt = this.updatedAt,
-    createdBy = this.createdBy,
-    updatedBy = this.updatedBy,
-    categoryId = this.categoryId,
-    sku = this.sku,
-    name = this.name,
-    stock = this.stock,
-    price = this.price,
-    localizedPrice = this.localizedPrice,
-    tags = this.tags,
-    description = this.description,
-    discountPercentage = this.discountPercentage,
-    brand = this.brand,
-    weight = this.weight,
-    dimensions = this.dimensions?.toEntity(),
-    img = this.img
+    id = id,
+    createdAt = createdAt,
+    updatedAt = updatedAt,
+    createdBy = createdBy,
+    updatedBy = updatedBy,
+    categoryId = categoryId,
+    name = name,
+    brand = brand,
+    description = description,
+    tags = tags,
+    images = images,
+    variants = variants?.map { it.toEntity() }
+)
+
+fun VariantResponseDto.toEntity() = VariantEntity(
+    id = id,
+    createdAt = createdAt,
+    updatedAt = updatedAt,
+    createdBy = createdBy,
+    updatedBy = updatedBy,
+    isMain = isMain,
+    productId = productId,
+    image = image,
+    sku = sku,
+    price = price,
+    discountPercentage = discountPercentage,
+    weight = weight,
+    dimensions = dimensions?.toEntity(),
+    stock = stock,
+    size = size,
+    model = model,
+    color = color,
+    localizedPrice = localizedPrice
+)
+
+fun DimensionsResponseDto.toEntity() = DimensionsEntity(
+    width = width,
+    height = height,
+    depth = depth
 )
 
 // Mapping from Entity to DTO
 fun ProductEntity.toDto() = ProductResponseDto(
-    id = this.id,
-    createdAt = this.createdAt,
-    updatedAt = this.updatedAt,
-    createdBy = this.createdBy,
-    updatedBy = this.updatedBy,
-    categoryId = this.categoryId,
-    sku = this.sku,
-    name = this.name,
-    stock = this.stock,
-    price = this.price,
-    localizedPrice = this.localizedPrice,
-    tags = this.tags,
-    description = this.description,
-    discountPercentage = this.discountPercentage,
-    brand = this.brand,
-    weight = this.weight,
-    dimensions = this.dimensions?.toDto(),
-    img = this.img
+    id = id,
+    createdAt = createdAt,
+    updatedAt = updatedAt,
+    createdBy = createdBy,
+    updatedBy = updatedBy,
+    categoryId = categoryId,
+    name = name,
+    brand = brand,
+    description = description,
+    tags = tags,
+    images = images,
+    variants = variants?.map { it.toDto() }
 )
 
-fun DimensionsResponseDto.toEntity() = DimensionsEntity(width, height, depth)
-fun DimensionsEntity.toDto() = DimensionsResponseDto(width, height, depth)
+fun VariantEntity.toDto() = VariantResponseDto(
+    id = id,
+    createdAt = createdAt,
+    updatedAt = updatedAt,
+    createdBy = createdBy,
+    updatedBy = updatedBy,
+    isMain = isMain,
+    productId = productId,
+    image = image,
+    sku = sku,
+    price = price,
+    discountPercentage = discountPercentage,
+    weight = weight,
+    dimensions = dimensions?.toDto(),
+    stock = stock,
+    size = size,
+    model = model,
+    color = color,
+    localizedPrice = localizedPrice
+)
 
+fun DimensionsEntity.toDto() = DimensionsResponseDto(
+    width = width,
+    height = height,
+    depth = depth
+)
 
-fun List<ProductResponseDto>.toEntityList(): List<ProductEntity> {
-    return this.map {
-        it.toEntity()
-    }
-}
-
-fun List<ProductEntity>.toDtoList(): List<ProductResponseDto> {
-    return this.map {
-        it.toDto()
-    }
-}
+// List mappings
+fun List<ProductResponseDto>.toEntityList(): List<ProductEntity> = map { it.toEntity() }
+fun List<ProductEntity>.toDtoList(): List<ProductResponseDto> = map { it.toDto() }
+fun List<VariantResponseDto>.toEntityList(): List<VariantEntity> = map { it.toEntity() }
+fun List<VariantEntity>.toDtoList(): List<VariantResponseDto> = map { it.toDto() }

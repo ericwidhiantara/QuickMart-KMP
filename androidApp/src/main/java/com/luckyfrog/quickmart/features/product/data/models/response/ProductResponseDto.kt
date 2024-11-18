@@ -14,27 +14,46 @@ data class ProductResponseDto(
     val updatedBy: String?,
     @SerializedName("category_id")
     val categoryId: String?,
-    val sku: String?,
     val name: String?,
-    val stock: Int?,
-    val price: Double?,
-    @SerializedName("localized_price")
-    val localizedPrice: String?,
-    val tags: List<String>?,
+    val brand: String?,
     val description: String?,
+    val tags: List<String>?,
+    @SerializedName("images")
+    val images: List<String>?,
+    val variants: List<VariantResponseDto>?
+)
+
+data class VariantResponseDto(
+    val id: String?,
+    @SerializedName("created_at")
+    val createdAt: Int?,
+    @SerializedName("updated_at")
+    val updatedAt: Int?,
+    @SerializedName("created_by")
+    val createdBy: String?,
+    @SerializedName("updated_by")
+    val updatedBy: String?,
+    @SerializedName("is_main")
+    val isMain: Boolean?,
+    @SerializedName("product_id")
+    val productId: String?,
+    val image: String?,
+    val sku: String?,
+    val price: Double?,
     @SerializedName("discount_percentage")
     val discountPercentage: Double?,
-    val brand: String?,
     val weight: Int?,
     val dimensions: DimensionsResponseDto?,
-    val img: List<String>? = null
+    val stock: Int?,
+    val size: String?,
+    val model: String?,
+    val color: String?,
+    @SerializedName("localized_price")
+    val localizedPrice: String?
 )
 
 data class DimensionsResponseDto(
-    @SerializedName("width")
+    val depth: Double?,
     val width: Double?,
-    @SerializedName("height")
-    val height: Double?,
-    @SerializedName("depth")
-    val depth: Double?
+    val height: Double?
 )
