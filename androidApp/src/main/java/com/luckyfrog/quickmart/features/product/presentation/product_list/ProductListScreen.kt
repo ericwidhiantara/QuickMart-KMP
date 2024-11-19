@@ -159,7 +159,7 @@ fun ProductListScreen(
                         ProductCard(
                             itemEntity = item,
                             onClick = {
-                                navController.navigate("${AppScreen.ProductDetailScreen.route}/${item.id}")
+                                navController.navigate(AppScreen.ProductDetailScreen.route + "/${item.id}")
                             }
                         )
 

@@ -15,7 +15,11 @@ data class ProductResponseDto(
     @SerializedName("category_id")
     val categoryId: String?,
     val name: String?,
+    val price: Double?,
+    @SerializedName("localized_price")
+    val localizedPrice: String?,
     val brand: String?,
+    val image: String?,
     val description: String?,
     val tags: List<String>?,
     @SerializedName("images")

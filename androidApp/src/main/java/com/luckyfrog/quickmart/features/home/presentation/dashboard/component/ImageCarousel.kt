@@ -11,13 +11,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,7 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.luckyfrog.quickmart.utils.resource.theme.colorCyan
+import com.luckyfrog.quickmart.core.widgets.PagerIndicator
 import kotlinx.coroutines.delay
 
 data class CarouselData(
@@ -166,36 +162,7 @@ fun CarouselItemWithOverlay(item: CarouselData, arraySize: Int, currentIndex: In
                         fontWeight = FontWeight.Bold
                     )
                     // Pager Indicator
-                    Box(
-                        modifier = Modifier
-                            .wrapContentWidth() // Make the width flexible based on content
-                            .height(16.dp)
-                            .clip(RoundedCornerShape(12.dp))
-
-                            .background(color = MaterialTheme.colorScheme.primaryContainer)
-                            .padding(horizontal = 8.dp), // Add horizontal padding inside the Box
-
-                        contentAlignment = Alignment.Center // Center content inside the Box
-                    ) {
-                        LazyRow(
-                            modifier = Modifier
-                                .wrapContentWidth(), // Wrap content width for LazyRow
-                            horizontalArrangement = Arrangement.spacedBy(5.dp), // Adds 5dp space between items
-                            verticalAlignment = Alignment.CenterVertically // Center items vertically
-                        ) {
-                            items(arraySize) { index ->
-                                Box(
-                                    modifier = Modifier
-                                        .width(6.dp)
-                                        .height(6.dp)
-                                        .background(
-                                            color = if (index == currentIndex) colorCyan else MaterialTheme.colorScheme.onBackground,
-                                            shape = CircleShape
-                                        ),
-                                )
-                            }
-                        }
-                    }
+                    PagerIndicator(arraySize = arraySize, currentIndex = currentIndex)
 
                 }
             }

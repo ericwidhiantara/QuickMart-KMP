@@ -93,7 +93,7 @@ fun ProductCard(
             }
             Spacer(modifier = Modifier.padding(vertical = 8.dp))
             Text(
-                text = itemEntity.id ?: "",
+                text = itemEntity.name ?: "",
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.titleMedium,
                 fontSize = 14.sp,

@@ -29,7 +29,13 @@ class ProductRepositoryImpl @Inject constructor(
             })
         }
 
-    override suspend fun getProductDetail(id: Int): ProductEntity {
-        return remoteDataSource.getProductDetail(id = id).toEntity()
-    }
+    override suspend fun getProductDetail(id: String): Flow<ApiResponse<ResponseDto<ProductEntity>>> =
+        flow {
+            emit(ApiResponse.Loading)
+            val response = remoteDataSource.getProductDetail(id = id)
+            emit(processResponse(response) { it ->
+                it.data?.toEntity()
+            })
+        }
+
 }

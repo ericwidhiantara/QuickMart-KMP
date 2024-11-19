@@ -20,9 +20,9 @@ interface ProductApi {
         @Query("page") page: Int?,
         @Query("limit") limit: Int?,
     ): Response<ResponseDto<PaginationDto<ProductResponseDto>>>
-    
+
     @GET("products/{id}")
     suspend fun getProductDetail(
-        @Path("id") id: Int
-    ): ProductResponseDto
+        @Path("id") id: String
+    ): Response<ResponseDto<ProductResponseDto>>
 }

@@ -13,7 +13,7 @@ interface ProductRemoteDataSource {
     ): Response<ResponseDto<PaginationDto<ProductResponseDto>>>
 
     suspend fun getProductDetail(
-        id: Int
-    ): ProductResponseDto
+        id: String
+    ): Response<ResponseDto<ProductResponseDto>>
 
 }

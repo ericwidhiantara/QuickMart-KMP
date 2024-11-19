@@ -36,6 +36,7 @@ object Images {
     val icOrderSuccess = com.luckyfrog.quickmart.R.drawable.ic_order_success
     val icPayment = com.luckyfrog.quickmart.R.drawable.ic_payment
     val icPrivacyPolicy = com.luckyfrog.quickmart.R.drawable.ic_privacy_policy
+    val icProductDummy = com.luckyfrog.quickmart.R.drawable.ic_product_dummy
     val icRecentSearchSubmit = com.luckyfrog.quickmart.R.drawable.ic_recent_search_submit
     val icReview = com.luckyfrog.quickmart.R.drawable.ic_review
     val icSearch = com.luckyfrog.quickmart.R.drawable.ic_search

@@ -1,9 +1,11 @@
 package com.luckyfrog.quickmart.features.product.presentation.product_detail
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,328 +13,359 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
-import com.luckyfrog.quickmart.core.widgets.CustomTopBar
+import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
-import kotlin.math.min
+import com.luckyfrog.quickmart.utils.PageLoader
+import com.luckyfrog.quickmart.utils.helper.capitalizeWords
+import com.luckyfrog.quickmart.utils.resource.theme.colorBlue
+import com.luckyfrog.quickmart.utils.resource.theme.colorCyan
+import com.luckyfrog.quickmart.utils.resource.theme.colorOrange
+import com.luckyfrog.quickmart.utils.resource.theme.colorWhite
+import kotlinx.coroutines.delay
 
 @Composable
 fun ProductDetailScreen(
     viewModel: ProductDetailViewModel = hiltViewModel(),
-    productId: Int, // Pass productId to fetch the details
-    navController: NavController,
+    productId: String,
+    navController: NavController
 ) {
+    val data by viewModel.state.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchProductDetail(productId)
+    }
 
     Scaffold(
-        topBar = {
-            CustomTopBar(
-                title = "Product Detail",
-                navController = navController
-            )
-        },
         content = { paddingValues ->
-            // Trigger the product detail fetch
-            LaunchedEffect(productId) {
-                viewModel.fetchProductDetail(productId)
-            }
+            when (val state = data) {
+                is ProductDetailState.Success -> ProductDetailContent(
+                    paddingValues = paddingValues,
+                    navController = navController,
+                    product = state.data
+                )
 
-            // Observe the product details from the ViewModel
-            val productDetail by viewModel.productDetail.collectAsState()
+                is ProductDetailState.Loading -> {
+                    PageLoader(modifier = Modifier.fillMaxSize())
+                }
 
-            // Display the product details
-            Column(
-                modifier = Modifier.padding(paddingValues)
-            ) {
-
-                when {
-                    productDetail == null -> {
-                        // Loading or error state
-                        Text(
-                            text = "Loading product details...",
-                            color = MaterialTheme.colorScheme.onBackground
-                        )
-                    }
-
-                    else -> {
-                        // Product is loaded, show its details
-                        productDetail?.let { product ->
-                            ProductDetailContent(product = product)
-                        }
+                is ProductDetailState.Error -> {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = state.message)
                     }
                 }
+
+                else -> {
+                    // Handle other states if needed
+                }
             }
+        },
+        bottomBar = {
+            ProductDetailBottomSection()
         }
     )
-
-//    CollapsingProductDetailScreen(onBackClick = { /*TODO*/ }, onFavoriteClick = { /*TODO*/ })
 }
 
 @Composable
-fun ProductDetailContent(product: ProductEntity) {
-    Column {
-        Text(
-            text = "Product Name: ${product.name}",
-            style = MaterialTheme.typography.headlineMedium
-        )
-        Text(text = "Product Price: ${product.price}", style = MaterialTheme.typography.bodyLarge)
-        Text(
-            text = "Product Description: ${product.description}",
-            style = MaterialTheme.typography.bodySmall
-        )
-        // Add more fields as needed
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CollapsingProductDetailScreen(
-    onBackClick: () -> Unit,
-    onFavoriteClick: () -> Unit,
-    images: List<String> = listOf(
-        "https://via.placeholder.com/360x290",
-        "https://via.placeholder.com/360x290",
-        "https://via.placeholder.com/360x290"
-    )
+fun ProductDetailContent(
+    paddingValues: PaddingValues,
+    navController: NavController,
+    product: ProductEntity,
 ) {
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    val toolbarState = scrollBehavior.state
+    val scrollState = rememberScrollState()
 
-    // Define heights
-    val maxImageHeight = 350.dp
-    val minImageHeight = 56.dp
-
-    // Convert to pixels for calculation
-    val maxHeightPx = with(LocalDensity.current) { maxImageHeight.toPx() }
-    val minHeightPx = with(LocalDensity.current) { minImageHeight.toPx() }
-
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent,
-                    navigationIconContentColor = Color.Black,
-                    actionIconContentColor = Color.Black
-                ),
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(Icons.Default.ArrowBack, "Back")
-                    }
-                },
-                actions = {
-                    IconButton(onClick = onFavoriteClick) {
-                        Icon(Icons.Default.FavoriteBorder, "Favorite")
-                    }
-                },
-                title = {},
-                scrollBehavior = scrollBehavior
-            )
+    val scrollOffset by remember {
+        derivedStateOf {
+            val maxScroll = 800f
+            val currentScroll = scrollState.value.toFloat()
+            (1f - (currentScroll / maxScroll)).coerceIn(0f, 1f)
         }
-    ) { paddingValues ->
-        Box(
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+    ) {
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues)
+                .verticalScroll(scrollState)
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize()
+            Spacer(modifier = Modifier.height(300.dp))
+
+            // Content section
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                    .background(MaterialTheme.colorScheme.surface)
+                    .padding(horizontal = 16.dp, vertical = 24.dp)
             ) {
-                item {
-                    // Image Carousel with collapsing effect
-                    val pagerState = rememberPagerState(pageCount = { images.size })
-                    val heightProgress = if (toolbarState.overlappedFraction < 0) {
-                        0f
-                    } else {
-                        min(1f, toolbarState.overlappedFraction)
-                    }
-
-                    val imageHeight = lerp(
-                        maxHeightPx,
-                        minHeightPx,
-                        heightProgress
-                    ).dp
-
-                    Box {
-                        HorizontalPager(
-                            state = pagerState,
+                // Tags section
+                LazyRow(
+                    horizontalArrangement = Arrangement.spacedBy(
+                        8.dp,
+                        Alignment.CenterHorizontally
+                    ),
+                ) {
+                    items(product.tags?.size ?: 0) { index ->
+                        val colors = listOf(colorCyan, colorBlue, colorOrange)
+                        val randomColor = colors[index % colors.size]
+                        Box(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .height(imageHeight)
-                                .graphicsLayer {
-                                    alpha = 1f - heightProgress
-                                }
-                        ) { page ->
-                            AsyncImage(
-                                model = images[page],
-                                contentDescription = "Product image ${page + 1}",
-                                modifier = Modifier.fillMaxSize(),
-                                contentScale = ContentScale.Crop
-                            )
-                        }
-
-                        // Page Indicator
-                        if (heightProgress < 0.5f) {
-                            Row(
-                                Modifier
-                                    .height(50.dp)
-                                    .fillMaxWidth()
-                                    .align(Alignment.BottomCenter),
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                repeat(images.size) { iteration ->
-                                    val color = if (pagerState.currentPage == iteration) {
-                                        MaterialTheme.colorScheme.primary
-                                    } else {
-                                        Color.LightGray
-                                    }
-                                    Box(
-                                        modifier = Modifier
-                                            .padding(2.dp)
-                                            .size(8.dp)
-                                            .background(
-                                                color,
-                                                shape = MaterialTheme.shapes.medium
-                                            )
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-
-                // Product Details
-                item {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp)
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
+                                .background(
+                                    color = randomColor,
+                                    shape = RoundedCornerShape(12.dp)
+                                )
                         ) {
                             Text(
-                                text = "Loop Silicone Strong\nMagnetic Watch",
-                                style = MaterialTheme.typography.headlineSmall
-                            )
-                            Column(horizontalAlignment = Alignment.End) {
-                                Text(
-                                    text = "$15.25",
-                                    style = MaterialTheme.typography.headlineSmall
-                                )
-                                Text(
-                                    text = "$20.00",
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = Color.Gray
-                                )
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text = "4.5",
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                            Text(
-                                text = " (495 reviews)",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Color.Gray
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.height(16.dp))
-
-                        Text(
-                            text = "Constructed with high-quality silicone material, " +
-                                    "the Loop Silicone Strong Magnetic Watch ensures a " +
-                                    "comfortable and secure fit on your wrist. The soft " +
-                                    "and flexible silicone is gentle on the skin, making " +
-                                    "it ideal for extended wear.",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Color.Gray
-                        )
-
-                        // Add more content to make it scrollable
-                        repeat(5) {
-                            Spacer(modifier = Modifier.height(32.dp))
-                            Text(
-                                text = "Additional product details section ${it + 1}",
-                                style = MaterialTheme.typography.bodyLarge
-                            )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "Lorem ipsum dolor sit amet, consectetur " +
-                                        "adipiscing elit. Sed do eiusmod tempor " +
-                                        "incididunt ut labore et dolore magna aliqua.",
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = Color.Gray
+                                text = product.tags?.get(index)?.capitalizeWords() ?: "",
+                                color = colorWhite,
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
                             )
                         }
                     }
                 }
-            }
 
-            // Bottom Buttons
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(16.dp)
-            ) {
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Product info
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Button(
-                        onClick = { /* Buy Now */ },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text("Buy Now")
-                    }
-                    Button(
-                        onClick = { /* Add to Cart */ },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text("Add to Cart")
-                    }
+                    Text(
+                        text = product.name?.capitalizeWords() ?: "",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text(
+                        text = product.variants?.get(0)?.localizedPrice ?: "",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                    )
                 }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Description
+                Text(
+                    text = product.description ?: "",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                )
+
+                // Add more content as needed
+                Spacer(modifier = Modifier.height(100.dp))
+            }
+        }
+
+        // Sticky header
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(300.dp * scrollOffset)
+                .background(MaterialTheme.colorScheme.background)
+        ) {
+            ProductHeaderSection()
+        }
+
+        // Top bar with back button and favorite
+        TopAppBar(
+            modifier = Modifier.align(Alignment.TopStart),
+            scrollOffset = scrollOffset,
+            title = product.name?.capitalizeWords() ?: "",
+            onBackClick = { navController.popBackStack() },
+            onFavoriteClick = { }
+        )
+    }
+}
+
+@Composable
+private fun TopAppBar(
+    modifier: Modifier = Modifier,
+    scrollOffset: Float,
+    title: String,
+    onBackClick: () -> Unit,
+    onFavoriteClick: () -> Unit
+) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(
+                MaterialTheme.colorScheme.surface.copy(
+                    alpha = (1f - scrollOffset).coerceIn(0f, 1f)
+                )
+            )
+            .padding(vertical = 12.dp)
+
+    ) {
+        // Back button
+        IconButton(
+            onClick = onBackClick,
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(horizontal = 16.dp)
+        ) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = stringResource(id = Images.icArrowBack),
+                tint = MaterialTheme.colorScheme.onBackground
+            )
+        }
+
+        // Title - only visible when collapsed
+        if (scrollOffset < 0.5f) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(horizontal = 56.dp)
+            )
+        }
+
+        // Favorite button
+        IconButton(
+            modifier = Modifier
+                .padding(8.dp)
+                .padding(horizontal = 16.dp)
+
+                .size(32.dp) // Adjust the size to your preference
+                .clip(CircleShape) // Ensures the shape is circular
+                .background(MaterialTheme.colorScheme.onSecondary) // Background color
+                .align(Alignment.TopEnd),
+            onClick = onFavoriteClick
+        ) {
+            Icon(
+                Icons.Default.FavoriteBorder,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primaryContainer
+            )
+        }
+
+    }
+}
+
+@Composable
+fun ProductHeaderSection(
+) {
+    val images = listOf(
+        Images.icProductDummy,
+        Images.icProductDummy,
+        Images.icProductDummy,
+        Images.icProductDummy,
+    )
+    val pagerState = rememberPagerState(pageCount = { images.size })
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(5000)
+            val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
+            pagerState.scrollToPage(nextPage)
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()
+        ) { currentPage ->
+            Image(
+                painter = painterResource(id = images[currentPage]),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
+
+        // Page indicator
+        Row(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            repeat(pagerState.pageCount) { index ->
+                Box(
+                    modifier = Modifier
+                        .size(8.dp)
+                        .background(
+                            color = if (pagerState.currentPage == index)
+                                MaterialTheme.colorScheme.primary
+                            else
+                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
+                            shape = CircleShape
+                        )
+                )
             }
         }
     }
 }
 
-private fun lerp(start: Float, end: Float, fraction: Float): Float {
-    return start + (end - start) * fraction
+@Composable
+fun ProductDetailBottomSection() {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        HorizontalDivider(modifier = Modifier.fillMaxWidth())
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(
+            onClick = { },
+            shape = RoundedCornerShape(25.dp),
+            colors = ButtonDefaults.buttonColors(),
+            modifier = Modifier.wrapContentHeight()
+        ) {
+            Text(
+                text = "Button",
+                color = White,
+                modifier = Modifier.padding(vertical = 6.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(10.dp))
+    }
 }

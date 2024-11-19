@@ -11,5 +11,5 @@ interface ProductRepository {
 
     suspend fun getProducts(params: ProductFormParamsEntity): Flow<ApiResponse<ResponseDto<PaginationEntity<ProductEntity>>>>
 
-    suspend fun getProductDetail(id: Int): ProductEntity
+    suspend fun getProductDetail(id: String): Flow<ApiResponse<ResponseDto<ProductEntity>>>
 }

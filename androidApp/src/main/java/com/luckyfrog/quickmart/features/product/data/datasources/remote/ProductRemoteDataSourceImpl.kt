@@ -25,7 +25,7 @@ class ProductRemoteDataSourceImpl @Inject constructor(
         )
     }
 
-    override suspend fun getProductDetail(id: Int): ProductResponseDto {
+    override suspend fun getProductDetail(id: String): Response<ResponseDto<ProductResponseDto>> {
         return api.getProductDetail(id = id)
     }
 }

@@ -2,11 +2,9 @@ package com.luckyfrog.quickmart.utils.resource.route
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.email_verification.EmailVerificationScreen
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.PasswordCreatedScreen
@@ -22,7 +20,6 @@ import com.luckyfrog.quickmart.features.general.presentation.onboarding.Onboardi
 import com.luckyfrog.quickmart.features.general.presentation.splash.SplashScreen
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.HomeScreen
 import com.luckyfrog.quickmart.features.product.presentation.product_detail.ProductDetailScreen
-import com.luckyfrog.quickmart.features.product.presentation.product_detail.ProductDetailViewModel
 import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListScreen
 import com.luckyfrog.quickmart.features.product.presentation.product_list_by_category.ProductListByCategoryScreen
 import com.luckyfrog.quickmart.features.product.presentation.search.SearchScreen
@@ -146,19 +143,12 @@ fun NavGraph(mainViewModel: MainViewModel) {
 
         composable(
             route = AppScreen.ProductDetailScreen.route + "/{productId}", // Assuming your route contains a productId
-            arguments = listOf(
-                navArgument("productId") {
-                    type = NavType.IntType
-                },
-            ) // Use IntType for productId
         ) {
-            val productId = it.arguments?.getInt("productId")
-                ?: 0 // Retrieve the productId as Int with a default value of 0
-            val viewModel = hiltViewModel<ProductDetailViewModel>()
+            val productId = it.arguments?.getString("productId")
+                ?: ""
 
             ProductDetailScreen(
                 productId = productId,
-                viewModel = viewModel,
                 navController = navController
             )
         }
