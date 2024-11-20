@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.core.resources.Images
+import com.luckyfrog.quickmart.core.widgets.PagerIndicator
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
 import com.luckyfrog.quickmart.utils.PageLoader
 import com.luckyfrog.quickmart.utils.helper.capitalizeWords
@@ -125,21 +126,34 @@ fun ProductDetailContent(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues)
+
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(scrollState)
         ) {
-            Spacer(modifier = Modifier.height(300.dp))
+            // Sticky header
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp * scrollOffset)
+                    .background(MaterialTheme.colorScheme.background)
+            ) {
+                ProductHeaderSection()
+            }
 
             // Content section
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
+                    .padding(
+                        top = 275.dp
+                    )
+                    .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp))
                     .background(MaterialTheme.colorScheme.surface)
                     .padding(horizontal = 16.dp, vertical = 24.dp)
+
             ) {
                 // Tags section
                 LazyRow(
@@ -198,19 +212,9 @@ fun ProductDetailContent(
                 // Add more content as needed
                 Spacer(modifier = Modifier.height(100.dp))
             }
-        }
 
-        // Sticky header
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp * scrollOffset)
-                .background(MaterialTheme.colorScheme.background)
-        ) {
-            ProductHeaderSection()
         }
-
-        // Top bar with back button and favorite
+// Top bar with back button and favorite
         TopAppBar(
             modifier = Modifier.align(Alignment.TopStart),
             scrollOffset = scrollOffset,
@@ -218,6 +222,7 @@ fun ProductDetailContent(
             onBackClick = { navController.popBackStack() },
             onFavoriteClick = { }
         )
+
     }
 }
 
@@ -270,7 +275,6 @@ private fun TopAppBar(
             modifier = Modifier
                 .padding(8.dp)
                 .padding(horizontal = 16.dp)
-
                 .size(32.dp) // Adjust the size to your preference
                 .clip(CircleShape) // Ensures the shape is circular
                 .background(MaterialTheme.colorScheme.onSecondary) // Background color
@@ -314,35 +318,32 @@ fun ProductHeaderSection(
             state = pagerState,
             modifier = Modifier.fillMaxSize()
         ) { currentPage ->
+
             Image(
                 painter = painterResource(id = images[currentPage]),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
+
         }
 
         // Page indicator
-        Row(
+        Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            repeat(pagerState.pageCount) { index ->
-                Box(
-                    modifier = Modifier
-                        .size(8.dp)
-                        .background(
-                            color = if (pagerState.currentPage == index)
-                                MaterialTheme.colorScheme.primary
-                            else
-                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
-                            shape = CircleShape
-                        )
+                .padding(
+                    bottom = 40.dp
+                ),
+            content = {
+                PagerIndicator(
+                    arraySize = pagerState.pageCount,
+                    currentIndex = pagerState.currentPage
                 )
-            }
-        }
+            },
+        )
+
+
     }
 }
 
