@@ -1,6 +1,5 @@
 package com.luckyfrog.quickmart.features.product.presentation.product_detail
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -49,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
@@ -296,10 +296,15 @@ private fun TopAppBar(
 fun ProductHeaderSection(
 ) {
     val images = listOf(
-        Images.icProductDummy,
-        Images.icProductDummy,
-        Images.icProductDummy,
-        Images.icProductDummy,
+        "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
+        "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/2.png",
+        "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/3.png",
+        "https://cdn.dummyjson.com/products/images/mens-watches/Longines%20Master%20Collection/1.png",
+        "https://cdn.dummyjson.com/products/images/mens-watches/Longines%20Master%20Collection/2.png",
+        "https://cdn.dummyjson.com/products/images/mens-watches/Longines%20Master%20Collection/3.png",
+        "https://cdn.dummyjson.com/products/images/mens-watches/Rolex%20Cellini%20Date%20Black%20Dial/1.png",
+        "https://cdn.dummyjson.com/products/images/mens-watches/Rolex%20Cellini%20Date%20Black%20Dial/2.png",
+        "https://cdn.dummyjson.com/products/images/mens-watches/Rolex%20Cellini%20Date%20Black%20Dial/3.png"
     )
     val pagerState = rememberPagerState(pageCount = { images.size })
 
@@ -319,14 +324,12 @@ fun ProductHeaderSection(
             state = pagerState,
             modifier = Modifier.fillMaxSize()
         ) { currentPage ->
-
-            Image(
-                painter = painterResource(id = images[currentPage]),
-                contentDescription = null,
+            AsyncImage(
+                model = images[currentPage],
+                contentDescription = "image",
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
-
         }
 
         // Page indicator
