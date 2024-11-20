@@ -2,6 +2,7 @@ package com.luckyfrog.quickmart.features.product.presentation.product_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,7 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -24,9 +25,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -41,8 +39,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -50,7 +49,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.resources.Images
+import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.PagerIndicator
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
 import com.luckyfrog.quickmart.utils.PageLoader
@@ -349,24 +350,39 @@ fun ProductHeaderSection(
 
 @Composable
 fun ProductDetailBottomSection() {
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        HorizontalDivider(modifier = Modifier.fillMaxWidth())
-        Spacer(modifier = Modifier.height(10.dp))
-        Button(
-            onClick = { },
-            shape = RoundedCornerShape(25.dp),
-            colors = ButtonDefaults.buttonColors(),
-            modifier = Modifier.wrapContentHeight()
-        ) {
-            Text(
-                text = "Button",
-                color = White,
-                modifier = Modifier.padding(vertical = 6.dp)
+    // Get the screen height from LocalConfiguration
+    val configuration = LocalConfiguration.current
+    val screenWidth = configuration.screenWidthDp.dp
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 20.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+
+        content = {
+            CustomOutlinedButton(
+                buttonText = stringResource(R.string.buy_now),
+                buttonTextColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier = Modifier.width(screenWidth * 0.45F),
+                onClick = {
+
+
+                },
+                buttonBorderColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                buttonContainerColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.onPrimaryContainer else Color.Transparent,
+
+                )
+            CustomOutlinedButton(
+                buttonText = stringResource(R.string.add_to_cart),
+                modifier = Modifier.width(screenWidth * 0.45F),
+                isWithIcon = true,
+                buttonIcon = painterResource(Images.icShoppingCart),
+                onClick = {
+
+                },
+                buttonContainerColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimaryContainer,
             )
+
         }
-        Spacer(modifier = Modifier.height(10.dp))
-    }
+    )
 }

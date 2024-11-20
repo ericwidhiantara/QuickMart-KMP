@@ -75,6 +75,8 @@
     <string name="filter_a_to_z">A-Z</string>
     <string name="filter_z_to_a">Z-A</string>
     <string name="apply">Apply</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="add_to_cart">Add To Cart</string>
 
 
 </resources>
