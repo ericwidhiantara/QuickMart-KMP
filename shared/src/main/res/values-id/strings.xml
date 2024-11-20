@@ -77,6 +77,8 @@
     <string name="apply">Terapkan</string>
     <string name="buy_now">Beli Sekarang</string>
     <string name="add_to_cart">Tambah Ke Keranjang</string>
+    <string name="read_more">Baca Selengkapnya</string>
+    <string name="show_less">Tampilkan Lebih Sedikit</string>
 
 
 </resources>

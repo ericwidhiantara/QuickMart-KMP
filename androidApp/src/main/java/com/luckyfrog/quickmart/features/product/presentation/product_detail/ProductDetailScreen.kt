@@ -52,6 +52,7 @@ import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
+import com.luckyfrog.quickmart.core.widgets.ExpandableText
 import com.luckyfrog.quickmart.core.widgets.PagerIndicator
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
 import com.luckyfrog.quickmart.utils.PageLoader
@@ -204,10 +205,9 @@ fun ProductDetailContent(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // Description
-                Text(
+                ExpandableText(
                     text = product.description ?: "",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
+                    maxLines = 4
                 )
 
                 // Add more content as needed
