@@ -60,7 +60,7 @@ fun CategoryListScreen(
             CustomTopBar(
                 title = stringResource(R.string.menu_categories),
                 navController = navController,
-                centeredTitle = true
+                centeredTitle = true,
             )
         },
     ) {

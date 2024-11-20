@@ -22,6 +22,7 @@ import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
+import com.luckyfrog.quickmart.features.cart.presentation.my_cart.MyCartScreen
 import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListScreen
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.HomeScreen
 import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
@@ -121,7 +122,11 @@ fun BottomNavBar(
                     navController = navController
                 )
 
-                2 -> Text("My Cart")
+                2 -> MyCartScreen(
+                    mainViewModel = mainViewModel,
+                    navController = navController
+                )
+
                 3 -> Text("Wishlist")
                 4 -> SettingsScreen(navController = navController)
             }
