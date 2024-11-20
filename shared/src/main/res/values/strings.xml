@@ -79,6 +79,16 @@
     <string name="add_to_cart">Add To Cart</string>
     <string name="read_more">Read More</string>
     <string name="show_less">Show Less</string>
-
+    <string name="my_cart">My Cart</string>
+    <string name="voucher_code">Voucher Code</string>
+    <string name="order_info">Order Info</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="shipping_cost">Shipping Cost</string>
+    <string name="total">Total</string>
+    <string name="checkout">Checkout (%1$d)</string>
+    <string name="voucher_code_placeholder">Enter voucher code</string>
+    <string name="empty_cart">Your cart is empty</string>
+    <string name="empty_cart_desc">Looks like you have not added anything in your cart. Go ahead and explore top categories.</string>
+    <string name="explore_products">Explore Products</string>
 
 </resources>

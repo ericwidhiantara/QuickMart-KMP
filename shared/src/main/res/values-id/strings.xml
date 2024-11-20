@@ -79,6 +79,17 @@
     <string name="add_to_cart">Tambah Ke Keranjang</string>
     <string name="read_more">Baca Selengkapnya</string>
     <string name="show_less">Tampilkan Lebih Sedikit</string>
+    <string name="my_cart">Keranjang Saya</string>
+    <string name="voucher_code">Kode Voucher</string>
+    <string name="order_info">Info Pesanan</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="shipping_cost">Biaya Pengiriman</string>
+    <string name="total">Total</string>
+    <string name="checkout">Pesan (%1$d)</string>
+    <string name="voucher_code_placeholder">Masukkan kode voucher</string>
+    <string name="empty_cart">Keranjang belanja Anda kosong</string>
+    <string name="empty_cart_desc">Sepertinya Anda belum menambahkan apa pun ke keranjang belanja Anda. Silakan lanjutkan dan jelajahi produk teratas.</string>
+    <string name="explore_products">Jelajahi Produk</string>
 
 
 </resources>
