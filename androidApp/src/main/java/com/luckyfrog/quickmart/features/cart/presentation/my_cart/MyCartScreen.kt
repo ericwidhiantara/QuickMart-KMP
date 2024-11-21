@@ -1,5 +1,6 @@
 package com.luckyfrog.quickmart.features.cart.presentation.my_cart
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -17,8 +18,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -27,11 +30,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
+import com.luckyfrog.quickmart.core.widgets.DeleteConfirmationDialog
 import com.luckyfrog.quickmart.core.widgets.EmptyState
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.CartItemCard
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.CartSummaryBar
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.VoucherCodeBottomSheet
 import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -118,6 +123,29 @@ fun MyCartScreen(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(items) { item ->
+                    val context = LocalContext.current
+                    val coroutineScope = rememberCoroutineScope()
+                    var showDeleteDialog by remember { mutableStateOf(false) }
+
+                    if (showDeleteDialog) {
+                        DeleteConfirmationDialog(
+                            onConfirm = {
+                                viewModel.deleteItem(item)
+                                coroutineScope.launch {
+                                    viewModel.deleteItem(item)
+                                    Toast.makeText(
+                                        context,
+                                        context.getString(R.string.item_deleted_successfully),
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                                showDeleteDialog = false
+                            },
+                            onDismiss = {
+                                showDeleteDialog = false
+                            }
+                        )
+                    }
                     CartItemCard(
                         imageUrl = item.productImage,
                         productName = item.productName,
@@ -132,8 +160,7 @@ fun MyCartScreen(
                             viewModel.updateItem(item.copy(qty = newQuantity))
                         },
                         onDelete = {
-                            viewModel.deleteItem(item)
-
+                            showDeleteDialog = true
                         }
                     )
                 }

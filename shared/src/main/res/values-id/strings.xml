@@ -90,6 +90,11 @@
     <string name="empty_cart">Keranjang belanja Anda kosong</string>
     <string name="empty_cart_desc">Sepertinya Anda belum menambahkan apa pun ke keranjang belanja Anda. Silakan lanjutkan dan jelajahi produk teratas.</string>
     <string name="explore_products">Jelajahi Produk</string>
-
+    <string name="confirm_delete">Konfirmasi Penghapusan</string>
+    <string name="confirm_delete_desc">Apakah Anda yakin ingin menghapus produk ini?</string>
+    <string name="delete">Hapus</string>
+    <string name="cancel">Batal</string>
+    <string name="item_deleted_successfully">Produk berhasil dihapus!</string>
+    <string name="added_to_cart">Produk telah ditambahkan ke keranjang Anda</string>
 
 </resources>

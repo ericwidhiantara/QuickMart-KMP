@@ -90,5 +90,11 @@
     <string name="empty_cart">Your cart is empty</string>
     <string name="empty_cart_desc">Looks like you have not added anything in your cart. Go ahead and explore top products.</string>
     <string name="explore_products">Explore Products</string>
+    <string name="confirm_delete">Delete Confirmation</string>
+    <string name="confirm_delete_desc">Are you sure you want to delete this product?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="item_deleted_successfully">Product deleted successfully!</string>
+    <string name="added_to_cart">The product has been added to your cart</string>
 
 </resources>
