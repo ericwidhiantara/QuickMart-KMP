@@ -386,7 +386,7 @@ fun ProductDetailBottomSection(
             CustomOutlinedButton(
                 buttonText = stringResource(R.string.add_to_cart),
                 modifier = Modifier.width(screenWidth * 0.45F),
-                isWithIcon = true,
+                isWithIcon = false,
                 buttonIcon = painterResource(Images.icShoppingCart),
                 onClick = {
                     val item = CartLocalItemDto(

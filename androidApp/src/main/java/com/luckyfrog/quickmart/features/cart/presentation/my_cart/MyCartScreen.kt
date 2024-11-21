@@ -14,7 +14,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
@@ -42,8 +42,11 @@ fun MyCartScreen(
 ) {
     LaunchedEffect(Unit) {
         viewModel.fetchCartItems()
+        viewModel.fetchSelectedItems()
     }
-    var items = viewModel.cartItems.collectAsState().value
+
+    val items by viewModel.cartItems.collectAsStateWithLifecycle()
+    val selectedItems by viewModel.selectedItems.collectAsStateWithLifecycle()
 
     var selectedVoucher by remember { mutableStateOf("") }
     var showBottomSheet by remember { mutableStateOf(false) }
@@ -72,9 +75,8 @@ fun MyCartScreen(
                 }
             )
         },
-
         bottomBar = {
-            if (!isCartEmpty)
+            if (selectedItems.isNotEmpty())
                 CartSummaryBar(
                     shippingCost = 0.00,
                     onCheckout = { /* Implement checkout logic */ },
@@ -124,20 +126,14 @@ fun MyCartScreen(
                         quantity = item.qty,
                         isChecked = item.selected,
                         onCheckedChange = { checked ->
-                            items = items.map {
-                                if (it.id == item.id) it.copy(selected = checked) else it
-                            }
-
+                            viewModel.updateItem(item.copy(selected = checked))
                         },
                         onQuantityChange = { newQuantity ->
-                            items = items.map {
-                                if (it.id == item.id) it.copy(qty = newQuantity) else it
-                            }
-                            viewModel.updateItem(item)
+                            viewModel.updateItem(item.copy(qty = newQuantity))
                         },
                         onDelete = {
                             viewModel.deleteItem(item)
-                            items = items.filter { it.id != item.id }
+
                         }
                     )
                 }

@@ -33,7 +33,7 @@ fun CartSummaryBar(
         viewModel.fetchSelectedItems()
         viewModel.calculateSubtotal()
     }
-    val selectedItems = viewModel.cartItems.collectAsState().value
+    val selectedItems = viewModel.selectedItems.collectAsState().value
     val subTotal = viewModel.subtotal.collectAsState().value
 
     Column(

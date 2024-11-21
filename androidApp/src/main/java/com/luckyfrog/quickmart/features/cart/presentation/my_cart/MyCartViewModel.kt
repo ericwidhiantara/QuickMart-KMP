@@ -37,15 +37,30 @@ class CartViewModel @Inject constructor(
     val subtotal = _subtotal.asStateFlow()
 
     fun addItem(cartItem: CartLocalItemDto) {
-        viewModelScope.launch { insertCartItemUseCase(cartItem) }
+        viewModelScope.launch {
+            insertCartItemUseCase(cartItem)
+            fetchCartItems()
+            fetchSelectedItems()
+            calculateSubtotal()
+        }
     }
 
     fun updateItem(cartItem: CartLocalItemDto) {
-        viewModelScope.launch { updateCartItemUseCase(cartItem) }
+        viewModelScope.launch {
+            updateCartItemUseCase(cartItem)
+            fetchCartItems()
+            fetchSelectedItems()
+            calculateSubtotal()
+        }
     }
 
     fun deleteItem(cartItem: CartLocalItemDto) {
-        viewModelScope.launch { deleteCartItemUseCase(cartItem) }
+        viewModelScope.launch {
+            deleteCartItemUseCase(cartItem)
+            fetchCartItems()
+            fetchSelectedItems()
+            calculateSubtotal()
+        }
     }
 
     fun fetchCartItems() {
