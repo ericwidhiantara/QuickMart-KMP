@@ -36,12 +36,11 @@ fun CustomTopBar(
                 .fillMaxWidth()
                 .height(66.dp)
                 .wrapContentHeight()
-                .padding(horizontal = 16.dp, vertical = 12.dp), // Padding for spacing
+                .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = if (centeredTitle && navController.previousBackStackEntry == null && actions == null) {
-                Arrangement.Center
-            } else {
-                Arrangement.SpaceBetween
+            horizontalArrangement = when {
+                navController.previousBackStackEntry == null && actions == null -> Arrangement.Center
+                else -> Arrangement.SpaceBetween
             }
         ) {
             // Left side with back button (only if available) and title
@@ -65,22 +64,22 @@ fun CustomTopBar(
                     Text(
                         text = title,
                         color = MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier.padding(start = if (navController.previousBackStackEntry != null) 8.dp else 0.dp), // Space if back button is present
+                        modifier = Modifier.padding(start = if (navController.previousBackStackEntry != null) 8.dp else 0.dp),
                         style = MaterialTheme.typography.titleMedium
                     )
                 }
             } else {
-                // Center the title if no back button or actions and centeredTitle is true
+                // Center the title if no back button
                 Text(
                     text = title,
                     color = MaterialTheme.colorScheme.onBackground,
-                    modifier = Modifier,
+                    modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleMedium
                 )
             }
 
-            // Right side actions (only if provided)
+            // Right side actions
             if (actions != null) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -88,6 +87,9 @@ fun CustomTopBar(
                 ) {
                     actions()
                 }
+            } else {
+                // Placeholder to maintain layout
+                Row {}
             }
         }
         HorizontalDivider()

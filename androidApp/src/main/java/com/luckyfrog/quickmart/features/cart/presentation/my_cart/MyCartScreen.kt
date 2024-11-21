@@ -77,7 +77,7 @@ fun MyCartScreen(
     var showBottomSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
     val isCartEmpty = remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
 
     Scaffold(
@@ -85,9 +85,9 @@ fun MyCartScreen(
             CustomTopBar(
                 title = stringResource(R.string.menu_my_cart),
                 navController = navController,
-                centeredTitle = true,
+                centeredTitle = isCartEmpty.value,
                 actions = {
-                    if (!isCartEmpty.value)
+                    if (!isCartEmpty.value) {
                         TextButton(onClick = {
                             showBottomSheet = true
                         }) {
@@ -97,6 +97,8 @@ fun MyCartScreen(
                                 fontWeight = FontWeight.Medium
                             )
                         }
+                    }
+
                 }
             )
         },
