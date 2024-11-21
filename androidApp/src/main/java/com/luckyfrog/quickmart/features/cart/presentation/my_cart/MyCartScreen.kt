@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
@@ -28,12 +29,15 @@ import com.luckyfrog.quickmart.core.widgets.EmptyState
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.CartItemCard
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.CartSummaryBar
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.VoucherCodeBottomSheet
+import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyCartScreen(
     navController: NavController,
-) {
+    navBarViewModel: NavBarViewModel = hiltViewModel(),
+
+    ) {
     var cartItems by remember {
         mutableStateOf(
             listOf(
@@ -131,7 +135,9 @@ fun MyCartScreen(
                 title = stringResource(id = R.string.empty_cart),
                 description = stringResource(id = R.string.empty_cart_desc),
                 buttonText = stringResource(id = R.string.explore_products),
-                onButtonClick = { }
+                onButtonClick = {
+                    navBarViewModel.updateIndex(1)
+                }
             )
         } else {
             LazyColumn(
