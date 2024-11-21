@@ -28,7 +28,7 @@ import com.luckyfrog.quickmart.utils.resource.theme.colorRed
 @Composable
 fun CustomTextField(
     withTitleLabel: Boolean = true,
-    titleLabel: String,
+    titleLabel: String? = null,
     titleLabelFontSize: TextUnit = 14.sp,
     value: String? = null,
     onValueChange: (String) -> Unit,
@@ -69,7 +69,7 @@ fun CustomTextField(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = titleLabel,
+                    text = titleLabel ?: "",
                     fontSize = titleLabelFontSize
                 )
                 if (required)

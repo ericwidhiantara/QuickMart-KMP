@@ -1,59 +1,78 @@
 package com.luckyfrog.quickmart.features.cart.presentation.my_cart
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.IconButton
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import coil.compose.AsyncImage
 import com.luckyfrog.quickmart.R
-import com.luckyfrog.quickmart.core.app.MainViewModel
-import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
-import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.QuantitySelector
-import com.luckyfrog.quickmart.utils.resource.theme.borderColor
-import com.luckyfrog.quickmart.utils.resource.theme.colorRed
+import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.CartItemCard
+import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.CartSummaryBar
+import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.VoucherCodeBottomSheet
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyCartScreen(
-    mainViewModel: MainViewModel,
     navController: NavController,
 ) {
+    var cartItems by remember {
+        mutableStateOf(
+            listOf(
+                CartItem(
+                    id = 1,
+                    name = "Loop Silicone Strong Magnetic Watch",
+                    imageUrl = "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
+                    currentPrice = 15.25,
+                    originalPrice = 20.00,
+                    quantity = 1,
+                    isChecked = false
+                ),
+
+                CartItem(
+                    id = 1,
+                    name = "Loop Silicone Strong Magnetic Watch",
+                    imageUrl = "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
+                    currentPrice = 15.25,
+                    originalPrice = 20.00,
+                    quantity = 1,
+                    isChecked = false
+                ),
+                CartItem(
+                    id = 1,
+                    name = "Loop Silicone Strong Magnetic Watch",
+                    imageUrl = "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
+                    currentPrice = 15.25,
+                    originalPrice = 20.00,
+                    quantity = 1,
+                    isChecked = false
+                )
+            )
+        )
+    }
+
+    var selectedVoucher by remember { mutableStateOf("") }
+    var showBottomSheet by remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState()
+
+
     Scaffold(
         topBar = {
             CustomTopBar(
@@ -61,132 +80,85 @@ fun MyCartScreen(
                 navController = navController,
                 centeredTitle = true,
                 actions = {
-                    TextButton(
-                        onClick = { },
-                        modifier = Modifier.padding(top = 4.dp)
-                    ) {
+                    TextButton(onClick = {
+                        showBottomSheet = true
+                    }) {
                         Text(
                             text = stringResource(id = R.string.voucher_code),
                             color = MaterialTheme.colorScheme.primary,
-                            fontWeight = FontWeight.Medium,
+                            fontWeight = FontWeight.Medium
                         )
                     }
                 }
             )
         },
+        bottomBar = {
+            CartSummaryBar(
+                subtotal = 45.75,
+                shippingCost = 0.00,
+                onCheckout = { /* Implement checkout logic */ },
+                cartItems = cartItems
+            )
+        }
+    ) { paddingValues ->
+        if (showBottomSheet) {
 
-        ) {
-        LazyColumn(
-            modifier = Modifier.padding(it),
-            contentPadding = PaddingValues(16.dp),
-            state = rememberLazyListState(),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            items(3) { index ->
-                val checked = remember {
-                    mutableStateOf(false)
-                }
-                var quantity by remember { mutableIntStateOf(1) }
+            ModalBottomSheet(
+                containerColor = MaterialTheme.colorScheme.background,
+                onDismissRequest = {
+                    showBottomSheet = false
+                },
+                sheetState = sheetState
+            ) {
+                VoucherCodeBottomSheet(
+                    onApply = { value ->
+                        selectedVoucher = value
+                        showBottomSheet = false
+                    },
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            checked.value = !checked.value
-                        },
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    content = {
-                        AsyncImage(
-                            model = "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
-                            contentDescription = "image",
-                            modifier = Modifier
-                                .size(120.dp, 120.dp)
-                                .clip(
-                                    RoundedCornerShape(12.dp)
-                                )
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Column(
-                            horizontalAlignment = Alignment.Start,
-                            verticalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier
-                                .fillMaxHeight()
-                                .padding(vertical = 12.dp)
-                                .weight(1f),
-                            content = {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Text(
-                                        text = "Loop Silicone Strong Magnetic Watch",
-                                        fontWeight = FontWeight.Medium,
-                                        modifier = Modifier.weight(1f)
-                                    )
-                                    Checkbox(
-                                        checked = checked.value, onCheckedChange = { value ->
-                                            checked.value = value
-                                        },
-                                        modifier = Modifier.clip(
-                                            RoundedCornerShape(8.dp)
-                                        )
-                                    )
-                                }
-
-                                Text(
-                                    text = "\$15.25",
-                                    fontWeight = FontWeight.Medium,
-                                )
-                                Text(
-                                    text = "\$20.00",
-                                    fontWeight = FontWeight.Normal,
-                                    fontSize = 10.sp,
-                                    textDecoration = TextDecoration.LineThrough
-                                )
-
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    QuantitySelector(
-                                        quantity = quantity,
-                                        onQuantityChanged = { newQuantity ->
-                                            quantity = newQuantity
-                                        },
-                                        modifier = Modifier
-                                            .border(
-                                                border = BorderStroke(
-                                                    1.dp,
-                                                    color = MaterialTheme.colorScheme.borderColor,
-                                                ),
-                                                shape = RoundedCornerShape(8.dp),
-                                            )
-                                            .padding(10.dp)
-                                    )
-                                    IconButton(
-                                        onClick = { /*TODO*/ },
-
-                                        ) {
-                                        Image(
-                                            painter = painterResource(id = Images.icDeleteCart),
-                                            contentDescription = "delete cart",
-                                            colorFilter = ColorFilter.tint(colorRed),
-                                        )
-                                    }
-                                }
-
-
-                            },
-                        )
-
-
-                    }
-                )
+                    )
 
             }
-
         }
 
+        LazyColumn(
+            modifier = Modifier.padding(paddingValues),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(cartItems) { item ->
+                CartItemCard(
+                    imageUrl = item.imageUrl,
+                    productName = item.name,
+                    currentPrice = item.currentPrice,
+                    originalPrice = item.originalPrice,
+                    quantity = item.quantity,
+                    isChecked = item.isChecked,
+                    onCheckedChange = { checked ->
+                        cartItems = cartItems.map {
+                            if (it.id == item.id) it.copy(isChecked = checked) else it
+                        }
+                    },
+                    onQuantityChange = { newQuantity ->
+                        cartItems = cartItems.map {
+                            if (it.id == item.id) it.copy(quantity = newQuantity) else it
+                        }
+                    },
+                    onDelete = {
+                        cartItems = cartItems.filter { it.id != item.id }
+                    }
+                )
+            }
+        }
     }
-
 }
+
+data class CartItem(
+    val id: Int,
+    val name: String,
+    val imageUrl: String,
+    val currentPrice: Double,
+    val originalPrice: Double,
+    val quantity: Int,
+    val isChecked: Boolean
+)

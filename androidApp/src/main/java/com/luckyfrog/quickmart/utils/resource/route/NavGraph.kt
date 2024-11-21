@@ -170,7 +170,7 @@ fun NavGraph(mainViewModel: MainViewModel) {
         /// CART
         composable(route = AppScreen.MyCartScreen.route) {
             MyCartScreen(
-                mainViewModel = mainViewModel, navController = navController
+                navController = navController
             )
         }
 

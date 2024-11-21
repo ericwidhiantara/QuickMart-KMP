@@ -123,7 +123,6 @@ fun BottomNavBar(
                 )
 
                 2 -> MyCartScreen(
-                    mainViewModel = mainViewModel,
                     navController = navController
                 )
 
