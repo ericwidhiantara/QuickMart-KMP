@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
+import com.luckyfrog.quickmart.core.widgets.EmptyState
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.CartItemCard
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.CartSummaryBar
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.VoucherCodeBottomSheet
@@ -71,7 +72,9 @@ fun MyCartScreen(
     var selectedVoucher by remember { mutableStateOf("") }
     var showBottomSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
-
+    val isCartEmpty = remember {
+        mutableStateOf(true)
+    }
 
     Scaffold(
         topBar = {
@@ -80,25 +83,28 @@ fun MyCartScreen(
                 navController = navController,
                 centeredTitle = true,
                 actions = {
-                    TextButton(onClick = {
-                        showBottomSheet = true
-                    }) {
-                        Text(
-                            text = stringResource(id = R.string.voucher_code),
-                            color = MaterialTheme.colorScheme.primary,
-                            fontWeight = FontWeight.Medium
-                        )
-                    }
+                    if (!isCartEmpty.value)
+                        TextButton(onClick = {
+                            showBottomSheet = true
+                        }) {
+                            Text(
+                                text = stringResource(id = R.string.voucher_code),
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
                 }
             )
         },
+
         bottomBar = {
-            CartSummaryBar(
-                subtotal = 45.75,
-                shippingCost = 0.00,
-                onCheckout = { /* Implement checkout logic */ },
-                cartItems = cartItems
-            )
+            if (!isCartEmpty.value)
+                CartSummaryBar(
+                    subtotal = 45.75,
+                    shippingCost = 0.00,
+                    onCheckout = { /* Implement checkout logic */ },
+                    cartItems = cartItems
+                )
         }
     ) { paddingValues ->
         if (showBottomSheet) {
@@ -120,36 +126,45 @@ fun MyCartScreen(
 
             }
         }
-
-        LazyColumn(
-            modifier = Modifier.padding(paddingValues),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            items(cartItems) { item ->
-                CartItemCard(
-                    imageUrl = item.imageUrl,
-                    productName = item.name,
-                    currentPrice = item.currentPrice,
-                    originalPrice = item.originalPrice,
-                    quantity = item.quantity,
-                    isChecked = item.isChecked,
-                    onCheckedChange = { checked ->
-                        cartItems = cartItems.map {
-                            if (it.id == item.id) it.copy(isChecked = checked) else it
+        if (isCartEmpty.value) {
+            EmptyState(
+                title = stringResource(id = R.string.empty_cart),
+                description = stringResource(id = R.string.empty_cart_desc),
+                buttonText = stringResource(id = R.string.explore_products),
+                onButtonClick = { }
+            )
+        } else {
+            LazyColumn(
+                modifier = Modifier.padding(paddingValues),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(cartItems) { item ->
+                    CartItemCard(
+                        imageUrl = item.imageUrl,
+                        productName = item.name,
+                        currentPrice = item.currentPrice,
+                        originalPrice = item.originalPrice,
+                        quantity = item.quantity,
+                        isChecked = item.isChecked,
+                        onCheckedChange = { checked ->
+                            cartItems = cartItems.map {
+                                if (it.id == item.id) it.copy(isChecked = checked) else it
+                            }
+                        },
+                        onQuantityChange = { newQuantity ->
+                            cartItems = cartItems.map {
+                                if (it.id == item.id) it.copy(quantity = newQuantity) else it
+                            }
+                        },
+                        onDelete = {
+                            cartItems = cartItems.filter { it.id != item.id }
                         }
-                    },
-                    onQuantityChange = { newQuantity ->
-                        cartItems = cartItems.map {
-                            if (it.id == item.id) it.copy(quantity = newQuantity) else it
-                        }
-                    },
-                    onDelete = {
-                        cartItems = cartItems.filter { it.id != item.id }
-                    }
-                )
+                    )
+                }
             }
         }
+
     }
 }
 

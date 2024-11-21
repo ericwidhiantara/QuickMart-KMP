@@ -88,7 +88,7 @@
     <string name="checkout">Checkout (%1$d)</string>
     <string name="voucher_code_placeholder">Enter voucher code</string>
     <string name="empty_cart">Your cart is empty</string>
-    <string name="empty_cart_desc">Looks like you have not added anything in your cart. Go ahead and explore top categories.</string>
+    <string name="empty_cart_desc">Looks like you have not added anything in your cart. Go ahead and explore top products.</string>
     <string name="explore_products">Explore Products</string>
 
 </resources>
