@@ -38,7 +38,17 @@ class CartViewModel @Inject constructor(
 
     fun addItem(cartItem: CartLocalItemDto) {
         viewModelScope.launch {
-            insertCartItemUseCase(cartItem)
+            // check if item already exists
+            val existingItem = cartItems.value.find { it.id == cartItem.id }
+
+            if (existingItem != null) {
+                // update the quantity of the existing item
+                val updatedItem = existingItem.copy(qty = existingItem.qty + cartItem.qty)
+                updateCartItemUseCase(updatedItem)
+            } else {
+                // insert the new item
+                insertCartItemUseCase(cartItem)
+            }
             fetchCartItems()
             fetchSelectedItems()
             calculateSubtotal()
