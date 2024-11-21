@@ -33,7 +33,7 @@ fun QuantitySelector(
                     onQuantityChanged(quantity - 1)
                 }
             },
-            modifier = Modifier.size(48.dp)
+            modifier = Modifier.size(30.dp)
         ) {
             Text(
                 text = "−",
@@ -58,7 +58,7 @@ fun QuantitySelector(
                     onQuantityChanged(quantity + 1)
                 }
             },
-            modifier = Modifier.size(48.dp)
+            modifier = Modifier.size(30.dp)
         ) {
             Text(
                 text = "+",

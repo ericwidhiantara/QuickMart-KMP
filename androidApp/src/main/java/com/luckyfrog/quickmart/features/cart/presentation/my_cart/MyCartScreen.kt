@@ -1,11 +1,15 @@
 package com.luckyfrog.quickmart.features.cart.presentation.my_cart
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -41,6 +46,8 @@ import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.QuantitySelector
+import com.luckyfrog.quickmart.utils.resource.theme.borderColor
+import com.luckyfrog.quickmart.utils.resource.theme.colorRed
 
 @Composable
 fun MyCartScreen(
@@ -71,8 +78,9 @@ fun MyCartScreen(
         ) {
         LazyColumn(
             modifier = Modifier.padding(it),
-            contentPadding = PaddingValues(24.dp),
-            state = rememberLazyListState()
+            contentPadding = PaddingValues(16.dp),
+            state = rememberLazyListState(),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             items(3) { index ->
                 val checked = remember {
@@ -81,7 +89,12 @@ fun MyCartScreen(
                 var quantity by remember { mutableIntStateOf(1) }
 
                 Row(
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            checked.value = !checked.value
+                        },
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     content = {
                         AsyncImage(
                             model = "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
@@ -95,17 +108,31 @@ fun MyCartScreen(
                         Spacer(modifier = Modifier.width(8.dp))
                         Column(
                             horizontalAlignment = Alignment.Start,
+                            verticalArrangement = Arrangement.SpaceBetween,
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .padding(vertical = 12.dp)
+                                .weight(1f),
                             content = {
-                                Row(modifier = Modifier) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
                                     Text(
                                         text = "Loop Silicone Strong Magnetic Watch",
                                         fontWeight = FontWeight.Medium,
+                                        modifier = Modifier.weight(1f)
                                     )
-                                    Checkbox(checked = checked.value, onCheckedChange = { value ->
-                                        checked.value = value
-                                    })
-
+                                    Checkbox(
+                                        checked = checked.value, onCheckedChange = { value ->
+                                            checked.value = value
+                                        },
+                                        modifier = Modifier.clip(
+                                            RoundedCornerShape(8.dp)
+                                        )
+                                    )
                                 }
+
                                 Text(
                                     text = "\$15.25",
                                     fontWeight = FontWeight.Medium,
@@ -116,9 +143,10 @@ fun MyCartScreen(
                                     fontSize = 10.sp,
                                     textDecoration = TextDecoration.LineThrough
                                 )
+
                                 Row(
-                                    modifier = Modifier,
-                                    horizontalArrangement = Arrangement.Center
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
                                     QuantitySelector(
                                         quantity = quantity,
@@ -126,18 +154,32 @@ fun MyCartScreen(
                                             quantity = newQuantity
                                         },
                                         modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(16.dp)
+                                            .border(
+                                                border = BorderStroke(
+                                                    1.dp,
+                                                    color = MaterialTheme.colorScheme.borderColor,
+                                                ),
+                                                shape = RoundedCornerShape(8.dp),
+                                            )
+                                            .padding(10.dp)
                                     )
-                                    IconButton(onClick = { /*TODO*/ }) {
+                                    IconButton(
+                                        onClick = { /*TODO*/ },
+
+                                        ) {
                                         Image(
                                             painter = painterResource(id = Images.icDeleteCart),
-                                            contentDescription = "delete cart"
+                                            contentDescription = "delete cart",
+                                            colorFilter = ColorFilter.tint(colorRed),
                                         )
                                     }
                                 }
+
+
                             },
                         )
+
+
                     }
                 )
 
