@@ -13,6 +13,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,58 +38,26 @@ import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewMode
 fun MyCartScreen(
     navController: NavController,
     navBarViewModel: NavBarViewModel = hiltViewModel(),
-
-    ) {
-    var cartItems by remember {
-        mutableStateOf(
-            listOf(
-                CartItem(
-                    id = 1,
-                    name = "Loop Silicone Strong Magnetic Watch",
-                    imageUrl = "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
-                    currentPrice = 15.25,
-                    originalPrice = 20.00,
-                    quantity = 1,
-                    isChecked = false
-                ),
-
-                CartItem(
-                    id = 1,
-                    name = "Loop Silicone Strong Magnetic Watch",
-                    imageUrl = "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
-                    currentPrice = 15.25,
-                    originalPrice = 20.00,
-                    quantity = 1,
-                    isChecked = false
-                ),
-                CartItem(
-                    id = 1,
-                    name = "Loop Silicone Strong Magnetic Watch",
-                    imageUrl = "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
-                    currentPrice = 15.25,
-                    originalPrice = 20.00,
-                    quantity = 1,
-                    isChecked = false
-                )
-            )
-        )
+    viewModel: CartViewModel = hiltViewModel()
+) {
+    LaunchedEffect(Unit) {
+        viewModel.fetchCartItems()
     }
+    var items = viewModel.cartItems.collectAsState().value
 
     var selectedVoucher by remember { mutableStateOf("") }
     var showBottomSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
-    val isCartEmpty = remember {
-        mutableStateOf(false)
-    }
+    val isCartEmpty = items.isEmpty();
 
     Scaffold(
         topBar = {
             CustomTopBar(
                 title = stringResource(R.string.menu_my_cart),
                 navController = navController,
-                centeredTitle = isCartEmpty.value,
+                centeredTitle = isCartEmpty,
                 actions = {
-                    if (!isCartEmpty.value) {
+                    if (!isCartEmpty) {
                         TextButton(onClick = {
                             showBottomSheet = true
                         }) {
@@ -104,12 +74,10 @@ fun MyCartScreen(
         },
 
         bottomBar = {
-            if (!isCartEmpty.value)
+            if (!isCartEmpty)
                 CartSummaryBar(
-                    subtotal = 45.75,
                     shippingCost = 0.00,
                     onCheckout = { /* Implement checkout logic */ },
-                    cartItems = cartItems
                 )
         }
     ) { paddingValues ->
@@ -132,7 +100,7 @@ fun MyCartScreen(
 
             }
         }
-        if (isCartEmpty.value) {
+        if (isCartEmpty) {
             EmptyState(
                 title = stringResource(id = R.string.empty_cart),
                 description = stringResource(id = R.string.empty_cart_desc),
@@ -147,26 +115,29 @@ fun MyCartScreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(cartItems) { item ->
+                items(items) { item ->
                     CartItemCard(
-                        imageUrl = item.imageUrl,
-                        productName = item.name,
-                        currentPrice = item.currentPrice,
-                        originalPrice = item.originalPrice,
-                        quantity = item.quantity,
-                        isChecked = item.isChecked,
+                        imageUrl = item.productImage,
+                        productName = item.productName,
+                        currentPrice = item.productPrice - (item.productPrice * item.discountPercentage / 100),
+                        originalPrice = item.productPrice,
+                        quantity = item.qty,
+                        isChecked = item.selected,
                         onCheckedChange = { checked ->
-                            cartItems = cartItems.map {
-                                if (it.id == item.id) it.copy(isChecked = checked) else it
+                            items = items.map {
+                                if (it.id == item.id) it.copy(selected = checked) else it
                             }
+
                         },
                         onQuantityChange = { newQuantity ->
-                            cartItems = cartItems.map {
-                                if (it.id == item.id) it.copy(quantity = newQuantity) else it
+                            items = items.map {
+                                if (it.id == item.id) it.copy(qty = newQuantity) else it
                             }
+                            viewModel.updateItem(item)
                         },
                         onDelete = {
-                            cartItems = cartItems.filter { it.id != item.id }
+                            viewModel.deleteItem(item)
+                            items = items.filter { it.id != item.id }
                         }
                     )
                 }

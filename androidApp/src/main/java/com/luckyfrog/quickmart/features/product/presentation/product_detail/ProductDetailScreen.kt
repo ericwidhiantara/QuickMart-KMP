@@ -54,6 +54,8 @@ import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.ExpandableText
 import com.luckyfrog.quickmart.core.widgets.PagerIndicator
+import com.luckyfrog.quickmart.features.cart.data.model.CartLocalItemDto
+import com.luckyfrog.quickmart.features.cart.presentation.my_cart.CartViewModel
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
 import com.luckyfrog.quickmart.utils.PageLoader
 import com.luckyfrog.quickmart.utils.helper.capitalizeWords
@@ -67,45 +69,47 @@ import kotlinx.coroutines.delay
 fun ProductDetailScreen(
     viewModel: ProductDetailViewModel = hiltViewModel(),
     productId: String,
-    navController: NavController
+    navController: NavController,
 ) {
     val data by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.fetchProductDetail(productId)
     }
-
-    Scaffold(
-        content = { paddingValues ->
-            when (val state = data) {
-                is ProductDetailState.Success -> ProductDetailContent(
+    when (val state = data) {
+        is ProductDetailState.Success -> {
+            Scaffold(
+                bottomBar = {
+                    ProductDetailBottomSection(state.data)
+                }
+            ) { paddingValues ->
+                ProductDetailContent(
                     paddingValues = paddingValues,
                     navController = navController,
                     product = state.data
                 )
-
-                is ProductDetailState.Loading -> {
-                    PageLoader(modifier = Modifier.fillMaxSize())
-                }
-
-                is ProductDetailState.Error -> {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(text = state.message)
-                    }
-                }
-
-                else -> {
-                    // Handle other states if needed
-                }
             }
-        },
-        bottomBar = {
-            ProductDetailBottomSection()
         }
-    )
+
+        is ProductDetailState.Loading -> {
+            PageLoader(modifier = Modifier.fillMaxSize())
+        }
+
+        is ProductDetailState.Error -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = state.message)
+            }
+        }
+
+        else -> {
+            // Handle other states if needed
+        }
+    }
+
+
 }
 
 @Composable
@@ -352,7 +356,11 @@ fun ProductHeaderSection(
 }
 
 @Composable
-fun ProductDetailBottomSection() {
+fun ProductDetailBottomSection(
+    product: ProductEntity,
+    cartModel: CartViewModel = hiltViewModel()
+
+) {
     // Get the screen height from LocalConfiguration
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp.dp
@@ -381,6 +389,18 @@ fun ProductDetailBottomSection() {
                 isWithIcon = true,
                 buttonIcon = painterResource(Images.icShoppingCart),
                 onClick = {
+                    val item = CartLocalItemDto(
+                        id = product.id ?: "",
+                        productName = product.name ?: "",
+                        productPrice = product.variants?.get(0)?.price ?: 0.0,
+                        discountPercentage = product.variants?.get(0)?.discountPercentage ?: 0.0,
+                        qty = 1,
+                        selected = true,
+                        productImage = product.images?.get(0)
+                            ?: "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png"
+
+                    )
+                    cartModel.addItem(item)
 
                 },
                 buttonContainerColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onPrimaryContainer,

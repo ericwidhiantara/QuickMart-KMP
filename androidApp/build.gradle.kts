@@ -7,6 +7,8 @@ plugins {
     id("kotlin-kapt")
     kotlin("plugin.serialization") version "2.0.21"
     id("com.google.devtools.ksp")
+    id("dagger.hilt.android.plugin")
+
 
 }
 
@@ -128,5 +130,11 @@ dependencies {
 
     // Async Image
     implementation("com.google.accompanist:accompanist-coil:0.15.0")
+
+    // Room
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
 
 }

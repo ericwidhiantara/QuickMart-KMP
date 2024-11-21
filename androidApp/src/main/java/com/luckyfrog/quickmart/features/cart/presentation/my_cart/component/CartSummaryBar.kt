@@ -9,23 +9,33 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
-import com.luckyfrog.quickmart.features.cart.presentation.my_cart.CartItem
+import com.luckyfrog.quickmart.features.cart.presentation.my_cart.CartViewModel
 
 
 @Composable
 fun CartSummaryBar(
-    subtotal: Double,
     shippingCost: Double,
     onCheckout: () -> Unit,
-    cartItems: List<CartItem>
+    viewModel: CartViewModel = hiltViewModel()
 ) {
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchSelectedItems()
+        viewModel.calculateSubtotal()
+    }
+    val selectedItems = viewModel.cartItems.collectAsState().value
+    val subTotal = viewModel.subtotal.collectAsState().value
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -38,18 +48,18 @@ fun CartSummaryBar(
         )
         Spacer(modifier = Modifier.height(12.dp))
 
-        OrderInfoRow(label = stringResource(id = R.string.subtotal), amount = subtotal)
+        OrderInfoRow(label = stringResource(id = R.string.subtotal), amount = subTotal)
         OrderInfoRow(label = stringResource(id = R.string.shipping_cost), amount = shippingCost)
 
         TotalOrderInfoRow(
             label = stringResource(id = R.string.total),
-            amount = subtotal + shippingCost
+            amount = subTotal + shippingCost
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
         CustomOutlinedButton(
-            buttonText = stringResource(R.string.checkout, cartItems.size),
+            buttonText = stringResource(R.string.checkout, selectedItems.size),
             onClick = onCheckout
         )
     }
