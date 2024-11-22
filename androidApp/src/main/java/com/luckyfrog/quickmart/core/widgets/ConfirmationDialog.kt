@@ -9,23 +9,27 @@ import androidx.compose.ui.res.stringResource
 import com.luckyfrog.quickmart.R
 
 @Composable
-fun DeleteConfirmationDialog(
+fun ConfirmationDialog(
+    title: String = stringResource(id = R.string.confirm_delete),
+    description: String = stringResource(id = R.string.confirm_delete_desc),
+    confirmText: String = stringResource(id = R.string.delete),
+    cancelText: String = stringResource(id = R.string.cancel),
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
-        title = { Text(text = stringResource(id = R.string.confirm_delete)) },
-        text = { Text(text = stringResource(id = R.string.confirm_delete_desc)) },
+        title = { Text(text = title) },
+        text = { Text(text = description) },
         confirmButton = {
             TextButton(onClick = onConfirm) {
-                Text(text = stringResource(id = R.string.delete))
+                Text(text = confirmText)
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = stringResource(id = R.string.cancel))
+                Text(text = cancelText)
             }
         }
     )

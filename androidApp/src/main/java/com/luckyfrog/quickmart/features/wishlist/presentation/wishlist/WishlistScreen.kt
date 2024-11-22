@@ -22,8 +22,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
+import com.luckyfrog.quickmart.core.widgets.ConfirmationDialog
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
-import com.luckyfrog.quickmart.core.widgets.DeleteConfirmationDialog
 import com.luckyfrog.quickmart.core.widgets.EmptyState
 import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
 import com.luckyfrog.quickmart.features.wishlist.presentation.wishlist.component.WishlistItemCard
@@ -74,7 +74,7 @@ fun WishlistScreen(
                     var showDeleteDialog by remember { mutableStateOf(false) }
 
                     if (showDeleteDialog) {
-                        DeleteConfirmationDialog(
+                        ConfirmationDialog(
                             onConfirm = {
                                 viewModel.deleteItem(item)
                                 coroutineScope.launch {

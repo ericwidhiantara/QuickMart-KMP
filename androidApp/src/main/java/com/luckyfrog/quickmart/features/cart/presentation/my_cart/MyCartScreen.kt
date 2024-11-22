@@ -29,8 +29,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
+import com.luckyfrog.quickmart.core.widgets.ConfirmationDialog
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
-import com.luckyfrog.quickmart.core.widgets.DeleteConfirmationDialog
 import com.luckyfrog.quickmart.core.widgets.EmptyState
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.CartItemCard
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.CartSummaryBar
@@ -128,9 +128,8 @@ fun MyCartScreen(
                     var showDeleteDialog by remember { mutableStateOf(false) }
 
                     if (showDeleteDialog) {
-                        DeleteConfirmationDialog(
+                        ConfirmationDialog(
                             onConfirm = {
-                                viewModel.deleteItem(item)
                                 coroutineScope.launch {
                                     viewModel.deleteItem(item)
                                     Toast.makeText(
@@ -170,12 +169,3 @@ fun MyCartScreen(
     }
 }
 
-data class CartItem(
-    val id: Int,
-    val name: String,
-    val imageUrl: String,
-    val currentPrice: Double,
-    val originalPrice: Double,
-    val quantity: Int,
-    val isChecked: Boolean
-)
