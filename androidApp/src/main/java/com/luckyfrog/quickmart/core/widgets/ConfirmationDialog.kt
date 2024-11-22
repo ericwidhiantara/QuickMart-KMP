@@ -21,7 +21,7 @@ fun ConfirmationDialog(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
         title = { Text(text = title) },
-        text = { Text(text = description) },
+        text = { Text(text = description, color = MaterialTheme.colorScheme.onSurface) },
         confirmButton = {
             TextButton(onClick = onConfirm) {
                 Text(text = confirmText)

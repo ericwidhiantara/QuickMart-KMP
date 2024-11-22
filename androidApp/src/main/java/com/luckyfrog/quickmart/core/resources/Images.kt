@@ -11,6 +11,7 @@ object Images {
     val icEmptyWishlist = com.luckyfrog.quickmart.R.drawable.ic_empty_wishlist
     val icFaq = com.luckyfrog.quickmart.R.drawable.ic_faq
     val icFilter = com.luckyfrog.quickmart.R.drawable.ic_filter
+    val icLanguage = com.luckyfrog.quickmart.R.drawable.ic_language
     val icLightMode = com.luckyfrog.quickmart.R.drawable.ic_light_mode
     val icLock = com.luckyfrog.quickmart.R.drawable.ic_lock
     val icLogoDark = com.luckyfrog.quickmart.R.drawable.ic_logo_dark
@@ -45,5 +46,6 @@ object Images {
     val icSplashDark = com.luckyfrog.quickmart.R.drawable.ic_splash_dark
     val icSplashLight = com.luckyfrog.quickmart.R.drawable.ic_splash_light
     val icTermsAndConditions = com.luckyfrog.quickmart.R.drawable.ic_terms_and_conditions
+    val icTheme = com.luckyfrog.quickmart.R.drawable.ic_dark_theme
     val icWishlist = com.luckyfrog.quickmart.R.drawable.ic_wishlist
 }

@@ -25,7 +25,7 @@ import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.MyCartScreen
 import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListScreen
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.HomeScreen
-import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
+import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScreen
 import com.luckyfrog.quickmart.features.wishlist.presentation.wishlist.WishlistScreen
 
 
@@ -131,7 +131,7 @@ fun BottomNavBar(
                     navController = navController
                 )
 
-                4 -> SettingsScreen(navController = navController)
+                4 -> ProfileScreen(navController = navController)
             }
         }
     }

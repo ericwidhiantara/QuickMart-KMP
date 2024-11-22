@@ -100,6 +100,17 @@
     <string name="empty_wishlist_desc">Tap heart button to start saving your favorite items.</string>
     <string name="added_to_wishlist">The product has been added to your wishlist</string>
     <string name="removed_from_wishlist">The product has been removed from your wishlist</string>
-
-
+    <string name="personal_information">Personal Information</string>
+    <string name="shipping_address">Shipping Address</string>
+    <string name="order_history">Order History</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="support_and_information">Support \u0026 Information</string>
+    <string name="faqs">FAQs</string>
+    <string name="account_management">Account Management</string>
+    <string name="change_password">Change Password</string>
+    <string name="theme">Theme</string>
+    <string name="language">Language</string>
+    <string name="confirm_logout">Logout Confirmation</string>
+    <string name="confirm_logout_desc">Are you sure want to logout?</string>
+    <string name="logout">Logout</string>
 </resources>

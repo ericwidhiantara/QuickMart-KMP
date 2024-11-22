@@ -48,8 +48,6 @@ import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.luckyfrog.quickmart.core.resources.Images
-import com.luckyfrog.quickmart.features.auth.presentation.login.UserState
-import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
 import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.Carousel
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CategoryList
@@ -58,6 +56,8 @@ import com.luckyfrog.quickmart.features.product.domain.entities.ProductFormParam
 import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListViewModel
 import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductState
 import com.luckyfrog.quickmart.features.product.presentation.product_list.component.ProductCard
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserState
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import java.util.Locale

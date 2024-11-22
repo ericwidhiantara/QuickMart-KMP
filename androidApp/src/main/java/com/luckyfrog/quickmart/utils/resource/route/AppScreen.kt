@@ -41,7 +41,7 @@ sealed class AppScreen(val route: String) {
     data object WishlistScreen : AppScreen(ConstantAppScreenName.WISHLIST_SCREEN)
 
     /// PROFILE
-    data object SettingsScreen : AppScreen(ConstantAppScreenName.SETTINGS_SCREEN)
+    data object ProfileScreen : AppScreen(ConstantAppScreenName.PROFILE_SCREEN)
 }
 
 object ConstantAppScreenName {
@@ -79,6 +79,6 @@ object ConstantAppScreenName {
     const val WISHLIST_SCREEN = "wishlist_screen"
 
     /// PROFILE
-    const val SETTINGS_SCREEN = "settings_screen"
+    const val PROFILE_SCREEN = "profile_screen"
 
 }

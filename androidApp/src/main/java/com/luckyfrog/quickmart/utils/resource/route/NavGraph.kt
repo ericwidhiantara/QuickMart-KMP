@@ -12,7 +12,6 @@ import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.create
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email_confirmation.ForgotPasswordEmailConfirmationScreen
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.verify_code.ForgotPasswordVerifyCodeScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginScreen
-import com.luckyfrog.quickmart.features.auth.presentation.login.UserViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterScreen
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.MyCartScreen
 import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListScreen
@@ -24,7 +23,8 @@ import com.luckyfrog.quickmart.features.product.presentation.product_detail.Prod
 import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListScreen
 import com.luckyfrog.quickmart.features.product.presentation.product_list_by_category.ProductListByCategoryScreen
 import com.luckyfrog.quickmart.features.product.presentation.search.SearchScreen
-import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
+import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScreen
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import com.luckyfrog.quickmart.features.wishlist.presentation.wishlist.WishlistScreen
 
 @Composable
@@ -32,7 +32,7 @@ fun NavGraph(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppScreen.SplashScreen.route
+        startDestination = AppScreen.ProfileScreen.route
     ) {
         /// GENERAL
         composable(route = AppScreen.SplashScreen.route) {
@@ -183,11 +183,10 @@ fun NavGraph(mainViewModel: MainViewModel) {
         }
 
         /// PROFILE
-        composable(route = AppScreen.SettingsScreen.route) {
-            val userViewModel = hiltViewModel<UserViewModel>()
+        composable(route = AppScreen.ProfileScreen.route) {
 
-            SettingsScreen(
-                userViewModel = userViewModel, navController = navController
+            ProfileScreen(
+                navController = navController
             )
         }
     }
