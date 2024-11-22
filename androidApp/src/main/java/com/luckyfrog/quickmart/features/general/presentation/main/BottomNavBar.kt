@@ -26,6 +26,7 @@ import com.luckyfrog.quickmart.features.cart.presentation.my_cart.MyCartScreen
 import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListScreen
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.HomeScreen
 import com.luckyfrog.quickmart.features.settings.presentation.SettingsScreen
+import com.luckyfrog.quickmart.features.wishlist.presentation.wishlist.WishlistScreen
 
 
 @Composable
@@ -126,7 +127,10 @@ fun BottomNavBar(
                     navController = navController
                 )
 
-                3 -> Text("Wishlist")
+                3 -> WishlistScreen(
+                    navController = navController
+                )
+
                 4 -> SettingsScreen(navController = navController)
             }
         }

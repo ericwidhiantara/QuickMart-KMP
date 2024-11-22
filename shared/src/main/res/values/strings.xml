@@ -96,5 +96,10 @@
     <string name="cancel">Cancel</string>
     <string name="item_deleted_successfully">Product deleted successfully!</string>
     <string name="added_to_cart">The product has been added to your cart</string>
+    <string name="empty_wishlist">Your wishlist is empty</string>
+    <string name="empty_wishlist_desc">Tap heart button to start saving your favorite items.</string>
+    <string name="added_to_wishlist">The product has been added to your wishlist</string>
+    <string name="removed_from_wishlist">The product has been removed from your wishlist</string>
+
 
 </resources>

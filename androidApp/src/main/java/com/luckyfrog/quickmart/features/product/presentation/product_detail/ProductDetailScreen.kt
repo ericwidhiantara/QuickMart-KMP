@@ -24,6 +24,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -50,6 +51,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.luckyfrog.quickmart.R
@@ -60,6 +62,8 @@ import com.luckyfrog.quickmart.core.widgets.PagerIndicator
 import com.luckyfrog.quickmart.features.cart.data.model.CartLocalItemDto
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.CartViewModel
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
+import com.luckyfrog.quickmart.features.wishlist.data.model.WishlistLocalItemDto
+import com.luckyfrog.quickmart.features.wishlist.presentation.wishlist.WishlistViewModel
 import com.luckyfrog.quickmart.utils.PageLoader
 import com.luckyfrog.quickmart.utils.helper.capitalizeWords
 import com.luckyfrog.quickmart.utils.resource.theme.colorBlue
@@ -80,6 +84,7 @@ fun ProductDetailScreen(
     LaunchedEffect(Unit) {
         viewModel.fetchProductDetail(productId)
     }
+
     when (val state = data) {
         is ProductDetailState.Success -> {
             Scaffold(
@@ -121,8 +126,21 @@ fun ProductDetailContent(
     paddingValues: PaddingValues,
     navController: NavController,
     product: ProductEntity,
-) {
+    wishlistViewModel: WishlistViewModel = hiltViewModel(),
+
+    ) {
+
+    LaunchedEffect(Unit) {
+        wishlistViewModel.fetchWishlistItems()
+    }
     val scrollState = rememberScrollState()
+
+    val items by wishlistViewModel.wishlistItems.collectAsStateWithLifecycle()
+
+    val isFavorite = items.any { it.id == product.id }
+
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
 
     val scrollOffset by remember {
         derivedStateOf {
@@ -223,13 +241,45 @@ fun ProductDetailContent(
             }
 
         }
-// Top bar with back button and favorite
+
+        // Top bar with back button and favorite
         TopAppBar(
             modifier = Modifier.align(Alignment.TopStart),
             scrollOffset = scrollOffset,
             title = product.name?.capitalizeWords() ?: "",
             onBackClick = { navController.popBackStack() },
-            onFavoriteClick = { }
+            isFavorite = isFavorite,
+            onFavoriteClick = {
+                val item = WishlistLocalItemDto(
+                    id = product.id ?: "",
+                    productName = product.name ?: "",
+                    productPrice = product.variants?.get(0)?.price ?: 0.0,
+                    discountPercentage = product.variants?.get(0)?.discountPercentage ?: 0.0,
+                    productImage = product.images?.get(0)
+                        ?: "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
+                )
+                if (isFavorite) {
+                    coroutineScope.launch {
+                        wishlistViewModel.deleteItem(item)
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.removed_from_wishlist),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    coroutineScope.launch {
+                        wishlistViewModel.addItem(item)
+                        Toast.makeText(
+                            context,
+                            context.getString(R.string.added_to_wishlist),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+                wishlistViewModel.fetchWishlistItems()
+
+            }
         )
 
     }
@@ -241,7 +291,8 @@ private fun TopAppBar(
     scrollOffset: Float,
     title: String,
     onBackClick: () -> Unit,
-    onFavoriteClick: () -> Unit
+    onFavoriteClick: () -> Unit,
+    isFavorite: Boolean = false
 ) {
     Box(
         modifier = modifier
@@ -291,7 +342,11 @@ private fun TopAppBar(
             onClick = onFavoriteClick
         ) {
             Icon(
-                Icons.Default.FavoriteBorder,
+                imageVector = if (isFavorite) {
+                    Icons.Filled.Favorite
+                } else {
+                    Icons.Filled.FavoriteBorder
+                },
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primaryContainer
             )

@@ -40,6 +40,15 @@ import com.luckyfrog.quickmart.features.product.data.repositories.ProductReposit
 import com.luckyfrog.quickmart.features.product.domain.repositories.ProductRepository
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductDetailUseCase
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCase
+import com.luckyfrog.quickmart.features.wishlist.data.datasources.local.WishlistAppDatabase
+import com.luckyfrog.quickmart.features.wishlist.data.datasources.local.WishlistLocalDataSource
+import com.luckyfrog.quickmart.features.wishlist.data.datasources.local.WishlistLocalDataSourceImpl
+import com.luckyfrog.quickmart.features.wishlist.data.datasources.local.dao.WishlistDao
+import com.luckyfrog.quickmart.features.wishlist.data.repositories.WishlistLocalRepositoryImpl
+import com.luckyfrog.quickmart.features.wishlist.domain.repositories.WishlistLocalRepository
+import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.DeleteWishlistItemUseCase
+import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.GetWishlistItemsUseCase
+import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.InsertWishlistItemUseCase
 import com.luckyfrog.quickmart.utils.TokenManager
 import dagger.Module
 import dagger.Provides
@@ -68,6 +77,24 @@ object DatabaseModule {
     @Singleton
     fun provideCartDao(database: CartAppDatabase): CartDao {
         return database.cartDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWishlistAppDatabase(@ApplicationContext context: Context): WishlistAppDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,  // Use applicationContext
+            WishlistAppDatabase::class.java,
+            "wishlist_database"  // Changed database name for clarity
+        )
+            .fallbackToDestructiveMigration()  // Optional: adds migration strategy
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideWishlistDao(database: WishlistAppDatabase): WishlistDao {
+        return database.wishlistDao()
     }
 }
 
@@ -109,6 +136,14 @@ object DataSourceModule {
         return CartLocalDataSourceImpl(cartDao)
     }
 
+    @Singleton
+    @Provides
+    fun providesWishlistLocalDataSource(
+        wishlistDao: WishlistDao
+    ): WishlistLocalDataSource {
+        return WishlistLocalDataSourceImpl(wishlistDao)
+    }
+
 
 }
 
@@ -147,6 +182,14 @@ object RepositoryModule {
         localDataSource: CartLocalDataSource
     ): CartLocalRepository {
         return CartLocalRepositoryImpl(localDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun providesWishlistLocalRepository(
+        localDataSource: WishlistLocalDataSource
+    ): WishlistLocalRepository {
+        return WishlistLocalRepositoryImpl(localDataSource)
     }
 
 }
@@ -295,6 +338,32 @@ object UseCaseModule {
         repository: CartLocalRepository
     ): CalculateSubtotalUseCase {
         return CalculateSubtotalUseCase(repository)
+    }
+
+    /// Wishlist Local
+    @Singleton
+    @Provides
+    fun providesInsertWishlistItemUseCase(
+        repository: WishlistLocalRepository
+    ): InsertWishlistItemUseCase {
+        return InsertWishlistItemUseCase(repository)
+
+    }
+
+    @Singleton
+    @Provides
+    fun providesDeleteWishlistItemUseCase(
+        repository: WishlistLocalRepository
+    ): DeleteWishlistItemUseCase {
+        return DeleteWishlistItemUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun providesGetWishlistItemsUseCase(
+        repository: WishlistLocalRepository
+    ): GetWishlistItemsUseCase {
+        return GetWishlistItemsUseCase(repository)
     }
 }
 

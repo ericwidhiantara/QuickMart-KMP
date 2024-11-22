@@ -96,5 +96,8 @@
     <string name="cancel">Batal</string>
     <string name="item_deleted_successfully">Produk berhasil dihapus!</string>
     <string name="added_to_cart">Produk telah ditambahkan ke keranjang Anda</string>
-
+    <string name="empty_wishlist">Daftar keinginan Anda kosong</string>
+    <string name="empty_wishlist_desc">Ketuk tombol hati untuk mulai menyimpan barang-barang favorit Anda.</string>
+    <string name="added_to_wishlist">Produk telah ditambahkan ke daftar keinginan Anda</string>
+    <string name="removed_from_wishlist">Produk telah dihapus dari daftar keinginan Anda</string>
 </resources>

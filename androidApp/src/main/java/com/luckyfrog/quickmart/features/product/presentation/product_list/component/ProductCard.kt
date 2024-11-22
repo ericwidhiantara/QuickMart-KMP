@@ -1,5 +1,6 @@
 package com.luckyfrog.quickmart.features.product.presentation.product_list.component
 
+import android.widget.Toast
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -23,25 +25,46 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
+import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
+import com.luckyfrog.quickmart.features.wishlist.data.model.WishlistLocalItemDto
+import com.luckyfrog.quickmart.features.wishlist.presentation.wishlist.WishlistViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun ProductCard(
     itemEntity: ProductEntity,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    wishlistViewModel: WishlistViewModel = hiltViewModel()
 ) {
+
+    LaunchedEffect(Unit) {
+        wishlistViewModel.fetchWishlistItems()
+    }
+
+    val items by wishlistViewModel.wishlistItems.collectAsStateWithLifecycle()
+
+    val isFavorite = items.any { it.id == itemEntity.id }
+
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     Card(
         modifier = Modifier
             .padding(vertical = 8.dp)
@@ -82,10 +105,45 @@ fun ProductCard(
                         .clip(CircleShape) // Ensures the shape is circular
                         .background(MaterialTheme.colorScheme.onSecondary) // Background color
                         .align(Alignment.TopEnd),
-                    onClick = {}
+                    onClick = {
+                        val item = WishlistLocalItemDto(
+                            id = itemEntity.id ?: "",
+                            productName = itemEntity.name ?: "",
+                            productPrice = itemEntity.variants?.get(0)?.price ?: 0.0,
+                            discountPercentage = itemEntity.variants?.get(0)?.discountPercentage
+                                ?: 0.0,
+                            productImage = itemEntity.images?.get(0)
+                                ?: "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
+                        )
+                        if (isFavorite) {
+                            coroutineScope.launch {
+                                wishlistViewModel.deleteItem(item)
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.removed_from_wishlist),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        } else {
+                            coroutineScope.launch {
+                                wishlistViewModel.addItem(item)
+                                Toast.makeText(
+                                    context,
+                                    context.getString(R.string.added_to_wishlist),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                        wishlistViewModel.fetchWishlistItems()
+
+                    }
                 ) {
                     Icon(
-                        Icons.Default.FavoriteBorder,
+                        imageVector = if (isFavorite) {
+                            Icons.Filled.Favorite
+                        } else {
+                            Icons.Filled.FavoriteBorder
+                        },
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primaryContainer
                     )
