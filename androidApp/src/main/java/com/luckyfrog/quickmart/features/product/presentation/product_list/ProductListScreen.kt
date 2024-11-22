@@ -6,9 +6,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -44,6 +46,7 @@ import com.luckyfrog.quickmart.utils.PageLoader
 import com.luckyfrog.quickmart.utils.helper.Constants
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 
+// ProductListScreen.kt
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductListScreen(
@@ -51,7 +54,8 @@ fun ProductListScreen(
     navController: NavController,
     viewModel: ProductListViewModel = hiltViewModel(),
     isFromHomeScreen: Boolean = false,
-    topBarTitle: String = stringResource(R.string.app_name)
+    topBarTitle: String = stringResource(R.string.app_name),
+    modifier: Modifier = Modifier
 ) {
     val data by viewModel.state.collectAsState()
     val sheetState = rememberModalBottomSheetState()
@@ -65,7 +69,7 @@ fun ProductListScreen(
             queryBy = null,
             sortBy = "created_at",
             sortOrder = "desc",
-            limit = Constants.MAX_PAGE_SIZE,
+            limit = if (isFromHomeScreen) 4 else Constants.MAX_PAGE_SIZE,
             page = 1,
         )
     }
@@ -75,7 +79,7 @@ fun ProductListScreen(
     }
 
     Scaffold(
-
+        modifier = modifier,
         topBar = {
             if (!isFromHomeScreen) {
                 CustomTopBar(
@@ -83,7 +87,6 @@ fun ProductListScreen(
                     title = topBarTitle,
                     centeredTitle = false,
                     actions = {
-
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(12.dp),
                             content = {
@@ -111,12 +114,9 @@ fun ProductListScreen(
                     },
                 )
             }
-
         }
-    ) {
-
+    ) { innerPadding ->
         if (showBottomSheet) {
-
             ModalBottomSheet(
                 containerColor = MaterialTheme.colorScheme.background,
                 onDismissRequest = {
@@ -136,76 +136,115 @@ fun ProductListScreen(
             }
         }
 
-        when (val state = data) {
-            is ProductState.Success -> {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    modifier = Modifier
-                        .padding(it)
-                        .padding(horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                ) {
-                    val itemCount = if (isFromHomeScreen) {
-                        state.data.size.coerceAtMost(4)
+        ProductGrid(
+            productState = data,
+            viewModel = viewModel,
+            navController = navController,
+            isFromHomeScreen = isFromHomeScreen,
+            params = params,
+            modifier = Modifier
+                .padding(innerPadding)
+                .then(
+                    if (isFromHomeScreen) {
+                        Modifier
+                            .height(500.dp)
+                            .padding(horizontal = 16.dp)
                     } else {
-                        state.data.size
+                        Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp)
                     }
+                )
+        )
+    }
+}
 
-                    items(
-                        count = itemCount,
-                        key = { index -> viewModel.getKeyForIndex(index) }  // Use timestamp-based key
-                    ) { index ->
-                        val item = state.data[index]
-                        ProductCard(
-                            itemEntity = item,
-                            onClick = {
-                                navController.navigate(AppScreen.ProductDetailScreen.route + "/${item.id}")
-                            }
-                        )
+@Composable
+private fun ProductGrid(
+    productState: ProductState,
+    viewModel: ProductListViewModel,
+    navController: NavController,
+    isFromHomeScreen: Boolean,
+    params: ProductFormParamsEntity,
+    modifier: Modifier = Modifier
+) {
+    when (productState) {
+        is ProductState.Success -> {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = modifier,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                userScrollEnabled = !isFromHomeScreen // Enable scrolling only for full list
+            ) {
+                val itemCount = if (isFromHomeScreen) {
+                    productState.data.size.coerceAtMost(4)
+                } else {
+                    productState.data.size
+                }
 
-                        // Check if we need to load more
-                        if (index >= itemCount - 2 && !state.isLastPage && !isFromHomeScreen && !state.isLoadingMore) {
-                            LaunchedEffect(Unit) {
-                                viewModel.fetchProducts(params)
-                            }
+                items(
+                    count = itemCount,
+                    key = { index -> viewModel.getKeyForIndex(index) }
+                ) { index ->
+                    val item = productState.data[index]
+                    ProductCard(
+                        itemEntity = item,
+                        onClick = {
+                            navController.navigate(AppScreen.ProductDetailScreen.route + "/${item.id}")
                         }
-                    }
+                    )
 
-                    // Show loading indicator only when actually loading more
-                    if (state.isLoadingMore && !isFromHomeScreen) {
-                        item {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(16.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier.size(24.dp)
-                                )
-                            }
+                    // Check if we need to load more
+                    if (!isFromHomeScreen &&
+                        index >= itemCount - 2 &&
+                        !productState.isLastPage &&
+                        !productState.isLoadingMore
+                    ) {
+                        LaunchedEffect(Unit) {
+                            viewModel.fetchProducts(params)
                         }
                     }
                 }
-            }
 
-            is ProductState.LoadingFirstPage -> {
-                PageLoader(modifier = Modifier.fillMaxSize())
-            }
-
-            is ProductState.Error -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = state.message)
+                // Show loading indicator only when loading more in full list
+                if (productState.isLoadingMore && !isFromHomeScreen) {
+                    item(span = { GridItemSpan(2) }) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    }
                 }
-            }
-
-            else -> {
-                // Handle other states if needed
             }
         }
-    }
 
+        is ProductState.LoadingFirstPage -> {
+            Box(
+                modifier = modifier,
+                contentAlignment = Alignment.Center
+            ) {
+                PageLoader()
+            }
+        }
+
+        is ProductState.Error -> {
+            Box(
+                modifier = modifier,
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = productState.message)
+            }
+        }
+
+        else -> {
+            // Handle other states if needed
+        }
+    }
 }

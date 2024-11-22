@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,7 +14,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -26,6 +31,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,7 +54,10 @@ import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewMode
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.Carousel
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.CategoryList
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.ProfileImage
-import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListScreen
+import com.luckyfrog.quickmart.features.product.domain.entities.ProductFormParamsEntity
+import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListViewModel
+import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductState
+import com.luckyfrog.quickmart.features.product.presentation.product_list.component.ProductCard
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import java.util.Locale
@@ -60,10 +69,8 @@ fun HomeScreen(
     userViewModel: UserViewModel = hiltViewModel(),
     navBarViewModel: NavBarViewModel = hiltViewModel(),
 ) {
-
     val userState by userViewModel.userState.collectAsState()
 
-    // Trigger the get user fetch
     LaunchedEffect(Unit) {
         userViewModel.getUserLogin()
     }
@@ -71,9 +78,7 @@ fun HomeScreen(
     Scaffold(
         modifier = Modifier
             .padding(vertical = 10.dp)
-            .background(
-                MaterialTheme.colorScheme.background
-            ),
+            .background(MaterialTheme.colorScheme.background),
         topBar = {
             Row(
                 modifier = Modifier
@@ -136,82 +141,156 @@ fun HomeScreen(
                                 }
                             }
                         }
-
                     }
                 )
-
             }
         }
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 24.dp)
                 .padding(innerPadding)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
         ) {
-
-            Carousel()
-            Spacer(modifier = Modifier.height(24.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
             ) {
-                Text(
-                    text = stringResource(R.string.categories),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
-                )
-                TextButton(
-                    onClick = {
-                        navBarViewModel.updateIndex(1)
-                    }
+                Carousel()
+                Spacer(modifier = Modifier.height(24.dp))
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = stringResource(R.string.see_all).uppercase(Locale.getDefault()),
-                        fontSize = 12.sp
+                        text = stringResource(R.string.categories),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
                     )
-                }
-
-            }
-            Spacer(modifier = Modifier.height(12.dp))
-            CategoryList(navController = navController)
-            Spacer(modifier = Modifier.height(24.dp))
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(
-                    text = stringResource(R.string.latest_products),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 18.sp
-                )
-                val context = LocalContext.current
-
-                val title = context.getString(R.string.latest_products)
-                TextButton(
-                    onClick = {
-
-                        navController.navigate(
-                            "${AppScreen.ProductListScreen.route}?title=$title"
+                    TextButton(
+                        onClick = {
+                            navBarViewModel.updateIndex(1)
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.see_all).uppercase(Locale.getDefault()),
+                            fontSize = 12.sp
                         )
                     }
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+                CategoryList(navController = navController)
+                Spacer(modifier = Modifier.height(24.dp))
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = stringResource(R.string.see_all).uppercase(Locale.getDefault()),
-                        fontSize = 12.sp
+                        text = stringResource(R.string.latest_products),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
+                    )
+                    val context = LocalContext.current
+                    val title = context.getString(R.string.latest_products)
+                    TextButton(
+                        onClick = {
+                            navController.navigate(
+                                "${AppScreen.ProductListScreen.route}?title=$title"
+                            )
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.see_all).uppercase(Locale.getDefault()),
+                            fontSize = 12.sp
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+            }
+
+            // Product Grid Section
+            HomeProductGrid(
+                navController = navController
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+
+        }
+    }
+}
+
+@Composable
+private fun HomeProductGrid(
+    navController: NavController,
+    viewModel: ProductListViewModel = hiltViewModel()
+) {
+    val data by viewModel.state.collectAsState()
+
+    val params = remember {
+        ProductFormParamsEntity(
+            categoryId = null,
+            query = null,
+            queryBy = null,
+            sortBy = "created_at",
+            sortOrder = "desc",
+            limit = 4, // Limit to 4 items for home screen
+            page = 1,
+        )
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchProducts(params, isFirstLoad = true)
+    }
+
+    when (val state = data) {
+        is ProductState.Success -> {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                modifier = Modifier
+                    .height(500.dp) // Fixed height for home screen grid
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                userScrollEnabled = false // Disable grid scrolling
+            ) {
+                items(
+                    count = state.data.take(4).size,
+                    key = { index -> viewModel.getKeyForIndex(index) }
+                ) { index ->
+                    val item = state.data[index]
+                    ProductCard(
+                        itemEntity = item,
+                        onClick = {
+                            navController.navigate(AppScreen.ProductDetailScreen.route + "/${item.id}")
+                        }
                     )
                 }
-
             }
-            Spacer(modifier = Modifier.height(12.dp))
-            ProductListScreen(
-                mainViewModel = mainViewModel,
-                navController = navController,
-                isFromHomeScreen = true,
-            )
         }
+
+        is ProductState.LoadingFirstPage -> {
+            Box(
+                modifier = Modifier
+                    .height(400.dp)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        }
+
+        is ProductState.Error -> {
+            Box(
+                modifier = Modifier
+                    .height(400.dp)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(text = state.message)
+            }
+        }
+
+        else -> {}
     }
 }
