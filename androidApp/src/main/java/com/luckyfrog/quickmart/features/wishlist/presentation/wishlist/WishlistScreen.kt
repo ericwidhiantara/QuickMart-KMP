@@ -26,6 +26,8 @@ import com.luckyfrog.quickmart.core.widgets.ConfirmationDialog
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
 import com.luckyfrog.quickmart.core.widgets.EmptyState
 import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserState
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import com.luckyfrog.quickmart.features.wishlist.presentation.wishlist.component.WishlistItemCard
 import kotlinx.coroutines.launch
 
@@ -33,10 +35,18 @@ import kotlinx.coroutines.launch
 fun WishlistScreen(
     navController: NavController,
     navBarViewModel: NavBarViewModel = hiltViewModel(),
-    viewModel: WishlistViewModel = hiltViewModel()
-) {
+    viewModel: WishlistViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel(),
+
+    ) {
     LaunchedEffect(Unit) {
-        viewModel.fetchWishlistItems()
+        userViewModel.getUserLogin()
+        // when success get user login data, fetch wishlist items
+        userViewModel.userState.collect { user ->
+            if (user is UserState.Success) {
+                viewModel.fetchWishlistItems(user.data.id)
+            }
+        }
     }
 
     val items by viewModel.wishlistItems.collectAsStateWithLifecycle()

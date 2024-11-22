@@ -36,6 +36,8 @@ import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.Cart
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.CartSummaryBar
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.VoucherCodeBottomSheet
 import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserState
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,11 +45,19 @@ import kotlinx.coroutines.launch
 fun MyCartScreen(
     navController: NavController,
     navBarViewModel: NavBarViewModel = hiltViewModel(),
-    viewModel: CartViewModel = hiltViewModel()
+    viewModel: CartViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(Unit) {
-        viewModel.fetchCartItems()
-        viewModel.fetchSelectedItems()
+        userViewModel.getUserLogin()
+        // when success get user login data, fetch cart items
+        userViewModel.userState.collect { user ->
+            if (user is UserState.Success) {
+                viewModel.fetchCartItems(user.data.id)
+                viewModel.fetchSelectedItems(user.data.id)
+            }
+        }
+
     }
 
     val items by viewModel.cartItems.collectAsStateWithLifecycle()

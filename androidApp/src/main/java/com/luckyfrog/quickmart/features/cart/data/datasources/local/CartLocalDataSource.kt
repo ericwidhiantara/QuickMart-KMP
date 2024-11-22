@@ -7,7 +7,7 @@ interface CartLocalDataSource {
     suspend fun insertItem(cartItem: CartLocalItemDto)
     suspend fun updateItem(cartItem: CartLocalItemDto)
     suspend fun deleteItem(cartItem: CartLocalItemDto)
-    suspend fun getAllItems(): List<CartLocalItemDto>
-    suspend fun getSelectedItems(): List<CartLocalItemDto>
-    suspend fun calculateSubtotal(): Double
+    suspend fun getAllItems(userId: String): List<CartLocalItemDto>
+    suspend fun getSelectedItems(userId: String): List<CartLocalItemDto>
+    suspend fun calculateSubtotal(userId: String): Double
 }

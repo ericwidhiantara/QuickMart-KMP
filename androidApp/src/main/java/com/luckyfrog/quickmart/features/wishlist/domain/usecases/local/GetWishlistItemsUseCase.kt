@@ -4,5 +4,5 @@ import com.luckyfrog.quickmart.features.wishlist.domain.repositories.WishlistLoc
 import javax.inject.Inject
 
 class GetWishlistItemsUseCase @Inject constructor(private val repository: WishlistLocalRepository) {
-    suspend operator fun invoke() = repository.getAllItems()
+    suspend operator fun invoke(userId: String) = repository.getAllItems(userId)
 }

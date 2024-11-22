@@ -8,7 +8,7 @@ interface CartLocalRepository {
     suspend fun insertItem(cartItem: CartLocalItemDto)
     suspend fun updateItem(cartItem: CartLocalItemDto)
     suspend fun deleteItem(cartItem: CartLocalItemDto)
-    suspend fun getAllItems(): Flow<List<CartLocalItemDto>>
-    suspend fun getSelectedItems(): Flow<List<CartLocalItemDto>>
-    suspend fun calculateSubtotal(): Flow<Double>
+    suspend fun getAllItems(userId: String): Flow<List<CartLocalItemDto>>
+    suspend fun getSelectedItems(userId: String): Flow<List<CartLocalItemDto>>
+    suspend fun calculateSubtotal(userId: String): Flow<Double>
 }

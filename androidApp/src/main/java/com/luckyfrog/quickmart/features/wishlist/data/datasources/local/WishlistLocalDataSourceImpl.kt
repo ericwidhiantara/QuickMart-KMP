@@ -9,6 +9,6 @@ class WishlistLocalDataSourceImpl @Inject constructor(private val dao: WishlistD
     WishlistLocalDataSource {
     override suspend fun insertItem(params: WishlistLocalItemDto) = dao.insertItem(params)
     override suspend fun deleteItem(params: WishlistLocalItemDto) = dao.deleteItem(params)
-    override suspend fun getAllItems() = dao.getAllItems()
+    override suspend fun getAllItems(userId: String) = dao.getAllItems(userId)
 
 }

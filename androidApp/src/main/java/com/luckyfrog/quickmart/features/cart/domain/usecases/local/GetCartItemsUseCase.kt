@@ -4,5 +4,5 @@ import com.luckyfrog.quickmart.features.cart.domain.repositories.CartLocalReposi
 import javax.inject.Inject
 
 class GetCartItemsUseCase @Inject constructor(private val repository: CartLocalRepository) {
-    suspend operator fun invoke() = repository.getAllItems()
+    suspend operator fun invoke(userId: String) = repository.getAllItems(userId)
 }

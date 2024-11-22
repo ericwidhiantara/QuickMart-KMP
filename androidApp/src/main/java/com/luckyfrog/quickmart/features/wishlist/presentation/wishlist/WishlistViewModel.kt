@@ -35,24 +35,24 @@ class WishlistViewModel @Inject constructor(
                 // insert the new item
                 insertWishlistItemUseCase(wishlistItem)
             }
-            fetchWishlistItems()
+            fetchWishlistItems(wishlistItem.userId)
         }
     }
 
     fun deleteItem(wishlistItem: WishlistLocalItemDto) {
         viewModelScope.launch {
             deleteWishlistItemUseCase(wishlistItem)
-            fetchWishlistItems()
+            fetchWishlistItems(wishlistItem.userId)
         }
     }
 
-    fun fetchWishlistItems() {
+    fun fetchWishlistItems(userId: String) {
         viewModelScope.launch {
-            getWishlistItemsUseCase().collect { items ->
+            getWishlistItemsUseCase(userId).collect { items ->
                 _wishlistItems.value = items
             }
         }
     }
-    
+
 
 }

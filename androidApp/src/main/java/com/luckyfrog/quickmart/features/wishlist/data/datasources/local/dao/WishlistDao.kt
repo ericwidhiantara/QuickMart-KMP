@@ -15,6 +15,6 @@ interface WishlistDao {
     @Delete
     suspend fun deleteItem(params: WishlistLocalItemDto)
 
-    @Query("SELECT * FROM wishlist_items")
-    suspend fun getAllItems(): List<WishlistLocalItemDto>
+    @Query("SELECT * FROM wishlist_items WHERE userId = :userId")
+    suspend fun getAllItems(userId: String): List<WishlistLocalItemDto>
 }

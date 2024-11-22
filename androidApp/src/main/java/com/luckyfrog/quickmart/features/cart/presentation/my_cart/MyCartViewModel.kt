@@ -1,5 +1,6 @@
 package com.luckyfrog.quickmart.features.cart.presentation.my_cart
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.luckyfrog.quickmart.features.cart.data.model.CartLocalItemDto
@@ -49,49 +50,50 @@ class CartViewModel @Inject constructor(
                 // insert the new item
                 insertCartItemUseCase(cartItem)
             }
-            fetchCartItems()
-            fetchSelectedItems()
-            calculateSubtotal()
+            fetchCartItems(cartItem.userId)
+            fetchSelectedItems(cartItem.userId)
+            calculateSubtotal(cartItem.userId)
         }
     }
 
     fun updateItem(cartItem: CartLocalItemDto) {
         viewModelScope.launch {
             updateCartItemUseCase(cartItem)
-            fetchCartItems()
-            fetchSelectedItems()
-            calculateSubtotal()
+            fetchCartItems(cartItem.userId)
+            fetchSelectedItems(cartItem.userId)
+            calculateSubtotal(cartItem.userId)
         }
     }
 
     fun deleteItem(cartItem: CartLocalItemDto) {
         viewModelScope.launch {
             deleteCartItemUseCase(cartItem)
-            fetchCartItems()
-            fetchSelectedItems()
-            calculateSubtotal()
+            fetchCartItems(cartItem.userId)
+            fetchSelectedItems(cartItem.userId)
+            calculateSubtotal(cartItem.userId)
         }
     }
 
-    fun fetchCartItems() {
+    fun fetchCartItems(userId: String) {
         viewModelScope.launch {
-            getCartItemsUseCase().collect { items ->
+            Log.i("CartViewModel", "Fetching cart items for user ID: $userId")
+            getCartItemsUseCase(userId).collect { items ->
                 _cartItems.value = items
             }
         }
     }
 
-    fun fetchSelectedItems() {
+    fun fetchSelectedItems(userId: String) {
         viewModelScope.launch {
-            getSelectedCartItemsUseCase().collect { items ->
+            getSelectedCartItemsUseCase(userId).collect { items ->
                 _selectedItems.value = items
             }
         }
     }
 
-    fun calculateSubtotal() {
+    fun calculateSubtotal(userId: String) {
         viewModelScope.launch {
-            _subtotal.value = calculateSubtotalUseCase().toList().firstOrNull() ?: 0.0
+            _subtotal.value = calculateSubtotalUseCase(userId).toList().firstOrNull() ?: 0.0
         }
     }
 

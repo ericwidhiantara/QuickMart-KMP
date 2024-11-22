@@ -6,5 +6,5 @@ import com.luckyfrog.quickmart.features.wishlist.data.model.WishlistLocalItemDto
 interface WishlistLocalDataSource {
     suspend fun insertItem(params: WishlistLocalItemDto)
     suspend fun deleteItem(params: WishlistLocalItemDto)
-    suspend fun getAllItems(): List<WishlistLocalItemDto>
+    suspend fun getAllItems(userId: String): List<WishlistLocalItemDto>
 }

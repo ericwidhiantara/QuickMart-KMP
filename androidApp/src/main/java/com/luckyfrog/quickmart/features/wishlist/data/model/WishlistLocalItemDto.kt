@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "wishlist_items")
 data class WishlistLocalItemDto(
     @PrimaryKey val id: String,
+    val userId: String,
     val productImage: String,
     val productName: String,
     val productPrice: Double,

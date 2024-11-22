@@ -36,8 +36,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -62,6 +64,8 @@ import com.luckyfrog.quickmart.core.widgets.PagerIndicator
 import com.luckyfrog.quickmart.features.cart.data.model.CartLocalItemDto
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.CartViewModel
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserState
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import com.luckyfrog.quickmart.features.wishlist.data.model.WishlistLocalItemDto
 import com.luckyfrog.quickmart.features.wishlist.presentation.wishlist.WishlistViewModel
 import com.luckyfrog.quickmart.utils.PageLoader
@@ -78,24 +82,36 @@ fun ProductDetailScreen(
     viewModel: ProductDetailViewModel = hiltViewModel(),
     productId: String,
     navController: NavController,
+    userViewModel: UserViewModel = hiltViewModel(),
 ) {
     val data by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.fetchProductDetail(productId)
+        userViewModel.getUserLogin()
     }
+    var userId by remember { mutableStateOf("") }
+    when (val userState = userViewModel.userState.collectAsState().value) {
+        is UserState.Success -> {
+            userId = userState.data.id
+        }
 
+        is UserState.Error -> {}
+        UserState.Idle -> {}
+        UserState.Loading -> {}
+    }
     when (val state = data) {
         is ProductDetailState.Success -> {
             Scaffold(
                 bottomBar = {
-                    ProductDetailBottomSection(state.data)
+                    ProductDetailBottomSection(state.data, userId = userId)
                 }
             ) { paddingValues ->
                 ProductDetailContent(
                     paddingValues = paddingValues,
                     navController = navController,
-                    product = state.data
+                    product = state.data,
+                    userId = userId
                 )
             }
         }
@@ -127,11 +143,11 @@ fun ProductDetailContent(
     navController: NavController,
     product: ProductEntity,
     wishlistViewModel: WishlistViewModel = hiltViewModel(),
-
-    ) {
+    userId: String,
+) {
 
     LaunchedEffect(Unit) {
-        wishlistViewModel.fetchWishlistItems()
+        wishlistViewModel.fetchWishlistItems(userId)
     }
     val scrollState = rememberScrollState()
 
@@ -257,6 +273,7 @@ fun ProductDetailContent(
                     discountPercentage = product.variants?.get(0)?.discountPercentage ?: 0.0,
                     productImage = product.images?.get(0)
                         ?: "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
+                    userId = userId,
                 )
                 if (isFavorite) {
                     coroutineScope.launch {
@@ -277,7 +294,7 @@ fun ProductDetailContent(
                         ).show()
                     }
                 }
-                wishlistViewModel.fetchWishlistItems()
+                wishlistViewModel.fetchWishlistItems(userId)
 
             }
         )
@@ -292,8 +309,9 @@ private fun TopAppBar(
     title: String,
     onBackClick: () -> Unit,
     onFavoriteClick: () -> Unit,
-    isFavorite: Boolean = false
-) {
+    isFavorite: Boolean = false,
+
+    ) {
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -417,8 +435,8 @@ fun ProductHeaderSection(
 @Composable
 fun ProductDetailBottomSection(
     product: ProductEntity,
-    cartModel: CartViewModel = hiltViewModel()
-
+    cartModel: CartViewModel = hiltViewModel(),
+    userId: String,
 ) {
     // Get the screen height from LocalConfiguration
     val configuration = LocalConfiguration.current
@@ -427,7 +445,7 @@ fun ProductDetailBottomSection(
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
-        cartModel.fetchCartItems()
+        cartModel.fetchCartItems(userId)
     }
 
     Row(
@@ -463,8 +481,8 @@ fun ProductDetailBottomSection(
                         qty = 1,
                         selected = true,
                         productImage = product.images?.get(0)
-                            ?: "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png"
-
+                            ?: "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
+                        userId = userId
                     )
                     coroutineScope.launch {
                         cartModel.addItem(item)

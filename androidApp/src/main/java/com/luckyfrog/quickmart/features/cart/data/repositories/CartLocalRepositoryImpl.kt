@@ -18,12 +18,12 @@ class CartLocalRepositoryImpl @Inject constructor(private val localDataSource: C
     override suspend fun deleteItem(cartItem: CartLocalItemDto) =
         localDataSource.deleteItem(cartItem)
 
-    override suspend fun getAllItems(): Flow<List<CartLocalItemDto>> =
-        flow { emit(localDataSource.getAllItems()) }
+    override suspend fun getAllItems(userId: String): Flow<List<CartLocalItemDto>> =
+        flow { emit(localDataSource.getAllItems(userId)) }
 
-    override suspend fun getSelectedItems(): Flow<List<CartLocalItemDto>> =
-        flow { emit(localDataSource.getSelectedItems()) }
+    override suspend fun getSelectedItems(userId: String): Flow<List<CartLocalItemDto>> =
+        flow { emit(localDataSource.getSelectedItems(userId)) }
 
-    override suspend fun calculateSubtotal(): Flow<Double> =
-        flow { emit(localDataSource.calculateSubtotal()) }
+    override suspend fun calculateSubtotal(userId: String): Flow<Double> =
+        flow { emit(localDataSource.calculateSubtotal(userId)) }
 }

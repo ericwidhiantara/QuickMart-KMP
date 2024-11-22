@@ -19,12 +19,12 @@ interface CartDao {
     @Delete
     suspend fun deleteItem(cartItem: CartLocalItemDto)
 
-    @Query("SELECT * FROM cart_items")
-    suspend fun getAllItems(): List<CartLocalItemDto>
+    @Query("SELECT * FROM cart_items WHERE userId = :userId")
+    suspend fun getAllItems(userId: String): List<CartLocalItemDto>
 
-    @Query("SELECT * FROM cart_items WHERE selected = 1")
-    suspend fun getSelectedItems(): List<CartLocalItemDto>
+    @Query("SELECT * FROM cart_items WHERE selected = 1 AND userId = :userId")
+    suspend fun getSelectedItems(userId: String): List<CartLocalItemDto>
 
-    @Query("SELECT SUM((productPrice - (productPrice * discountPercentage / 100)) * qty) FROM cart_items WHERE selected = 1")
-    suspend fun calculateSubtotal(): Double
+    @Query("SELECT SUM((productPrice - (productPrice * discountPercentage / 100)) * qty) FROM cart_items WHERE selected = 1 AND userId = :userId")
+    suspend fun calculateSubtotal(userId: String): Double
 }

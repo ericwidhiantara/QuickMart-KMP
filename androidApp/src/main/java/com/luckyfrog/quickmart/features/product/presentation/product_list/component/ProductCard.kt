@@ -26,8 +26,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -44,6 +48,8 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserState
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import com.luckyfrog.quickmart.features.wishlist.data.model.WishlistLocalItemDto
 import com.luckyfrog.quickmart.features.wishlist.presentation.wishlist.WishlistViewModel
 import kotlinx.coroutines.launch
@@ -52,17 +58,29 @@ import kotlinx.coroutines.launch
 fun ProductCard(
     itemEntity: ProductEntity,
     onClick: () -> Unit,
-    wishlistViewModel: WishlistViewModel = hiltViewModel()
+    wishlistViewModel: WishlistViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel(),
 ) {
 
+    var userId by remember { mutableStateOf("") }
+
     LaunchedEffect(Unit) {
-        wishlistViewModel.fetchWishlistItems()
+        wishlistViewModel.fetchWishlistItems(userId)
+        userViewModel.getUserLogin()
     }
 
     val items by wishlistViewModel.wishlistItems.collectAsStateWithLifecycle()
 
     val isFavorite = items.any { it.id == itemEntity.id }
+    when (val userState = userViewModel.userState.collectAsState().value) {
+        is UserState.Success -> {
+            userId = userState.data.id
+        }
 
+        is UserState.Error -> {}
+        UserState.Idle -> {}
+        UserState.Loading -> {}
+    }
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     Card(
@@ -114,6 +132,7 @@ fun ProductCard(
                                 ?: 0.0,
                             productImage = itemEntity.images?.get(0)
                                 ?: "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/1.png",
+                            userId = userId,
                         )
                         if (isFavorite) {
                             coroutineScope.launch {
@@ -134,7 +153,7 @@ fun ProductCard(
                                 ).show()
                             }
                         }
-                        wishlistViewModel.fetchWishlistItems()
+                        wishlistViewModel.fetchWishlistItems(userId)
 
                     }
                 ) {

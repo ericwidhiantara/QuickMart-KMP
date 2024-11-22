@@ -15,6 +15,6 @@ class WishlistLocalRepositoryImpl @Inject constructor(private val localDataSourc
     override suspend fun deleteItem(params: WishlistLocalItemDto) =
         localDataSource.deleteItem(params)
 
-    override suspend fun getAllItems(): Flow<List<WishlistLocalItemDto>> =
-        flow { emit(localDataSource.getAllItems()) }
+    override suspend fun getAllItems(userId: String): Flow<List<WishlistLocalItemDto>> =
+        flow { emit(localDataSource.getAllItems(userId)) }
 }

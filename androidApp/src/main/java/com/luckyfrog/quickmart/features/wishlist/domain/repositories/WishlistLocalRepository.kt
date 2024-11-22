@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface WishlistLocalRepository {
     suspend fun insertItem(params: WishlistLocalItemDto)
     suspend fun deleteItem(params: WishlistLocalItemDto)
-    suspend fun getAllItems(): Flow<List<WishlistLocalItemDto>>
+    suspend fun getAllItems(userId: String): Flow<List<WishlistLocalItemDto>>
 }

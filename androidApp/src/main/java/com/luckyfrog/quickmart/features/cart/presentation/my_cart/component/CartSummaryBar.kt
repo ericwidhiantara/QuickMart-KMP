@@ -20,6 +20,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.CartViewModel
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserState
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import java.util.Locale
 
 
@@ -27,12 +29,21 @@ import java.util.Locale
 fun CartSummaryBar(
     shippingCost: Double,
     onCheckout: () -> Unit,
-    viewModel: CartViewModel = hiltViewModel()
-) {
+    viewModel: CartViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel(),
+
+    ) {
 
     LaunchedEffect(Unit) {
-        viewModel.fetchSelectedItems()
-        viewModel.calculateSubtotal()
+        userViewModel.getUserLogin()
+        // when success get user login data, fetch cart items
+        userViewModel.userState.collect { user ->
+            if (user is UserState.Success) {
+                viewModel.fetchSelectedItems(user.data.id)
+                viewModel.calculateSubtotal(user.data.id)
+            }
+        }
+
     }
     val selectedItems = viewModel.selectedItems.collectAsState().value
     val subTotal = viewModel.subtotal.collectAsState().value
