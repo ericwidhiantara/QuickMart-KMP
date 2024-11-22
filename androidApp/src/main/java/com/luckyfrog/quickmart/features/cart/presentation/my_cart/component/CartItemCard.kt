@@ -32,6 +32,7 @@ import coil.compose.AsyncImage
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.utils.resource.theme.borderColor
 import com.luckyfrog.quickmart.utils.resource.theme.colorRed
+import java.util.Locale
 
 @Composable
 fun CartItemCard(
@@ -86,11 +87,17 @@ fun CartItemCard(
             }
 
             Text(
-                text = String.format("$%.2f", currentPrice),
+                text = String.format(
+                    Locale.US,
+                    "$%.2f", currentPrice
+                ),
                 fontWeight = FontWeight.Medium,
             )
             Text(
-                text = String.format("$%.2f", originalPrice),
+                text = String.format(
+                    Locale.US,
+                    "$%.2f", originalPrice
+                ),
                 fontWeight = FontWeight.Normal,
                 fontSize = 10.sp,
                 textDecoration = TextDecoration.LineThrough

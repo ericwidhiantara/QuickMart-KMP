@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.CartViewModel
+import java.util.Locale
 
 
 @Composable
@@ -77,7 +78,10 @@ fun OrderInfoRow(label: String, amount: Double) {
             fontWeight = FontWeight.Normal,
         )
         Text(
-            text = String.format("$%.2f", amount),
+            text = String.format(
+                Locale.US,
+                "$%.2f", amount
+            ),
             fontSize = 12.sp,
             fontWeight = FontWeight.Normal,
         )
@@ -96,7 +100,10 @@ fun TotalOrderInfoRow(label: String, amount: Double) {
             fontWeight = FontWeight.Medium,
         )
         Text(
-            text = String.format("$%.2f", amount),
+            text = String.format(
+                Locale.US,
+                "$%.2f", amount
+            ),
             fontSize = 16.sp,
             fontWeight = FontWeight.Medium,
         )
