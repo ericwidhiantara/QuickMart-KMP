@@ -256,12 +256,10 @@ fun LoginScreen(
                     tokenManager.saveToken(state.data.accessToken ?: "")
                     tokenManager.saveRefreshToken(state.data.refreshToken ?: "")
                     // Login success, navigate to the next screen
-                    // Navigate to the product list screen and clear the previous stack
                     navController.navigate(AppScreen.MainScreen.route) {
-                        popUpTo(navController.graph.startDestinationId) {
+                        popUpTo(AppScreen.LoginScreen.route) {
                             inclusive = true
-                        }
-                        launchSingleTop = true
+                        }  // Clear back stack
                     }
                 }
 

@@ -33,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -44,11 +45,14 @@ import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.widgets.ConfirmationDialog
 import com.luckyfrog.quickmart.features.profile.presentation.profile.component.ProfileTopBar
+import com.luckyfrog.quickmart.utils.TokenManager
+import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 
 @Composable
 fun ProfileScreen(
     navController: NavController,
-    userViewModel: UserViewModel = hiltViewModel()
+    userViewModel: UserViewModel = hiltViewModel(),
+    tokenManager: TokenManager = TokenManager(LocalContext.current),
 ) {
     val userState by userViewModel.userState.collectAsState()
     var showLogoutDialog by remember { mutableStateOf(false) }
@@ -134,6 +138,12 @@ fun ProfileScreen(
                     onConfirm = {
                         showLogoutDialog = false
                         // Add logout logic here
+                        tokenManager.clearTokens()
+                        navController.navigate(AppScreen.LoginScreen.route) {
+                            popUpTo(AppScreen.MainScreen.route) {
+                                inclusive = true
+                            }  // Clear back stack
+                        }
                     },
                     onDismiss = {
                         showLogoutDialog = false
