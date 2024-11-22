@@ -109,7 +109,7 @@ fun ProductCard(
                         val item = WishlistLocalItemDto(
                             id = itemEntity.id ?: "",
                             productName = itemEntity.name ?: "",
-                            productPrice = itemEntity.variants?.get(0)?.price ?: 0.0,
+                            productPrice = itemEntity.price ?: 0.0,
                             discountPercentage = itemEntity.variants?.get(0)?.discountPercentage
                                 ?: 0.0,
                             productImage = itemEntity.images?.get(0)
