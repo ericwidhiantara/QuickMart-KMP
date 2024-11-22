@@ -93,15 +93,17 @@ fun CartItemCard(
                 ),
                 fontWeight = FontWeight.Medium,
             )
-            Text(
-                text = String.format(
-                    Locale.US,
-                    "$%.2f", originalPrice
-                ),
-                fontWeight = FontWeight.Normal,
-                fontSize = 10.sp,
-                textDecoration = TextDecoration.LineThrough
-            )
+            
+            if (originalPrice != currentPrice)
+                Text(
+                    text = String.format(
+                        Locale.US,
+                        "$%.2f", originalPrice
+                    ),
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 10.sp,
+                    textDecoration = TextDecoration.LineThrough
+                )
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
