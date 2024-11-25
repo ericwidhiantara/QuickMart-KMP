@@ -25,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -334,11 +335,16 @@ fun RegisterScreen(
                     tokenManager.saveToken(state.data.accessToken ?: "")
                     tokenManager.saveRefreshToken(state.data.refreshToken ?: "")
                     // Register success, navigate to the next screen
-                    navController.navigate(AppScreen.EmailVerificationScreen.route) {
-                        popUpTo(navController.graph.startDestinationId) {
-                            inclusive = true
+                    // Don't forget to use LaunchedEffect to navigate
+                    // Because if we don't use LaunchedEffect,
+                    // the next page will be infinite loop request
+                    LaunchedEffect(Unit) {
+                        navController.navigate(AppScreen.EmailVerificationScreen.route) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
                         }
-                        launchSingleTop = true
                     }
                 }
 

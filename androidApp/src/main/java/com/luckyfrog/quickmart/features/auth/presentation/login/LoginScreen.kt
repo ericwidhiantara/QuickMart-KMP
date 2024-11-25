@@ -25,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -256,10 +257,15 @@ fun LoginScreen(
                     tokenManager.saveToken(state.data.accessToken ?: "")
                     tokenManager.saveRefreshToken(state.data.refreshToken ?: "")
                     // Login success, navigate to the next screen
-                    navController.navigate(AppScreen.MainScreen.route) {
-                        popUpTo(AppScreen.LoginScreen.route) {
-                            inclusive = true
-                        }  // Clear back stack
+                    // Don't forget to use LaunchedEffect to navigate
+                    // Because if we don't use LaunchedEffect,
+                    // the mainscreen will be infinite loop request
+                    LaunchedEffect(Unit) {
+                        navController.navigate(AppScreen.MainScreen.route) {
+                            popUpTo(AppScreen.LoginScreen.route) {
+                                inclusive = true
+                            }  // Clear back stack
+                        }
                     }
                 }
 
