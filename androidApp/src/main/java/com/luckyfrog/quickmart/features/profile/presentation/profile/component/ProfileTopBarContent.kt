@@ -28,8 +28,9 @@ import com.luckyfrog.quickmart.features.home.presentation.dashboard.component.Pr
 
 @Composable
 fun ProfileTopBarContent(
-    fullName: String?,
-    email: String?,
+    fullName: String? = null,
+    email: String? = null,
+    image: String? = null,
     onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -45,7 +46,7 @@ fun ProfileTopBarContent(
             ProfileImage(
                 width = 40.dp,
                 height = 40.dp,
-                url = "https://avatar.iran.liara.run/public/66",
+                url = image ?: "https://avatar.iran.liara.run/public/66",
             )
 
             Spacer(modifier = Modifier.width(8.dp))

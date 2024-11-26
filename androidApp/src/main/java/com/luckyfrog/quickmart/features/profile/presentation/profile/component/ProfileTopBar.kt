@@ -25,6 +25,7 @@ fun ProfileTopBar(
             ProfileTopBarContent(
                 fullName = userState.data.fullname,
                 email = userState.data.email,
+                image = userState.data.image,
                 onLogoutClick = onLogoutClick,
                 modifier = modifier
             )
@@ -32,8 +33,6 @@ fun ProfileTopBar(
 
         is UserState.Error, is UserState.Idle -> {
             ProfileTopBarContent(
-                fullName = null,
-                email = null,
                 onLogoutClick = onLogoutClick,
                 modifier = modifier
             )
