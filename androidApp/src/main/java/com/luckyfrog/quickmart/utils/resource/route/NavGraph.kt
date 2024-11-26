@@ -25,6 +25,7 @@ import com.luckyfrog.quickmart.features.product.presentation.product_list_by_cat
 import com.luckyfrog.quickmart.features.product.presentation.search.SearchScreen
 import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScreen
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
+import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingAddressFormScreen
 import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingAddressScreen
 import com.luckyfrog.quickmart.features.wishlist.presentation.wishlist.WishlistScreen
 
@@ -193,6 +194,14 @@ fun NavGraph(mainViewModel: MainViewModel) {
         composable(route = AppScreen.ShippingAddressScreen.route) {
             ShippingAddressScreen(
                 navController = navController
+            )
+        }
+
+        composable(route = AppScreen.ShippingAddressFormScreen.route + "?isEdit={isEdit}") {
+            val isEdit = it.arguments?.getString("isEdit")?.toBoolean() ?: false
+            ShippingAddressFormScreen(
+                navController = navController,
+                isEdit = isEdit
             )
         }
     }

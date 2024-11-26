@@ -27,6 +27,7 @@ import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
+import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.colorWhite
 
 @Composable
@@ -63,7 +64,9 @@ fun ShippingAddressScreen(navController: NavController) {
         bottomBar = {
             CustomOutlinedButton(
                 modifier = Modifier.padding(8.dp),
-                onClick = {},
+                onClick = {
+                    navController.navigate(AppScreen.ShippingAddressFormScreen.route)
+                },
                 buttonText = stringResource(R.string.add_shipping_address),
                 buttonBorderColor = MaterialTheme.colorScheme.primary
             )
@@ -78,7 +81,9 @@ fun ShippingAddressScreen(navController: NavController) {
         ) {
             items(items) { item ->
                 Button(
-                    onClick = { /* Handle item click */ },
+                    onClick = {
+                        navController.navigate(AppScreen.ShippingAddressFormScreen.route + "?isEdit=true")
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
@@ -140,7 +145,9 @@ fun ShippingAddressScreen(navController: NavController) {
                             )
                             Spacer(modifier = Modifier.height(20.dp))
                             CustomOutlinedButton(
-                                onClick = {},
+                                onClick = {
+                                    navController.navigate(AppScreen.ShippingAddressFormScreen.route + "?isEdit=true")
+                                },
                                 buttonText = stringResource(R.string.edit_shipping_address),
                                 buttonBorderColor = MaterialTheme.colorScheme.primary
                             )

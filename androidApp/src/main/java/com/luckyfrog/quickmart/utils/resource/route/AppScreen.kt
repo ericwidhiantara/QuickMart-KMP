@@ -43,6 +43,8 @@ sealed class AppScreen(val route: String) {
     /// PROFILE
     data object ProfileScreen : AppScreen(ConstantAppScreenName.PROFILE_SCREEN)
     data object ShippingAddressScreen : AppScreen(ConstantAppScreenName.SHIPPING_ADDRESS_SCREEN)
+    data object ShippingAddressFormScreen :
+        AppScreen(ConstantAppScreenName.SHIPPING_ADDRESS_FORM_SCREEN)
 }
 
 object ConstantAppScreenName {
@@ -82,5 +84,6 @@ object ConstantAppScreenName {
     /// PROFILE
     const val PROFILE_SCREEN = "profile_screen"
     const val SHIPPING_ADDRESS_SCREEN = "shipping_address_screen"
+    const val SHIPPING_ADDRESS_FORM_SCREEN = "shipping_address_form_screen"
 
 }
