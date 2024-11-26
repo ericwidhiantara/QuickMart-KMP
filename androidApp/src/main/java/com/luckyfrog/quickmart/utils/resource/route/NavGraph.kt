@@ -25,6 +25,7 @@ import com.luckyfrog.quickmart.features.product.presentation.product_list_by_cat
 import com.luckyfrog.quickmart.features.product.presentation.search.SearchScreen
 import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScreen
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
+import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingAddressScreen
 import com.luckyfrog.quickmart.features.wishlist.presentation.wishlist.WishlistScreen
 
 @Composable
@@ -32,7 +33,7 @@ fun NavGraph(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppScreen.SplashScreen.route
+        startDestination = AppScreen.ShippingAddressScreen.route
     ) {
         /// GENERAL
         composable(route = AppScreen.SplashScreen.route) {
@@ -184,8 +185,13 @@ fun NavGraph(mainViewModel: MainViewModel) {
 
         /// PROFILE
         composable(route = AppScreen.ProfileScreen.route) {
-
             ProfileScreen(
+                navController = navController
+            )
+        }
+
+        composable(route = AppScreen.ShippingAddressScreen.route) {
+            ShippingAddressScreen(
                 navController = navController
             )
         }

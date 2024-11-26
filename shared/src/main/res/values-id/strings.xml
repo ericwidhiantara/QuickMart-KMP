@@ -113,4 +113,19 @@
     <string name="confirm_logout">Konfirmasi Logout</string>
     <string name="confirm_logout_desc">Anda yakin ingin logout?</string>
     <string name="logout">Logout</string>
+    <string name="recipient_name">Nama Penerima</string>
+    <string name="recipient_name_placeholder">Masukkan nama penerima</string>
+    <string name="recipient_phone">Nomor Telepon Penerima</string>
+    <string name="recipient_phone_placeholder">Masukkan nomor telepon penerima</string>
+    <string name="recipient_address">Alamat Penerima</string>
+    <string name="recipient_address_placeholder">Masukkan alamat penerima</string>
+    <string name="primary_address">Alamat Utama</string>
+    <string name="add_shipping_address">Tambahkan Alamat Pengiriman</string>
+    <string name="edit_shipping_address">Edit Alamat Pengiriman</string>
+    <string name="edit">Edit</string>
+    <string name="old_password">Kata Sandi Lama</string>
+    <string name="old_password_desc">Masukkan kata sandi lama untuk mengubah kata sandi.</string>
+    <string name="ongoing">Sedang berlangsung</string>
+    <string name="completed">Selesai</string>
+    <string name="estimated_time">Perkiraan waktu: %1$d hari kerja</string>
 </resources>

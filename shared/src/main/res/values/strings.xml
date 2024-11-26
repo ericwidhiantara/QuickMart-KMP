@@ -113,4 +113,19 @@
     <string name="confirm_logout">Logout Confirmation</string>
     <string name="confirm_logout_desc">Are you sure want to logout?</string>
     <string name="logout">Logout</string>
+    <string name="recipient_name">Recipient Name</string>
+    <string name="recipient_name_placeholder">Enter the recipient name</string>
+    <string name="recipient_phone">Recipient Phone Number</string>
+    <string name="recipient_phone_placeholder">Enter the recipient phone number</string>
+    <string name="recipient_address">Recipient Address</string>
+    <string name="recipient_address_placeholder">Enter the recipient address</string>
+    <string name="primary_address">Primary Address</string>
+    <string name="add_shipping_address">Add Shipping Address</string>
+    <string name="edit_shipping_address">Edit Shipping Address</string>
+    <string name="edit">Edit</string>
+    <string name="old_password">Old Password</string>
+    <string name="old_password_desc">Enter old password to change the password.</string>
+    <string name="ongoing">On-going</string>
+    <string name="completed">Completed</string>
+    <string name="estimated_time">Estimated times : %1$d working days</string>
 </resources>

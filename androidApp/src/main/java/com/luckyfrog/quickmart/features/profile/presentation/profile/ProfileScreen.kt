@@ -64,7 +64,9 @@ fun ProfileScreen(
                 SettingsItem(
                     title = stringResource(id = R.string.shipping_address),
                     icon = Images.icShipping,
-                    onClick = {}
+                    onClick = {
+                        navController.navigate(AppScreen.ShippingAddressScreen.route)
+                    }
                 ),
                 SettingsItem(
                     title = stringResource(id = R.string.payment_method),
