@@ -33,16 +33,14 @@ import com.luckyfrog.quickmart.utils.resource.theme.colorRed
 fun ShippingAddressFormScreen(
     navController: NavController,
     isEdit: Boolean = false,
+    item: ShippingItem? = null
 ) {
-    val recipientAddressController =
-        remember { mutableStateOf("") }
-    val recipientNameController =
-        remember { mutableStateOf("") }
-    val recipientPhoneController =
-        remember { mutableStateOf("") }
-
-    var isPrimaryAddress by remember { mutableStateOf(false) }
-
+    // State variables for form fields
+    val recipientAddressController = remember { mutableStateOf(item?.recipientAddress ?: "") }
+    val recipientNameController = remember { mutableStateOf(item?.recipientName ?: "") }
+    val recipientPhoneController = remember { mutableStateOf(item?.recipientPhone ?: "") }
+    var isPrimaryAddress by remember { mutableStateOf(item?.isPrimary ?: false) }
+    
     var shouldValidate by remember { mutableStateOf(false) }
 
     val validator = DefaultValidator()

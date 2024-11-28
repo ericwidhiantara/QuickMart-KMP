@@ -29,6 +29,10 @@ import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.colorWhite
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
+import java.net.URLEncoder
 
 @Composable
 fun ShippingAddressScreen(navController: NavController) {
@@ -82,7 +86,9 @@ fun ShippingAddressScreen(navController: NavController) {
             items(items) { item ->
                 Button(
                     onClick = {
-                        navController.navigate(AppScreen.ShippingAddressFormScreen.route + "?isEdit=true")
+                        val jsonString = Json.encodeToString(item)
+                        val encodedJson = URLEncoder.encode(jsonString, "UTF-8")
+                        navController.navigate(AppScreen.ShippingAddressFormScreen.route + "?isEdit=true&item=$encodedJson")
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -146,7 +152,11 @@ fun ShippingAddressScreen(navController: NavController) {
                             Spacer(modifier = Modifier.height(20.dp))
                             CustomOutlinedButton(
                                 onClick = {
-                                    navController.navigate(AppScreen.ShippingAddressFormScreen.route + "?isEdit=true")
+                                    val jsonString = Json.encodeToString(item)
+                                    val encodedJson = URLEncoder.encode(jsonString, "UTF-8")
+
+                                    navController.navigate(AppScreen.ShippingAddressFormScreen.route + "?isEdit=true&item=$encodedJson")
+
                                 },
                                 buttonText = stringResource(R.string.edit_shipping_address),
                                 buttonBorderColor = MaterialTheme.colorScheme.primary
@@ -162,6 +172,7 @@ fun ShippingAddressScreen(navController: NavController) {
     }
 }
 
+@Serializable
 data class ShippingItem(
     val recipientName: String,
     val recipientPhone: String,

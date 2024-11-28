@@ -27,14 +27,16 @@ import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScre
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingAddressFormScreen
 import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingAddressScreen
+import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingItem
 import com.luckyfrog.quickmart.features.wishlist.presentation.wishlist.WishlistScreen
+import kotlinx.serialization.json.Json
 
 @Composable
 fun NavGraph(mainViewModel: MainViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppScreen.ShippingAddressScreen.route
+        startDestination = AppScreen.SplashScreen.route
     ) {
         /// GENERAL
         composable(route = AppScreen.SplashScreen.route) {
@@ -197,12 +199,18 @@ fun NavGraph(mainViewModel: MainViewModel) {
             )
         }
 
-        composable(route = AppScreen.ShippingAddressFormScreen.route + "?isEdit={isEdit}") {
+        composable(route = AppScreen.ShippingAddressFormScreen.route + "?isEdit={isEdit}&item={item}") {
             val isEdit = it.arguments?.getString("isEdit")?.toBoolean() ?: false
+            val itemJson = it.arguments?.getString("item")
+            val shippingItem: ShippingItem? = itemJson?.let { json ->
+                Json.decodeFromString<ShippingItem>(json)
+            }
             ShippingAddressFormScreen(
                 navController = navController,
-                isEdit = isEdit
+                isEdit = isEdit,
+                item = shippingItem
             )
         }
+
     }
 }
