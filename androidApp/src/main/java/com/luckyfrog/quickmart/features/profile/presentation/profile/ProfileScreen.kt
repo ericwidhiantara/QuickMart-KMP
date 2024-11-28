@@ -69,11 +69,6 @@ fun ProfileScreen(
                     }
                 ),
                 SettingsItem(
-                    title = stringResource(id = R.string.payment_method),
-                    icon = Images.icPayment,
-                    onClick = {}
-                ),
-                SettingsItem(
                     title = stringResource(id = R.string.order_history),
                     icon = Images.icOrderHistory,
                     onClick = {}
@@ -106,7 +101,9 @@ fun ProfileScreen(
                 SettingsItem(
                     title = stringResource(id = R.string.change_password),
                     icon = Images.icChangePassword,
-                    onClick = {}
+                    onClick = {
+                        navController.navigate(AppScreen.CheckPasswordScreen.route)
+                    }
                 ),
                 SettingsItem(
                     title = stringResource(id = R.string.theme),

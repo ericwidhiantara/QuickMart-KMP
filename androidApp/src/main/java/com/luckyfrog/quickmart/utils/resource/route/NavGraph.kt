@@ -23,6 +23,8 @@ import com.luckyfrog.quickmart.features.product.presentation.product_detail.Prod
 import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListScreen
 import com.luckyfrog.quickmart.features.product.presentation.product_list_by_category.ProductListByCategoryScreen
 import com.luckyfrog.quickmart.features.product.presentation.search.SearchScreen
+import com.luckyfrog.quickmart.features.profile.presentation.change_password.ChangePasswordScreen
+import com.luckyfrog.quickmart.features.profile.presentation.check_password.CheckPasswordScreen
 import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScreen
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingAddressFormScreen
@@ -212,5 +214,18 @@ fun NavGraph(mainViewModel: MainViewModel) {
             )
         }
 
+        composable(route = AppScreen.CheckPasswordScreen.route) {
+            CheckPasswordScreen(
+                mainViewModel = mainViewModel,
+                navController = navController,
+            )
+        }
+
+        composable(route = AppScreen.ChangePasswordScreen.route) {
+            ChangePasswordScreen(
+                mainViewModel = mainViewModel,
+                navController = navController,
+            )
+        }
     }
 }

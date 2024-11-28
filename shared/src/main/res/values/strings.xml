@@ -128,4 +128,6 @@
     <string name="ongoing">On-going</string>
     <string name="completed">Completed</string>
     <string name="estimated_time">Estimated times : %1$d working days</string>
+    <string name="continue_text">Continue</string>
+
 </resources>

@@ -128,4 +128,6 @@
     <string name="ongoing">Sedang berlangsung</string>
     <string name="completed">Selesai</string>
     <string name="estimated_time">Perkiraan waktu: %1$d hari kerja</string>
+    <string name="continue_text">Continue</string>
+
 </resources>
