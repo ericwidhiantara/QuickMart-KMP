@@ -3,6 +3,7 @@ package com.luckyfrog.quickmart.features.auth.presentation.forgot_password.creat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.luckyfrog.quickmart.core.generic.entities.MetaEntity
+import com.luckyfrog.quickmart.core.generic.mapper.toEntity
 import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordChangePasswordFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordChangePasswordUseCase
 import com.luckyfrog.quickmart.utils.helper.ApiResponse
@@ -36,7 +37,7 @@ class CreatePasswordViewModel @Inject constructor(
                     }
 
                     is ApiResponse.Success -> {
-                        _state.value = CreatePasswordState.Success(response.data)
+                        _state.value = CreatePasswordState.Success(response.data.meta?.toEntity()!!)
                     }
 
                     is ApiResponse.Failure -> {

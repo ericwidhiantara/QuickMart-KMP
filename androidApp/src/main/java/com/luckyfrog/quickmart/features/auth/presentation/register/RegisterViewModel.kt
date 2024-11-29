@@ -36,7 +36,7 @@ class RegisterViewModel @Inject constructor(
                     }
 
                     is ApiResponse.Success -> {
-                        _state.value = RegisterState.Success(response.data)
+                        _state.value = RegisterState.Success(response.data.data!!)
                     }
 
                     is ApiResponse.Failure -> {

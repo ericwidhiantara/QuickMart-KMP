@@ -39,7 +39,8 @@ class ForgotPasswordVerifyCodeViewModel @Inject constructor(
                     }
 
                     is ApiResponse.Success -> {
-                        _state.value = ForgotPasswordVerifyCodeState.Success(response.data)
+                        _state.value =
+                            ForgotPasswordVerifyCodeState.Success(response.data.data!!)
                     }
 
                     is ApiResponse.Failure -> {

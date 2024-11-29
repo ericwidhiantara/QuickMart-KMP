@@ -36,7 +36,7 @@ class LoginViewModel @Inject constructor(
                     }
 
                     is ApiResponse.Success -> {
-                        _loginState.value = LoginState.Success(response.data)
+                        _loginState.value = LoginState.Success(response.data.data!!)
                     }
 
                     is ApiResponse.Failure -> {
