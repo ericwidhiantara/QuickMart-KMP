@@ -15,5 +15,5 @@ object Constants {
     const val DEFAULT_SYSTEM_LOCALE_LANG = "def"
     const val MAX_PAGE_SIZE = 10
 
-    const val SERVER_URL = "https://relations-confusion-med-scientist.trycloudflare.com"
+    const val SERVER_URL = "https://fist-thousand-ref-sip.trycloudflare.com"
 }

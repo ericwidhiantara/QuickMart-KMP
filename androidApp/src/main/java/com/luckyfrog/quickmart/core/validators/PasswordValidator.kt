@@ -7,3 +7,12 @@ class PasswordValidator : FieldValidator<String> {
     }
 }
 
+class ConfirmPasswordValidator(
+    private val originalPassword: String
+) : FieldValidator<String> {
+    override fun validate(value: String): Boolean {
+        return value == originalPassword
+    }
+}
+
+

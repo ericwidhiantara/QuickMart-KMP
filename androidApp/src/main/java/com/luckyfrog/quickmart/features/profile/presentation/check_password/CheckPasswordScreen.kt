@@ -44,6 +44,7 @@ import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTextField
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
+import com.luckyfrog.quickmart.features.profile.data.models.request.CheckPasswordFormRequestDto
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
@@ -80,11 +81,7 @@ fun CheckPasswordScreen(
             )
             // this will using asynchronous to navigate to the next screen
             LaunchedEffect(Unit) {
-//                navController.navigate(AppScreen.PasswordChangedScreen.route) {
-//                    popUpTo(AppScreen.CreatePasswordScreen.route) {
-//                        inclusive = true
-//                    }
-//                }
+                navController.navigate(AppScreen.ChangePasswordScreen.route)
             }
         }
 
@@ -204,7 +201,10 @@ fun CheckPasswordScreen(
                         return@CustomOutlinedButton
                     }
 
-                    navController.navigate(AppScreen.ChangePasswordScreen.route)
+                    val params = CheckPasswordFormRequestDto(
+                        password = passwordController.value,
+                    )
+                    viewModel.checkPassword(params)
                 }
             )
 

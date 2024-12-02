@@ -3,8 +3,9 @@ package com.luckyfrog.quickmart.features.profile.presentation.check_password
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.luckyfrog.quickmart.core.generic.entities.MetaEntity
-import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordChangePasswordFormRequestDto
-import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordChangePasswordUseCase
+import com.luckyfrog.quickmart.core.generic.mapper.toEntity
+import com.luckyfrog.quickmart.features.profile.data.models.request.CheckPasswordFormRequestDto
+import com.luckyfrog.quickmart.features.profile.domain.usecases.CheckPasswordUseCase
 import com.luckyfrog.quickmart.utils.helper.ApiResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,13 +22,13 @@ sealed class CheckPasswordState {
 
 @HiltViewModel
 class CheckPasswordViewModel @Inject constructor(
-    private val _usecase: ForgotPasswordChangePasswordUseCase
+    private val _usecase: CheckPasswordUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<CheckPasswordState>(CheckPasswordState.Idle)
     val state: StateFlow<CheckPasswordState> = _state
 
-    fun changePassword(params: ForgotPasswordChangePasswordFormRequestDto) {
+    fun checkPassword(params: CheckPasswordFormRequestDto) {
         viewModelScope.launch {
             _usecase.execute(params).collect { response ->
                 when (response) {
@@ -36,7 +37,7 @@ class CheckPasswordViewModel @Inject constructor(
                     }
 
                     is ApiResponse.Success -> {
-                        _state.value = CheckPasswordState.Success(response.data)
+                        _state.value = CheckPasswordState.Success(response.data.meta?.toEntity()!!)
                     }
 
                     is ApiResponse.Failure -> {

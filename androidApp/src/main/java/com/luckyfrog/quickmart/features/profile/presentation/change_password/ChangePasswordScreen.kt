@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -40,11 +41,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
+import com.luckyfrog.quickmart.core.validators.ConfirmPasswordValidator
 import com.luckyfrog.quickmart.core.validators.PasswordValidator
 import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTextField
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
+import com.luckyfrog.quickmart.features.profile.data.models.request.ChangePasswordFormRequestDto
+import com.luckyfrog.quickmart.utils.TokenManager
+import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 
@@ -53,6 +58,7 @@ fun ChangePasswordScreen(
     mainViewModel: MainViewModel,
     navController: NavController,
     viewModel: ChangePasswordViewModel = hiltViewModel(),
+    tokenManager: TokenManager = TokenManager(LocalContext.current),
 ) {
     val passwordController = remember { mutableStateOf("") }
     val passwordConfirmController = remember { mutableStateOf("") }
@@ -68,13 +74,12 @@ fun ChangePasswordScreen(
     var shouldValidate by remember { mutableStateOf(false) }
     // Change your validators
     val passwordValidator = PasswordValidator()
+    val passwordConfirmValidator = ConfirmPasswordValidator(passwordController.value)
 
     when (val state = viewState) {
-
         is ChangePasswordState.Success -> {
             showDialog.value = false
             // Show a toast with the success message
-            // on below line we are displaying a custom toast message on below line
             SweetSuccess(
                 message = state.data.message ?: "",
                 duration = Toast.LENGTH_LONG,
@@ -83,22 +88,25 @@ fun ChangePasswordScreen(
             )
             // this will using asynchronous to navigate to the next screen
             LaunchedEffect(Unit) {
-
+                tokenManager.clearTokens()
+                navController.navigate(AppScreen.LoginScreen.route) {
+                    popUpTo(AppScreen.MainScreen.route) {
+                        inclusive = true
+                    }  // Clear back stack
+                }
             }
         }
 
         is ChangePasswordState.Error -> {
             showDialog.value = false
             // Show a toast with the error message
-            // on below line we are displaying a custom toast message on below line
             SweetError(
                 message = state.message,
                 duration = Toast.LENGTH_SHORT,
                 padding = PaddingValues(top = 16.dp),
                 contentAlignment = Alignment.TopCenter
             )
-            Log.d("ForgotPasswordEmailConfirmationScreen", "Error State: $state")
-
+            Log.d("ChangePasswordScreen", "Error State: $state")
         }
 
         is ChangePasswordState.Loading -> {
@@ -111,7 +119,6 @@ fun ChangePasswordScreen(
         is ChangePasswordState.Idle -> {
             // No action yet
         }
-
     }
 
     Scaffold(
@@ -139,7 +146,6 @@ fun ChangePasswordScreen(
                     }
                     Text(text = annotatedString)
                 }
-
             )
         },
     ) { innerPadding ->
@@ -163,11 +169,16 @@ fun ChangePasswordScreen(
                 fontSize = 14.sp,
             )
             Spacer(modifier = Modifier.height(16.dp))
+
+            // New Password TextField
             CustomTextField(
                 validator = passwordValidator,
-                errorMessage = if (passwordController.value.isEmpty()) stringResource(R.string.field_required) else stringResource(
-                    R.string.field_length, 6
-                ),
+
+                errorMessage = when {
+                    passwordController.value.isEmpty() -> stringResource(R.string.field_required)
+                    passwordController.value.length < 6 -> stringResource(R.string.field_length, 6)
+                    else -> ""
+                },
                 shouldValidate = shouldValidate,
                 value = passwordController.value,
                 onValueChange = { newText ->
@@ -183,7 +194,6 @@ fun ChangePasswordScreen(
                         Icons.Filled.Visibility
                     else Icons.Filled.VisibilityOff
 
-                    // Please provide localized description for accessibility services
                     val description =
                         if (passwordVisibility) "Hide password" else "Show password"
 
@@ -193,11 +203,20 @@ fun ChangePasswordScreen(
                 }
             )
             Spacer(modifier = Modifier.height(16.dp))
+
+            // Confirm Password TextField
             CustomTextField(
-                validator = passwordValidator,
-                errorMessage = if (passwordController.value.isEmpty()) stringResource(R.string.field_required) else if (passwordController.value != passwordConfirmController.value) stringResource(
-                    R.string.field_confirm_password,
-                ) else stringResource(R.string.field_length, 6),
+                validator = passwordConfirmValidator,
+                errorMessage = when {
+                    passwordConfirmController.value.isEmpty() -> stringResource(R.string.field_required)
+                    passwordConfirmController.value.length < 6 -> stringResource(
+                        R.string.field_length,
+                        6
+                    )
+
+                    passwordConfirmController.value != passwordController.value -> stringResource(R.string.field_confirm_password)
+                    else -> ""
+                },
                 shouldValidate = shouldValidate,
                 value = passwordConfirmController.value,
                 onValueChange = { newText ->
@@ -213,7 +232,6 @@ fun ChangePasswordScreen(
                         Icons.Filled.Visibility
                     else Icons.Filled.VisibilityOff
 
-                    // Please provide localized description for accessibility services
                     val description =
                         if (passwordConfirmVisibility) "Hide password" else "Show password"
 
@@ -225,20 +243,29 @@ fun ChangePasswordScreen(
                 }
             )
             Spacer(modifier = Modifier.height(24.dp))
+
             CustomOutlinedButton(
                 isButtonEnabled = !isLoading,
                 buttonText = stringResource(R.string.save),
                 onClick = {
                     shouldValidate = true
 
-                    if (passwordController.value.isEmpty() || passwordConfirmController.value.isEmpty()) {
-                        showDialog.value = true
-                        return@CustomOutlinedButton
-                    }
+                    // Improved validation before submitting
+                    val isNewPasswordValid = passwordController.value.isNotEmpty() &&
+                            passwordController.value.length >= 6
+                    val isConfirmPasswordValid = passwordConfirmController.value.isNotEmpty() &&
+                            passwordConfirmController.value.length >= 6 &&
+                            passwordController.value == passwordConfirmController.value
 
+                    if (isNewPasswordValid && isConfirmPasswordValid) {
+                        val params = ChangePasswordFormRequestDto(
+                            newPassword = passwordController.value,
+                            confirmPassword = passwordConfirmController.value
+                        )
+                        viewModel.changePassword(params)
+                    }
                 }
             )
-
         }
     }
 }

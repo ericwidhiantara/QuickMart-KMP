@@ -7,6 +7,7 @@ import com.luckyfrog.quickmart.core.network.RetrofitInterceptor
 import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthApi
 import com.luckyfrog.quickmart.features.category.data.datasources.remote.CategoryApi
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductApi
+import com.luckyfrog.quickmart.features.profile.data.datasources.remote.ProfileApi
 import com.luckyfrog.quickmart.utils.TokenManager
 import com.luckyfrog.quickmart.utils.helper.Constants
 import dagger.Module
@@ -79,4 +80,9 @@ object RetrofitModule {
     @Provides
     fun providesCategoryApi(retrofit: Retrofit): CategoryApi =
         retrofit.create(CategoryApi::class.java)
+
+    @Singleton
+    @Provides
+    fun providesProfileApi(retrofit: Retrofit): ProfileApi =
+        retrofit.create(ProfileApi::class.java)
 }

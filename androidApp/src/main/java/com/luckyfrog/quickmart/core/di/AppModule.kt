@@ -40,6 +40,13 @@ import com.luckyfrog.quickmart.features.product.data.repositories.ProductReposit
 import com.luckyfrog.quickmart.features.product.domain.repositories.ProductRepository
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductDetailUseCase
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCase
+import com.luckyfrog.quickmart.features.profile.data.datasources.remote.ProfileApi
+import com.luckyfrog.quickmart.features.profile.data.datasources.remote.ProfileRemoteDataSource
+import com.luckyfrog.quickmart.features.profile.data.datasources.remote.ProfileRemoteDataSourceImpl
+import com.luckyfrog.quickmart.features.profile.data.repositories.ProfileRepositoryImpl
+import com.luckyfrog.quickmart.features.profile.domain.repositories.ProfileRepository
+import com.luckyfrog.quickmart.features.profile.domain.usecases.ChangePasswordUseCase
+import com.luckyfrog.quickmart.features.profile.domain.usecases.CheckPasswordUseCase
 import com.luckyfrog.quickmart.features.wishlist.data.datasources.local.WishlistAppDatabase
 import com.luckyfrog.quickmart.features.wishlist.data.datasources.local.WishlistLocalDataSource
 import com.luckyfrog.quickmart.features.wishlist.data.datasources.local.WishlistLocalDataSourceImpl
@@ -144,6 +151,14 @@ object DataSourceModule {
         return WishlistLocalDataSourceImpl(wishlistDao)
     }
 
+    @Singleton
+    @Provides
+    fun providesProfileRemoteDataSource(
+        api: ProfileApi
+    ): ProfileRemoteDataSource {
+        return ProfileRemoteDataSourceImpl(api)
+    }
+
 
 }
 
@@ -190,6 +205,14 @@ object RepositoryModule {
         localDataSource: WishlistLocalDataSource
     ): WishlistLocalRepository {
         return WishlistLocalRepositoryImpl(localDataSource)
+    }
+
+    @Singleton
+    @Provides
+    fun providesProfileRepository(
+        remoteDataSource: ProfileRemoteDataSource
+    ): ProfileRepository {
+        return ProfileRepositoryImpl(remoteDataSource)
     }
 
 }
@@ -364,6 +387,24 @@ object UseCaseModule {
         repository: WishlistLocalRepository
     ): GetWishlistItemsUseCase {
         return GetWishlistItemsUseCase(repository)
+    }
+
+
+    /// Profile
+    @Singleton
+    @Provides
+    fun providesCheckPasswordUseCase(
+        repository: ProfileRepository
+    ): CheckPasswordUseCase {
+        return CheckPasswordUseCase(repository)
+    }
+
+    @Singleton
+    @Provides
+    fun providesChangePasswordUseCase(
+        repository: ProfileRepository
+    ): ChangePasswordUseCase {
+        return ChangePasswordUseCase(repository)
     }
 }
 
