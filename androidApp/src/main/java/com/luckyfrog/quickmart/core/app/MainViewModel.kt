@@ -5,16 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
-import com.luckyfrog.quickmart.core.app.AppPreferences.ACCESS_TOKEN
-import com.luckyfrog.quickmart.core.app.AppPreferences.REFRESH_TOKEN
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
-import dagger.hilt.android.lifecycle.HiltViewModel
-import io.paperdb.Paper
-import javax.inject.Inject
 
-@HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {
+class MainViewModel: ViewModel() {
 
     var stateApp by mutableStateOf(MainState())
 
@@ -38,8 +32,8 @@ data class MainState(
 
 fun logout(navController: NavController) {
     // Remove token
-    Paper.book().delete(ACCESS_TOKEN)
-    Paper.book().delete(REFRESH_TOKEN)
+//    Paper.book().delete(ACCESS_TOKEN)
+//    Paper.book().delete(REFRESH_TOKEN)
 
     // Navigate to LoginScreen
     navController.navigate(AppScreen.LoginScreen.route) {

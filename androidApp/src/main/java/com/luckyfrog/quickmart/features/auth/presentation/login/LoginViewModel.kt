@@ -5,12 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.luckyfrog.quickmart.features.auth.data.models.request.LoginFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.entities.AuthEntity
 import com.luckyfrog.quickmart.features.auth.domain.usecases.LoginUseCase
-import com.luckyfrog.quickmart.utils.helper.ApiResponse
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.luckyfrog.quickmart.utils.ApiResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 sealed class LoginState {
     data object Idle : LoginState()
@@ -19,8 +17,7 @@ sealed class LoginState {
     data class Error(val message: String) : LoginState()
 }
 
-@HiltViewModel
-class LoginViewModel @Inject constructor(
+class LoginViewModel(
     private val loginUseCase: LoginUseCase
 ) : ViewModel() {
 

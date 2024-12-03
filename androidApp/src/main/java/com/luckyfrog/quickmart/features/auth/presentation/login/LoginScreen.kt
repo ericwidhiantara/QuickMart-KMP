@@ -33,7 +33,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
@@ -47,7 +46,6 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.MainViewModel
@@ -59,19 +57,18 @@ import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTextField
 import com.luckyfrog.quickmart.features.auth.data.models.request.LoginFormRequestDto
-import com.luckyfrog.quickmart.utils.TokenManager
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import com.luckyfrog.quickmart.utils.resource.theme.colorBlack
 import com.luckyfrog.quickmart.utils.resource.theme.colorBlue
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LoginScreen(
     mainViewModel: MainViewModel,
-    loginViewModel: LoginViewModel = hiltViewModel(),
+    loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
     navController: NavController,
-    tokenManager: TokenManager = TokenManager(LocalContext.current),
 ) {
     val usernameController =
         remember { mutableStateOf("") }
@@ -254,8 +251,8 @@ fun LoginScreen(
                 is LoginState.Success -> {
                     showDialog.value = false
 
-                    tokenManager.saveToken(state.data.accessToken ?: "")
-                    tokenManager.saveRefreshToken(state.data.refreshToken ?: "")
+//                    tokenManager.saveToken(state.data.accessToken ?: "")
+//                    tokenManager.saveRefreshToken(state.data.refreshToken ?: "")
                     // Login success, navigate to the next screen
                     // Don't forget to use LaunchedEffect to navigate
                     // Because if we don't use LaunchedEffect,
