@@ -1,4 +1,4 @@
-package com.luckyfrog.quickmart.features.auth.presentation.login
+package com.luckyfrog.quickmart.presentation.login
 
 import android.util.Log
 import android.widget.Toast
@@ -66,7 +66,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LoginScreen(
-    mainViewModel: MainViewModel,
+    mainViewModel:MainViewModel = koinViewModel<MainViewModel>(),
     loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
     navController: NavController,
 ) {

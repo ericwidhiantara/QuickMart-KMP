@@ -1,6 +1,5 @@
 package com.luckyfrog.quickmart.features.auth.data.datasources.remote
 
-import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
 import com.luckyfrog.quickmart.core.preferences.StringSettingConfig
 import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordChangePasswordFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordSendOTPFormRequestDto
@@ -8,13 +7,8 @@ import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordV
 import com.luckyfrog.quickmart.features.auth.data.models.request.LoginFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.request.RegisterFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.request.VerifyOTPFormRequestDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.AuthResponseDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordVerifyCodeResponseDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDto
-import com.luckyfrog.quickmart.utils.TokenManager
 import com.russhwolf.settings.Settings
 import io.ktor.client.statement.HttpResponse
-import kotlinx.coroutines.flow.Flow
 
 class AuthRemoteDataSourceImpl(
     private val api: AuthApi, // Use AuthApi instead of HttpClient

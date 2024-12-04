@@ -1,39 +1,32 @@
 package com.luckyfrog.quickmart.core.di
 
 import com.luckyfrog.quickmart.utils.Constants
-import com.luckyfrog.quickmart.utils.TokenManager
-import com.russhwolf.settings.Settings
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.http.URLProtocol
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.Dispatchers
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
-import org.koin.core.module.Module
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
 fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
-
     startKoin {
         appDeclaration()
         modules(
-//            viewModelModule,
             ktorModule,
             apiModule,
             dataSourceModule,
             repositoryModule,
-//            sqlDelightModule,
-//            mapperModule,
             dispatcherModule,
             useCaseModule,
-            viewModelModule,
-
-//            platformModule()
+            platformViewModelModule(),
         )
     }
 
@@ -61,6 +54,12 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
 val ktorModule = module {
     single {
         HttpClient {
+            defaultRequest {
+                host = Constants.SERVER_URL
+                url {
+                    protocol = URLProtocol.HTTPS
+                }
+            }
             install(ContentNegotiation) {
                 json(
                     Json {
@@ -77,7 +76,7 @@ val ktorModule = module {
         }
     }
 
-    single { Constants.SERVER_URL }
+//    single { Constants.SERVER_URL }
 
 }
 //
@@ -92,8 +91,3 @@ val dispatcherModule = module {
 //val mapperModule = module {
 //    factory { ApiCharacterMapper() }
 //}
-
-fun initKoin() = initKoin {}
-
-
-

@@ -1,7 +1,10 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.sqldelight)
+    alias(libs.plugins.compose.compiler)
     id("kotlin-parcelize")
     kotlin("plugin.serialization") version "2.0.21"
 
@@ -10,8 +13,10 @@ plugins {
 kotlin {
     androidTarget {
         compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_1_8)
+                }
             }
         }
     }
@@ -128,6 +133,22 @@ kotlin {
             api(libs.koin.core)
             api(libs.koin.compose)
 
+            implementation(libs.androidx.annotation.jvm)
+            implementation(libs.androidx.runtime.android)
+            implementation(libs.androidx.ui.android)
+            implementation(libs.androidx.activity.ktx)
+            implementation(libs.androidx.foundation.layout.android)
+            implementation(libs.androidx.material3.android)
+            implementation(libs.koin.core)
+            implementation(libs.koin.android)
+            implementation(libs.androidx.navigation.runtime.ktx)
+            implementation(libs.androidx.navigation.compose)
+            implementation(libs.androidx.material.icons.extended)
+            implementation(libs.composablesweettoast)
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose.v341)
+            implementation(libs.multiplatform.settings.android.debug)
+
         }
 
         iosMain.dependencies {
@@ -152,9 +173,18 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-}
-dependencies {
-    implementation(project(":androidApp"))
+    buildFeatures {
+        compose = true
+    }
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
 }
 
 sqldelight {

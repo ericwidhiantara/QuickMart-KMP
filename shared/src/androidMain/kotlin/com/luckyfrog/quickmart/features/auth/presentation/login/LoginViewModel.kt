@@ -1,4 +1,4 @@
-package com.luckyfrog.quickmart.features.auth.presentation.login
+package com.luckyfrog.quickmart.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

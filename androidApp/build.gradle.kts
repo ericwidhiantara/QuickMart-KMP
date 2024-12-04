@@ -37,7 +37,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":shared"))
+    implementation(projects.shared)
     implementation(libs.androidx.annotation.jvm)
     implementation(libs.androidx.runtime.android)
     implementation(libs.androidx.ui.android)
@@ -50,8 +50,6 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.composablesweettoast)
-    implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose.v341)
     implementation(libs.multiplatform.settings.android.debug)
-
 }
