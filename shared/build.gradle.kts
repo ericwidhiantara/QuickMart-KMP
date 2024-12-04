@@ -47,16 +47,12 @@ kotlin {
             implementation(libs.ktor.client.logging)
             //implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             implementation(libs.ktor.client.cio)
-
-            //implementation("io.ktor:ktor-client-logging-native:$ktorVersion")
-
-            implementation(libs.jetbrains.kotlinx.datetime.v040)
+            implementation("org.json:json:20210307")
 
             implementation( libs.koin.core)
 
             //implementation("io.insert-koin:koin-test:${koin_core_version}")
             implementation(libs.kotlinx.coroutines.core.v162)
-            implementation(libs.jetbrains.kotlinx.datetime.v040)
 
             // Datetime
             implementation(libs.kotlinx.datetime)

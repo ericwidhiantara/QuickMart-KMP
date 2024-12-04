@@ -19,6 +19,7 @@ hiltCompilerVersion = "1.2.0"
 hiltNavigationCompose = "1.2.0"
 hiveAndroid = "2.1.0"
 insertKoinKoinCore = "3.4.1"
+json = "20210307"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 koinAndroidxCompose = "3.4.1"
@@ -37,8 +38,10 @@ kotlinxCoroutinesAndroid = "1.9.0"
 kotlinxCoroutinesCore = "1.9.0"
 kotlinxSerializationJson = "1.7.3"
 ktorClientContentNegotiation = "2.0.2"
+ktorClientLogging = "2.1"
+ktorClientLoggingNative = "2.1.1"
 ktorSerializationKotlinxJson = "2.0.2"
-ktorVersion = "2.0.2"
+ktorVersion = "2.3.7"
 lifecycleRuntimeKtx = "2.8.7"
 loggingInterceptor = "4.12.0"
 lottieCompose = "6.5.2"
@@ -113,6 +116,7 @@ hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hil
 hive = { module = "io.hive:hive", version.ref = "hiveAndroid" }
 hive-android = { module = "io.hive:hive-android", version.ref = "hiveAndroid" }
 jetbrains-kotlinx-datetime-v040 = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetimeVersion" }
+json = { module = "org.json:json", version.ref = "json" }
 junit = { module = "junit:junit", version.ref = "junit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinCore" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinCore" }
@@ -139,6 +143,8 @@ ktor-client-content-negotiation-v202 = { module = "io.ktor:ktor-client-content-n
 ktor-client-core-v202 = { module = "io.ktor:ktor-client-core", version.ref = "ktorVersion" }
 ktor-client-json = { module = "io.ktor:ktor-client-json", version.ref = "ktorVersion" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorVersion" }
+ktor-client-logging-native = { module = "io.ktor:ktor-client-logging-native", version.ref = "ktorClientLoggingNative" }
+ktor-client-logging-v21 = { module = "io.ktor:ktor-client-logging", version.ref = "ktorClientLogging" }
 ktor-serialization-kotlinx-json-v202 = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorSerializationKotlinxJson" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 logging-interceptor-v2 = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
