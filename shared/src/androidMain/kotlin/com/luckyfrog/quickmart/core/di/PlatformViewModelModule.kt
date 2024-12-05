@@ -7,10 +7,12 @@ import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email_
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.verify_code.ForgotPasswordVerifyCodeViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterViewModel
+import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual fun platformViewModelModule(): Module = module {
+    // Auth
     factory { LoginViewModel(get()) }
     factory { RegisterViewModel(get()) }
     factory { EmailVerificationViewModel(get(), get()) }
@@ -18,9 +20,10 @@ actual fun platformViewModelModule(): Module = module {
     factory { ForgotPasswordEmailConfirmationViewModel(get()) }
     factory { ForgotPasswordVerifyCodeViewModel(get()) }
 
+    // General
     factory { MainViewModel(
         application = get()
     ) }
+    factory { NavBarViewModel() }
 
-    // Add other Android-specific view models here
 }
