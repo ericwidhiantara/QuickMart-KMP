@@ -1,7 +1,7 @@
 package com.luckyfrog.quickmart.core.di
 
 import com.luckyfrog.quickmart.core.app.MainViewModel
-import com.luckyfrog.quickmart.presentation.login.LoginViewModel
+import com.luckyfrog.quickmart.features.auth.presentation.login.LoginViewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 

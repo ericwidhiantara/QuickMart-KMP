@@ -1,4 +1,4 @@
-package com.luckyfrog.quickmart.presentation.login
+package com.luckyfrog.quickmart.features.auth.presentation.login
 
 import android.util.Log
 import android.widget.Toast

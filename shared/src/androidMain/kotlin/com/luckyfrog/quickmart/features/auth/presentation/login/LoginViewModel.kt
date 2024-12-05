@@ -1,5 +1,6 @@
-package com.luckyfrog.quickmart.presentation.login
+package com.luckyfrog.quickmart.features.auth.presentation.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.luckyfrog.quickmart.features.auth.data.models.request.LoginFormRequestDto
@@ -27,6 +28,7 @@ class LoginViewModel(
     fun login(params: LoginFormRequestDto) {
         viewModelScope.launch {
             loginUseCase.execute(params).collect { response ->
+                Log.d("LoginViewModel", "response: $response")
                 when (response) {
                     is ApiResponse.Loading -> {
                         _loginState.value = LoginState.Loading

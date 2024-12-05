@@ -1,6 +1,7 @@
 package com.luckyfrog.quickmart.features.auth.data.repositories
 
 import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
+import com.luckyfrog.quickmart.core.generic.mapper.toEntity
 import com.luckyfrog.quickmart.core.network.processResponse
 import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthRemoteDataSource
 import com.luckyfrog.quickmart.features.auth.data.models.mapper.toEntity
@@ -26,14 +27,15 @@ class AuthRepositoryImpl(
         flow {
             emit(ApiResponse.Loading)
             val response = remoteDataSource.login(params)
-            emit(processResponse(response) { it.data })
+            println("AuthRepositoryImpl response: $response")
+            emit(processResponse(response) { it.data?.toEntity() })
         }
 
     override suspend fun register(params: RegisterFormRequestDto): Flow<ApiResponse<ResponseDto<AuthEntity>>> =
         flow {
             emit(ApiResponse.Loading)
             val response = remoteDataSource.register(params)
-            emit(processResponse(response) { it.data })
+            emit(processResponse(response) { it.data?.toEntity() })
         }
 
     override suspend fun sendOTP(): Flow<ApiResponse<ResponseDto<Unit>>> = flow {
@@ -60,7 +62,7 @@ class AuthRepositoryImpl(
         flow {
             emit(ApiResponse.Loading)
             val response = remoteDataSource.forgotPasswordVerifyOTP(params)
-            emit(processResponse(response) { it.data })
+            emit(processResponse(response) { it.data?.toEntity() })
         }
 
     override suspend fun forgotPasswordChangePassword(params: ForgotPasswordChangePasswordFormRequestDto): Flow<ApiResponse<ResponseDto<Unit>>> =
@@ -73,6 +75,6 @@ class AuthRepositoryImpl(
     override suspend fun getUserLogin(): Flow<ApiResponse<ResponseDto<UserEntity>>> = flow {
         emit(ApiResponse.Loading)
         val response = remoteDataSource.getUserLogin()
-        emit(processResponse(response) { it.data })
+        emit(processResponse(response) { it.data?.toEntity() })
     }
 }

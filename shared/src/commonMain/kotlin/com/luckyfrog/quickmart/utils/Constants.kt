@@ -15,5 +15,5 @@ object Constants {
     const val DEFAULT_SYSTEM_LOCALE_LANG = "def"
     const val MAX_PAGE_SIZE = 10
 
-    const val SERVER_URL = "club-visiting-sir-lanes.trycloudflare.com"
+    const val SERVER_URL = "aviation-presence-q-racing.trycloudflare.com"
 }
