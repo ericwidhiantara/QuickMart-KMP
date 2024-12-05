@@ -18,8 +18,8 @@ class MainActivity : ComponentActivity() {
 
         super.onCreate(savedInstanceState)
         setContent {
-            val context = LocalContext.current
-            val viewModel: MainViewModel = MainViewModel(
+            LocalContext.current
+            val viewModel = MainViewModel(
                 application = application
             )
             MyAppTheme(appTheme = viewModel.stateApp.theme) {
