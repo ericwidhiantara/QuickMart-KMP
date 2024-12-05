@@ -4,6 +4,8 @@ import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthRemoteD
 import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthRemoteDataSourceImpl
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductRemoteDataSource
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductRemoteDataSourceImpl
+import com.luckyfrog.quickmart.features.profile.data.datasources.remote.ProfileRemoteDataSource
+import com.luckyfrog.quickmart.features.profile.data.datasources.remote.ProfileRemoteDataSourceImpl
 import org.koin.dsl.module
 
 val dataSourceModule = module {
@@ -16,6 +18,12 @@ val dataSourceModule = module {
 
     factory<ProductRemoteDataSource> {
         ProductRemoteDataSourceImpl(
+            api = get(),
+        )
+    }
+
+    factory<ProfileRemoteDataSource> {
+        ProfileRemoteDataSourceImpl(
             api = get(),
         )
     }

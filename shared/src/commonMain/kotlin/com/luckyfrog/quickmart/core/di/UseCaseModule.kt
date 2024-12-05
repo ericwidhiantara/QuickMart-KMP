@@ -10,6 +10,8 @@ import com.luckyfrog.quickmart.features.auth.domain.usecases.SendOTPUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.VerifyOTPUseCase
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductDetailUseCase
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCase
+import com.luckyfrog.quickmart.features.profile.domain.usecases.ChangePasswordUseCase
+import com.luckyfrog.quickmart.features.profile.domain.usecases.CheckPasswordUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -26,5 +28,9 @@ val useCaseModule = module {
     // PRODUCT
     factory { GetProductsUseCase(repository = get()) }
     factory { GetProductDetailUseCase(repository = get()) }
+
+    // PROFILE
+    factory { CheckPasswordUseCase(repository = get()) }
+    factory { ChangePasswordUseCase(repository = get()) }
 
 }
