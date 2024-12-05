@@ -1,19 +1,10 @@
 package com.luckyfrog.quickmart.utils
 
 object Constants {
-    const val APP_NAME: String = "Lucky Store"
-    const val ENGLISH: String = "English"
-    const val INDONESIA: String = "Bahasa"
-
-    // status code
-    const val SUCCESS = 200
-    const val FAILURE = 400
-
-    //enum language
-    const val ENGLISH_LOCALE_LANG = "en"
-    const val INDONESIA_LOCALE_LANG = "id"
-    const val DEFAULT_SYSTEM_LOCALE_LANG = "def"
-    const val MAX_PAGE_SIZE = 10
+    const val ACCESS_TOKEN = "access_token"
+    const val REFRESH_TOKEN = "refresh_token"
+    const val FIRST_TIME = "first_time"
+    const val APP_THEME = "app_theme"
 
     const val SERVER_URL = "aviation-presence-q-racing.trycloudflare.com"
 }

@@ -1,4 +1,4 @@
-package com.luckyfrog.quickmart.features.auth.presentation.login
+package com.luckyfrog.quickmart.features.auth.presentation.register
 
 import android.util.Log
 import android.widget.Toast
@@ -36,15 +36,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withLink
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -55,43 +51,51 @@ import com.luckyfrog.quickmart.core.di.provideSettings
 import com.luckyfrog.quickmart.core.preferences.StringSettingConfig
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.validators.DefaultValidator
+import com.luckyfrog.quickmart.core.validators.EmailValidator
 import com.luckyfrog.quickmart.core.validators.PasswordValidator
-import com.luckyfrog.quickmart.core.validators.isLoginInputValid
+import com.luckyfrog.quickmart.core.validators.isRegisterInputValid
 import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTextField
-import com.luckyfrog.quickmart.features.auth.data.models.request.LoginFormRequestDto
+import com.luckyfrog.quickmart.features.auth.data.models.request.RegisterFormRequestDto
 import com.luckyfrog.quickmart.utils.Constants
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import com.luckyfrog.quickmart.utils.resource.theme.colorBlack
-import com.luckyfrog.quickmart.utils.resource.theme.colorBlue
 import com.russhwolf.settings.Settings
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun LoginScreen(
-    mainViewModel:MainViewModel = koinViewModel<MainViewModel>(),
-    loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
+fun RegisterScreen(
+    mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
     navController: NavController,
-
+    registerViewModel: RegisterViewModel = koinViewModel<RegisterViewModel>(),
 ) {
+    val fullnameController =
+        remember { mutableStateOf("Jhon Doe") }
     val usernameController =
-        remember { mutableStateOf("") }
-    val passwordController = remember { mutableStateOf("") }
+        remember { mutableStateOf("jhon_doe") }
+    val emailController =
+        remember { mutableStateOf("nukenin.konoha@gmail.com") }
+    val passwordController = remember { mutableStateOf("12345678") }
+    val passwordConfirmController = remember { mutableStateOf("12345678") }
     var passwordVisibility: Boolean by remember { mutableStateOf(false) }
-    // Collect login result state from the ViewModel
-    val loginState by loginViewModel.loginState.collectAsState()
+    var passwordConfirmVisibility: Boolean by remember { mutableStateOf(false) }
 
-    val isLoading = loginState is LoginState.Loading
+    // Collect login result state from the ViewModel
+    val registerState by registerViewModel.state.collectAsState()
+
+    val isLoading = registerState is RegisterState.Loading
     val showDialog = remember { mutableStateOf(false) }
 
     var shouldValidate by remember { mutableStateOf(false) }
-// Create your validators
+    // Create your validators
+    val fullnameValidator = DefaultValidator()
     val usernameValidator = DefaultValidator()
+    val emailValidator = EmailValidator()
     val passwordValidator = PasswordValidator()
-
+    val confirmPasswordValidator = PasswordValidator()
 
     Scaffold(
         topBar = {
@@ -122,8 +126,9 @@ fun LoginScreen(
                     rememberScrollState()
                 ),
         ) {
+
             Text(
-                text = stringResource(R.string.login),
+                text = stringResource(R.string.signup),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
@@ -133,20 +138,20 @@ fun LoginScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 content = {
                     Text(
-                        text = stringResource(R.string.dont_have_account),
+                        text = stringResource(R.string.already_have_account),
                         fontSize = 14.sp,
                         textAlign = TextAlign.Center
                     )
                     TextButton(onClick = {
-                        // Navigate to RegisterScreen
-                        navController.navigate(AppScreen.RegisterScreen.route) {
-                            popUpTo(AppScreen.LoginScreen.route) {
+                        // Navigate to Login
+                        navController.navigate(AppScreen.LoginScreen.route) {
+                            popUpTo(AppScreen.RegisterScreen.route) {
                                 inclusive = true
                             }  // Clear back stack
                         }
                     }) {
                         Text(
-                            text = stringResource(R.string.signup),
+                            text = stringResource(R.string.login),
                             fontSize = 14.sp,
                             textAlign = TextAlign.Center
                         )
@@ -154,6 +159,21 @@ fun LoginScreen(
                 }
             )
             Spacer(modifier = Modifier.height(32.dp))
+            CustomTextField(
+                validator = fullnameValidator,
+                errorMessage = if (fullnameController.value.isEmpty()) stringResource(R.string.field_required) else stringResource(
+                    R.string.field_length, 2
+                ),
+                shouldValidate = shouldValidate,
+                value = fullnameController.value,
+                onValueChange = { newText ->
+                    fullnameController.value = newText
+                },
+                titleLabel = stringResource(R.string.full_name),
+                titleLabelFontSize = 12.sp,
+                placeholder = stringResource(R.string.full_name_placeholder),
+            )
+            Spacer(modifier = Modifier.height(16.dp))
             CustomTextField(
                 validator = usernameValidator,
                 errorMessage = if (usernameController.value.isEmpty()) stringResource(R.string.field_required) else stringResource(
@@ -167,6 +187,21 @@ fun LoginScreen(
                 titleLabel = stringResource(R.string.username),
                 titleLabelFontSize = 12.sp,
                 placeholder = stringResource(R.string.username_placeholder),
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            CustomTextField(
+                validator = emailValidator,
+                errorMessage = if (emailController.value.isEmpty()) stringResource(R.string.field_required) else stringResource(
+                    R.string.field_email,
+                ),
+                shouldValidate = shouldValidate,
+                value = emailController.value,
+                onValueChange = { newText ->
+                    emailController.value = newText
+                },
+                titleLabel = stringResource(R.string.email),
+                titleLabelFontSize = 12.sp,
+                placeholder = stringResource(R.string.email_placeholder),
             )
             Spacer(modifier = Modifier.height(16.dp))
             CustomTextField(
@@ -198,29 +233,44 @@ fun LoginScreen(
                     }
                 }
             )
-            Spacer(
-                modifier = Modifier.height(24.dp)
-            )
-            TextButton(
-                onClick = {
-                    navController.navigate(AppScreen.ForgotPasswordEmailConfirmationScreen.route)
+            Spacer(modifier = Modifier.height(16.dp))
+            CustomTextField(
+                validator = passwordValidator,
+                errorMessage = if (passwordController.value.isEmpty()) stringResource(R.string.field_required) else if (passwordController.value != passwordConfirmController.value) stringResource(
+                    R.string.field_confirm_password,
+                ) else stringResource(R.string.field_length, 6),
+                shouldValidate = shouldValidate,
+                value = passwordConfirmController.value,
+                onValueChange = { newText ->
+                    passwordConfirmController.value = newText
                 },
-                modifier = Modifier.align(
-                    alignment = Alignment.End
-                )
-            ) {
-                Text(
-                    text = stringResource(R.string.forgot_password),
-                    fontSize = 14.sp,
-                    color = MaterialTheme.colorScheme.primary,
-                )
-            }
+                titleLabel = stringResource(R.string.confirm_password),
+                titleLabelFontSize = 12.sp,
+                placeholder = stringResource(R.string.confirm_password_placeholder),
+                visualTransformation = if (passwordConfirmVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                trailingIcon = {
+                    val image = if (passwordConfirmVisibility)
+                        Icons.Filled.Visibility
+                    else Icons.Filled.VisibilityOff
+
+                    // Please provide localized description for accessibility services
+                    val description =
+                        if (passwordConfirmVisibility) "Hide password" else "Show password"
+
+                    IconButton(onClick = {
+                        passwordConfirmVisibility = !passwordConfirmVisibility
+                    }) {
+                        Icon(imageVector = image, description)
+                    }
+                }
+            )
             Spacer(
                 modifier = Modifier.height(24.dp)
             )
             CustomOutlinedButton(
                 isButtonEnabled = !isLoading,
-                buttonText = stringResource(R.string.login),
+                buttonText = stringResource(R.string.create_account),
                 onClick = {
                     shouldValidate = true
 
@@ -229,55 +279,81 @@ fun LoginScreen(
                         return@CustomOutlinedButton
                     }
 
-                    if (!isLoginInputValid(
+                    if (!isRegisterInputValid(
+                            fullnameController.value,
                             usernameController.value,
+                            emailController.value,
                             passwordController.value,
+                            passwordConfirmController.value,
+                            fullnameValidator,
                             usernameValidator,
-                            passwordValidator
+                            emailValidator,
+                            passwordValidator,
+                            confirmPasswordValidator
                         )
                     ) {
                         showDialog.value = true
                         return@CustomOutlinedButton
                     }
 
-                    // Create the LoginFormRequestDto from the user inputs
-                    val loginFormRequest = LoginFormRequestDto(
+                    // Create the RegisterFormRequestDto from the user inputs
+                    val params = RegisterFormRequestDto(
+                        fullname = fullnameController.value,
                         username = usernameController.value,
+                        email = emailController.value,
                         password = passwordController.value,
+                        confirmPassword = passwordConfirmController.value,
                     )
 
-                    Log.d("LoginScreen", "loginFormRequest: $loginFormRequest")
+                    Log.d("RegisterScreen", "params: $params")
                     // Trigger the login action
-                    loginViewModel.login(loginFormRequest)
+                    registerViewModel.register(params)
+                }
+            )
+            Spacer(
+                modifier = Modifier.height(24.dp)
+            )
+            CustomOutlinedButton(
+                buttonText = stringResource(R.string.signup_with_google),
+                buttonTextColor = colorBlack,
+                isWithIcon = true,
+                buttonIcon = painterResource(
+                    Images.icLogoGoogle
+                ),
+                buttonContainerColor = MaterialTheme.colorScheme.onPrimary,
+                onClick = {
 
                 }
             )
+            Spacer(
+                modifier = Modifier.height(81.dp)
+            )
 
             // Handling the login result (success or failure)
-            when (val state = loginState) {
+            when (val state = registerState) {
 
-                is LoginState.Success -> {
+                is RegisterState.Success -> {
                     showDialog.value = false
+
                     AppPreferences.setToken(state.data.accessToken ?: "", LocalContext.current)
                     AppPreferences.setRefreshToken(state.data.refreshToken ?: "", LocalContext.current)
-//                    tokenManager.saveToken(state.data.accessToken ?: "")
-//                    tokenManager.saveRefreshToken(state.data.refreshToken ?: "")
-                    // Login success, navigate to the next screen
+                    // Register success, navigate to the next screen
                     // Don't forget to use LaunchedEffect to navigate
                     // Because if we don't use LaunchedEffect,
-                    // the mainscreen will be infinite loop request
+                    // the next page will be infinite loop request
                     LaunchedEffect(Unit) {
-                        navController.navigate(AppScreen.MainScreen.route) {
-                            popUpTo(AppScreen.LoginScreen.route) {
+                        navController.navigate(AppScreen.EmailVerificationScreen.route) {
+                            popUpTo(navController.graph.startDestinationId) {
                                 inclusive = true
-                            }  // Clear back stack
+                            }
+                            launchSingleTop = true
                         }
                     }
                 }
 
-                is LoginState.Error -> {
+                is RegisterState.Error -> {
                     showDialog.value = false
-                    Log.d("LoginScreen", "Error: ${state.message}")
+                    Log.d("RegisterScreen", "Error: ${state.message}")
                     // Show a toast with the error message
                     // on below line we are displaying a custom toast message on below line
                     SweetError(
@@ -288,102 +364,21 @@ fun LoginScreen(
                     )
                 }
 
-                is LoginState.Loading -> {
+                is RegisterState.Loading -> {
                     showDialog.value = true // Show loading dialog
                     CustomLoadingDialog(
                         showDialog = showDialog,
                     )
                 }
 
-                is LoginState.Idle -> {
+                is RegisterState.Idle -> {
                     showDialog.value = false
                     // No action yet
                 }
+
             }
-            Spacer(
-                modifier = Modifier.height(24.dp)
-            )
-            CustomOutlinedButton(
-                isButtonEnabled = !isLoading,
-                buttonText = stringResource(R.string.login_with_google),
-                buttonTextColor = colorBlack,
-                isWithIcon = true,
-                buttonIcon = painterResource(
-                    Images.icLogoGoogle
-                ),
-                buttonContainerColor = MaterialTheme.colorScheme.onPrimary,
-                onClick = {
-                    // Create the LoginFormRequestDto from the user inputs
-                    val loginFormRequest = LoginFormRequestDto(
-                        username = usernameController.value,
-                        password = passwordController.value,
-                    )
-
-                    Log.d("LoginScreen", "loginFormRequest: $loginFormRequest")
-                    // Trigger the login action
-                    loginViewModel.login(loginFormRequest)
-
-                }
-            )
-            Spacer(
-                modifier = Modifier.height(61.dp)
-            )
-            LoginTermsAndPrivacyText()
-            Spacer(
-                modifier = Modifier.height(16.dp)
-            )
         }
     }
 
 }
 
-
-@Composable
-fun LoginTermsAndPrivacyText() {
-    val annotated = buildAnnotatedString {
-        withStyle(MaterialTheme.typography.bodyMedium.toSpanStyle()) {
-            append(stringResource(id = R.string.login_terms_and_conditions) + " ")
-        }
-        withLink(
-            link = LinkAnnotation.Clickable(
-                tag = "TAG",
-                linkInteractionListener = {
-                    Log.d("LoginTermsAndPrivacyText", "privacy_policy")
-                },
-            ),
-        ) {
-            withStyle(
-                MaterialTheme.typography.bodyMedium.toSpanStyle()
-                    .copy(fontWeight = FontWeight.Bold, color = colorBlue)
-            ) {
-                append(stringResource(id = R.string.privacy_policy))
-            }
-        }
-        withStyle(MaterialTheme.typography.bodyMedium.toSpanStyle()) {
-            append(" " + stringResource(id = R.string.and) + " ")
-        }
-
-        withLink(
-            link = LinkAnnotation.Clickable(
-                tag = "TAG",
-                linkInteractionListener = {
-                    Log.d("LoginTermsAndPrivacyText", "terms_conditions")
-                },
-            ),
-        ) {
-            withStyle(
-                MaterialTheme.typography.bodyMedium.toSpanStyle()
-                    .copy(fontWeight = FontWeight.Bold, color = colorBlue)
-            ) {
-                append(stringResource(id = R.string.terms_and_conditions))
-            }
-        }
-    }
-
-    Text(
-        text = annotated,
-        modifier = Modifier
-            .padding(16.dp),
-        textAlign = TextAlign.Center
-    )
-}

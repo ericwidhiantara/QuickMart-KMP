@@ -1,44 +1,68 @@
 package com.luckyfrog.quickmart.core.app
 
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
+import com.luckyfrog.quickmart.core.di.provideSettings
+import com.luckyfrog.quickmart.utils.Constants.APP_THEME
+import com.luckyfrog.quickmart.utils.Constants.ACCESS_TOKEN
+import com.luckyfrog.quickmart.utils.Constants.FIRST_TIME
+import com.luckyfrog.quickmart.utils.Constants.REFRESH_TOKEN
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
+import com.russhwolf.settings.Settings
+import com.russhwolf.settings.get
 
 object AppPreferences {
+private lateinit var settings: Settings
 
-    //region LanguageConfig
-    //key
-    const val APP_LANG = "AppLang"
-
-    fun setLocale(lang: String) {
-//        Paper.book().write(APP_LANG, lang)
+    fun setTheme(value: AppTheme, context: Context): Boolean {
+        settings = provideSettings(context)
+        settings.putString(APP_THEME, value.name)
+        return (settings.get<String>(APP_THEME) ?: AppTheme.Default.name) == value.name
     }
 
-    //endregion
-
-    //region Theme
-
-    const val APP_THEME = "AppTheme"
-    const val ACCESS_TOKEN = "AccessToken"
-    const val REFRESH_TOKEN = "RefreshToken"
-    const val FIRST_TIME = "FirstTime"
-
-    fun setTheme(theme: AppTheme) {
-//        Paper.book().write(APP_THEME, theme)
+    fun getTheme(context: Context): AppTheme {
+        settings = provideSettings(context)
+        settings.putString(APP_THEME, AppTheme.Default.name)
+        return AppTheme.valueOf(settings.get<String>(APP_THEME) ?: AppTheme.Default.name)
     }
 
-    fun getTheme(): AppTheme {
-        return AppTheme.Default
-//        return Paper.book().read(APP_THEME, AppTheme.Default)!!
+    fun setFirstTime(value: Boolean, context: Context): Boolean {
+        settings = provideSettings(context)
+        settings.putBoolean(FIRST_TIME, value)
+        return settings.get<Boolean>(FIRST_TIME) ?: false
     }
 
-
-    fun setFirstTime(value: Boolean): Boolean {
-        return false
-//        Paper.book().write(FIRST_TIME, value)
+    fun getFirstTime(context: Context): Boolean? {
+        settings = provideSettings(context)
+        return settings.get<Boolean>(FIRST_TIME)
     }
 
-    fun getFirstTime(): Boolean? {
-        return false
-//        return Paper.book().read(FIRST_TIME, null)
+    fun setToken(value: String, context: Context): String {
+        settings = provideSettings(context)
+        settings.putString(ACCESS_TOKEN, value)
+        return settings.get<String>(ACCESS_TOKEN) ?: ""
     }
-    //endregion
+
+    fun getToken(context: Context): String {
+        settings = provideSettings(context)
+        return settings.get<String>(ACCESS_TOKEN) ?: ""
+    }
+
+    fun setRefreshToken(value: String, context: Context): String {
+        settings = provideSettings(context)
+        settings.putString(REFRESH_TOKEN, value)
+        return settings.get<String>(REFRESH_TOKEN) ?: ""
+    }
+
+    fun getRefreshToken(context: Context): String {
+        settings = provideSettings(context)
+        return settings.get<String>(REFRESH_TOKEN) ?: ""
+    }
+
+    fun clearToken(context: Context) :Boolean {
+        settings = provideSettings(context)
+        settings.remove(ACCESS_TOKEN)
+        settings.remove(REFRESH_TOKEN)
+        return true
+    }
 }
