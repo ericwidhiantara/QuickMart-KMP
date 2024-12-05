@@ -70,7 +70,7 @@ class AuthApiImpl(private val client: HttpClient) : AuthApi {
                 }
             ))
         }
-        println("postLogin response: ${response}")
+        println("postLogin response: $response")
         return response.body() // Assuming ResponseDto is a wrapper around the response
     }
 
