@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.resources.Images
+import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -28,7 +29,7 @@ fun BottomNavBar(
     navBarViewModel: NavBarViewModel = koinViewModel<NavBarViewModel>(), // Inject NavBarViewModel
 
 ) {
-    val currentIndex = navBarViewModel.currentIndex.value // Observe currentIndex
+    val currentIndex = navBarViewModel.currentIndex.intValue // Observe currentIndex
 
 
     val navbarItems: Array<BottomNavigationItem> = arrayOf(
@@ -111,9 +112,9 @@ fun BottomNavBar(
 
                 2 -> Text("Jehe")
 
-                3 ->Text("Jehe")
+                3 -> Text("Jehe")
 
-                4 -> Text("Jehe")
+                4 -> ProfileScreen(navController)
             }
         }
     }

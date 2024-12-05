@@ -8,6 +8,9 @@ import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.verify
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterViewModel
 import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
+import com.luckyfrog.quickmart.features.profile.presentation.change_password.ChangePasswordViewModel
+import com.luckyfrog.quickmart.features.profile.presentation.check_password.CheckPasswordViewModel
+import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
@@ -21,9 +24,16 @@ actual fun platformViewModelModule(): Module = module {
     factory { ForgotPasswordVerifyCodeViewModel(get()) }
 
     // General
-    factory { MainViewModel(
-        application = get()
-    ) }
+    factory {
+        MainViewModel(
+            application = get()
+        )
+    }
     factory { NavBarViewModel() }
 
+    // Profile
+    factory { ChangePasswordViewModel(get()) }
+    factory { CheckPasswordViewModel(get()) }
+    factory { UserViewModel(get()) }
+    
 }
