@@ -8,6 +8,7 @@ import com.luckyfrog.quickmart.features.auth.domain.usecases.LoginUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.RegisterUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.SendOTPUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.VerifyOTPUseCase
+import com.luckyfrog.quickmart.features.category.domain.usecases.GetCategoriesUseCase
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductDetailUseCase
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.ChangePasswordUseCase
@@ -32,5 +33,8 @@ val useCaseModule = module {
     // PROFILE
     factory { CheckPasswordUseCase(repository = get()) }
     factory { ChangePasswordUseCase(repository = get()) }
+
+    // CATEGORY
+    factory { GetCategoriesUseCase(repository = get()) }
 
 }
