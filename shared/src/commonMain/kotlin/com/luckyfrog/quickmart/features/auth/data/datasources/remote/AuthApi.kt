@@ -8,9 +8,9 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
+import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 
@@ -33,11 +33,11 @@ interface AuthApi {
 
     suspend fun postVerifyOTP(
         otpCode: String
-    ):  ResponseDto<Unit>
+    ): ResponseDto<Unit>
 
     suspend fun postForgotPasswordSendOTP(
         email: String
-    ):  ResponseDto<Unit>
+    ): ResponseDto<Unit>
 
     suspend fun postForgotPasswordVerifyOTP(
         email: String,
@@ -51,7 +51,6 @@ interface AuthApi {
     ): ResponseDto<Unit>
 
     suspend fun getUserLogin(
-        accessToken: String
     ): ResponseDto<UserResponseDto>
 
     suspend fun postRefreshToken(
@@ -61,7 +60,10 @@ interface AuthApi {
 
 class AuthApiImpl(private val client: HttpClient) : AuthApi {
 
-    override suspend fun postLogin(username: String, password: String): ResponseDto<AuthResponseDto> {
+    override suspend fun postLogin(
+        username: String,
+        password: String
+    ): ResponseDto<AuthResponseDto> {
         val response = client.post("auth/login") {
             setBody(MultiPartFormDataContent(
                 formData {
@@ -95,12 +97,13 @@ class AuthApiImpl(private val client: HttpClient) : AuthApi {
         return response.body()
 
     }
+
     override suspend fun postSendOTP(): ResponseDto<Unit> {
         val response = client.post("auth/verify-email/send-otp")
         return response.body()
     }
 
-    override suspend fun postVerifyOTP(otpCode: String): ResponseDto<Unit>{
+    override suspend fun postVerifyOTP(otpCode: String): ResponseDto<Unit> {
         val response = client.post("auth/verify-email/verify-otp") {
             setBody(MultiPartFormDataContent(
                 formData {
@@ -125,7 +128,7 @@ class AuthApiImpl(private val client: HttpClient) : AuthApi {
     override suspend fun postForgotPasswordVerifyOTP(
         email: String,
         otpCode: String
-    ): ResponseDto<ForgotPasswordVerifyCodeResponseDto>{
+    ): ResponseDto<ForgotPasswordVerifyCodeResponseDto> {
         val response = client.post("auth/forgot-password/verify-otp") {
             setBody(MultiPartFormDataContent(
                 formData {
@@ -154,14 +157,8 @@ class AuthApiImpl(private val client: HttpClient) : AuthApi {
         return response.body()
     }
 
-    override suspend fun getUserLogin(accessToken: String): ResponseDto<UserResponseDto> {
-        val response = client.post("auth/check-token") {
-            setBody(MultiPartFormDataContent(
-                formData {
-                    append("access_token", accessToken)
-                }
-            ))
-        }
+    override suspend fun getUserLogin(): ResponseDto<UserResponseDto> {
+        val response = client.get("user/me")
         return response.body()
     }
 

@@ -143,7 +143,7 @@ fun OnboardingScreen(
 
                                 if (currentIndex.intValue < arraySize - 1)
                                     TextButton(onClick = {
-                                        AppPreferences.setFirstTime(false,context)
+                                        AppPreferences.setFirstTime(false, context)
                                         navController.navigate(AppScreen.RegisterScreen.route) {
                                             popUpTo(AppScreen.OnboardingScreen.route) {
                                                 inclusive = true
@@ -203,7 +203,7 @@ fun OnboardingScreen(
                             modifier = Modifier.width(screenWidth * 0.45F),
                             onClick = {
                                 if (currentIndex.intValue == arraySize - 1) {
-                                    AppPreferences.setFirstTime(false,context)
+                                    AppPreferences.setFirstTime(false, context)
 
                                     navController.navigate(AppScreen.LoginScreen.route) {
                                         popUpTo(AppScreen.OnboardingScreen.route) {
@@ -226,7 +226,7 @@ fun OnboardingScreen(
                             buttonIcon = painterResource(Images.icArrowForward),
                             onClick = {
                                 if (currentIndex.intValue == arraySize - 1) {
-                                    AppPreferences.setFirstTime(false,context)
+                                    AppPreferences.setFirstTime(false, context)
 
                                     navController.navigate(AppScreen.RegisterScreen.route) {
                                         popUpTo(AppScreen.OnboardingScreen.route) {
@@ -248,7 +248,7 @@ fun OnboardingScreen(
                     buttonText = stringResource(R.string.next),
                     onClick = {
                         if (currentIndex.intValue == arraySize - 1) {
-                            AppPreferences.setFirstTime(false,context)
+                            AppPreferences.setFirstTime(false, context)
                             navController.navigate(AppScreen.LoginScreen.route) {
                                 popUpTo(AppScreen.OnboardingScreen.route) { inclusive = true }
                             }

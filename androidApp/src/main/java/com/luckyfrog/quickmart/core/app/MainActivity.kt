@@ -12,8 +12,6 @@ import com.luckyfrog.quickmart.utils.resource.route.NavGraph
 import com.luckyfrog.quickmart.utils.resource.theme.MyAppTheme
 
 class MainActivity : ComponentActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)

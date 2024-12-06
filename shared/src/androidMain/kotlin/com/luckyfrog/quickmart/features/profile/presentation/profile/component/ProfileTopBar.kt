@@ -25,7 +25,7 @@ fun ProfileTopBar(
             ProfileTopBarContent(
                 fullName = userState.data.fullname,
                 email = userState.data.email,
-                image = userState.data.image,
+                image = userState.data.profilePicture,
                 onLogoutClick = onLogoutClick,
                 modifier = modifier
             )

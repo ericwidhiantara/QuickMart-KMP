@@ -14,7 +14,7 @@ fun UserResponseDto.toEntity() = UserEntity(
     phoneNumber = this.phoneNumber ?: "",
     gender = this.gender ?: "",
     birthDate = this.birthDate ?: "",
-    image = this.image ?: "",
+    profilePicture = this.profilePicture ?: "",
     role = this.role ?: ""
 )
 
@@ -29,7 +29,7 @@ fun UserEntity.toDto() = UserResponseDto(
     phoneNumber = this.phoneNumber ?: "",
     gender = this.gender ?: "",
     birthDate = this.birthDate ?: "",
-    image = this.image ?: "",
+    profilePicture = this.profilePicture ?: "",
     role = this.role ?: ""
 )
 

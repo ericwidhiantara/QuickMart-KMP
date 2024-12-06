@@ -16,6 +16,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
             dispatcherModule,
             useCaseModule,
             platformViewModelModule(),
+            platformAppModule(),
         )
     }
 

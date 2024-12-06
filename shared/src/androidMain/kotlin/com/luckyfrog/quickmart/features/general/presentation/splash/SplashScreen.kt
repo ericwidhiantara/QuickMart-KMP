@@ -26,7 +26,7 @@ fun SplashScreen(
     mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
     navController: NavController,
 
-) {
+    ) {
     val isFirstTime = AppPreferences.getFirstTime(LocalContext.current)
     Log.d("SplashScreen", "isFirstTime: $isFirstTime")
     val token = AppPreferences.getToken(LocalContext.current)
@@ -35,6 +35,7 @@ fun SplashScreen(
     LaunchedEffect(Unit) {
         Log.i("SplashScreen", "token : $token")
         Log.i("SplashScreen", "is first time : $isFirstTime")
+        Log.i("SplashScreen", "token : $token")
         // Simulate a delay for the splash screen (e.g., 2 seconds)
         delay(3000)
         // Navigate to the login screen

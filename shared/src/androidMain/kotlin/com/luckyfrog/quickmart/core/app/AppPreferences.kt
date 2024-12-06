@@ -1,10 +1,12 @@
 package com.luckyfrog.quickmart.core.app
 
 import android.content.Context
-import androidx.compose.ui.platform.LocalContext
+import android.util.Log
 import com.luckyfrog.quickmart.core.di.provideSettings
-import com.luckyfrog.quickmart.utils.Constants.APP_THEME
+import com.luckyfrog.quickmart.core.preferences.BooleanSettingConfig
+import com.luckyfrog.quickmart.core.preferences.StringSettingConfig
 import com.luckyfrog.quickmart.utils.Constants.ACCESS_TOKEN
+import com.luckyfrog.quickmart.utils.Constants.APP_THEME
 import com.luckyfrog.quickmart.utils.Constants.FIRST_TIME
 import com.luckyfrog.quickmart.utils.Constants.REFRESH_TOKEN
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
@@ -12,7 +14,7 @@ import com.russhwolf.settings.Settings
 import com.russhwolf.settings.get
 
 object AppPreferences {
-private lateinit var settings: Settings
+    private lateinit var settings: Settings
 
     fun setTheme(value: AppTheme, context: Context): Boolean {
         settings = provideSettings(context)
@@ -28,41 +30,58 @@ private lateinit var settings: Settings
 
     fun setFirstTime(value: Boolean, context: Context): Boolean {
         settings = provideSettings(context)
-        settings.putBoolean(FIRST_TIME, value)
-        return settings.get<Boolean>(FIRST_TIME) ?: false
+        val config =
+            BooleanSettingConfig(settings, FIRST_TIME, false)
+        config.set(value)
+        return config.set(value)
     }
 
     fun getFirstTime(context: Context): Boolean? {
         settings = provideSettings(context)
-        return settings.get<Boolean>(FIRST_TIME)
+        val config =
+            BooleanSettingConfig(settings, FIRST_TIME, false)
+        Log.i("AppPreferences", "getFirstTime: ${config.get()}")
+        return config.get()
     }
 
     fun setToken(value: String, context: Context): String {
         settings = provideSettings(context)
-        settings.putString(ACCESS_TOKEN, value)
-        return settings.get<String>(ACCESS_TOKEN) ?: ""
+        val configAccessToken =
+            StringSettingConfig(settings, ACCESS_TOKEN, "")
+        configAccessToken.set(value)
+        return configAccessToken.get()
     }
 
     fun getToken(context: Context): String {
         settings = provideSettings(context)
-        return settings.get<String>(ACCESS_TOKEN) ?: ""
+        val config =
+            StringSettingConfig(settings, ACCESS_TOKEN, "")
+        return config.get()
     }
 
     fun setRefreshToken(value: String, context: Context): String {
         settings = provideSettings(context)
-        settings.putString(REFRESH_TOKEN, value)
-        return settings.get<String>(REFRESH_TOKEN) ?: ""
+        val config =
+            StringSettingConfig(settings, REFRESH_TOKEN, "")
+        config.set(value)
+        return config.get()
     }
 
     fun getRefreshToken(context: Context): String {
         settings = provideSettings(context)
-        return settings.get<String>(REFRESH_TOKEN) ?: ""
+        val configAccessToken =
+            StringSettingConfig(settings, REFRESH_TOKEN, "")
+        return configAccessToken.get()
     }
 
-    fun clearToken(context: Context) :Boolean {
+    fun clearToken(context: Context): Boolean {
         settings = provideSettings(context)
-        settings.remove(ACCESS_TOKEN)
-        settings.remove(REFRESH_TOKEN)
+        val token =
+            StringSettingConfig(settings, ACCESS_TOKEN, "")
+        val refreshToken =
+            StringSettingConfig(settings, REFRESH_TOKEN, "")
+        token.remove()
+        refreshToken.remove()
         return true
     }
 }

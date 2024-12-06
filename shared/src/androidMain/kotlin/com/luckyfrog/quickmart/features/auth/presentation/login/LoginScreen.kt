@@ -51,8 +51,6 @@ import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.app.AppPreferences
 import com.luckyfrog.quickmart.core.app.MainViewModel
-import com.luckyfrog.quickmart.core.di.provideSettings
-import com.luckyfrog.quickmart.core.preferences.StringSettingConfig
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.validators.DefaultValidator
 import com.luckyfrog.quickmart.core.validators.PasswordValidator
@@ -61,22 +59,20 @@ import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTextField
 import com.luckyfrog.quickmart.features.auth.data.models.request.LoginFormRequestDto
-import com.luckyfrog.quickmart.utils.Constants
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.resource.theme.AppTheme
 import com.luckyfrog.quickmart.utils.resource.theme.colorBlack
 import com.luckyfrog.quickmart.utils.resource.theme.colorBlue
-import com.russhwolf.settings.Settings
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LoginScreen(
-    mainViewModel:MainViewModel = koinViewModel<MainViewModel>(),
+    mainViewModel: MainViewModel = koinViewModel<MainViewModel>(),
     loginViewModel: LoginViewModel = koinViewModel<LoginViewModel>(),
     navController: NavController,
 
-) {
+    ) {
     val usernameController =
         remember { mutableStateOf("") }
     val passwordController = remember { mutableStateOf("") }
@@ -259,7 +255,10 @@ fun LoginScreen(
                 is LoginState.Success -> {
                     showDialog.value = false
                     AppPreferences.setToken(state.data.accessToken ?: "", LocalContext.current)
-                    AppPreferences.setRefreshToken(state.data.refreshToken ?: "", LocalContext.current)
+                    AppPreferences.setRefreshToken(
+                        state.data.refreshToken ?: "",
+                        LocalContext.current
+                    )
 //                    tokenManager.saveToken(state.data.accessToken ?: "")
 //                    tokenManager.saveRefreshToken(state.data.refreshToken ?: "")
                     // Login success, navigate to the next screen

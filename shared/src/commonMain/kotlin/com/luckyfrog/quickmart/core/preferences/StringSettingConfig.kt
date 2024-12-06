@@ -18,8 +18,9 @@ class StringSettingConfig(settings: Settings, key: String, defaultValue: String)
         }
 
     override fun getStringValue(settings: Settings, key: String, defaultValue: String): String =
-        settings.getString(key, defaultValue).toString()
+        settings.getString(key, defaultValue)
 
     override fun setStringValue(settings: Settings, key: String, value: String) =
-        settings.putString(key, value.toString())
+        settings.putString(key, value)
+
 }

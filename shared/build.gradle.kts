@@ -47,9 +47,11 @@ kotlin {
             implementation(libs.ktor.client.logging)
             //implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             implementation(libs.ktor.client.cio)
-            implementation("org.json:json:20210307")
+            implementation(libs.json)
+            implementation(libs.ktor.client.auth)
 
-            implementation( libs.koin.core)
+
+            implementation(libs.koin.core)
 
             //implementation("io.insert-koin:koin-test:${koin_core_version}")
             implementation(libs.kotlinx.coroutines.core.v162)
@@ -72,6 +74,9 @@ kotlin {
 
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.coroutines)
+
+            implementation(libs.androidx.preference.ktx)
+
 
         }
 

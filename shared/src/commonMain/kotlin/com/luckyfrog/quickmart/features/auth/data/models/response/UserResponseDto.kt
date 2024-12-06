@@ -5,13 +5,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserResponseDto(
-    @SerialName("id") val id: String, // Changed to String for UUID
+    @SerialName("id") val id: String,
     @SerialName("role") val role: String?,
-    @SerialName("fullname") val fullname: String?, // Combined firstName and lastName
+    @SerialName("fullname") val fullname: String?,
     @SerialName("username") val username: String?,
     @SerialName("email") val email: String?,
-    @SerialName("phone_number") val phoneNumber: String?, // Renamed from phone
+    @SerialName("phone_number") val phoneNumber: String?,
     @SerialName("gender") val gender: String?,
     @SerialName("birth_date") val birthDate: String?,
-    @SerialName("image") val image: String? // Image remains the same
+    @SerialName("profile_picture") val profilePicture: String?
 )

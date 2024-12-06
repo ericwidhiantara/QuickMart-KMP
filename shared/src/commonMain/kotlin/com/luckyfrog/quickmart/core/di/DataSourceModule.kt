@@ -11,8 +11,7 @@ import org.koin.dsl.module
 val dataSourceModule = module {
     factory<AuthRemoteDataSource> {
         AuthRemoteDataSourceImpl(
-            api = get(),
-            settings = get()
+            api = get()
         )
     }
 
