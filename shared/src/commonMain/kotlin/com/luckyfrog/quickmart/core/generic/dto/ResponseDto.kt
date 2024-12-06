@@ -11,6 +11,7 @@ data class ResponseDto<T>(
     @SerialName("data")
     val data: T? = null
 )
+
 @Serializable
 data class MetaDto(
     @SerialName("code")
@@ -26,7 +27,7 @@ data class MetaDto(
     val errorDetail: String? = null
 )
 
-
+@Serializable
 data class PaginationDto<T>(
     val total: Int?,
     @SerialName("current_page")

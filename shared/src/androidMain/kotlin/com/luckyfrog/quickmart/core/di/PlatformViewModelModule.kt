@@ -7,6 +7,7 @@ import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email_
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.verify_code.ForgotPasswordVerifyCodeViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterViewModel
+import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListViewModel
 import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
 import com.luckyfrog.quickmart.features.profile.presentation.change_password.ChangePasswordViewModel
 import com.luckyfrog.quickmart.features.profile.presentation.check_password.CheckPasswordViewModel
@@ -35,5 +36,9 @@ actual fun platformViewModelModule(): Module = module {
     factory { ChangePasswordViewModel(get()) }
     factory { CheckPasswordViewModel(get()) }
     factory { UserViewModel(get()) }
-    
+
+    // Category
+    factory { CategoryListViewModel(get()) }
+
+
 }
