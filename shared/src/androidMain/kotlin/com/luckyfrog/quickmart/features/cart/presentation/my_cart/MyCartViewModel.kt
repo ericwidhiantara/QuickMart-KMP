@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 
-class CartViewModel(
+class MyCartViewModel(
     private val insertCartItemUseCase: InsertCartItemUseCase,
     private val updateCartItemUseCase: UpdateCartItemUseCase,
     private val deleteCartItemUseCase: DeleteCartItemUseCase,

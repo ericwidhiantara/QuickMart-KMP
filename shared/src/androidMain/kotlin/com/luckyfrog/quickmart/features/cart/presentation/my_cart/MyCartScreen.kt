@@ -45,7 +45,7 @@ import org.koin.androidx.compose.koinViewModel
 fun MyCartScreen(
     navController: NavController,
     navBarViewModel: NavBarViewModel = koinViewModel<NavBarViewModel>(),
-    viewModel: CartViewModel = koinViewModel<CartViewModel>(),
+    viewModel: MyCartViewModel = koinViewModel<MyCartViewModel>(),
     userViewModel: UserViewModel = koinViewModel<UserViewModel>(),
 ) {
     LaunchedEffect(Unit) {

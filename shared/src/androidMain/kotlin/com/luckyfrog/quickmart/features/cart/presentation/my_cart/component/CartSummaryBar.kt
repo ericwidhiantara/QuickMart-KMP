@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
-import com.luckyfrog.quickmart.features.cart.presentation.my_cart.CartViewModel
+import com.luckyfrog.quickmart.features.cart.presentation.my_cart.MyCartViewModel
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserState
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -29,7 +29,7 @@ import java.util.Locale
 fun CartSummaryBar(
     shippingCost: Double,
     onCheckout: () -> Unit,
-    viewModel: CartViewModel = koinViewModel<CartViewModel>(),
+    viewModel: MyCartViewModel = koinViewModel<MyCartViewModel>(),
     userViewModel: UserViewModel = koinViewModel<UserViewModel>(),
 
     ) {
