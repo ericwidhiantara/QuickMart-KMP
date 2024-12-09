@@ -44,12 +44,11 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.foundation.layout.android)
     implementation(libs.androidx.material3.android)
-    implementation(libs.koin.core)
     implementation(libs.koin.android)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.composablesweettoast)
-    implementation(libs.koin.androidx.compose.v341)
+    implementation(libs.koin.androidx.compose)
     implementation(libs.multiplatform.settings.android.debug)
 }

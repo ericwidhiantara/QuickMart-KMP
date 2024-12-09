@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.resources.Images
+import com.luckyfrog.quickmart.features.cart.presentation.my_cart.MyCartScreen
 import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListScreen
 import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScreen
 import org.koin.androidx.compose.koinViewModel
@@ -111,7 +112,7 @@ fun BottomNavBar(
 
                 1 -> CategoryListScreen(navController)
 
-                2 -> Text("Jehe")
+                2 -> MyCartScreen(navController)
 
                 3 -> Text("Jehe")
 

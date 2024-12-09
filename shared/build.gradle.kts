@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.compose.compiler)
     id("kotlin-parcelize")
     kotlin("plugin.serialization") version "2.0.21"
-
 }
 
 kotlin {
@@ -29,6 +28,7 @@ kotlin {
         it.binaries.framework {
             baseName = "shared"
             isStatic = true
+            linkerOpts.add("-lsqlite3")
         }
     }
 
@@ -38,31 +38,19 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
-            implementation(libs.runtime)
-            implementation(libs.ktor.client.core.v202)
-            implementation(libs.ktor.client.content.negotiation.v202)
-            implementation(libs.ktor.serialization.kotlinx.json.v202)
-
             implementation(libs.ktor.client.json)
             implementation(libs.ktor.client.logging)
-            //implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             implementation(libs.ktor.client.cio)
-            implementation(libs.json)
             implementation(libs.ktor.client.auth)
 
-
-            implementation(libs.koin.core)
-
-            //implementation("io.insert-koin:koin-test:${koin_core_version}")
-            implementation(libs.kotlinx.coroutines.core.v162)
+            implementation(libs.runtime)
+            implementation(libs.json)
 
             // Datetime
             implementation(libs.kotlinx.datetime)
 
             // Koin
             implementation(libs.koin.core)
-
-            // Kotlin Coroutines
             implementation(libs.kotlinx.coroutines.core)
 
             // Serialization
@@ -75,9 +63,6 @@ kotlin {
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.coroutines)
 
-            implementation(libs.androidx.preference.ktx)
-
-
         }
 
         commonTest.dependencies {
@@ -85,10 +70,8 @@ kotlin {
         }
 
         androidMain.dependencies {
-            implementation(libs.androidx.core.ktx)
 
-            // Android-specific SQLDelight driver
-            implementation(libs.sqldelight.android.driver)
+            implementation(libs.androidx.core.ktx)
 
             // Android-specific SQLDelight driver
             implementation(libs.sqldelight.android.driver)
@@ -131,8 +114,6 @@ kotlin {
             implementation(libs.paperdb)
             implementation(libs.multiplatform.settings.android.debug)
 
-            api(libs.koin.core)
-            api(libs.koin.compose)
 
             implementation(libs.androidx.annotation.jvm)
             implementation(libs.androidx.runtime.android)
@@ -140,15 +121,17 @@ kotlin {
             implementation(libs.androidx.activity.ktx)
             implementation(libs.androidx.foundation.layout.android)
             implementation(libs.androidx.material3.android)
-            implementation(libs.koin.core)
             implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose.v343)
             implementation(libs.androidx.navigation.runtime.ktx)
             implementation(libs.androidx.navigation.compose)
             implementation(libs.androidx.material.icons.extended)
             implementation(libs.composablesweettoast)
-            implementation(libs.koin.android)
-            implementation(libs.koin.androidx.compose.v341)
             implementation(libs.multiplatform.settings.android.debug)
+            implementation(libs.androidx.preference.ktx)
+
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
 
         }
 
@@ -162,6 +145,7 @@ kotlin {
 
         }
     }
+
 }
 
 android {
@@ -186,15 +170,19 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
+
 }
 
 sqldelight {
     databases {
         create("CartDatabase") {
-            packageName.set("com.luckyfrog.quickmart.features.cart.data.datasources.local")
-        }
-        create("WishlistDatabase") {
-            packageName.set("com.luckyfrog.quickmart.features.wishlist.data.datasources.local")
+            packageName.set("com.luckyfrog.quickmart.carts")
+            srcDirs.setFrom("src/commonMain/sqldelight-carts")
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight-carts"))
+            generateAsync = false
+            deriveSchemaFromMigrations.set(true)
+            verifyMigrations.set(true)
         }
     }
 }

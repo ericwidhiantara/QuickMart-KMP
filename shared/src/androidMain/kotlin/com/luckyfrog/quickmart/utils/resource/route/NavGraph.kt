@@ -11,6 +11,7 @@ import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email_
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.verify_code.ForgotPasswordVerifyCodeScreen
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginScreen
 import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterScreen
+import com.luckyfrog.quickmart.features.cart.presentation.my_cart.MyCartScreen
 import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListScreen
 import com.luckyfrog.quickmart.features.general.presentation.main.BottomNavBar
 import com.luckyfrog.quickmart.features.general.presentation.onboarding.OnboardingScreen
@@ -133,6 +134,13 @@ fun NavGraph() {
         /// CATEGORY
         composable(route = AppScreen.CategoryListScreen.route) {
             CategoryListScreen(
+                navController = navController
+            )
+        }
+
+        // CART
+        composable(route = AppScreen.MyCartScreen.route) {
+            MyCartScreen(
                 navController = navController
             )
         }

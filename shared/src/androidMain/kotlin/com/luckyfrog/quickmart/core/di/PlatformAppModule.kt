@@ -8,7 +8,9 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual fun platformAppModule(): Module = module {
-    single { provideSettings(get()) }
+    single { provideSettings(get<Context>()) }
+    single { DatabaseDriverFactory(get()) }
+
 }
 
 fun provideSettings(context: Context): Settings {

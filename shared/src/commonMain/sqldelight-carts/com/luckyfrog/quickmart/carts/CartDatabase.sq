@@ -1,0 +1,40 @@
+CREATE TABLE carts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userId TEXT NOT NULL,
+    productId TEXT NOT NULL,
+    productName TEXT NOT NULL,
+    productImage TEXT NOT NULL,
+    productPrice REAL NOT NULL,
+    discountPercentage REAL NOT NULL DEFAULT 0,
+    qty INTEGER NOT NULL,
+    selected INTEGER NOT NULL DEFAULT 0
+);
+
+insertItem:
+INSERT OR REPLACE INTO carts(userId, productId, productName, productImage, productPrice, discountPercentage, qty, selected)
+VALUES (?, ?, ?, ?,?, ?, ?, ?);
+
+updateItem:
+UPDATE carts
+SET productId = ?,
+    productName = ?,
+    productImage = ?,
+    productPrice = ?,
+    discountPercentage = ?,
+    qty = ?,
+    selected = ?
+WHERE id = ?;
+
+deleteItem:
+DELETE FROM carts WHERE id = ?;
+
+getAllItems:
+SELECT * FROM carts WHERE userId = ?;
+
+getSelectedItems:
+SELECT * FROM carts WHERE selected = 1 AND userId = ?;
+
+calculateSubtotal:
+SELECT COALESCE(SUM((productPrice - (productPrice * discountPercentage / 100)) * qty), 0.0)
+FROM carts
+WHERE selected = 1 AND userId = ?;
