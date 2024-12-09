@@ -23,6 +23,7 @@ import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.MyCartScreen
 import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListScreen
 import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScreen
+import com.luckyfrog.quickmart.features.wishlist.presentation.my_wishlist.MyWishlistScreen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -114,7 +115,7 @@ fun BottomNavBar(
 
                 2 -> MyCartScreen(navController)
 
-                3 -> Text("Jehe")
+                3 -> MyWishlistScreen(navController)
 
                 4 -> ProfileScreen(navController)
             }

@@ -22,6 +22,7 @@ import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScre
 import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingAddressFormScreen
 import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingAddressScreen
 import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingItem
+import com.luckyfrog.quickmart.features.wishlist.presentation.my_wishlist.MyWishlistScreen
 import kotlinx.serialization.json.Json
 
 @Composable
@@ -141,6 +142,13 @@ fun NavGraph() {
         // CART
         composable(route = AppScreen.MyCartScreen.route) {
             MyCartScreen(
+                navController = navController
+            )
+        }
+
+        // WISHLIST
+        composable(route = AppScreen.MyWishlistScreen.route) {
+            MyWishlistScreen(
                 navController = navController
             )
         }
