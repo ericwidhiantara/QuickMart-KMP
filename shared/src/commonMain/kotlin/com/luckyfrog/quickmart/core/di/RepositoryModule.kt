@@ -10,6 +10,8 @@ import com.luckyfrog.quickmart.features.product.data.repositories.ProductReposit
 import com.luckyfrog.quickmart.features.product.domain.repositories.ProductRepository
 import com.luckyfrog.quickmart.features.profile.data.repositories.ProfileRepositoryImpl
 import com.luckyfrog.quickmart.features.profile.domain.repositories.ProfileRepository
+import com.luckyfrog.quickmart.features.wishlist.data.repositories.WishlistLocalRepositoryImpl
+import com.luckyfrog.quickmart.features.wishlist.domain.repositories.WishlistLocalRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -22,4 +24,6 @@ val repositoryModule = module {
     factory<CategoryRepository> { CategoryRepositoryImpl(remoteDataSource = get()) }
 
     factory<CartLocalRepository> { CartLocalRepositoryImpl(localDataSource = get()) }
+   
+    factory<WishlistLocalRepository> { WishlistLocalRepositoryImpl(localDataSource = get()) }
 }

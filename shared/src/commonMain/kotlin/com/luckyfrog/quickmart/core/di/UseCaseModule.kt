@@ -19,6 +19,9 @@ import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductDetail
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.ChangePasswordUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.CheckPasswordUseCase
+import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.DeleteWishlistItemUseCase
+import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.GetWishlistItemsUseCase
+import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.InsertWishlistItemUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -50,5 +53,10 @@ val useCaseModule = module {
     factory { GetSelectedCartItemsUseCase(repository = get()) }
     factory { InsertCartItemUseCase(repository = get()) }
     factory { UpdateCartItemUseCase(repository = get()) }
+
+    // WISHLIST
+    factory { DeleteWishlistItemUseCase(repository = get()) }
+    factory { GetWishlistItemsUseCase(repository = get()) }
+    factory { InsertWishlistItemUseCase(repository = get()) }
 
 }

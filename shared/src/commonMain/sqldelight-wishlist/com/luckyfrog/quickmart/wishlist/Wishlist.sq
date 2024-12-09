@@ -1,0 +1,19 @@
+CREATE TABLE wishlist (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userId TEXT NOT NULL,
+    productId TEXT NOT NULL,
+    productName TEXT NOT NULL,
+    productImage TEXT NOT NULL,
+    productPrice REAL NOT NULL,
+    discountPercentage REAL NOT NULL DEFAULT 0
+);
+
+insertItem:
+INSERT OR REPLACE INTO wishlist(userId, productId, productName, productImage, productPrice, discountPercentage)
+VALUES (?, ?, ?, ?,?, ?);
+
+deleteItem:
+DELETE FROM wishlist WHERE id = ?;
+
+getAllItems:
+SELECT * FROM wishlist WHERE userId = ?;
