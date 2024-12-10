@@ -41,9 +41,9 @@ fun SplashScreen(
         // Navigate to the login screen
         navController.navigate(
             when (isFirstTime) {
-                true -> AppScreen.OnboardingScreen.route
-                false -> if (token == "") AppScreen.LoginScreen.route else AppScreen.MainScreen.route
-                null -> AppScreen.OnboardingScreen.route
+                "" -> AppScreen.OnboardingScreen.route
+                "1" -> if (token == "") AppScreen.LoginScreen.route else AppScreen.MainScreen.route
+                else -> AppScreen.OnboardingScreen.route
             }
         ) {
             // Remove the splash screen from the back stack to prevent returning to it

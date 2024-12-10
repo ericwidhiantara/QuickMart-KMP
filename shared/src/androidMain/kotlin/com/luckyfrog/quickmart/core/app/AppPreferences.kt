@@ -3,7 +3,6 @@ package com.luckyfrog.quickmart.core.app
 import android.content.Context
 import android.util.Log
 import com.luckyfrog.quickmart.core.di.provideSettings
-import com.luckyfrog.quickmart.core.preferences.BooleanSettingConfig
 import com.luckyfrog.quickmart.core.preferences.StringSettingConfig
 import com.luckyfrog.quickmart.utils.Constants.ACCESS_TOKEN
 import com.luckyfrog.quickmart.utils.Constants.APP_THEME
@@ -28,19 +27,20 @@ object AppPreferences {
         return AppTheme.valueOf(settings.get<String>(APP_THEME) ?: AppTheme.Default.name)
     }
 
-    fun setFirstTime(value: Boolean, context: Context): Boolean {
+    fun setFirstTime(context: Context): String {
         settings = provideSettings(context)
         val config =
-            BooleanSettingConfig(settings, FIRST_TIME, false)
-        config.set(value)
-        return config.set(value)
+            StringSettingConfig(settings, FIRST_TIME, "")
+        config.set("1")
+        Log.i("AppPreferences", "getFirstTime: ${config.get()}")
+
+        return config.get()
     }
 
-    fun getFirstTime(context: Context): Boolean? {
+    fun getFirstTime(context: Context): String {
         settings = provideSettings(context)
         val config =
-            BooleanSettingConfig(settings, FIRST_TIME, false)
-        Log.i("AppPreferences", "getFirstTime: ${config.get()}")
+            StringSettingConfig(settings, FIRST_TIME, "")
         return config.get()
     }
 
