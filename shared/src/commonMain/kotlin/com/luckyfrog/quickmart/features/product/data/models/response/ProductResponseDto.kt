@@ -7,26 +7,26 @@ import kotlinx.serialization.Serializable
 data class ProductResponseDto(
     val id: String?,
     @SerialName("created_at")
-    val createdAt: Int?,
+    val createdAt: Int? = null,
     @SerialName("updated_at")
-    val updatedAt: Int?,
+    val updatedAt: Int? = null,
     @SerialName("created_by")
-    val createdBy: String?,
+    val createdBy: String? = null,
     @SerialName("updated_by")
-    val updatedBy: String?,
+    val updatedBy: String? = null,
     @SerialName("category_id")
-    val categoryId: String?,
+    val categoryId: String? = null,
     val name: String?,
-    val price: Double?,
+    val price: Double? = null,
     @SerialName("localized_price")
-    val localizedPrice: String?,
-    val brand: String?,
-    val image: String?,
-    val description: String?,
-    val tags: List<String>?,
+    val localizedPrice: String? = null,
+    val brand: String? = null,
+    val image: String? = null,
+    val description: String? = null,
+    val tags: List<String>? = null,
     @SerialName("images")
-    val images: List<String>?,
-    val variants: List<VariantResponseDto>?
+    val images: List<String>? = null,
+    val variants: List<VariantResponseDto>? = null
 )
 
 @Serializable
@@ -44,19 +44,19 @@ data class VariantResponseDto(
     val isMain: Boolean?,
     @SerialName("product_id")
     val productId: String?,
-    val image: String?,
+    val image: String? = null,
     val sku: String?,
-    val price: Double?,
+    val price: Double? = null,
     @SerialName("discount_percentage")
     val discountPercentage: Double?,
-    val weight: Int?,
+    val weight: Double?,
     val dimensions: DimensionsResponseDto?,
     val stock: Int?,
-    val size: String?,
-    val model: String?,
-    val color: String?,
+    val size: String? = null,
+    val model: String? = null,
+    val color: String? = null,
     @SerialName("localized_price")
-    val localizedPrice: String?
+    val localizedPrice: String? = null
 )
 
 @Serializable

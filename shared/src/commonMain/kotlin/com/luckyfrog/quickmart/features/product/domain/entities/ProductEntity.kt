@@ -34,7 +34,7 @@ data class VariantEntity(
     val sku: String?,
     val price: Double?,
     val discountPercentage: Double?,
-    val weight: Int?,
+    val weight: Double?,
     val dimensions: DimensionsEntity?,
     val stock: Int?,
     val size: String?,
