@@ -10,6 +10,8 @@ import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterViewM
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.MyCartViewModel
 import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListViewModel
 import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
+import com.luckyfrog.quickmart.features.product.presentation.product_detail.ProductDetailViewModel
+import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListViewModel
 import com.luckyfrog.quickmart.features.profile.presentation.change_password.ChangePasswordViewModel
 import com.luckyfrog.quickmart.features.profile.presentation.check_password.CheckPasswordViewModel
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
@@ -47,4 +49,8 @@ actual fun platformViewModelModule(): Module = module {
 
     // Wishlist
     factory { MyWishlistViewModel(get(), get(), get()) }
+
+    // Product
+    factory { ProductDetailViewModel(get()) }
+    factory { ProductListViewModel(get()) }
 }

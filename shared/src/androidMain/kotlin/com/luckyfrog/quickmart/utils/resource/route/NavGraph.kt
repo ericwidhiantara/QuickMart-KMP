@@ -16,6 +16,10 @@ import com.luckyfrog.quickmart.features.category.presentation.categories.Categor
 import com.luckyfrog.quickmart.features.general.presentation.main.BottomNavBar
 import com.luckyfrog.quickmart.features.general.presentation.onboarding.OnboardingScreen
 import com.luckyfrog.quickmart.features.general.presentation.splash.SplashScreen
+import com.luckyfrog.quickmart.features.product.presentation.product_detail.ProductDetailScreen
+import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListScreen
+import com.luckyfrog.quickmart.features.product.presentation.product_list_by_category.ProductListByCategoryScreen
+import com.luckyfrog.quickmart.features.product.presentation.search.SearchScreen
 import com.luckyfrog.quickmart.features.profile.presentation.change_password.ChangePasswordScreen
 import com.luckyfrog.quickmart.features.profile.presentation.check_password.CheckPasswordScreen
 import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScreen
@@ -152,5 +156,46 @@ fun NavGraph() {
                 navController = navController
             )
         }
+
+        /// PRODUCT
+        composable(route = AppScreen.ProductListScreen.route + "?title={title}") {
+            val title = it.arguments?.getString("title")
+                ?: ""
+            ProductListScreen(
+                navController = navController,
+                topBarTitle = title,
+            )
+        }
+
+        composable(route = AppScreen.ProductListByCategoryScreen.route + "?id={id}&title={title}") {
+            val id = it.arguments?.getString("id")
+                ?: ""
+            val title = it.arguments?.getString("title")
+                ?: ""
+            ProductListByCategoryScreen(
+                navController = navController,
+                topBarTitle = title,
+                categoryId = id,
+            )
+        }
+
+        composable(
+            route = AppScreen.ProductDetailScreen.route + "/{productId}", // Assuming your route contains a productId
+        ) {
+            val productId = it.arguments?.getString("productId")
+                ?: ""
+
+            ProductDetailScreen(
+                productId = productId,
+                navController = navController
+            )
+        }
+
+        composable(route = AppScreen.SearchScreen.route) {
+            SearchScreen(
+                navController = navController
+            )
+        }
     }
+
 }
