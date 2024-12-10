@@ -24,4 +24,4 @@ val dispatcherModule = module {
     factory { Dispatchers.Default }
 }
 
-
+fun initKoin() = initKoin {}

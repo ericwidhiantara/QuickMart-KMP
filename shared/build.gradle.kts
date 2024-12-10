@@ -5,9 +5,11 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.compose.compiler)
+    id("org.jetbrains.compose") version "1.7.0" // or the latest version
     id("kotlin-parcelize")
     kotlin("plugin.serialization") version "2.0.21"
 }
+
 
 kotlin {
     androidTarget {
@@ -34,6 +36,9 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+//            implementation(libs.androidx.compose.runtime.runtime)
+            implementation(compose.runtime)
+
             // Ktor
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
@@ -138,10 +143,12 @@ kotlin {
         iosMain.dependencies {
             // iOS-specific SQLDelight driver
             implementation(libs.sqldelight.native.driver)
+            implementation(libs.koin.core)
 
             // Ktor
             implementation(libs.ktor.client.darwin)
             implementation(libs.native.driver)
+            implementation(libs.stately.common)
 
         }
     }
@@ -158,9 +165,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    buildFeatures {
-        compose = true
-    }
+//    buildFeatures {
+//        compose = true
+//    }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
