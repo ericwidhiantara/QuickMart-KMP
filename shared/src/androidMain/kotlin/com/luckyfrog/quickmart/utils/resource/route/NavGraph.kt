@@ -16,6 +16,7 @@ import com.luckyfrog.quickmart.features.category.presentation.categories.Categor
 import com.luckyfrog.quickmart.features.general.presentation.main.BottomNavBar
 import com.luckyfrog.quickmart.features.general.presentation.onboarding.OnboardingScreen
 import com.luckyfrog.quickmart.features.general.presentation.splash.SplashScreen
+import com.luckyfrog.quickmart.features.home.presentation.dashboard.HomeScreen
 import com.luckyfrog.quickmart.features.product.presentation.product_detail.ProductDetailScreen
 import com.luckyfrog.quickmart.features.product.presentation.product_list.ProductListScreen
 import com.luckyfrog.quickmart.features.product.presentation.product_list_by_category.ProductListByCategoryScreen
@@ -194,6 +195,13 @@ fun NavGraph() {
         composable(route = AppScreen.SearchScreen.route) {
             SearchScreen(
                 navController = navController
+            )
+        }
+
+        /// HOME
+        composable(route = AppScreen.HomeScreen.route) {
+            HomeScreen(
+                navController = navController,
             )
         }
     }
