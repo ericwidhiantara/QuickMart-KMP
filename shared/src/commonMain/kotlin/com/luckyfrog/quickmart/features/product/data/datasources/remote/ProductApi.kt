@@ -37,7 +37,7 @@ class ProductApiImpl(private val client: HttpClient) : ProductApi {
         page: Int?,
         limit: Int?,
     ): ResponseDto<PaginationDto<ProductResponseDto>> {
-        val response =  client.get("product") {
+        val response = client.get("products") {
             if (categoryId != null) {
                 parameter("category_id", categoryId)
             }
@@ -60,7 +60,7 @@ class ProductApiImpl(private val client: HttpClient) : ProductApi {
     }
 
     override suspend fun getProductDetail(id: String): ResponseDto<ProductResponseDto> {
-        val response = client.get("product/$id")
+        val response = client.get("products/$id")
         return response.body()
     }
 }
