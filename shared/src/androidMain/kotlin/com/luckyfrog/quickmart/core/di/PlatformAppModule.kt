@@ -9,7 +9,8 @@ import org.koin.dsl.module
 
 actual fun platformAppModule(): Module = module {
     single { provideSettings(get<Context>()) }
-    single { DatabaseDriverFactory(get()) }
+    single { CartDatabaseDriverFactory(get()) }
+    single { WishlistDatabaseDriverFactory(get()) }
 
 }
 

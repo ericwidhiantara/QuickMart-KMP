@@ -15,6 +15,7 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
             repositoryModule,
             dispatcherModule,
             useCaseModule,
+            platformAppModule(),
             platformViewModelModule(),
             sqlDelightModule,
         )

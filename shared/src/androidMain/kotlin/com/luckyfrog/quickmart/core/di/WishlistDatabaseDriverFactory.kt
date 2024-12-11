@@ -3,14 +3,14 @@ package com.luckyfrog.quickmart.core.di
 import android.content.Context
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
-import com.luckyfrog.quickmart.carts.CartDatabase
+import com.luckyfrog.quickmart.wishlist.WishlistDatabase
 
-actual class DatabaseDriverFactory(private val context: Context) {
+actual class WishlistDatabaseDriverFactory(private val context: Context) {
     actual suspend fun createDriver(): SqlDriver {
         return AndroidSqliteDriver(
-            schema = CartDatabase.Schema,
+            schema = WishlistDatabase.Schema,
             context = context,
-            name = "carts.db"
+            name = "wishlist.db"
         )
     }
 }

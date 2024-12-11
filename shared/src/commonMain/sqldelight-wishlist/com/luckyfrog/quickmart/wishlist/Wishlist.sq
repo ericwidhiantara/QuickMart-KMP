@@ -8,12 +8,12 @@ CREATE TABLE wishlist (
     discountPercentage REAL NOT NULL DEFAULT 0
 );
 
-insertItem:
+addWishlist:
 INSERT OR REPLACE INTO wishlist(userId, productId, productName, productImage, productPrice, discountPercentage)
-VALUES (?, ?, ?, ?,?, ?);
+VALUES (:userId, :productId, :productName, :productImage, :productPrice, :discountPercentage);
 
-deleteItem:
+deleteWishlist:
 DELETE FROM wishlist WHERE id = ?;
 
-getAllItems:
+getAllWishlist:
 SELECT * FROM wishlist WHERE userId = ?;

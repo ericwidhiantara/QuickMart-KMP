@@ -185,19 +185,11 @@ sqldelight {
         create("CartDatabase") {
             packageName.set("com.luckyfrog.quickmart.carts")
             srcDirs.setFrom("src/commonMain/sqldelight-carts")
-            schemaOutputDirectory.set(file("src/commonMain/sqldelight-carts"))
-            generateAsync = false
-            deriveSchemaFromMigrations.set(true)
-            verifyMigrations.set(true)
         }
 
         create("WishlistDatabase") {
             packageName.set("com.luckyfrog.quickmart.wishlist")
             srcDirs.setFrom("src/commonMain/sqldelight-wishlist")
-            schemaOutputDirectory.set(file("src/commonMain/sqldelight-wishlist"))
-            generateAsync = false
-            deriveSchemaFromMigrations.set(true)
-            verifyMigrations.set(true)
         }
     }
 }

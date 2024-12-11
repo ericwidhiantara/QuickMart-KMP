@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import com.luckyfrog.quickmart.core.di.initKoin
-import com.luckyfrog.quickmart.core.di.platformAppModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.logger.Level
@@ -19,7 +18,6 @@ class QuickMart : Application() {
                 module {
                     single { this@QuickMart } // Provide the application context
                 },
-                platformAppModule()
             )
             androidLogger(if (isDebug()) Level.ERROR else Level.NONE)
             androidContext(this@QuickMart) // Inject Android context

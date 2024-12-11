@@ -12,7 +12,7 @@ CREATE TABLE carts (
 
 insertItem:
 INSERT OR REPLACE INTO carts(userId, productId, productName, productImage, productPrice, discountPercentage, qty, selected)
-VALUES (?, ?, ?, ?,?, ?, ?, ?);
+VALUES (:userId, :productId, :productName, :productImage, :productPrice, :discountPercentage, :qty, :selected);
 
 updateItem:
 UPDATE carts
