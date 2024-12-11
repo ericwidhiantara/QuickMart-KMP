@@ -5,14 +5,14 @@ struct OnboardingScreen: View {
     @State private var currentIndex: Int = 0
     
     let titles = [
-        "Welcome to QuickMart",
-        "Explore Your Favorites",
-        "Get Started Today"
+        NSLocalizedString("onboarding_title_1", comment: "Title 1"),
+        NSLocalizedString("onboarding_title_2", comment: "Title 2"),
+        NSLocalizedString("onboarding_title_3", comment: "Title 3"),
     ]
     let subtitles = [
-        "Discover the best deals and offers.",
-        "Find what you love, quickly and easily.",
-        "Sign up and start saving now!"
+        NSLocalizedString("onboarding_subtitle_1", comment: "Subtitle 1"),
+        NSLocalizedString("onboarding_subtitle_2", comment: "Subtitle 2"),
+        NSLocalizedString("onboarding_subtitle_3", comment: "Subtitle 3")
     ]
     let images = [
         "Onboarding1",
@@ -22,11 +22,11 @@ struct OnboardingScreen: View {
     
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.appColorScheme) private var theme
-
+    
     private let themeManager = ThemeManager.shared
     
     private let screenWidth: CGFloat = UIScreen.main.bounds.width // Screen width
-
+    
     
     var body: some View {
         NavigationStack {
@@ -58,12 +58,12 @@ struct OnboardingScreen: View {
                                     }
                                     
                                     Spacer()
-                                
+                                    
                                     if currentIndex < titles.count - 1 {
                                         Button(action: {
                                             // Implement Skip action
                                         }) {
-                                            Text("Skip for now")
+                                            Text( NSLocalizedString("skip_for_now", comment: "Skip for now"))
                                                 .foregroundColor(.colorCyan)
                                         }
                                     }
@@ -78,21 +78,21 @@ struct OnboardingScreen: View {
                                 
                                 Spacer()
                             }
-                            .padding()
+                                .padding()
                         )
                 }
                 
                 Spacer().frame(height: 24)
                 
                 Text(titles[currentIndex])
-                    .font(.title)
+                    .font(.system(size: 24))
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
                 
                 Spacer().frame(height: 16)
                 
                 Text(subtitles[currentIndex])
-                    .font(.body)
+                    .font(.system(size: 14))
                     .multilineTextAlignment(.center)
                 
                 Spacer().frame(height: 16)
@@ -100,32 +100,32 @@ struct OnboardingScreen: View {
                 if currentIndex == titles.count - 1 {
                     HStack {
                         CustomOutlinedButton(
-                                        buttonText: "Login",
-                                        buttonTextColor: colorScheme == .dark ? theme.onPrimary : theme.onPrimaryContainer,
-                                        buttonContainerColor: colorScheme == .dark ? theme.onPrimaryContainer : .clear,
-                                        buttonBorderColor: theme.onPrimaryContainer,
-                                        onClick: {
-                                           
-                                        },
-                                        isWithIcon: false
-                                    )
-                                    .frame(width: screenWidth * 0.45)
-
-                                    CustomOutlinedButton(
-                                        buttonText: "Get Started",
-                                        buttonTextColor: .white,
-                                        buttonContainerColor: colorScheme == .dark ? theme.primary : theme.onPrimaryContainer,
-                                        onClick: {
-                                            
-                                        },
-                                        isWithIcon: true,
-                                        buttonIcon: Image("ArrowForward")
-                                    )
-                                    .frame(width: screenWidth * 0.45)
+                            buttonText:  NSLocalizedString("login", comment: "Login"),
+                            buttonTextColor: colorScheme == .dark ? theme.onPrimary : theme.onPrimaryContainer,
+                            buttonContainerColor: colorScheme == .dark ? theme.onPrimaryContainer : .clear,
+                            buttonBorderColor: theme.onPrimaryContainer,
+                            onClick: {
+                                
+                            },
+                            isWithIcon: false
+                        )
+                        .frame(width: screenWidth * 0.45)
+                        
+                        CustomOutlinedButton(
+                            buttonText: NSLocalizedString("get_started", comment: "Get started"),
+                            buttonTextColor: .white,
+                            buttonContainerColor: colorScheme == .dark ? theme.primary : theme.onPrimaryContainer,
+                            onClick: {
+                                
+                            },
+                            isWithIcon: true,
+                            buttonIcon: Image("ArrowForward")
+                        )
+                        .frame(width: screenWidth * 0.45)
                     }
                 } else {
                     CustomOutlinedButton(
-                        buttonText: "Next",
+                        buttonText:  NSLocalizedString("next", comment: "Next"),
                         buttonTextColor: theme.onPrimary,
                         buttonContainerColor: colorScheme == .dark ? theme.primary : theme.onPrimaryContainer,
                         onClick: {
