@@ -40,15 +40,27 @@ class ThemeManager {
             return UIImage(named: isDarkMode ? "SplashLight" : "SplashDark")
         }
     }
+    
+    func getLogoImage(isDarkMode: Bool) -> UIImage? {
+        // Use direct image names from the Xcode assets
+        switch currentTheme {
+        case .light:
+            return UIImage(named: "LogoLight") // Make sure the image is in Xcode assets
+        case .dark:
+            return UIImage(named: "LogoDark")
+        case .default:
+            return UIImage(named: isDarkMode ? "LogoLight" : "LogoDark")
+        }
+    }
 
     // Determine the initial route based on user preferences
     func determineInitialRoute() -> AppScreen {
         if isFirstTime {
             return .onboarding
         } else if token.isEmpty {
-            return .login
+            return .onboarding
         } else {
-            return .main
+            return .onboarding
         }
     }
 }

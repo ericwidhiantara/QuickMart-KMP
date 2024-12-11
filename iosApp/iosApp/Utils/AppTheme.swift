@@ -13,10 +13,3 @@ enum AppTheme {
     case dark
     case `default`
 }
-
-enum AppScreen {
-    case splash
-    case onboarding
-    case login
-    case main
-}
