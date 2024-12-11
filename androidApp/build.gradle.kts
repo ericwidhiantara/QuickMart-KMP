@@ -6,11 +6,11 @@ plugins {
 
 android {
     namespace = "com.luckyfrog.quickmart"
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
         applicationId = "com.luckyfrog.quickmart"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = android.compileSdk
         versionCode = 1
         versionName = "1.0"
     }

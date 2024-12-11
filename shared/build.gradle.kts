@@ -10,7 +10,6 @@ plugins {
     kotlin("plugin.serialization") version "2.0.21"
 }
 
-
 kotlin {
     androidTarget {
         compilations.all {
@@ -48,7 +47,7 @@ kotlin {
             implementation(libs.ktor.client.cio)
             implementation(libs.ktor.client.auth)
 
-            implementation(libs.runtime)
+            implementation(libs.sqldelight.runtime)
             implementation(libs.json)
 
             // Datetime
@@ -83,7 +82,6 @@ kotlin {
 
             // Ktor
             implementation(libs.ktor.client.android)
-            implementation(libs.android.driver)
 
             // AndroidX Compose
             implementation(project.dependencies.platform(libs.androidx.compose.bom))
@@ -113,10 +111,8 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.accompanist.coil)
 
-
             // Toast
             implementation(libs.composablesweettoast)
-            implementation(libs.paperdb)
             implementation(libs.multiplatform.settings.android.debug)
 
 
@@ -127,7 +123,6 @@ kotlin {
             implementation(libs.androidx.foundation.layout.android)
             implementation(libs.androidx.material3.android)
             implementation(libs.koin.android)
-            implementation(libs.koin.androidx.compose.v343)
             implementation(libs.androidx.navigation.runtime.ktx)
             implementation(libs.androidx.navigation.compose)
             implementation(libs.androidx.material.icons.extended)
@@ -147,7 +142,6 @@ kotlin {
 
             // Ktor
             implementation(libs.ktor.client.darwin)
-            implementation(libs.native.driver)
             implementation(libs.stately.common)
 
         }
@@ -165,9 +159,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-//    buildFeatures {
-//        compose = true
-//    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
