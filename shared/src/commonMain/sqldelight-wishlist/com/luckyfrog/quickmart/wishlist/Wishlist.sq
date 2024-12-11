@@ -13,7 +13,7 @@ INSERT OR REPLACE INTO wishlist(userId, productId, productName, productImage, pr
 VALUES (:userId, :productId, :productName, :productImage, :productPrice, :discountPercentage);
 
 deleteWishlist:
-DELETE FROM wishlist WHERE id = ?;
+DELETE FROM wishlist WHERE productId = ?;
 
 getAllWishlist:
 SELECT * FROM wishlist WHERE userId = ?;

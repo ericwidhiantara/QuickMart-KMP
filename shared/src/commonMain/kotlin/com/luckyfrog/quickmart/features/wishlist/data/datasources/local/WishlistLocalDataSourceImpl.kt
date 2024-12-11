@@ -21,9 +21,9 @@ class WishlistLocalDataSourceImpl(
 
     override suspend fun deleteItem(item: WishlistLocalItemDto) {
         database.invoke { db ->
-            item.id?.let {
+            item.productId.let {
                 db.wishlistQueries.deleteWishlist(it)
-            } ?: throw IllegalArgumentException("Item ID must not be null for deletion")
+            }
         }
     }
 
