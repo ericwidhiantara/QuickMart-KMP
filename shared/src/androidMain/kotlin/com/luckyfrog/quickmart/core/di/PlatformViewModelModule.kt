@@ -5,7 +5,6 @@ import com.luckyfrog.quickmart.features.auth.presentation.email_verification.Ema
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.create_password.CreatePasswordViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.email_confirmation.ForgotPasswordEmailConfirmationViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.verify_code.ForgotPasswordVerifyCodeViewModel
-import com.luckyfrog.quickmart.features.auth.presentation.login.LoginViewModel
 import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterViewModel
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.MyCartViewModel
 import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListViewModel
@@ -21,7 +20,7 @@ import org.koin.dsl.module
 
 actual fun platformViewModelModule(): Module = module {
     // Auth
-    factory { LoginViewModel(get()) }
+//    factory { LoginViewModel(get()) }
     factory { RegisterViewModel(get()) }
     factory { EmailVerificationViewModel(get(), get()) }
     factory { CreatePasswordViewModel(get()) }

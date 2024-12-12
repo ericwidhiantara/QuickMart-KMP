@@ -27,9 +27,11 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "shared"
+            baseName = "Shared"
             isStatic = true
             linkerOpts.add("-lsqlite3")
+            export(libs.mvvm.core)
+            export(libs.mvvm.flow)
         }
     }
 
@@ -66,7 +68,8 @@ kotlin {
 
             implementation(libs.multiplatform.settings)
             implementation(libs.multiplatform.settings.coroutines)
-
+            implementation(libs.mvvm.core)
+            implementation(libs.mvvm.flow)
         }
 
         commonTest.dependencies {
@@ -133,6 +136,10 @@ kotlin {
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
 
+            // Moko
+            api(libs.mvvm.core)
+            api(libs.mvvm.flow)
+            api(libs.mvvm.flow.compose)
         }
 
         iosMain.dependencies {
@@ -143,6 +150,10 @@ kotlin {
             // Ktor
             implementation(libs.ktor.client.darwin)
             implementation(libs.stately.common)
+
+            // Moko
+            api(libs.mvvm.core)
+            api(libs.mvvm.flow)
 
         }
     }

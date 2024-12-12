@@ -11,14 +11,16 @@ fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
         modules(
             ktorModule,
             apiModule,
+            platformAppModule(),
             dataSourceModule,
             repositoryModule,
             dispatcherModule,
             useCaseModule,
-            platformAppModule(),
+            viewModelModule,
             platformViewModelModule(),
             sqlDelightModule,
-        )
+
+            )
     }
 
 val dispatcherModule = module {
