@@ -8,13 +8,15 @@ import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductA
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductApiImpl
 import com.luckyfrog.quickmart.features.profile.data.datasources.remote.ProfileApi
 import com.luckyfrog.quickmart.features.profile.data.datasources.remote.ProfileApiImpl
+import io.ktor.client.HttpClient
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 
 val apiModule = module {
     factory<AuthApi> {
         AuthApiImpl(
-            get()
+            get<HttpClient>(named("AuthHttpClient"))
         )
     }
 

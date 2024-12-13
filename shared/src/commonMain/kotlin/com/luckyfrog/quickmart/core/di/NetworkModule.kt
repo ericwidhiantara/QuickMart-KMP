@@ -18,6 +18,7 @@ import io.ktor.http.headers
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 class AdvancedCustomKtorLogger : Logger {
@@ -53,7 +54,6 @@ class AdvancedCustomKtorLogger : Logger {
 
 val ktorModule = module {
     single {
-
         HttpClient {
             defaultRequest {
                 host = Constants.SERVER_URL
@@ -95,7 +95,7 @@ val ktorModule = module {
 
                         val token = config.get()
                         println("token from ktor load token: $token")
-                        
+
                         BearerTokens(
                             accessToken = token,
                             refreshToken = "",
@@ -147,7 +147,35 @@ val ktorModule = module {
             }
         }
     }
+    single(named("AuthHttpClient")) {
+        HttpClient {
+            defaultRequest {
+                host = Constants.SERVER_URL
+                url {
+                    protocol = URLProtocol.HTTPS
+                }
+                headers {
+                    append("Content-Type", "application/json")
+                    append("Accept", "application/json")
+                }
+            }
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        ignoreUnknownKeys = true
+                        prettyPrint = true
+                        isLenient = true
+                    }
+                )
+            }
+            install(Logging) {
+                logger = AdvancedCustomKtorLogger()
+                level = LogLevel.ALL
+            }
+        }
+    }
 }
+
 
 private fun String.prettyPrintJson(): String {
     return try {
