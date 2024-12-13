@@ -1,6 +1,6 @@
 import Foundation
+import Shared  // Import the shared Kotlin module
 import SwiftUI
-import Shared // Import the shared Kotlin module
 
 class ThemeManager {
     static let shared = ThemeManager()
@@ -33,19 +33,19 @@ class ThemeManager {
         // Use direct image names from the Xcode assets
         switch currentTheme {
         case .light:
-            return UIImage(named: "SplashLight") // Make sure the image is in Xcode assets
+            return UIImage(named: "SplashLight")  // Make sure the image is in Xcode assets
         case .dark:
             return UIImage(named: "SplashDark")
         case .default:
             return UIImage(named: isDarkMode ? "SplashLight" : "SplashDark")
         }
     }
-    
+
     func getLogoImage(isDarkMode: Bool) -> UIImage? {
         // Use direct image names from the Xcode assets
         switch currentTheme {
         case .light:
-            return UIImage(named: "LogoLight") // Make sure the image is in Xcode assets
+            return UIImage(named: "LogoLight")  // Make sure the image is in Xcode assets
         case .dark:
             return UIImage(named: "LogoDark")
         case .default:

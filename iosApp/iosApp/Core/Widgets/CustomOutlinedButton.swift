@@ -34,18 +34,23 @@ struct CustomOutlinedButton: View {
                     Spacer().frame(width: 10)
                     icon
                         .renderingMode(.template)
-                        .foregroundColor(isButtonEnabled ? buttonTextColor : .gray)
+                        .foregroundColor(
+                            isButtonEnabled ? buttonTextColor : .gray)
                 }
             }
             .padding()
             .frame(maxWidth: .infinity, minHeight: height)
-            .background(isButtonEnabled ? buttonContainerColor : Color.gray.opacity(0.3))
+            .background(
+                isButtonEnabled ? buttonContainerColor : Color.gray.opacity(0.3)
+            )
             .cornerRadius(10)
         }
         .disabled(!isButtonEnabled)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(isButtonEnabled ? buttonBorderColor : Color.gray, lineWidth: 1)
+                .stroke(
+                    isButtonEnabled ? buttonBorderColor : Color.gray,
+                    lineWidth: 1)
         )
     }
 }

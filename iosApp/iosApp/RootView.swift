@@ -6,13 +6,11 @@
 //  Copyright © 2024 orgName. All rights reserved.
 //
 
-
-
 import SwiftUI
 
-struct ContentView : View {
-    @State private var rootView : AppScreen = .splash
-    
+struct ContentView: View {
+    @State private var rootView: AppScreen = .login
+
     var body: some View {
         NavigationView {
             switch rootView {
@@ -23,6 +21,10 @@ struct ContentView : View {
             case .login:
                 LoginView(rootView: $rootView)
             }
-        }.navigationViewStyle(StackNavigationViewStyle()).appTheme(.default) // or .light, .dark
+        }.navigationViewStyle(StackNavigationViewStyle()).appTheme(.default)  // or .light, .dark
     }
+}
+
+#Preview {
+    ContentView()
 }

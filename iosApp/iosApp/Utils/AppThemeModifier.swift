@@ -12,7 +12,7 @@ import SwiftUI
 struct AppThemeModifier: ViewModifier {
     @Environment(\.colorScheme) private var systemColorScheme
     let theme: AppTheme
-    
+
     private var activeColorScheme: AppColorScheme {
         switch theme {
         case .light:
@@ -23,11 +23,12 @@ struct AppThemeModifier: ViewModifier {
             return systemColorScheme == .dark ? .dark : .light
         }
     }
-    
+
     func body(content: Content) -> some View {
         content
             .environment(\.appColorScheme, activeColorScheme)
-            .preferredColorScheme(theme == .default ? nil : (theme == .dark ? .dark : .light))
+            .preferredColorScheme(
+                theme == .default ? nil : (theme == .dark ? .dark : .light))
     }
 }
 
