@@ -6,103 +6,153 @@
 //  Copyright © 2024 orgName. All rights reserved.
 //
 
-
-import SwiftUI
 import Shared
-
+import SwiftUI
 
 struct LoginView: View {
-    @Binding var rootView : AppScreen
-    @ObservedObject var viewModel: LoginViewModel = KoinHelper().getLoginViewModel()
+    @Binding var rootView: AppScreen
+    @ObservedObject var viewModel: LoginViewModel = KoinHelper()
+        .getLoginViewModel()
+
+    @State var uiState: LoginState = LoginState.Idle()
 
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var isPasswordVisible: Bool = false
     @State private var shouldValidate: Bool = false
     @State private var showErrorDialog: Bool = false
-    
+
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.presentationMode) var presentationMode
-    
+
+    private func performLogin() {
+        shouldValidate = true
+
+        guard !username.isEmpty, !password.isEmpty else {
+            showErrorDialog = true
+            return
+        }
+
+        let loginRequest = LoginFormRequestDto(
+            username: username,
+            password: password
+        )
+
+        viewModel.login(params: loginRequest)
+    }
+
    
-    
+
     var body: some View {
-        NavigationView {
+        let appUiState = viewModel.loginState
+        VStack {
+            switch uiState {
+            case is LoginState.Loading:
+                ProgressView()
+            case let successState as LoginState.Success:
+                Text(successState.data.accessToken ?? "")
+            case let errorState as LoginState.Error:
+                Text(errorState.message)
+            default:
+                VStack {}
+            }
             ScrollView {
-                VStack(alignment: .center, spacing: 16) {
-                    // Logo
-                    Image(colorScheme == .dark ? "LogoLight" : "LogoDark")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 32)
-                    
+                VStack(
+                    alignment: .leading,
+                    spacing: 16
+                ) {
+
                     // Title and Signup Link
-                    Text("Login")
+                    Text("login")
                         .font(.title)
                         .fontWeight(.bold)
-                    
                     HStack {
-                        Text("Don't have an account?")
-                        
-                        NavigationLink(destination: OnboardingView(rootView:$rootView)) {
-                            Text("Sign Up")
-                                .foregroundColor(.blue)
+                        Text("dont_have_account").font(.system(size: 14))
+
+                        Button(action: {
+                            // Implement Skip action
+                        }) {
+                            Text(
+                                NSLocalizedString(
+                                    "signup",
+                                    comment: "Signup")
+                            ).font(.system(size: 14))
+                            .foregroundColor(.colorCyan)
                         }
                     }
-                    
+                    Spacer().frame(height: 32)
+
                     // Username TextField
                     CustomTextField(
-                        title: "Username",
-                        placeholder: "Enter username",
-                        text: $username,
-                        shouldValidate: $shouldValidate,
-                        validator: { value in
-                            !value.isEmpty && value.count >= 2
-                        },
-                        errorMessage: "Username is required (min 2 characters)"
+                        type: .text,
+                        titleLabel: NSLocalizedString(
+                            "username", comment: ""),
+                        value: $username,
+                        validator: { $0.count >= 3 },
+                        shouldValidate: shouldValidate,
+                        placeholder: NSLocalizedString(
+                            "username_placeholder", comment: ""),
+                        textInputAutocapitalization: .none
                     )
-                    
                     // Password TextField
-                    CustomPasswordField(
-                        title: "Password",
-                        placeholder: "Enter password",
-                        text: $password,
-                        shouldValidate: $shouldValidate,
-                        isVisible: $isPasswordVisible,
-                        validator: { value in
-                            !value.isEmpty && value.count >= 6
-                        },
-                        errorMessage: "Password is required (min 6 characters)"
+                    CustomTextField(
+                        type: .password,
+                        titleLabel: NSLocalizedString(
+                            "password", comment: ""),
+                        value: $password,
+                        validator: { $0.count >= 8 },
+                        shouldValidate: shouldValidate,
+                        placeholder: NSLocalizedString(
+                            "password_placeholder", comment: ""),
+                        textInputAutocapitalization: .none
                     )
-                    
-                    // Forgot Password
+                    Spacer().frame(height: 12)
                     HStack {
                         Spacer()
-                        NavigationLink(destination: SplashView(rootView:$rootView)) {
-                            Text("Forgot Password?")
-                                .foregroundColor(.blue)
+                        Button(action: {
+                            // Implement Skip action
+                        }) {
+                            Text(
+                                NSLocalizedString(
+                                    "forgot_password",
+                                    comment: "Forgot Password")
+                            )
+                            .foregroundColor(.colorCyan)
                         }
                     }
-                    
-                    // Login Button
-                    Button(action: performLogin) {
-                        Text("Login")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-//                    .disabled(viewModel.loginState is LoginState.Loading)
-                    
-                    // Google Login Button
-                    Button(action: performGoogleLogin) {
+                    Spacer().frame(height: 16)
+
+                    CustomOutlinedButton(
+                        buttonText: NSLocalizedString(
+                            "login",
+                            comment: "Login"),
+                        buttonTextColor: .white,
+                        buttonContainerColor: .colorCyan,
+                        onClick: {
+                            guard !username.isEmpty, !password.isEmpty
+                            else {
+                                shouldValidate = true
+                                return
+                            }
+
+                            let loginRequest = LoginFormRequestDto(
+                                username: username,
+                                password: password
+                            )
+                            appUiState.subscribe { state in
+                                self.uiState = state!
+                            }
+                            viewModel.login(params: loginRequest)
+                        }
+                    )
+                    .disabled(
+                        uiState is LoginState.Loading)
+                    Button(action: {}) {
                         HStack {
                             Image("LogoGoogle")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 24, height: 24)
-                            Text("Login with Google")
+                            Text("login_with_google")
                                 .foregroundColor(.black)
                         }
                         .frame(maxWidth: .infinity)
@@ -110,152 +160,101 @@ struct LoginView: View {
                         .background(Color.white)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                                .stroke(
+                                    Color.gray.opacity(0.3),
+                                    lineWidth: 1)
                         )
                     }
-                    
-                    // Terms and Privacy
-                    TermsAndPrivacyText()
-                }
-                .padding()
-            }
-            .navigationBarHidden(true)
-        }
-        .onChange(of: viewModel.loginState) { state in
-            handleLoginState(state)
-        }
-        .alert(isPresented: $showErrorDialog) {
-            Alert(
-                title: Text("Login Error"),
-                message: Text("Error"),
-                dismissButton: .default(Text("OK"))
-            )
-        }
-    }
-    
-    private func performLogin() {
-        shouldValidate = true
-        
-        guard !username.isEmpty, !password.isEmpty else {
-            showErrorDialog = true
-            return
-        }
-        
-        let loginRequest = LoginFormRequestDto(
-            username: username,
-            password: password
-        )
-        
-        viewModel.login(params: loginRequest)
-    }
-    
-    private func performGoogleLogin() {
-        // Implement Google login logic
-        // For now, using the same login method
-        performLogin()
-    }
-    
-    private func handleLoginState(_ state: LoginState) {
-        switch state {
-        case is LoginState.Success:
-            // Navigate to main screen
-            // You'll need to implement navigation logic based on your app's navigation structure
-            break
-        case let errorState as LoginState.Error:
-            showErrorDialog = true
-        default:
-            break
-        }
-    }
-    
-    private func extractErrorMessage() -> String {
-        if case LoginState.Error() = viewModel.loginState {
-            return self
-        }
-        return "Unknown error occurred"
-    }
-}
 
-// Custom TextField with Validation
-struct CustomTextField: View {
-    let title: String
-    let placeholder: String
-    @Binding var text: String
-    @Binding var shouldValidate: Bool
-    let validator: (String) -> Bool
-    let errorMessage: String
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text(title)
-                .font(.caption)
-            
-            TextField(placeholder, text: $text)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            
-            if shouldValidate && !validator(text) {
-                Text(errorMessage)
-                    .foregroundColor(.red)
-                    .font(.caption)
+                    Spacer()
+                    LoginTermsAndPrivacyText()
+                        .onOpenURL { url in
+                            switch url.absoluteString {
+                            case "privacy":
+                                print("Privacy Policy Tapped")
+                            // Handle privacy policy navigation
+                            case "terms":
+                                print("Terms and Conditions Tapped")
+                            // Handle terms and conditions navigation
+                            default:
+                                break
+                            }
+                        }
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 20)
+            }
+            .task {
+                appUiState.subscribe { state in
+                    self.uiState = state!
+                }
+            }
+            .alert(isPresented: $showErrorDialog) {
+                Alert(
+                    title: Text("field_required"),
+                    message: Text("field_required"),
+                    dismissButton: .default(Text("save"))
+                )
+            }
+        }.toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Image(colorScheme == .dark ? "LogoLight" : "LogoDark")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 32)
+
             }
         }
     }
 }
+struct LoginTermsAndPrivacyText: View {
+    private let loginTerms = "login_terms_and_conditions"
+    private let termsAndConditions = "terms_and_conditions"
+    private let privacyPolicy = "privacy_policy"
+    private let and = "and"
 
-// Custom Password Field with Visibility Toggle
-struct CustomPasswordField: View {
-    let title: String
-    let placeholder: String
-    @Binding var text: String
-    @Binding var shouldValidate: Bool
-    @Binding var isVisible: Bool
-    let validator: (String) -> Bool
-    let errorMessage: String
-    
     var body: some View {
-        VStack(alignment: .leading) {
-            Text(title)
-                .font(.caption)
-            
-            HStack {
-                Group {
-                    if isVisible {
-                        TextField(placeholder, text: $text)
-                    } else {
-                        SecureField(placeholder, text: $text)
-                    }
-                }
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                
-                Button(action: { isVisible.toggle() }) {
-                    Image(systemName: isVisible ? "eye.slash" : "eye")
-                        .foregroundColor(.gray)
-                }
-            }
-            
-            if shouldValidate && !validator(text) {
-                Text(errorMessage)
-                    .foregroundColor(.red)
-                    .font(.caption)
-            }
-        }
+        Text(attributedString)
+            .padding(16)
+            .multilineTextAlignment(.center)
+    }
+
+    private var attributedString: AttributedString {
+        var fullString = AttributedString()
+
+        // Regular text
+        var regularAttributes = AttributeContainer()
+        regularAttributes.font = .body
+
+        // Clickable link attributes
+        var linkAttributes = AttributeContainer()
+        linkAttributes.font = .body.weight(.bold)
+        linkAttributes.foregroundColor = .colorCyan
+
+        // Construct the attributed string
+        fullString += AttributedString(
+            NSLocalizedString(loginTerms, comment: ""),
+            attributes: regularAttributes)
+
+        var privacyLink = AttributedString(
+            NSLocalizedString(privacyPolicy, comment: ""),
+            attributes: linkAttributes)
+        privacyLink.link = URL(string: "privacy")
+        fullString += privacyLink
+
+        fullString += AttributedString(
+            " " + and + " ", attributes: regularAttributes)
+
+        var termsLink = AttributedString(
+            NSLocalizedString(termsAndConditions, comment: ""),
+            attributes: linkAttributes)
+        termsLink.link = URL(string: "terms")
+        fullString += termsLink
+
+        return fullString
     }
 }
 
-// Terms and Privacy Text
-struct TermsAndPrivacyText: View {
-    var body: some View {
-        HStack{
-            Text("By continuing, you agree to our ")
-            Text("Privacy Policy").foregroundColor(.blue)
-                .onTapGesture {
-                    // Handle Privacy Policy tap
-                }
-            Text(" and ")
-            Text("Terms and Conditions").foregroundColor(.blue)
-                .onTapGesture {
-                    // Handle Terms and Conditions tap
-                }
-        }
-    }
+#Preview {
+    LoginView(rootView: .constant(.login))
 }
