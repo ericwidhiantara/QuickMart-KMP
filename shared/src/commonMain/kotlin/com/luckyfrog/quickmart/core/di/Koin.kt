@@ -1,30 +1,24 @@
 package com.luckyfrog.quickmart.core.di
 
-import kotlinx.coroutines.Dispatchers
-import org.koin.core.context.startKoin
-import org.koin.dsl.KoinAppDeclaration
+import com.luckyfrog.quickmart.utils.provideDispatcher
 import org.koin.dsl.module
 
-fun initKoin(appDeclaration: KoinAppDeclaration = {}) =
-    startKoin {
-        appDeclaration()
-        modules(
-            ktorModule,
-            apiModule,
-            platformAppModule(),
-            dataSourceModule,
-            repositoryModule,
-            dispatcherModule,
-            useCaseModule,
-            viewModelModule,
-            platformViewModelModule(),
-            sqlDelightModule,
-
-            )
-    }
 
 val dispatcherModule = module {
-    factory { Dispatchers.Default }
+    factory { provideDispatcher() }
 }
 
-fun initKoin() = initKoin {}
+private val sharedModules = listOf(
+    ktorModule,
+    apiModule,
+    platformAppModule(),
+    dataSourceModule,
+    repositoryModule,
+    dispatcherModule,
+    useCaseModule,
+    viewModelModule,
+    platformViewModelModule(),
+    sqlDelightModule,
+)
+
+fun getSharedModules() = sharedModules

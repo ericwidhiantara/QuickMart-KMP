@@ -1,6 +1,6 @@
 import Foundation
 import SwiftUI
-import shared // Import the shared Kotlin module
+import Shared // Import the shared Kotlin module
 
 class ThemeManager {
     static let shared = ThemeManager()

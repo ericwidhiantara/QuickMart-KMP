@@ -1,11 +1,11 @@
 import UIKit
 import SwiftUI
-import shared
+import Shared
 
 @main
 struct iOSApp: App {
-   init() {
-       KoinKt.doInitKoin()
+    init() {
+        KoinHelperKt.doInitKoin()
     }
 	var body: some Scene {
 		WindowGroup {

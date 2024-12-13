@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct OnboardingScreen: View {
+struct OnboardingView: View {
     @Binding var rootView : AppScreen
     @State private var currentIndex: Int = 0
     
@@ -105,7 +105,7 @@ struct OnboardingScreen: View {
                             buttonContainerColor: colorScheme == .dark ? theme.onPrimaryContainer : .clear,
                             buttonBorderColor: theme.onPrimaryContainer,
                             onClick: {
-                                
+                                rootView = .login
                             },
                             isWithIcon: false
                         )

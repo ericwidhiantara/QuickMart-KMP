@@ -19,7 +19,9 @@ struct ContentView : View {
             case .splash:
                 SplashView(rootView: $rootView)
             case .onboarding:
-                OnboardingScreen(rootView: $rootView)
+                OnboardingView(rootView: $rootView)
+            case .login:
+                LoginView(rootView: $rootView)
             }
         }.navigationViewStyle(StackNavigationViewStyle()).appTheme(.default) // or .light, .dark
     }

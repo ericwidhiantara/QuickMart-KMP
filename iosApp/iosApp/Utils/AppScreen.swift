@@ -11,4 +11,5 @@ import Foundation
 enum AppScreen: Hashable {
     case splash
     case onboarding
+    case login
 }

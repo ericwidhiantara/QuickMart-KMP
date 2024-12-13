@@ -10,6 +10,11 @@
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		07D71EE72D097B6100C212D3 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D71EE62D097B6100C212D3 /* RootView.swift */; };
+		07D71F2B2D0A9C1300C212D3 /* ViewModelStateNullable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D71F292D0A9C1300C212D3 /* ViewModelStateNullable.swift */; };
+		07D71F2C2D0A9C1300C212D3 /* CFlowExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D71F252D0A9C1300C212D3 /* CFlowExt.swift */; };
+		07D71F2D2D0A9C1300C212D3 /* ViewModelObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D71F272D0A9C1300C212D3 /* ViewModelObservable.swift */; };
+		07D71F2E2D0A9C1300C212D3 /* ViewModelBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D71F262D0A9C1300C212D3 /* ViewModelBinding.swift */; };
+		07D71F2F2D0A9C1300C212D3 /* ViewModelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07D71F282D0A9C1300C212D3 /* ViewModelState.swift */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +35,11 @@
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		07D71EE62D097B6100C212D3 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		07D71F252D0A9C1300C212D3 /* CFlowExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFlowExt.swift; sourceTree = "<group>"; };
+		07D71F262D0A9C1300C212D3 /* ViewModelBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelBinding.swift; sourceTree = "<group>"; };
+		07D71F272D0A9C1300C212D3 /* ViewModelObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelObservable.swift; sourceTree = "<group>"; };
+		07D71F282D0A9C1300C212D3 /* ViewModelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelState.swift; sourceTree = "<group>"; };
+		07D71F292D0A9C1300C212D3 /* ViewModelStateNullable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelStateNullable.swift; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* QuickMart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickMart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -60,6 +70,18 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		07D71F2A2D0A9C1300C212D3 /* mokoMvvmFlowSwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				07D71F252D0A9C1300C212D3 /* CFlowExt.swift */,
+				07D71F262D0A9C1300C212D3 /* ViewModelBinding.swift */,
+				07D71F272D0A9C1300C212D3 /* ViewModelObservable.swift */,
+				07D71F282D0A9C1300C212D3 /* ViewModelState.swift */,
+				07D71F292D0A9C1300C212D3 /* ViewModelStateNullable.swift */,
+			);
+			path = mokoMvvmFlowSwiftUI;
+			sourceTree = "<group>";
+		};
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +102,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				07D71F2A2D0A9C1300C212D3 /* mokoMvvmFlowSwiftUI */,
 				07D71EE62D097B6100C212D3 /* RootView.swift */,
 				07D71EDD2D0969EC00C212D3 /* Core */,
 				07E1172B2D07FE7D00DADCC0 /* Features */,
@@ -199,6 +222,11 @@
 			files = (
 				07D71EE72D097B6100C212D3 /* RootView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				07D71F2B2D0A9C1300C212D3 /* ViewModelStateNullable.swift in Sources */,
+				07D71F2C2D0A9C1300C212D3 /* CFlowExt.swift in Sources */,
+				07D71F2D2D0A9C1300C212D3 /* ViewModelObservable.swift in Sources */,
+				07D71F2E2D0A9C1300C212D3 /* ViewModelBinding.swift in Sources */,
+				07D71F2F2D0A9C1300C212D3 /* ViewModelState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

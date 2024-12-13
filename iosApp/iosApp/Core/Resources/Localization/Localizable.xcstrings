@@ -1,6 +1,94 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    " and " : {
+
+    },
+    "account_management" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account Management"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manajemen Akun"
+          }
+        }
+      }
+    },
+    "add_shipping_address" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add Shipping Address"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tambahkan Alamat Pengiriman"
+          }
+        }
+      }
+    },
+    "add_to_cart" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add To Cart"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tambah Ke Keranjang"
+          }
+        }
+      }
+    },
+    "added_to_cart" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The product has been added to your cart"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produk telah ditambahkan ke keranjang Anda"
+          }
+        }
+      }
+    },
+    "added_to_wishlist" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The product has been added to your wishlist"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produk telah ditambahkan ke daftar keinginan Anda"
+          }
+        }
+      }
+    },
     "already_have_account" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -18,6 +106,23 @@
         }
       }
     },
+    "and" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "and"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dan"
+          }
+        }
+      }
+    },
     "app_name" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -31,6 +136,264 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "QuickMart"
+          }
+        }
+      }
+    },
+    "apply" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apply"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terapkan"
+          }
+        }
+      }
+    },
+    "buy_now" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buy Now"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beli Sekarang"
+          }
+        }
+      }
+    },
+    "By continuing, you agree to our " : {
+
+    },
+    "cancel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batal"
+          }
+        }
+      }
+    },
+    "categories" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategori"
+          }
+        }
+      }
+    },
+    "change_password" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change Password"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ubah Kata Sandi"
+          }
+        }
+      }
+    },
+    "change_password_success" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New password set successfully"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kata sandi baru berhasil ditetapkan"
+          }
+        }
+      }
+    },
+    "change_password_success_desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Congratulations! Your password has been set successfully, now you can login to your account with the new password."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selamat! Kata sandi Anda telah berhasil ditetapkan, sekarang Anda dapat masuk ke akun Anda dengan kata sandi baru."
+          }
+        }
+      }
+    },
+    "checkout" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checkout (%1$d)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pesan (%1$d)"
+          }
+        }
+      }
+    },
+    "completed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selesai"
+          }
+        }
+      }
+    },
+    "confirm_delete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete Confirmation"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konfirmasi Penghapusan"
+          }
+        }
+      }
+    },
+    "confirm_delete_desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete this product?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apakah Anda yakin ingin menghapus produk ini?"
+          }
+        }
+      }
+    },
+    "confirm_desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your email address for verification."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masukkan alamat email Anda untuk verifikasi."
+          }
+        }
+      }
+    },
+    "confirm_email" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirmation Email"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Email Konfirmasi"
+          }
+        }
+      }
+    },
+    "confirm_logout" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logout Confirmation"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konfirmasi Logout"
+          }
+        }
+      }
+    },
+    "confirm_logout_desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to logout?"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anda yakin ingin logout?"
           }
         }
       }
@@ -69,6 +432,23 @@
         }
       }
     },
+    "continue_text" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        }
+      }
+    },
     "create_account" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -86,6 +466,26 @@
         }
       }
     },
+    "delete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hapus"
+          }
+        }
+      }
+    },
+    "Don't have an account?" : {
+
+    },
     "dont_have_account" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -99,6 +499,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tidak punya akun?"
+          }
+        }
+      }
+    },
+    "edit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit"
+          }
+        }
+      }
+    },
+    "edit_shipping_address" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Shipping Address"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Alamat Pengiriman"
           }
         }
       }
@@ -154,6 +588,74 @@
         }
       }
     },
+    "empty_cart" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your cart is empty"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keranjang belanja Anda kosong"
+          }
+        }
+      }
+    },
+    "empty_cart_desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Looks like you have not added anything in your cart. Go ahead and explore top products."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sepertinya Anda belum menambahkan apa pun ke keranjang belanja Anda. Silakan lanjutkan dan jelajahi produk teratas."
+          }
+        }
+      }
+    },
+    "empty_wishlist" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your wishlist is empty"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daftar keinginan Anda kosong"
+          }
+        }
+      }
+    },
+    "empty_wishlist_desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap heart button to start saving your favorite items."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ketuk tombol hati untuk mulai menyimpan barang-barang favorit Anda."
+          }
+        }
+      }
+    },
     "enter_verification_code" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -170,6 +672,250 @@
           }
         }
       }
+    },
+    "Error" : {
+
+    },
+    "estimated_time" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estimated times : %1$d working days"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perkiraan waktu: %1$d hari kerja"
+          }
+        }
+      }
+    },
+    "explore_products" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore Products"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelajahi Produk"
+          }
+        }
+      }
+    },
+    "faqs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FAQs"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FAQ"
+          }
+        }
+      }
+    },
+    "field_confirm_password" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This field must be same as password"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolom ini harus sama dengan kata sandi"
+          }
+        }
+      }
+    },
+    "field_email" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This field must be a valid email address"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolom ini harus berisi alamat email yang valid"
+          }
+        }
+      }
+    },
+    "field_length" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This field must be at least %1$d characters"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolom ini minimal harus berisi %1$d karakter"
+          }
+        }
+      }
+    },
+    "field_max_length" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This field must be at most %1$d characters"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolom ini maksimal harus berisi %1$d karakter"
+          }
+        }
+      }
+    },
+    "field_password" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This field must be at least %1$d characters, including at least one uppercase letter, one lowercase letter, and one number"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolom ini minimal harus berisi %1$d karakter, termasuk minimal satu huruf besar, satu huruf kecil, dan satu angka"
+          }
+        }
+      }
+    },
+    "field_required" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This field is required"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kolom ini wajib diisi"
+          }
+        }
+      }
+    },
+    "filter" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
+          }
+        }
+      }
+    },
+    "filter_a_to_z" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A-Z"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A-Z"
+          }
+        }
+      }
+    },
+    "filter_price_high_to_low" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price (High to Low)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harga (Tertinggi ke Terendah)"
+          }
+        }
+      }
+    },
+    "filter_price_low_to_high" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Price (Low to High)"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harga (Terendah ke Tertinggi)"
+          }
+        }
+      }
+    },
+    "filter_z_to_a" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Z-A"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Z-A"
+          }
+        }
+      }
+    },
+    "Forgot Password?" : {
+
     },
     "forgot_password" : {
       "extractionState" : "manual",
@@ -239,6 +985,91 @@
         }
       }
     },
+    "invalid_input" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invalid input"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Input tidak valid"
+          }
+        }
+      }
+    },
+    "item_deleted_successfully" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Product deleted successfully!"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produk berhasil dihapus!"
+          }
+        }
+      }
+    },
+    "language" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bahasa"
+          }
+        }
+      }
+    },
+    "latest_products" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest Products"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produk Terbaru"
+          }
+        }
+      }
+    },
+    "loading" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loading…"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sedang memuat…"
+          }
+        }
+      }
+    },
     "login" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -256,6 +1087,202 @@
         }
       }
     },
+    "Login" : {
+
+    },
+    "Login Error" : {
+
+    },
+    "Login with Google" : {
+
+    },
+    "login_terms_and_conditions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By logging in, you agree to our "
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dengan masuk, Anda setuju dengan "
+          }
+        }
+      }
+    },
+    "login_with_google" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Login with Google"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masuk dengan Google"
+          }
+        }
+      }
+    },
+    "logout" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logout"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logout"
+          }
+        }
+      }
+    },
+    "menu_categories" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categories"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategori"
+          }
+        }
+      }
+    },
+    "menu_home" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Home"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beranda"
+          }
+        }
+      }
+    },
+    "menu_my_cart" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My Cart"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keranjang Saya"
+          }
+        }
+      }
+    },
+    "menu_profile" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profile"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Profil"
+          }
+        }
+      }
+    },
+    "menu_wishlist" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wishlist"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wishlist"
+          }
+        }
+      }
+    },
+    "my_cart" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "My Cart"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keranjang Saya"
+          }
+        }
+      }
+    },
+    "new_password" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Password"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kata Sandi Baru"
+          }
+        }
+      }
+    },
+    "new_password_desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter your new password and remember it."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masukkan kata sandi baru Anda dan ingatlah."
+          }
+        }
+      }
+    },
     "next" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -269,6 +1296,43 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Berikutnya"
+          }
+        }
+      }
+    },
+    "OK" : {
+
+    },
+    "old_password" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Old Password"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kata Sandi Lama"
+          }
+        }
+      }
+    },
+    "old_password_desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter old password to change the password."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masukkan kata sandi lama untuk mengubah kata sandi."
           }
         }
       }
@@ -375,6 +1439,57 @@
         }
       }
     },
+    "ongoing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On-going"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sedang berlangsung"
+          }
+        }
+      }
+    },
+    "order_history" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Order History"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riwayat Pesanan"
+          }
+        }
+      }
+    },
+    "order_info" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Order Info"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info Pesanan"
+          }
+        }
+      }
+    },
     "password" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -409,6 +1524,94 @@
         }
       }
     },
+    "payment_method" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Payment Method"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metode Pembayaran"
+          }
+        }
+      }
+    },
+    "personal_information" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Personal Information"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informasi Pribadi"
+          }
+        }
+      }
+    },
+    "please_wait" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please wait"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mohon tunggu"
+          }
+        }
+      }
+    },
+    "primary_address" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primary Address"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alamat Utama"
+          }
+        }
+      }
+    },
+    "Privacy Policy" : {
+
+    },
+    "privacy_policy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy Policy"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kebijakan Privasi"
+          }
+        }
+      }
+    },
     "proceed" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -422,6 +1625,159 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lanjutkan"
+          }
+        }
+      }
+    },
+    "read_more" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Read More"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baca Selengkapnya"
+          }
+        }
+      }
+    },
+    "recent_search" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent Search"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pencarian Terkini"
+          }
+        }
+      }
+    },
+    "recipient_address" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recipient Address"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alamat Penerima"
+          }
+        }
+      }
+    },
+    "recipient_address_placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the recipient address"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masukkan alamat penerima"
+          }
+        }
+      }
+    },
+    "recipient_name" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recipient Name"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nama Penerima"
+          }
+        }
+      }
+    },
+    "recipient_name_placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the recipient name"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masukkan nama penerima"
+          }
+        }
+      }
+    },
+    "recipient_phone" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recipient Phone Number"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nomor Telepon Penerima"
+          }
+        }
+      }
+    },
+    "recipient_phone_placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the recipient phone number"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masukkan nomor telepon penerima"
+          }
+        }
+      }
+    },
+    "removed_from_wishlist" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The product has been removed from your wishlist"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Produk telah dihapus dari daftar keinginan Anda"
           }
         }
       }
@@ -459,6 +1815,128 @@
           }
         }
       }
+    },
+    "save" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simpan"
+          }
+        }
+      }
+    },
+    "search" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cari"
+          }
+        }
+      }
+    },
+    "see_all" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See All"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lihat Semua"
+          }
+        }
+      }
+    },
+    "send" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kirim"
+          }
+        }
+      }
+    },
+    "shipping_address" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shipping Address"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alamat Pengiriman"
+          }
+        }
+      }
+    },
+    "shipping_cost" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shipping Cost"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biaya Pengiriman"
+          }
+        }
+      }
+    },
+    "show_less" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Less"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tampilkan Lebih Sedikit"
+          }
+        }
+      }
+    },
+    "Sign Up" : {
+
     },
     "signup" : {
       "extractionState" : "manual",
@@ -579,6 +2057,94 @@
         }
       }
     },
+    "subtotal" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subtotal"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subtotal"
+          }
+        }
+      }
+    },
+    "support_and_information" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support & Information"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informasi Dukungan"
+          }
+        }
+      }
+    },
+    "Terms and Conditions" : {
+
+    },
+    "terms_and_conditions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terms and Conditions"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Syarat dan Ketentuan"
+          }
+        }
+      }
+    },
+    "theme" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Theme"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tema"
+          }
+        }
+      }
+    },
+    "total" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total"
+          }
+        }
+      }
+    },
     "username" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -630,1570 +2196,40 @@
         }
       }
     },
-    "login_with_google": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Login with Google"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Masuk dengan Google"
-            }
+    "voucher_code" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voucher Code"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kode Voucher"
           }
         }
-      },
-      "login_terms_and_conditions": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "By logging in, you agree to our "
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Dengan masuk, Anda setuju dengan "
-            }
+      }
+    },
+    "voucher_code_placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter voucher code"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masukkan kode voucher"
           }
         }
-      },
-      "privacy_policy": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Privacy Policy"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Kebijakan Privasi"
-            }
-          }
-        }
-      },
-      "and": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "and"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "dan"
-            }
-          }
-        }
-      },
-      "terms_and_conditions": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Terms and Conditions"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Syarat dan Ketentuan"
-            }
-          }
-        }
-      },
-      "confirm_email": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Confirmation Email"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Email Konfirmasi"
-            }
-          }
-        }
-      },
-      "confirm_desc": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Enter your email address for verification."
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Masukkan alamat email Anda untuk verifikasi."
-            }
-          }
-        }
-      },
-      "send": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Send"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Kirim"
-            }
-          }
-        }
-      },
-      "new_password": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "New Password"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Kata Sandi Baru"
-            }
-          }
-        }
-      },
-      "new_password_desc": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Enter your new password and remember it."
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Masukkan kata sandi baru Anda dan ingatlah."
-            }
-          }
-        }
-      },
-      "save": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Save"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Simpan"
-            }
-          }
-        }
-      },
-      "change_password_success": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "New password set successfully"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Kata sandi baru berhasil ditetapkan"
-            }
-          }
-        }
-      },
-      "change_password_success_desc": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Congratulations! Your password has been set successfully, now you can login to your account with the new password."
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Selamat! Kata sandi Anda telah berhasil ditetapkan, sekarang Anda dapat masuk ke akun Anda dengan kata sandi baru."
-            }
-          }
-        }
-      },
-      "menu_home": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Home"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Beranda"
-            }
-          }
-        }
-      },
-      "menu_categories": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Categories"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Kategori"
-            }
-          }
-        }
-      },
-      "menu_my_cart": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "My Cart"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Keranjang Saya"
-            }
-          }
-        }
-      },
-      "menu_wishlist": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Wishlist"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Wishlist"
-            }
-          }
-        }
-      },
-      "menu_profile": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Profile"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Profil"
-            }
-          }
-        }
-      },
-      "categories": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Categories"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Kategori"
-            }
-          }
-        }
-      },
-      "see_all": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "See All"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Lihat Semua"
-            }
-          }
-        }
-      },
-      "latest_products": {
-        "extractionState": "manual",
-        "localizations": {
-          "en": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Latest Products"
-            }
-          },
-          "id": {
-            "stringUnit": {
-              "state": "translated",
-              "value": "Produk Terbaru"
-            }
-          }
-        }
-      },
-      "loading": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Loading…"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Sedang memuat…"
-              }
-            }
-          }
-        },
-        "please_wait": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Please wait"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Mohon tunggu"
-              }
-            }
-          }
-        },
-        "invalid_input": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Invalid input"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Input tidak valid"
-              }
-            }
-          }
-        },
-        "field_required": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "This field is required"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Kolom ini wajib diisi"
-              }
-            }
-          }
-        },
-        "field_length": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "This field must be at least %1$d characters"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Kolom ini minimal harus berisi %1$d karakter"
-              }
-            }
-          }
-        },
-        "field_max_length": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "This field must be at most %1$d characters"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Kolom ini maksimal harus berisi %1$d karakter"
-              }
-            }
-          }
-        },
-        "field_email": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "This field must be a valid email address"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Kolom ini harus berisi alamat email yang valid"
-              }
-            }
-          }
-        },
-        "field_password": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "This field must be at least %1$d characters, including at least one uppercase letter, one lowercase letter, and one number"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Kolom ini minimal harus berisi %1$d karakter, termasuk minimal satu huruf besar, satu huruf kecil, dan satu angka"
-              }
-            }
-          }
-        },
-        "field_confirm_password": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "This field must be same as password"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Kolom ini harus sama dengan kata sandi"
-              }
-            }
-          }
-        },
-        "search": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Search"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Cari"
-              }
-            }
-          }
-        },
-        "recent_search": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Recent Search"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Pencarian Terkini"
-              }
-            }
-          }
-        },
-        "filter": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Filter"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Filter"
-              }
-            }
-          }
-        },
-        "filter_price_low_to_high": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Price (Low to High)"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Harga (Terendah ke Tertinggi)"
-              }
-            }
-          }
-        },
-        "filter_price_high_to_low": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Price (High to Low)"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Harga (Tertinggi ke Terendah)"
-              }
-            }
-          }
-        },
-        "filter_a_to_z": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "A-Z"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "A-Z"
-              }
-            }
-          }
-        },
-        "filter_z_to_a": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Z-A"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Z-A"
-              }
-            }
-          }
-        },
-        "apply": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Apply"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Terapkan"
-              }
-            }
-          }
-        },
-        "buy_now": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Buy Now"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Beli Sekarang"
-              }
-            }
-          }
-        },
-        "add_to_cart": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Add To Cart"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Tambah Ke Keranjang"
-              }
-            }
-          }
-        },
-        "read_more": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Read More"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Baca Selengkapnya"
-              }
-            }
-          }
-        },
-        "show_less": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Show Less"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Tampilkan Lebih Sedikit"
-              }
-            }
-          }
-        },
-        "my_cart": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "My Cart"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Keranjang Saya"
-              }
-            }
-          }
-        },
-        "voucher_code": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Voucher Code"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Kode Voucher"
-              }
-            }
-          }
-        },
-        "order_info": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Order Info"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Info Pesanan"
-              }
-            }
-          }
-        },
-        "subtotal": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Subtotal"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Subtotal"
-              }
-            }
-          }
-        },
-        "shipping_cost": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Shipping Cost"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Biaya Pengiriman"
-              }
-            }
-          }
-        },
-        "total": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Total"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Total"
-              }
-            }
-          }
-        },
-        "checkout": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Checkout (%1$d)"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Pesan (%1$d)"
-              }
-            }
-          }
-        },
-        "voucher_code_placeholder": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Enter voucher code"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Masukkan kode voucher"
-              }
-            }
-          }
-        },
-        "empty_cart": {
-          "extractionState": "manual",
-          "localizations": {
-            "en": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Your cart is empty"
-              }
-            },
-            "id": {
-              "stringUnit": {
-                "state": "translated",
-                "value": "Keranjang belanja Anda kosong"
-              }
-            }
-          }
-        },
-        "empty_cart_desc": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Looks like you have not added anything in your cart. Go ahead and explore top products."
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Sepertinya Anda belum menambahkan apa pun ke keranjang belanja Anda. Silakan lanjutkan dan jelajahi produk teratas."
-                }
-              }
-            }
-          },
-          "explore_products": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Explore Products"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Jelajahi Produk"
-                }
-              }
-            }
-          },
-          "confirm_delete": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Delete Confirmation"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Konfirmasi Penghapusan"
-                }
-              }
-            }
-          },
-          "confirm_delete_desc": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Are you sure you want to delete this product?"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Apakah Anda yakin ingin menghapus produk ini?"
-                }
-              }
-            }
-          },
-          "delete": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Delete"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Hapus"
-                }
-              }
-            }
-          },
-          "cancel": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Cancel"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Batal"
-                }
-              }
-            }
-          },
-          "item_deleted_successfully": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Product deleted successfully!"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Produk berhasil dihapus!"
-                }
-              }
-            }
-          },
-          "added_to_cart": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "The product has been added to your cart"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Produk telah ditambahkan ke keranjang Anda"
-                }
-              }
-            }
-          },
-          "empty_wishlist": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Your wishlist is empty"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Daftar keinginan Anda kosong"
-                }
-              }
-            }
-          },
-          "empty_wishlist_desc": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Tap heart button to start saving your favorite items."
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Ketuk tombol hati untuk mulai menyimpan barang-barang favorit Anda."
-                }
-              }
-            }
-          },
-          "added_to_wishlist": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "The product has been added to your wishlist"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Produk telah ditambahkan ke daftar keinginan Anda"
-                }
-              }
-            }
-          },
-          "removed_from_wishlist": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "The product has been removed from your wishlist"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Produk telah dihapus dari daftar keinginan Anda"
-                }
-              }
-            }
-          },
-          "personal_information": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Personal Information"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Informasi Pribadi"
-                }
-              }
-            }
-          },
-          "shipping_address": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Shipping Address"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Alamat Pengiriman"
-                }
-              }
-            }
-          },
-          "payment_method": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Payment Method"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Metode Pembayaran"
-                }
-              }
-            }
-          },
-          "order_history": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Order History"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Riwayat Pesanan"
-                }
-              }
-            }
-          },
-          "support_and_information": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Support & Information"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Informasi Dukungan"
-                }
-              }
-            }
-          },
-          "faqs": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "FAQs"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "FAQ"
-                }
-              }
-            }
-          },
-          "account_management": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Account Management"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Manajemen Akun"
-                }
-              }
-            }
-          },
-          "change_password": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Change Password"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Ubah Kata Sandi"
-                }
-              }
-            }
-          },
-          "theme": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Theme"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Tema"
-                }
-              }
-            }
-          },
-          "language": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Language"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Bahasa"
-                }
-              }
-            }
-          },
-          "confirm_logout": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Logout Confirmation"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Konfirmasi Logout"
-                }
-              }
-            }
-          },
-          "confirm_logout_desc": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Are you sure you want to logout?"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Anda yakin ingin logout?"
-                }
-              }
-            }
-          },
-          "logout": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Logout"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Logout"
-                }
-              }
-            }
-          },
-          "recipient_name": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Recipient Name"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Nama Penerima"
-                }
-              }
-            }
-          },
-          "recipient_name_placeholder": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Enter the recipient name"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Masukkan nama penerima"
-                }
-              }
-            }
-          },
-          "recipient_phone": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Recipient Phone Number"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Nomor Telepon Penerima"
-                }
-              }
-            }
-          },
-          "recipient_phone_placeholder": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Enter the recipient phone number"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Masukkan nomor telepon penerima"
-                }
-              }
-            }
-          },
-          "recipient_address": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Recipient Address"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Alamat Penerima"
-                }
-              }
-            }
-          },
-          "recipient_address_placeholder": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Enter the recipient address"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Masukkan alamat penerima"
-                }
-              }
-            }
-          },
-          "primary_address": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Primary Address"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Alamat Utama"
-                }
-              }
-            }
-          },
-          "add_shipping_address": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Add Shipping Address"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Tambahkan Alamat Pengiriman"
-                }
-              }
-            }
-          },
-          "edit_shipping_address": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Edit Shipping Address"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Edit Alamat Pengiriman"
-                }
-              }
-            }
-          },
-          "edit": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Edit"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Edit"
-                }
-              }
-            }
-          },
-          "old_password": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Old Password"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Kata Sandi Lama"
-                }
-              }
-            }
-          },
-          "old_password_desc": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Enter old password to change the password."
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Masukkan kata sandi lama untuk mengubah kata sandi."
-                }
-              }
-            }
-          },
-          "ongoing": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "On-going"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Sedang berlangsung"
-                }
-              }
-            }
-          },
-          "completed": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Completed"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Selesai"
-                }
-              }
-            }
-          },
-          "estimated_time": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Estimated times : %1$d working days"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Perkiraan waktu: %1$d hari kerja"
-                }
-              }
-            }
-          },
-          "continue_text": {
-            "extractionState": "manual",
-            "localizations": {
-              "en": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Continue"
-                }
-              },
-              "id": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Continue"
-                }
-              }
-            }
-          }
+      }
+    }
   },
   "version" : "1.0"
 }
