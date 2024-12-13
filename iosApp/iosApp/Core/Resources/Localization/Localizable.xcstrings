@@ -1,7 +1,7 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    " and " : {
+    "*" : {
 
     },
     "account_management" : {
@@ -173,9 +173,6 @@
           }
         }
       }
-    },
-    "By continuing, you agree to our " : {
-
     },
     "cancel" : {
       "extractionState" : "manual",
@@ -483,9 +480,6 @@
         }
       }
     },
-    "Don't have an account?" : {
-
-    },
     "dont_have_account" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -672,9 +666,6 @@
           }
         }
       }
-    },
-    "Error" : {
-
     },
     "estimated_time" : {
       "extractionState" : "manual",
@@ -914,9 +905,6 @@
         }
       }
     },
-    "Forgot Password?" : {
-
-    },
     "forgot_password" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1086,15 +1074,6 @@
           }
         }
       }
-    },
-    "Login" : {
-
-    },
-    "Login Error" : {
-
-    },
-    "Login with Google" : {
-
     },
     "login_terms_and_conditions" : {
       "extractionState" : "manual",
@@ -1299,9 +1278,6 @@
           }
         }
       }
-    },
-    "OK" : {
-
     },
     "old_password" : {
       "extractionState" : "manual",
@@ -1591,9 +1567,6 @@
           }
         }
       }
-    },
-    "Privacy Policy" : {
-
     },
     "privacy_policy" : {
       "extractionState" : "manual",
@@ -1935,9 +1908,6 @@
         }
       }
     },
-    "Sign Up" : {
-
-    },
     "signup" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2090,9 +2060,6 @@
           }
         }
       }
-    },
-    "Terms and Conditions" : {
-
     },
     "terms_and_conditions" : {
       "extractionState" : "manual",
