@@ -2,7 +2,20 @@
   "sourceLanguage" : "en",
   "strings" : {
     "*" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*"
+          }
+        }
+      }
     },
     "account_management" : {
       "extractionState" : "manual",
