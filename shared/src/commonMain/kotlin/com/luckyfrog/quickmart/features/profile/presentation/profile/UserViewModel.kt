@@ -1,7 +1,7 @@
 package com.luckyfrog.quickmart.features.profile.presentation.profile
 
 import com.luckyfrog.quickmart.features.auth.domain.entities.UserEntity
-import com.luckyfrog.quickmart.features.auth.domain.usecases.GetUserUseCase
+import com.luckyfrog.quickmart.features.profile.domain.usecases.GetUserUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

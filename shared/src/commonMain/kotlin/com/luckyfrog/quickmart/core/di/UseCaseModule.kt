@@ -3,7 +3,6 @@ package com.luckyfrog.quickmart.core.di
 import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordChangePasswordUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordSendOTPUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordVerifyOTPUseCase
-import com.luckyfrog.quickmart.features.auth.domain.usecases.GetUserUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.LoginUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.RegisterUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.SendOTPUseCase
@@ -19,6 +18,7 @@ import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductDetail
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.ChangePasswordUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.CheckPasswordUseCase
+import com.luckyfrog.quickmart.features.profile.domain.usecases.GetUserUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.DeleteWishlistItemUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.GetWishlistItemsUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.InsertWishlistItemUseCase
@@ -29,7 +29,6 @@ val useCaseModule = module {
     factory { ForgotPasswordChangePasswordUseCase(repository = get()) }
     factory { ForgotPasswordSendOTPUseCase(repository = get()) }
     factory { ForgotPasswordVerifyOTPUseCase(repository = get()) }
-    factory { GetUserUseCase(repository = get()) }
     factory { LoginUseCase(repository = get()) }
     factory { RegisterUseCase(repository = get()) }
     factory { SendOTPUseCase(repository = get()) }
@@ -40,6 +39,7 @@ val useCaseModule = module {
     factory { GetProductDetailUseCase(repository = get()) }
 
     // PROFILE
+    factory { GetUserUseCase(repository = get()) }
     factory { CheckPasswordUseCase(repository = get()) }
     factory { ChangePasswordUseCase(repository = get()) }
 

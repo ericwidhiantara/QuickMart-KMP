@@ -9,7 +9,6 @@ import com.luckyfrog.quickmart.features.auth.data.models.request.RegisterFormReq
 import com.luckyfrog.quickmart.features.auth.data.models.request.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.AuthResponseDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordVerifyCodeResponseDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDto
 
 class AuthRemoteDataSourceImpl(
     private val api: AuthApi, // Use AuthApi instead of HttpClient
@@ -54,9 +53,5 @@ class AuthRemoteDataSourceImpl(
             newPassword = params.newPassword,
             confirmPassword = params.confirmPassword
         )
-    }
-
-    override suspend fun getUserLogin(): ResponseDto<UserResponseDto> {
-        return api.getUserLogin()
     }
 }

@@ -1,12 +1,16 @@
 package com.luckyfrog.quickmart.features.profile.data.datasources.remote
 
 import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
+import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDto
 import com.luckyfrog.quickmart.features.profile.data.models.request.ChangePasswordFormRequestDto
 import com.luckyfrog.quickmart.features.profile.data.models.request.CheckPasswordFormRequestDto
 
 class ProfileRemoteDataSourceImpl(
     private val api: ProfileApi,
 ) : ProfileRemoteDataSource {
+    override suspend fun getUserLogin(): ResponseDto<UserResponseDto> {
+        return api.getUserLogin()
+    }
 
     override suspend fun checkPassword(params: CheckPasswordFormRequestDto): ResponseDto<Unit> {
         return api.postCheckPassword(

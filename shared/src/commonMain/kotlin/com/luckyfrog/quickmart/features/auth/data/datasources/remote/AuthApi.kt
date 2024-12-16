@@ -3,12 +3,10 @@ package com.luckyfrog.quickmart.features.auth.data.datasources.remote
 import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.AuthResponseDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordVerifyCodeResponseDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
-import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
@@ -49,9 +47,6 @@ interface AuthApi {
         newPassword: String,
         confirmPassword: String
     ): ResponseDto<Unit>
-
-    suspend fun getUserLogin(
-    ): ResponseDto<UserResponseDto>
 
     suspend fun postRefreshToken(
         refreshToken: String
@@ -154,11 +149,6 @@ class AuthApiImpl(private val client: HttpClient) : AuthApi {
                 }
             ))
         }
-        return response.body()
-    }
-
-    override suspend fun getUserLogin(): ResponseDto<UserResponseDto> {
-        val response = client.get("user/me")
         return response.body()
     }
 

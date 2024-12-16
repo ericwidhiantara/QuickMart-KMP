@@ -9,8 +9,6 @@ import com.luckyfrog.quickmart.features.auth.data.models.request.RegisterFormReq
 import com.luckyfrog.quickmart.features.auth.data.models.request.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.AuthResponseDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.ForgotPasswordVerifyCodeResponseDto
-import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDto
-import io.ktor.client.statement.HttpResponse
 
 interface AuthRemoteDataSource {
     suspend fun login(params: LoginFormRequestDto): ResponseDto<AuthResponseDto>
@@ -20,5 +18,4 @@ interface AuthRemoteDataSource {
     suspend fun forgotPasswordSendOTP(params: ForgotPasswordSendOTPFormRequestDto): ResponseDto<Unit>
     suspend fun forgotPasswordVerifyOTP(params: ForgotPasswordVerifyOTPFormRequestDto): ResponseDto<ForgotPasswordVerifyCodeResponseDto>
     suspend fun forgotPasswordChangePassword(params: ForgotPasswordChangePasswordFormRequestDto): ResponseDto<Unit>
-    suspend fun getUserLogin(): ResponseDto<UserResponseDto>
 }

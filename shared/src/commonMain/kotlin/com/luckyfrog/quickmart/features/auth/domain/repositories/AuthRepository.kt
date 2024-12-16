@@ -9,7 +9,6 @@ import com.luckyfrog.quickmart.features.auth.data.models.request.RegisterFormReq
 import com.luckyfrog.quickmart.features.auth.data.models.request.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.entities.AuthEntity
 import com.luckyfrog.quickmart.features.auth.domain.entities.ForgotPasswordVerifyCodeResponseEntity
-import com.luckyfrog.quickmart.features.auth.domain.entities.UserEntity
 import com.luckyfrog.quickmart.utils.ApiResponse
 import kotlinx.coroutines.flow.Flow
 
@@ -27,6 +26,4 @@ interface AuthRepository {
     suspend fun forgotPasswordVerifyOTP(params: ForgotPasswordVerifyOTPFormRequestDto): Flow<ApiResponse<ResponseDto<ForgotPasswordVerifyCodeResponseEntity>>>
 
     suspend fun forgotPasswordChangePassword(params: ForgotPasswordChangePasswordFormRequestDto): Flow<ApiResponse<ResponseDto<Unit>>>
-
-    suspend fun getUserLogin(): Flow<ApiResponse<ResponseDto<UserEntity>>>
 }
