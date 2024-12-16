@@ -3,9 +3,10 @@ package com.luckyfrog.quickmart.features.product.presentation.product_detail
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductDetailUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
+import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 // ProductDetailState.kt
@@ -20,7 +21,7 @@ class ProductDetailViewModel(
     private val _useCase: GetProductDetailUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow<ProductDetailState>(ProductDetailState.Idle)
-    val state: StateFlow<ProductDetailState> = _state
+    val state = _state.asStateFlow().cStateFlow()
 
     fun fetchProductDetail(productId: String) {
         _state.value = ProductDetailState.Loading

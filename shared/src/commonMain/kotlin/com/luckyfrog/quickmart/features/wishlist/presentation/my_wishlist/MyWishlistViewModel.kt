@@ -4,6 +4,7 @@ import com.luckyfrog.quickmart.features.wishlist.data.models.WishlistLocalItemDt
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.DeleteWishlistItemUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.GetWishlistItemsUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.InsertWishlistItemUseCase
+import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +17,7 @@ class MyWishlistViewModel(
 ) : ViewModel() {
 
     private val _wishlistItems = MutableStateFlow<List<WishlistLocalItemDto>>(emptyList())
-    val wishlistItems = _wishlistItems.asStateFlow()
+    val wishlistItems = _wishlistItems.asStateFlow().cStateFlow()
 
     fun addItem(wishlistItem: WishlistLocalItemDto) {
         viewModelScope.launch {

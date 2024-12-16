@@ -5,9 +5,10 @@ import com.luckyfrog.quickmart.core.generic.mapper.toEntity
 import com.luckyfrog.quickmart.features.profile.data.models.request.CheckPasswordFormRequestDto
 import com.luckyfrog.quickmart.features.profile.domain.usecases.CheckPasswordUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
+import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 sealed class CheckPasswordState {
@@ -22,7 +23,7 @@ class CheckPasswordViewModel(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<CheckPasswordState>(CheckPasswordState.Idle)
-    val state: StateFlow<CheckPasswordState> = _state
+    val state = _state.asStateFlow().cStateFlow()
 
     fun checkPassword(params: CheckPasswordFormRequestDto) {
         viewModelScope.launch {

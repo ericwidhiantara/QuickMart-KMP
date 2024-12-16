@@ -5,9 +5,10 @@ import com.luckyfrog.quickmart.core.generic.mapper.toEntity
 import com.luckyfrog.quickmart.features.profile.data.models.request.ChangePasswordFormRequestDto
 import com.luckyfrog.quickmart.features.profile.domain.usecases.ChangePasswordUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
+import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 sealed class ChangePasswordState {
@@ -22,7 +23,7 @@ class ChangePasswordViewModel(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<ChangePasswordState>(ChangePasswordState.Idle)
-    val state: StateFlow<ChangePasswordState> = _state
+    val state = _state.asStateFlow().cStateFlow()
 
     fun changePassword(params: ChangePasswordFormRequestDto) {
         viewModelScope.launch {

@@ -6,9 +6,10 @@ import com.luckyfrog.quickmart.features.auth.data.models.request.VerifyOTPFormRe
 import com.luckyfrog.quickmart.features.auth.domain.usecases.SendOTPUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.VerifyOTPUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
+import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 sealed class EmailVerificationState {
@@ -24,7 +25,7 @@ class EmailVerificationViewModel(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<EmailVerificationState>(EmailVerificationState.Idle)
-    val state: StateFlow<EmailVerificationState> = _state
+    val state = _state.asStateFlow().cStateFlow()
 
     fun sendOTP() {
         viewModelScope.launch {

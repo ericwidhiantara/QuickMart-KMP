@@ -5,9 +5,10 @@ import com.luckyfrog.quickmart.core.generic.mapper.toEntity
 import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordSendOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordSendOTPUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
+import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 sealed class ForgotPasswordEmailConfirmationState {
@@ -23,7 +24,7 @@ class ForgotPasswordEmailConfirmationViewModel(
 
     private val _state =
         MutableStateFlow<ForgotPasswordEmailConfirmationState>(ForgotPasswordEmailConfirmationState.Idle)
-    val state: StateFlow<ForgotPasswordEmailConfirmationState> = _state
+    val state = _state.asStateFlow().cStateFlow()
 
     fun sendOTP(params: ForgotPasswordSendOTPFormRequestDto) {
         viewModelScope.launch {

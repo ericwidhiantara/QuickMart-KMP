@@ -7,6 +7,7 @@ import com.luckyfrog.quickmart.features.cart.domain.usecases.local.GetCartItemsU
 import com.luckyfrog.quickmart.features.cart.domain.usecases.local.GetSelectedCartItemsUseCase
 import com.luckyfrog.quickmart.features.cart.domain.usecases.local.InsertCartItemUseCase
 import com.luckyfrog.quickmart.features.cart.domain.usecases.local.UpdateCartItemUseCase
+import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,13 +25,13 @@ class MyCartViewModel(
 ) : ViewModel() {
 
     private val _cartItems = MutableStateFlow<List<CartLocalItemDto>>(emptyList())
-    val cartItems = _cartItems.asStateFlow()
+    val cartItems = _cartItems.asStateFlow().cStateFlow()
 
     private val _selectedItems = MutableStateFlow<List<CartLocalItemDto>>(emptyList())
-    val selectedItems = _selectedItems.asStateFlow()
+    val selectedItems = _selectedItems.asStateFlow().cStateFlow()
 
     private val _subtotal = MutableStateFlow(0.0)
-    val subtotal = _subtotal.asStateFlow()
+    val subtotal = _subtotal.asStateFlow().cStateFlow()
 
     fun addItem(cartItem: CartLocalItemDto) {
         viewModelScope.launch {

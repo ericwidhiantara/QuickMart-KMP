@@ -4,9 +4,10 @@ import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordV
 import com.luckyfrog.quickmart.features.auth.domain.entities.ForgotPasswordVerifyCodeResponseEntity
 import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordVerifyOTPUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
+import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 sealed class ForgotPasswordVerifyCodeState {
@@ -24,7 +25,7 @@ class ForgotPasswordVerifyCodeViewModel(
 
     private val _state =
         MutableStateFlow<ForgotPasswordVerifyCodeState>(ForgotPasswordVerifyCodeState.Idle)
-    val state: StateFlow<ForgotPasswordVerifyCodeState> = _state
+    val state = _state.asStateFlow().cStateFlow()
 
     fun verifyOTP(params: ForgotPasswordVerifyOTPFormRequestDto) {
         viewModelScope.launch {

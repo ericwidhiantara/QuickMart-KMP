@@ -4,9 +4,10 @@ import com.luckyfrog.quickmart.features.auth.data.models.request.RegisterFormReq
 import com.luckyfrog.quickmart.features.auth.domain.entities.AuthEntity
 import com.luckyfrog.quickmart.features.auth.domain.usecases.RegisterUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
+import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 sealed class RegisterState {
@@ -21,7 +22,7 @@ class RegisterViewModel(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<RegisterState>(RegisterState.Idle)
-    val state: StateFlow<RegisterState> = _state
+    val state = _state.asStateFlow().cStateFlow()
 
     fun register(params: RegisterFormRequestDto) {
         viewModelScope.launch {

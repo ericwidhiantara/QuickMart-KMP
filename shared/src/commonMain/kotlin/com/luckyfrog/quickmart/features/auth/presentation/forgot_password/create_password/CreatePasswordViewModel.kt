@@ -5,9 +5,10 @@ import com.luckyfrog.quickmart.core.generic.mapper.toEntity
 import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordChangePasswordFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordChangePasswordUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
+import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 sealed class CreatePasswordState {
@@ -22,7 +23,7 @@ class CreatePasswordViewModel(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<CreatePasswordState>(CreatePasswordState.Idle)
-    val state: StateFlow<CreatePasswordState> = _state
+    val state = _state.asStateFlow().cStateFlow()
 
     fun changePassword(params: ForgotPasswordChangePasswordFormRequestDto) {
         viewModelScope.launch {

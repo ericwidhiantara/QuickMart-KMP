@@ -4,9 +4,10 @@ import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductFormParamsEntity
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
+import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 
@@ -26,7 +27,7 @@ class ProductListViewModel(
     private val _usecase: GetProductsUseCase
 ) : ViewModel() {
     private val _state = MutableStateFlow<ProductState>(ProductState.Idle)
-    val state: StateFlow<ProductState> = _state
+    val state = _state.asStateFlow().cStateFlow()
 
     private var currentPage = 1
     private val productList = mutableListOf<ProductEntity>()
