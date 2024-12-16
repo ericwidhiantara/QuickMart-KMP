@@ -24,7 +24,7 @@ import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.widgets.ConfirmationDialog
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
 import com.luckyfrog.quickmart.core.widgets.EmptyState
-import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
+import com.luckyfrog.quickmart.features.general.presentation.NavBarViewModel
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserState
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import com.luckyfrog.quickmart.features.wishlist.presentation.my_wishlist.component.WishlistItemCard

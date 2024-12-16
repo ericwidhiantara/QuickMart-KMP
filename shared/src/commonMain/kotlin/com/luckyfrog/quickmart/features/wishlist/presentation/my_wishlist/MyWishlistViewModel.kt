@@ -1,11 +1,10 @@
 package com.luckyfrog.quickmart.features.wishlist.presentation.my_wishlist
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.luckyfrog.quickmart.features.wishlist.data.models.WishlistLocalItemDto
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.DeleteWishlistItemUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.GetWishlistItemsUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.InsertWishlistItemUseCase
+import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch

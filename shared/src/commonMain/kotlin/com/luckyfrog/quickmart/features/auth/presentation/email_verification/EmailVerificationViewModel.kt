@@ -1,13 +1,12 @@
 package com.luckyfrog.quickmart.features.auth.presentation.email_verification
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.luckyfrog.quickmart.core.generic.entities.MetaEntity
 import com.luckyfrog.quickmart.core.generic.mapper.toEntity
 import com.luckyfrog.quickmart.features.auth.data.models.request.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.usecases.SendOTPUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.VerifyOTPUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
+import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

@@ -1,8 +1,5 @@
 package com.luckyfrog.quickmart.features.cart.presentation.my_cart
 
-import android.util.Log
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.luckyfrog.quickmart.features.cart.data.model.CartLocalItemDto
 import com.luckyfrog.quickmart.features.cart.domain.usecases.local.CalculateSubtotalUseCase
 import com.luckyfrog.quickmart.features.cart.domain.usecases.local.DeleteCartItemUseCase
@@ -10,6 +7,7 @@ import com.luckyfrog.quickmart.features.cart.domain.usecases.local.GetCartItemsU
 import com.luckyfrog.quickmart.features.cart.domain.usecases.local.GetSelectedCartItemsUseCase
 import com.luckyfrog.quickmart.features.cart.domain.usecases.local.InsertCartItemUseCase
 import com.luckyfrog.quickmart.features.cart.domain.usecases.local.UpdateCartItemUseCase
+import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.toList
@@ -73,7 +71,6 @@ class MyCartViewModel(
 
     fun fetchCartItems(userId: String) {
         viewModelScope.launch {
-            Log.i("CartViewModel", "Fetching cart items for user ID: $userId")
             getCartItemsUseCase(userId).collect { items ->
                 _cartItems.value = items
             }

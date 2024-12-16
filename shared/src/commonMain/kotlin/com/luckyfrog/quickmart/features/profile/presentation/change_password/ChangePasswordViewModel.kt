@@ -1,12 +1,11 @@
 package com.luckyfrog.quickmart.features.profile.presentation.change_password
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.luckyfrog.quickmart.core.generic.entities.MetaEntity
 import com.luckyfrog.quickmart.core.generic.mapper.toEntity
 import com.luckyfrog.quickmart.features.profile.data.models.request.ChangePasswordFormRequestDto
 import com.luckyfrog.quickmart.features.profile.domain.usecases.ChangePasswordUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
+import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

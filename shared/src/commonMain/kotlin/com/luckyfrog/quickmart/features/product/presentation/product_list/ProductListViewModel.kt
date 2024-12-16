@@ -1,49 +1,49 @@
-package com.luckyfrog.quickmart.features.category.presentation.categories
+package com.luckyfrog.quickmart.features.product.presentation.product_list
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.luckyfrog.quickmart.features.category.domain.entities.CategoryEntity
-import com.luckyfrog.quickmart.features.category.domain.entities.CategoryFormParamsEntity
-import com.luckyfrog.quickmart.features.category.domain.usecases.GetCategoriesUseCase
+import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
+import com.luckyfrog.quickmart.features.product.domain.entities.ProductFormParamsEntity
+import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
+import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 
-sealed class CategoryState {
-    data object Idle : CategoryState()
+sealed class ProductState {
+    data object Idle : ProductState()
     data class Success(
-        val data: List<CategoryEntity>,
+        val data: List<ProductEntity>,
         val isLastPage: Boolean,
-        val isLoadingMore: Boolean = false
-    ) : CategoryState()
+        val isLoadingMore: Boolean = false  // New field to track pagination loading
+    ) : ProductState()
 
-    data object LoadingFirstPage : CategoryState()
-    data class Error(val message: String) : CategoryState()
+    data object LoadingFirstPage : ProductState()
+    data class Error(val message: String) : ProductState()
 }
 
-class CategoryListViewModel(
-    private val _usecase: GetCategoriesUseCase
+class ProductListViewModel(
+    private val _usecase: GetProductsUseCase
 ) : ViewModel() {
-    private val _state = MutableStateFlow<CategoryState>(CategoryState.Idle)
-    val state: StateFlow<CategoryState> = _state
+    private val _state = MutableStateFlow<ProductState>(ProductState.Idle)
+    val state: StateFlow<ProductState> = _state
 
     private var currentPage = 1
-    private val productList = mutableListOf<CategoryEntity>()
+    private val productList = mutableListOf<ProductEntity>()
     private var isLastPage = false
     private var isLoadingMore = false  // Track if we're loading more items
     private var itemKeys = mutableMapOf<Int, Long>()  // Store index to timestamp mapping
 
-    fun fetchCategories(params: CategoryFormParamsEntity, isFirstLoad: Boolean = false) {
+    fun fetchProducts(params: ProductFormParamsEntity, isFirstLoad: Boolean = false) {
         if (isFirstLoad) {
             currentPage = 1
             productList.clear()
-            _state.value = CategoryState.LoadingFirstPage
+            _state.value = ProductState.LoadingFirstPage
         } else {
             if (isLastPage || isLoadingMore) return
             isLoadingMore = true
             // Update current success state to show loading more
-            (_state.value as? CategoryState.Success)?.let { currentState ->
+            (_state.value as? ProductState.Success)?.let { currentState ->
                 _state.value = currentState.copy(isLoadingMore = true)
             }
         }
@@ -59,7 +59,7 @@ class CategoryListViewModel(
                         isLastPage = newData.isEmpty() ||
                                 (response.data.data?.data?.size ?: 0) < params.limit
 
-                        _state.value = CategoryState.Success(
+                        _state.value = ProductState.Success(
                             data = productList.toList(),
                             isLastPage = isLastPage,
                             isLoadingMore = false
@@ -73,10 +73,10 @@ class CategoryListViewModel(
 
                     is ApiResponse.Failure -> {
                         if (isFirstLoad) {
-                            _state.value = CategoryState.Error(response.errorMessage)
+                            _state.value = ProductState.Error(response.errorMessage)
                         } else {
                             // If pagination fails, revert to previous success state without loading
-                            (_state.value as? CategoryState.Success)?.let { currentState ->
+                            (_state.value as? ProductState.Success)?.let { currentState ->
                                 _state.value = currentState.copy(isLoadingMore = false)
                             }
                         }
@@ -91,7 +91,7 @@ class CategoryListViewModel(
 
     fun getKeyForIndex(index: Int): Long {
         return itemKeys[index] ?: run {
-            val newKey = System.currentTimeMillis() + index
+            val newKey = Clock.System.now().toEpochMilliseconds() + index
             itemKeys[index] = newKey
             newKey
         }

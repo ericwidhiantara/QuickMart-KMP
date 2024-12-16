@@ -34,7 +34,7 @@ import com.luckyfrog.quickmart.core.widgets.EmptyState
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.CartItemCard
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.CartSummaryBar
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.component.VoucherCodeBottomSheet
-import com.luckyfrog.quickmart.features.general.presentation.main.NavBarViewModel
+import com.luckyfrog.quickmart.features.general.presentation.NavBarViewModel
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserState
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import kotlinx.coroutines.launch

@@ -2,6 +2,7 @@ package com.luckyfrog.quickmart.core.di
 
 import android.content.Context
 import androidx.preference.PreferenceManager
+import com.luckyfrog.quickmart.core.app.MainViewModel
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.SharedPreferencesSettings
 import org.koin.core.module.Module
@@ -11,6 +12,11 @@ actual fun platformAppModule(): Module = module {
     single { provideSettings(get<Context>()) }
     single { CartDatabaseDriverFactory(get()) }
     single { WishlistDatabaseDriverFactory(get()) }
+    factory {
+        MainViewModel(
+            application = get()
+        )
+    }
 
 }
 

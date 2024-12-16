@@ -22,6 +22,7 @@ import com.luckyfrog.quickmart.R
 import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.MyCartScreen
 import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListScreen
+import com.luckyfrog.quickmart.features.general.presentation.NavBarViewModel
 import com.luckyfrog.quickmart.features.home.presentation.dashboard.HomeScreen
 import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScreen
 import com.luckyfrog.quickmart.features.wishlist.presentation.my_wishlist.MyWishlistScreen
