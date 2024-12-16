@@ -36,8 +36,9 @@ struct CustomTextField: View {
     var isDisabled: Bool = false
     var isReadOnly: Bool = false
 
-    // State for password visibility
+    // State for password visibility and focus
     @State private var isSecureTextEntry: Bool = true
+    @FocusState private var isFocused: Bool
 
     // Validation State
     private var isInputValid: Bool {
@@ -73,6 +74,9 @@ struct CustomTextField: View {
                             .textInputAutocapitalization(textInputAutocapitalization)
                             .frame(height: 48)
                             .padding(.horizontal, 10)
+                            .focused($isFocused)
+                            .keyboardType(.default)
+                            .autocorrectionDisabled()
 
                     case .password:
                         Group {
@@ -82,6 +86,8 @@ struct CustomTextField: View {
                                     .textInputAutocapitalization(textInputAutocapitalization)
                                     .frame(height: 48)
                                     .padding(.leading, 10)
+                                    .focused($isFocused)
+                                    .autocorrectionDisabled()
 
                             } else {
                                 TextField(placeholder, text: $value)
@@ -89,13 +95,15 @@ struct CustomTextField: View {
                                     .textInputAutocapitalization(textInputAutocapitalization)
                                     .frame(height: 48)
                                     .padding(.horizontal, 10)
-
+                                    .focused($isFocused)
+                                    .keyboardType(.default)
+                                    .autocorrectionDisabled()
                             }
                         }
                     }
                 }
                 .font(.system(size: placeholderFontSize))
-                .disabled(isDisabled)
+                .disabled(isDisabled || isReadOnly)
                 .onChange(of: value) { newValue in
                     onValueChange?(newValue)
                 }
@@ -126,6 +134,11 @@ struct CustomTextField: View {
                 .foregroundColor(.red)
                 .font(.system(size: 12))
             }
+        }
+        // Performance and interaction improvements
+        .animation(.default, value: isFocused)
+        .transaction { transaction in
+            transaction.animation = nil
         }
     }
 }

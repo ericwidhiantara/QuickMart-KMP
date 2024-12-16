@@ -21,53 +21,51 @@ struct LoginView: View {
     @State private var isPasswordVisible: Bool = false
     @State private var shouldValidate: Bool = false
     @State private var showErrorDialog: Bool = false
+    @State private var showLoadingDialog: Bool = false
+    @State private var showSnackbar: Bool = false
+    @State private var snackbarMessage: String = ""
 
     @Environment(\.colorScheme) var colorScheme
 
-    private func performLogin() {
-        shouldValidate = true
-
-        guard !username.isEmpty, !password.isEmpty else {
-            showErrorDialog = true
-            return
+    private func handleLoginState(_ state: LoginState) {
+        switch state {
+        case is LoginState.Success:
+            showSnackbar = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                rootView = .main
+            }
+            break
+        case let errorState as LoginState.Error:
+            showSnackbar = true
+            snackbarMessage = errorState.message
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                showSnackbar = false
+            }
+            break
+        default:
+            showSnackbar = false
+            break
         }
-
-        let loginRequest = LoginFormRequestDto(
-            username: username,
-            password: password
-        )
-
-        viewModel.login(params: loginRequest)
     }
 
-   
-
     var body: some View {
+
         let appUiState = viewModel.loginState
+
         VStack {
-            switch uiState {
-            case is LoginState.Loading:
-                ProgressView()
-            case let successState as LoginState.Success:
-                Text(successState.data.accessToken ?? "")
-            case let errorState as LoginState.Error:
-                Text(errorState.message)
-            default:
-                VStack {}
-            }
             ScrollView {
                 VStack(
                     alignment: .leading,
                     spacing: 16
                 ) {
-
+                    
                     // Title and Signup Link
                     Text("login")
                         .font(.title)
                         .fontWeight(.bold)
                     HStack {
                         Text("dont_have_account").font(.system(size: 14))
-
+                        
                         Button(action: {
                             // Implement Skip action
                         }) {
@@ -76,11 +74,11 @@ struct LoginView: View {
                                     "signup",
                                     comment: "Signup")
                             ).font(.system(size: 14))
-                            .foregroundColor(.colorCyan)
+                                .foregroundColor(.colorCyan)
                         }
                     }
                     Spacer().frame(height: 32)
-
+                    
                     // Username TextField
                     CustomTextField(
                         type: .text,
@@ -91,7 +89,7 @@ struct LoginView: View {
                         shouldValidate: shouldValidate,
                         placeholder: NSLocalizedString(
                             "username_placeholder", comment: ""),
-                        textInputAutocapitalization: .none
+                        textInputAutocapitalization: .never
                     )
                     // Password TextField
                     CustomTextField(
@@ -103,7 +101,7 @@ struct LoginView: View {
                         shouldValidate: shouldValidate,
                         placeholder: NSLocalizedString(
                             "password_placeholder", comment: ""),
-                        textInputAutocapitalization: .none
+                        textInputAutocapitalization: .never
                     )
                     Spacer().frame(height: 12)
                     HStack {
@@ -120,7 +118,7 @@ struct LoginView: View {
                         }
                     }
                     Spacer().frame(height: 16)
-
+                    
                     CustomOutlinedButton(
                         buttonText: NSLocalizedString(
                             "login",
@@ -128,12 +126,12 @@ struct LoginView: View {
                         buttonTextColor: .white,
                         buttonContainerColor: .colorCyan,
                         onClick: {
-                            guard !username.isEmpty, !password.isEmpty
-                            else {
-                                shouldValidate = true
-                                return
-                            }
-
+                            //                            guard !username.isEmpty, !password.isEmpty
+                            //                            else {
+                            //                                shouldValidate = true
+                            //                                return
+                            //                            }
+                            
                             let loginRequest = LoginFormRequestDto(
                                 username: username,
                                 password: password
@@ -165,17 +163,16 @@ struct LoginView: View {
                                     lineWidth: 1)
                         )
                     }
-
                     Spacer()
                     LoginTermsAndPrivacyText()
                         .onOpenURL { url in
                             switch url.absoluteString {
                             case "privacy":
                                 print("Privacy Policy Tapped")
-                            // Handle privacy policy navigation
+                                // Handle privacy policy navigation
                             case "terms":
                                 print("Terms and Conditions Tapped")
-                            // Handle terms and conditions navigation
+                                // Handle terms and conditions navigation
                             default:
                                 break
                             }
@@ -184,18 +181,24 @@ struct LoginView: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 20)
             }
+            .onChange(of: uiState) { state in
+                handleLoginState(state)
+            }
             .task {
                 appUiState.subscribe { state in
                     self.uiState = state!
                 }
             }
-            .alert(isPresented: $showErrorDialog) {
-                Alert(
-                    title: Text("field_required"),
-                    message: Text("field_required"),
-                    dismissButton: .default(Text("save"))
-                )
-            }
+
+            .modifier(
+                CustomActivityIndicatorModifier(
+                    isLoading: uiState is LoginState.Loading)
+            ).snackbar(
+                show: $showSnackbar, bgColor: .red, txtColor: .white,
+                icon: "xmark", iconColor: .white,
+                message: snackbarMessage
+            )
+            
         }.toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Image(colorScheme == .dark ? "LogoLight" : "LogoDark")
@@ -205,8 +208,10 @@ struct LoginView: View {
 
             }
         }
+
     }
 }
+
 struct LoginTermsAndPrivacyText: View {
     private let loginTerms = "login_terms_and_conditions"
     private let termsAndConditions = "terms_and_conditions"

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var rootView: AppScreen = .login
+    @State private var rootView: AppScreen = .splash
 
     var body: some View {
         NavigationView {
@@ -20,6 +20,8 @@ struct ContentView: View {
                 OnboardingView(rootView: $rootView)
             case .login:
                 LoginView(rootView: $rootView)
+            case .main:
+                Text("app_name")
             }
         }.navigationViewStyle(StackNavigationViewStyle()).appTheme(.default)  // or .light, .dark
     }

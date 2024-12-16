@@ -7,7 +7,7 @@ class ThemeManager {
 
     // AppStorage properties for persistent user preferences
     @AppStorage("appTheme") private var storedTheme: String = "default"
-    @AppStorage("isFirstTime") private var isFirstTime: Bool = true
+    @AppStorage("isFirstTime") private var isFirstTime: String = ""
     @AppStorage("userToken") private var token: String = ""
 
     // Property to manage the current theme
@@ -55,12 +55,18 @@ class ThemeManager {
 
     // Determine the initial route based on user preferences
     func determineInitialRoute() -> AppScreen {
-        if isFirstTime {
+        switch(isFirstTime){
+        case "":
             return .onboarding
-        } else if token.isEmpty {
-            return .onboarding
-        } else {
+        case "1":
+            if token.isEmpty {
+                return .login
+            } else {
+                return .main
+            }
+        default:
             return .onboarding
         }
+    
     }
 }
