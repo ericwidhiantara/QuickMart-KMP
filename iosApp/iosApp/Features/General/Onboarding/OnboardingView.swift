@@ -64,7 +64,7 @@ struct OnboardingView: View {
 
                                     if currentIndex < titles.count - 1 {
                                         Button(action: {
-                                            // Implement Skip action
+                                            rootView = .register
                                         }) {
                                             Text(
                                                 NSLocalizedString(
@@ -128,7 +128,7 @@ struct OnboardingView: View {
                             buttonContainerColor: colorScheme == .dark
                                 ? theme.primary : theme.onPrimaryContainer,
                             onClick: {
-
+                                rootView = .register
                             },
                             isWithIcon: true,
                             buttonIcon: Image("ArrowForward")

@@ -58,28 +58,26 @@ struct LoginView: View {
                     alignment: .leading,
                     spacing: 16
                 ) {
-                    
+
                     // Title and Signup Link
                     Text("login")
                         .font(.title)
                         .fontWeight(.bold)
                     HStack {
                         Text("dont_have_account").font(.system(size: 14))
-                        
+
                         Button(action: {
-                            // Implement Skip action
+                            rootView = .register
                         }) {
                             Text(
-                                NSLocalizedString(
-                                    "signup",
-                                    comment: "Signup")
+                                "signup"
                             ).font(.system(size: 14))
                                 .foregroundColor(.colorCyan)
                         }
                     }
                     Spacer().frame(height: 32)
-                    
-                    // Username TextField
+
+                   
                     CustomTextField(
                         type: .text,
                         titleLabel: NSLocalizedString(
@@ -91,7 +89,7 @@ struct LoginView: View {
                             "username_placeholder", comment: ""),
                         textInputAutocapitalization: .never
                     )
-                    // Password TextField
+                  
                     CustomTextField(
                         type: .password,
                         titleLabel: NSLocalizedString(
@@ -118,7 +116,7 @@ struct LoginView: View {
                         }
                     }
                     Spacer().frame(height: 16)
-                    
+
                     CustomOutlinedButton(
                         buttonText: NSLocalizedString(
                             "login",
@@ -126,12 +124,12 @@ struct LoginView: View {
                         buttonTextColor: .white,
                         buttonContainerColor: .colorCyan,
                         onClick: {
-                            //                            guard !username.isEmpty, !password.isEmpty
-                            //                            else {
-                            //                                shouldValidate = true
-                            //                                return
-                            //                            }
-                            
+                            guard !username.isEmpty, !password.isEmpty
+                            else {
+                                shouldValidate = true
+                                return
+                            }
+
                             let loginRequest = LoginFormRequestDto(
                                 username: username,
                                 password: password
@@ -169,10 +167,10 @@ struct LoginView: View {
                             switch url.absoluteString {
                             case "privacy":
                                 print("Privacy Policy Tapped")
-                                // Handle privacy policy navigation
+                            // Handle privacy policy navigation
                             case "terms":
                                 print("Terms and Conditions Tapped")
-                                // Handle terms and conditions navigation
+                            // Handle terms and conditions navigation
                             default:
                                 break
                             }
@@ -198,7 +196,7 @@ struct LoginView: View {
                 icon: "xmark", iconColor: .white,
                 message: snackbarMessage
             )
-            
+
         }.toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Image(colorScheme == .dark ? "LogoLight" : "LogoDark")

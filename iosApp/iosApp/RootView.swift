@@ -20,6 +20,8 @@ struct ContentView: View {
                 OnboardingView(rootView: $rootView)
             case .login:
                 LoginView(rootView: $rootView)
+            case .register:
+                RegisterView(rootView: $rootView)
             case .main:
                 Text("app_name")
             }
