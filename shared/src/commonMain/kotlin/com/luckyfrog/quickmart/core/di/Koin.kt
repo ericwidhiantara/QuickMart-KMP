@@ -17,7 +17,6 @@ private val sharedModules = listOf(
     dispatcherModule,
     useCaseModule,
     viewModelModule,
-//    platformViewModelModule(),
     sqlDelightModule,
 )
 
