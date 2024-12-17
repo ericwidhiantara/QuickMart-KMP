@@ -29,8 +29,11 @@ struct LoginView: View {
 
     private func handleLoginState(_ state: LoginState) {
         switch state {
-        case is LoginState.Success:
+        case let success as LoginState.Success:
             showSnackbar = false
+            _ = AppPreferences.shared.setToken(success.data.accessToken ?? "")
+            _ = AppPreferences.shared.setRefreshToken(
+                success.data.refreshToken ?? "")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 rootView = .main
             }
@@ -77,7 +80,6 @@ struct LoginView: View {
                     }
                     Spacer().frame(height: 32)
 
-                   
                     CustomTextField(
                         type: .text,
                         titleLabel: NSLocalizedString(
@@ -89,7 +91,7 @@ struct LoginView: View {
                             "username_placeholder", comment: ""),
                         textInputAutocapitalization: .never
                     )
-                  
+
                     CustomTextField(
                         type: .password,
                         titleLabel: NSLocalizedString(
@@ -141,7 +143,8 @@ struct LoginView: View {
                         }
                     )
                     .disabled(
-                        uiState is LoginState.Loading)
+                        uiState is LoginState.Loading
+                            || uiState is LoginState.Success)
                     Button(action: {}) {
                         HStack {
                             Image("LogoGoogle")

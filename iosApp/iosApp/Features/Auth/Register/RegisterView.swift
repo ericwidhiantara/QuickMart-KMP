@@ -33,8 +33,11 @@ struct RegisterView: View {
 
     private func handleRegisterState(_ state: RegisterState) {
         switch state {
-        case is RegisterState.Success:
+        case let success as RegisterState.Success:
             showSnackbar = false
+            _ = AppPreferences.shared.setToken(success.data.accessToken ?? "")
+            _ = AppPreferences.shared.setRefreshToken(
+                success.data.refreshToken ?? "")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 rootView = .main
             }
@@ -132,30 +135,38 @@ struct RegisterView: View {
                         value: $password,
                         validator: { password in
                             // Minimum 8 characters, at least one uppercase, one lowercase, and one number
-                            let passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,}$"
-                            let predicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
+                            let passwordRegex =
+                                "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,}$"
+                            let predicate = NSPredicate(
+                                format: "SELF MATCHES %@", passwordRegex)
                             return predicate.evaluate(with: password)
                         },
                         shouldValidate: shouldValidate,
-                        errorMessage: String(format: NSLocalizedString(
-                            "field_password",
-                            comment: "This field must be at least %1$d characters, including at least one uppercase letter, one lowercase letter, and one number"
-                        ), 8),
-                        placeholder: NSLocalizedString("password_placeholder", comment: ""),
+                        errorMessage: String(
+                            format: NSLocalizedString(
+                                "field_password",
+                                comment:
+                                    "This field must be at least %1$d characters, including at least one uppercase letter, one lowercase letter, and one number"
+                            ), 8),
+                        placeholder: NSLocalizedString(
+                            "password_placeholder", comment: ""),
                         textInputAutocapitalization: .never
                     )
 
                     CustomTextField(
                         type: .password,
-                        titleLabel: NSLocalizedString("confirm_password", comment: ""),
+                        titleLabel: NSLocalizedString(
+                            "confirm_password", comment: ""),
                         value: $passwordConfirm,
                         validator: { $0 == password && $0.count >= 8 },
                         shouldValidate: shouldValidate,
-                        errorMessage: NSLocalizedString("field_confirm_password", comment: "Passwords do not match"),
-                        placeholder: NSLocalizedString("confirm_password_placeholder", comment: ""),
+                        errorMessage: NSLocalizedString(
+                            "field_confirm_password",
+                            comment: "Passwords do not match"),
+                        placeholder: NSLocalizedString(
+                            "confirm_password_placeholder", comment: ""),
                         textInputAutocapitalization: .never
                     )
-
 
                     Spacer().frame(height: 16)
 
@@ -167,29 +178,30 @@ struct RegisterView: View {
                         buttonTextColor: .white,
                         buttonContainerColor: .colorCyan,
                         onClick: {
-                           
-                            let emailRegex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
-                            let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
 
-                           
-                            let passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,}$"
-                            let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
+                            let emailRegex =
+                                "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+                            let emailPredicate = NSPredicate(
+                                format: "SELF MATCHES %@", emailRegex)
 
-                            
+                            let passwordRegex =
+                                "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,}$"
+                            let passwordPredicate = NSPredicate(
+                                format: "SELF MATCHES %@", passwordRegex)
+
                             guard !fullname.isEmpty,
-                                  !username.isEmpty,
-                                  !email.isEmpty,
-                                  emailPredicate.evaluate(with: email),
-                                  !password.isEmpty,
-                                  passwordPredicate.evaluate(with: password),
-                                  !passwordConfirm.isEmpty,
-                                  password == passwordConfirm
+                                !username.isEmpty,
+                                !email.isEmpty,
+                                emailPredicate.evaluate(with: email),
+                                !password.isEmpty,
+                                passwordPredicate.evaluate(with: password),
+                                !passwordConfirm.isEmpty,
+                                password == passwordConfirm
                             else {
                                 shouldValidate = true
                                 return
                             }
 
-                            
                             let registerRequest = RegisterFormRequestDto(
                                 fullname: fullname,
                                 username: username,
@@ -198,7 +210,6 @@ struct RegisterView: View {
                                 confirmPassword: passwordConfirm
                             )
 
-                           
                             appUiState.subscribe { state in
                                 self.uiState = state!
                             }

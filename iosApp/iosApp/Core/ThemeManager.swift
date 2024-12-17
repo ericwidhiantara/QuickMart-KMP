@@ -6,25 +6,16 @@ class ThemeManager {
     static let shared = ThemeManager()
 
     // AppStorage properties for persistent user preferences
-    @AppStorage("appTheme") private var storedTheme: String = "default"
-    @AppStorage("isFirstTime") private var isFirstTime: String = ""
-    @AppStorage("userToken") private var token: String = ""
+    private var storedTheme: AppTheme = AppPreferences.shared.getTheme()
+    private var isFirstTime: String = AppPreferences.shared.getFirstTime()
+    private var token: String = AppPreferences.shared.getToken()
 
     // Property to manage the current theme
     var currentTheme: AppTheme {
-        get {
-            switch storedTheme {
-            case "light": return .light
-            case "dark": return .dark
-            default: return .default
-            }
-        }
-        set {
-            switch newValue {
-            case .light: storedTheme = "light"
-            case .dark: storedTheme = "dark"
-            case .default: storedTheme = "default"
-            }
+        switch storedTheme {
+        case AppTheme.light: return .light
+        case AppTheme.dark: return .dark
+        default: return .default
         }
     }
 
@@ -55,7 +46,7 @@ class ThemeManager {
 
     // Determine the initial route based on user preferences
     func determineInitialRoute() -> AppScreen {
-        switch(isFirstTime){
+        switch isFirstTime {
         case "":
             return .onboarding
         case "1":
@@ -67,6 +58,6 @@ class ThemeManager {
         default:
             return .onboarding
         }
-    
+
     }
 }

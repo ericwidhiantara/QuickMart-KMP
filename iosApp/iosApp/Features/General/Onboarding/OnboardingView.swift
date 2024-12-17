@@ -65,6 +65,7 @@ struct OnboardingView: View {
                                     if currentIndex < titles.count - 1 {
                                         Button(action: {
                                             rootView = .register
+                                            _ = AppPreferences.shared.setFirstTime()
                                         }) {
                                             Text(
                                                 NSLocalizedString(
@@ -116,6 +117,7 @@ struct OnboardingView: View {
                             buttonBorderColor: theme.onPrimaryContainer,
                             onClick: {
                                 rootView = .login
+                                _ = AppPreferences.shared.setFirstTime()
                             },
                             isWithIcon: false
                         )
@@ -129,6 +131,7 @@ struct OnboardingView: View {
                                 ? theme.primary : theme.onPrimaryContainer,
                             onClick: {
                                 rootView = .register
+                                _ = AppPreferences.shared.setFirstTime()
                             },
                             isWithIcon: true,
                             buttonIcon: Image("ArrowForward")
