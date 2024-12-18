@@ -27,12 +27,6 @@ interface AuthApi {
         confirmPassword: String
     ): ResponseDto<AuthResponseDto>
 
-    suspend fun postSendOTP(): ResponseDto<Unit>
-
-    suspend fun postVerifyOTP(
-        otpCode: String
-    ): ResponseDto<Unit>
-
     suspend fun postForgotPasswordSendOTP(
         email: String
     ): ResponseDto<Unit>
@@ -91,22 +85,6 @@ class AuthApiImpl(private val client: HttpClient) : AuthApi {
         }
         return response.body()
 
-    }
-
-    override suspend fun postSendOTP(): ResponseDto<Unit> {
-        val response = client.post("auth/verify-email/send-otp")
-        return response.body()
-    }
-
-    override suspend fun postVerifyOTP(otpCode: String): ResponseDto<Unit> {
-        val response = client.post("auth/verify-email/verify-otp") {
-            setBody(MultiPartFormDataContent(
-                formData {
-                    append("otp_code", otpCode)
-                }
-            ))
-        }
-        return response.body()
     }
 
     override suspend fun postForgotPasswordSendOTP(email: String): ResponseDto<Unit> {

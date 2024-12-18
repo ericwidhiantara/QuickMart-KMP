@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,12 +31,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
-import com.luckyfrog.quickmart.core.app.MainViewModel
+import com.luckyfrog.quickmart.core.app.AppPreferences
 import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
 import com.luckyfrog.quickmart.core.widgets.CustomOTPInput
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
-import com.luckyfrog.quickmart.features.auth.data.models.request.VerifyOTPFormRequestDto
+import com.luckyfrog.quickmart.features.profile.data.models.request.SendOTPFormRequestDto
+import com.luckyfrog.quickmart.features.profile.data.models.request.VerifyOTPFormRequestDto
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 import kotlinx.coroutines.delay
@@ -56,9 +58,15 @@ fun EmailVerificationScreen(
     var remainingTime by remember { mutableLongStateOf(timerDuration / 1000) }
     var timerKey by remember { mutableIntStateOf(0) }  // Unique key to reset the timer
     var otpCode by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
+    val params = SendOTPFormRequestDto(
+        token = AppPreferences.getToken(context)
+    )
     // Timer logic with LaunchedEffect
     LaunchedEffect(key1 = timerKey) {
-        emailVerificationViewModel.sendOTP()
+
+        emailVerificationViewModel.sendOTP(params)
 
         isTimerFinished = false
         remainingTime = timerDuration / 1000 // Reset the timer duration
@@ -161,7 +169,7 @@ fun EmailVerificationScreen(
                 TextButton(
                     onClick = {
                         // Resend OTP logic
-                        emailVerificationViewModel.sendOTP()
+                        emailVerificationViewModel.sendOTP(params)
 
                         timerKey++  // Change the key to restart LaunchedEffect
                     },

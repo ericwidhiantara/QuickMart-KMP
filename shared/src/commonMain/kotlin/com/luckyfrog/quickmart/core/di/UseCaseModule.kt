@@ -5,8 +5,6 @@ import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordSendO
 import com.luckyfrog.quickmart.features.auth.domain.usecases.ForgotPasswordVerifyOTPUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.LoginUseCase
 import com.luckyfrog.quickmart.features.auth.domain.usecases.RegisterUseCase
-import com.luckyfrog.quickmart.features.auth.domain.usecases.SendOTPUseCase
-import com.luckyfrog.quickmart.features.auth.domain.usecases.VerifyOTPUseCase
 import com.luckyfrog.quickmart.features.cart.domain.usecases.local.CalculateSubtotalUseCase
 import com.luckyfrog.quickmart.features.cart.domain.usecases.local.DeleteCartItemUseCase
 import com.luckyfrog.quickmart.features.cart.domain.usecases.local.GetCartItemsUseCase
@@ -19,6 +17,8 @@ import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCa
 import com.luckyfrog.quickmart.features.profile.domain.usecases.ChangePasswordUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.CheckPasswordUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.GetUserUseCase
+import com.luckyfrog.quickmart.features.profile.domain.usecases.SendOTPUseCase
+import com.luckyfrog.quickmart.features.profile.domain.usecases.VerifyOTPUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.DeleteWishlistItemUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.GetWishlistItemsUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.InsertWishlistItemUseCase
@@ -31,8 +31,6 @@ val useCaseModule = module {
     factory { ForgotPasswordVerifyOTPUseCase(repository = get()) }
     factory { LoginUseCase(repository = get()) }
     factory { RegisterUseCase(repository = get()) }
-    factory { SendOTPUseCase(repository = get()) }
-    factory { VerifyOTPUseCase(repository = get()) }
 
     // PRODUCT
     factory { GetProductsUseCase(repository = get()) }
@@ -42,6 +40,8 @@ val useCaseModule = module {
     factory { GetUserUseCase(repository = get()) }
     factory { CheckPasswordUseCase(repository = get()) }
     factory { ChangePasswordUseCase(repository = get()) }
+    factory { SendOTPUseCase(repository = get()) }
+    factory { VerifyOTPUseCase(repository = get()) }
 
     // CATEGORY
     factory { GetCategoriesUseCase(repository = get()) }

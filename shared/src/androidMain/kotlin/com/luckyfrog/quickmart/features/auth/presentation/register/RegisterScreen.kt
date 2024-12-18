@@ -73,7 +73,7 @@ fun RegisterScreen(
     val usernameController =
         remember { mutableStateOf("jhon_doe") }
     val emailController =
-        remember { mutableStateOf("nukenin.konoha@gmail.com") }
+        remember { mutableStateOf("jhon.doe@gmail.com") }
     val passwordController = remember { mutableStateOf("12345678") }
     val passwordConfirmController = remember { mutableStateOf("12345678") }
     var passwordVisibility: Boolean by remember { mutableStateOf(false) }

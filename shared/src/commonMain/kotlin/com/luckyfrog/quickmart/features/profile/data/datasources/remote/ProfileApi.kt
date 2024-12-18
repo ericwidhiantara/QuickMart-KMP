@@ -7,6 +7,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.get
+import io.ktor.client.request.headers
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 
@@ -21,6 +22,14 @@ interface ProfileApi {
     suspend fun postChangePassword(
         newPassword: String,
         confirmPassword: String,
+    ): ResponseDto<Unit>
+
+    suspend fun postSendOTP(
+        token: String
+    ): ResponseDto<Unit>
+
+    suspend fun postVerifyOTP(
+        otpCode: String
     ): ResponseDto<Unit>
 }
 
@@ -59,4 +68,24 @@ class ProfileApiImpl(private val client: HttpClient) : ProfileApi {
         return response.body()
     }
 
+
+    override suspend fun postSendOTP(token: String): ResponseDto<Unit> {
+        val response = client.post("auth/verify-email/send-otp") {
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+        }
+        return response.body()
+    }
+
+    override suspend fun postVerifyOTP(otpCode: String): ResponseDto<Unit> {
+        val response = client.post("auth/verify-email/verify-otp") {
+            setBody(MultiPartFormDataContent(
+                formData {
+                    append("otp_code", otpCode)
+                }
+            ))
+        }
+        return response.body()
+    }
 }

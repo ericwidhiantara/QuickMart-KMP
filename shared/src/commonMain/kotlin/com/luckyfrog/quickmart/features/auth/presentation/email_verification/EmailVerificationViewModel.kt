@@ -2,9 +2,10 @@ package com.luckyfrog.quickmart.features.auth.presentation.email_verification
 
 import com.luckyfrog.quickmart.core.generic.entities.MetaEntity
 import com.luckyfrog.quickmart.core.generic.mapper.toEntity
-import com.luckyfrog.quickmart.features.auth.data.models.request.VerifyOTPFormRequestDto
-import com.luckyfrog.quickmart.features.auth.domain.usecases.SendOTPUseCase
-import com.luckyfrog.quickmart.features.auth.domain.usecases.VerifyOTPUseCase
+import com.luckyfrog.quickmart.features.profile.data.models.request.SendOTPFormRequestDto
+import com.luckyfrog.quickmart.features.profile.data.models.request.VerifyOTPFormRequestDto
+import com.luckyfrog.quickmart.features.profile.domain.usecases.SendOTPUseCase
+import com.luckyfrog.quickmart.features.profile.domain.usecases.VerifyOTPUseCase
 import com.luckyfrog.quickmart.utils.ApiResponse
 import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
@@ -27,9 +28,9 @@ class EmailVerificationViewModel(
     private val _state = MutableStateFlow<EmailVerificationState>(EmailVerificationState.Idle)
     val state = _state.asStateFlow().cStateFlow()
 
-    fun sendOTP() {
+    fun sendOTP(params: SendOTPFormRequestDto) {
         viewModelScope.launch {
-            _usecase.execute(Unit).collect { response ->
+            _usecase.execute(params).collect { response ->
                 when (response) {
                     is ApiResponse.Loading -> {
                         _state.value = EmailVerificationState.Loading

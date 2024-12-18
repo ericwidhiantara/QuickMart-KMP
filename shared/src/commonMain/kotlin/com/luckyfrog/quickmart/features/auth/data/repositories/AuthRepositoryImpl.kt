@@ -9,10 +9,10 @@ import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordS
 import com.luckyfrog.quickmart.features.auth.data.models.request.ForgotPasswordVerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.request.LoginFormRequestDto
 import com.luckyfrog.quickmart.features.auth.data.models.request.RegisterFormRequestDto
-import com.luckyfrog.quickmart.features.auth.data.models.request.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.auth.domain.entities.AuthEntity
 import com.luckyfrog.quickmart.features.auth.domain.entities.ForgotPasswordVerifyCodeResponseEntity
 import com.luckyfrog.quickmart.features.auth.domain.repositories.AuthRepository
+import com.luckyfrog.quickmart.features.profile.data.models.request.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.utils.ApiResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -35,20 +35,7 @@ class AuthRepositoryImpl(
             val response = remoteDataSource.register(params)
             emit(processResponse(response) { it.data?.toEntity() })
         }
-
-    override suspend fun sendOTP(): Flow<ApiResponse<ResponseDto<Unit>>> = flow {
-        emit(ApiResponse.Loading)
-        val response = remoteDataSource.sendOTP()
-        emit(processResponse(response) { it.data })
-    }
-
-    override suspend fun verifyOTP(params: VerifyOTPFormRequestDto): Flow<ApiResponse<ResponseDto<Unit>>> =
-        flow {
-            emit(ApiResponse.Loading)
-            val response = remoteDataSource.verifyOTP(params)
-            emit(processResponse(response) { it.data })
-        }
-
+    
     override suspend fun forgotPasswordSendOTP(params: ForgotPasswordSendOTPFormRequestDto): Flow<ApiResponse<ResponseDto<Unit>>> =
         flow {
             emit(ApiResponse.Loading)
