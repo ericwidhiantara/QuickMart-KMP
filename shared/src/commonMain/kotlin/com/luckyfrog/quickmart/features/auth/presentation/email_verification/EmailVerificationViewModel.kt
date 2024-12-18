@@ -2,7 +2,6 @@ package com.luckyfrog.quickmart.features.auth.presentation.email_verification
 
 import com.luckyfrog.quickmart.core.generic.entities.MetaEntity
 import com.luckyfrog.quickmart.core.generic.mapper.toEntity
-import com.luckyfrog.quickmart.features.profile.data.models.request.SendOTPFormRequestDto
 import com.luckyfrog.quickmart.features.profile.data.models.request.VerifyOTPFormRequestDto
 import com.luckyfrog.quickmart.features.profile.domain.usecases.SendOTPUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.VerifyOTPUseCase
@@ -28,9 +27,9 @@ class EmailVerificationViewModel(
     private val _state = MutableStateFlow<EmailVerificationState>(EmailVerificationState.Idle)
     val state = _state.asStateFlow().cStateFlow()
 
-    fun sendOTP(params: SendOTPFormRequestDto) {
+    fun sendOTP() {
         viewModelScope.launch {
-            _usecase.execute(params).collect { response ->
+            _usecase.execute(Unit).collect { response ->
                 when (response) {
                     is ApiResponse.Loading -> {
                         _state.value = EmailVerificationState.Loading

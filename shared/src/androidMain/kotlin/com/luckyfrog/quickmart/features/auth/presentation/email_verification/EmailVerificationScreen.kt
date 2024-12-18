@@ -23,7 +23,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -31,12 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
-import com.luckyfrog.quickmart.core.app.AppPreferences
 import com.luckyfrog.quickmart.core.widgets.CustomLoadingDialog
 import com.luckyfrog.quickmart.core.widgets.CustomOTPInput
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
-import com.luckyfrog.quickmart.features.profile.data.models.request.SendOTPFormRequestDto
 import com.luckyfrog.quickmart.features.profile.data.models.request.VerifyOTPFormRequestDto
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
@@ -59,14 +56,10 @@ fun EmailVerificationScreen(
     var timerKey by remember { mutableIntStateOf(0) }  // Unique key to reset the timer
     var otpCode by remember { mutableStateOf("") }
 
-    val context = LocalContext.current
-    val params = SendOTPFormRequestDto(
-        token = AppPreferences.getToken(context)
-    )
     // Timer logic with LaunchedEffect
     LaunchedEffect(key1 = timerKey) {
 
-        emailVerificationViewModel.sendOTP(params)
+        emailVerificationViewModel.sendOTP()
 
         isTimerFinished = false
         remainingTime = timerDuration / 1000 // Reset the timer duration
@@ -169,7 +162,7 @@ fun EmailVerificationScreen(
                 TextButton(
                     onClick = {
                         // Resend OTP logic
-                        emailVerificationViewModel.sendOTP(params)
+                        emailVerificationViewModel.sendOTP()
 
                         timerKey++  // Change the key to restart LaunchedEffect
                     },
