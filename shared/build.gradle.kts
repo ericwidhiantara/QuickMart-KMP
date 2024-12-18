@@ -32,6 +32,8 @@ kotlin {
             linkerOpts.add("-lsqlite3")
             export(libs.mvvm.core)
             export(libs.mvvm.flow)
+            export(libs.multiplatform.settings)
+
         }
     }
 
@@ -116,8 +118,6 @@ kotlin {
 
             // Toast
             implementation(libs.composablesweettoast)
-            implementation(libs.multiplatform.settings.android.debug)
-
 
             implementation(libs.androidx.annotation.jvm)
             implementation(libs.androidx.runtime.android)
@@ -130,7 +130,6 @@ kotlin {
             implementation(libs.androidx.navigation.compose)
             implementation(libs.androidx.material.icons.extended)
             implementation(libs.composablesweettoast)
-            implementation(libs.multiplatform.settings.android.debug)
             implementation(libs.androidx.preference.ktx)
 
             implementation(libs.koin.android)
@@ -140,6 +139,9 @@ kotlin {
             api(libs.mvvm.core)
             api(libs.mvvm.flow)
             api(libs.mvvm.flow.compose)
+
+            api(libs.multiplatform.settings)
+
         }
 
         iosMain.dependencies {
@@ -154,6 +156,8 @@ kotlin {
             // Moko
             api(libs.mvvm.core)
             api(libs.mvvm.flow)
+            api(libs.multiplatform.settings)
+
 
         }
     }
