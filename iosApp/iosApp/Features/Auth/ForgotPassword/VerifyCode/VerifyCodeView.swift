@@ -14,17 +14,12 @@ struct VerifyCodeView: View {
     @Binding var email: String
 
     @ObservedObject var viewModel: ForgotPasswordVerifyCodeViewModel =
-        KoinHelper()
-        .getForgotPasswordVerifyCodeViewModel()
-    @ObservedObject var emailViewModel:
-        ForgotPasswordEmailConfirmationViewModel =
-            KoinHelper()
-            .getForgotPasswordEmailConfirmationViewModel()
+        KoinHelper().getForgotPasswordVerifyCodeViewModel()
+    @ObservedObject var emailViewModel: ForgotPasswordEmailConfirmationViewModel =
+        KoinHelper().getForgotPasswordEmailConfirmationViewModel()
 
-    @State private var uiState: ForgotPasswordVerifyCodeState =
-        ForgotPasswordVerifyCodeState.Idle()
-    @State private var emailUiState: ForgotPasswordEmailConfirmationState =
-        ForgotPasswordEmailConfirmationState.Idle()
+    @State private var uiState: ForgotPasswordVerifyCodeState = ForgotPasswordVerifyCodeState.Idle()
+    @State private var emailUiState: ForgotPasswordEmailConfirmationState = ForgotPasswordEmailConfirmationState.Idle()
     @State private var otpCode = ""
     @State private var remainingTime: Int = 60
     @State private var isTimerFinished = false
@@ -39,19 +34,14 @@ struct VerifyCodeView: View {
     @State private var otpId: String = ""
     @State private var isVerifySuccess: Bool? = false
 
-    let timerDuration = 60  // seconds
+    let timerDuration = 60 // seconds
 
-    private func handleVerificationState(
-        _ state: ForgotPasswordVerifyCodeState
-    ) {
+    // MARK: - Helper Methods
+    private func handleVerificationState(_ state: ForgotPasswordVerifyCodeState) {
         switch state {
         case let success as ForgotPasswordVerifyCodeState.Success:
             isVerifySuccess = true
-            
-            // ToDO: pass otpId to creaatePassword screen
-            otpId = success.data.otpId!
-            break
-
+            otpId = success.data.otpId ?? ""
         case let errorState as ForgotPasswordVerifyCodeState.Error:
             showSnackbar = true
             isVerifySuccess = false
@@ -65,17 +55,12 @@ struct VerifyCodeView: View {
         }
     }
 
-    private func handleSendOTPState(
-        _ state: ForgotPasswordEmailConfirmationState
-    ) {
+    private func handleSendOTPState(_ state: ForgotPasswordEmailConfirmationState) {
         switch state {
         case let success as ForgotPasswordEmailConfirmationState.Success:
             showSnackbar = true
             isSuccessSnackbar = true
             snackbarMessage = success.data.message ?? ""
-
-            break
-
         case let errorState as ForgotPasswordEmailConfirmationState.Error:
             showSnackbar = true
             isSuccessSnackbar = false
@@ -112,129 +97,118 @@ struct VerifyCodeView: View {
 
     private func resendOTP(email: String) {
         let params = ForgotPasswordSendOTPFormRequestDto(email: email)
-
         emailViewModel.sendOTP(params: params)
         startTimer()
     }
 
     private func verifyOTP() {
-        let params = ForgotPasswordVerifyOTPFormRequestDto(
-            email: email,
-            otpCode: otpCode
-        )
-
+        let params = ForgotPasswordVerifyOTPFormRequestDto(email: email, otpCode: otpCode)
         viewModel.verifyOTP(params: params)
     }
 
+    private func handleAppear() {
+        if !isSubscribed {
+            isSubscribed = true
+            viewModel.state.subscribe { state in
+                if let state = state { self.uiState = state }
+            }
+            emailViewModel.state.subscribe { state in
+                if let state = state { self.emailUiState = state }
+            }
+        }
+
+        if isFirstLaunch {
+            isFirstLaunch = false
+            startTimer()
+        } else if !isTimerStarted {
+            startTimer()
+        }
+    }
+
+    // MARK: - Subviews
+    private func topSection() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("email_verification")
+                .font(.title)
+                .fontWeight(.bold)
+
+            Text("enter_verification_code")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
+        .padding(.top, 20)
+        .padding(.horizontal)
+    }
+
+    private func otpInputSection() -> some View {
+        CustomOTPInput(otpValue: $otpCode)
+            .padding(.horizontal)
+    }
+
+    private func timerResendSection() -> some View {
+        HStack {
+            if isTimerFinished {
+                Button("resend_code") {
+                    resendOTP(email: email)
+                }
+                .foregroundColor(.colorCyan)
+            } else {
+                Text("resend_code_timer")
+                    .foregroundColor(.gray)
+                Text(formattedTime)
+                    .foregroundColor(.gray)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.horizontal)
+    }
+
+    // MARK: - Body
     var body: some View {
         GeometryReader { geometry in
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    // Top Section with Titles
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("email_verification")
-                            .font(.title)
-                            .fontWeight(.bold)
-
-                        Text("enter_verification_code")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
-                    .padding(.top, 20)
-                    .padding(.horizontal)
-
-                    // OTP Input
-                    CustomOTPInput(otpValue: $otpCode)
-                        .padding(.horizontal)
-
-                    // Timer/Resend Section
-                    HStack {
-                        if isTimerFinished {
-                            Button("resend_code") {
-                                resendOTP(email: email)
-                            }
-                            .foregroundColor(.colorCyan)
-                        } else {
-                            Text("resend_code_timer")
-                                .foregroundColor(.gray)
-                            Text(formattedTime)
-                                .foregroundColor(.gray)
-                        }
-                    }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.horizontal)
+                    topSection()
+                    otpInputSection()
+                    timerResendSection()
 
                     NavigationLink(
-                        destination: VerifyCodeView(rootView: $rootView, email: $email),
+                        destination: CreatePasswordView(rootView: $rootView, otpId: $otpId),
                         tag: true,
                         selection: $isVerifySuccess
                     ) {
                         EmptyView()
                     }
+
                     CustomOutlinedButton(
-                        buttonText: NSLocalizedString(
-                            "proceed",
-                            comment: ""
-                        ),
+                        buttonText: NSLocalizedString("proceed", comment: ""),
                         buttonTextColor: .white,
                         buttonContainerColor: .colorCyan,
-                        onClick: {
-                            verifyOTP()
-                        }
-
+                        onClick: { verifyOTP() }
                     )
-                    .disabled(
-                        uiState is ForgotPasswordVerifyCodeState.Loading
-                    )
+                    .disabled(uiState is ForgotPasswordVerifyCodeState.Loading)
                     .padding(.horizontal)
 
                     Spacer()
                 }
                 .frame(minHeight: geometry.size.height)
-
             }
-
             .scrollDisabled(true)
         }
-        .onAppear {
-            // Ensure state subscription happens only once
-            if !isSubscribed {
-                isSubscribed = true
-                viewModel.state.subscribe { state in
-                    if let state = state {
-                        self.uiState = state
-                    }
-                }
-                emailViewModel.state.subscribe { state in
-                    if let state = state {
-                        self.emailUiState = state
-                    }
-                }
-            }
-
-            // Handle first launch
-            if isFirstLaunch {
-                isFirstLaunch = false
-                startTimer()
-            } else if !isTimerStarted {
-                startTimer()
-            }
-        }
-        .onChange(of: uiState) { state in
-            handleVerificationState(state)
-        }
-        .onChange(of: emailUiState) { state in
-            handleSendOTPState(state)
-        }
+        .onAppear { handleAppear() }
+        .onChange(of: uiState) { handleVerificationState($0) }
+        .onChange(of: emailUiState) { handleSendOTPState($0) }
         .modifier(
             CustomActivityIndicatorModifier(
-                isLoading: uiState
-                    is ForgotPasswordVerifyCodeState.Loading)
+                isLoading: uiState is ForgotPasswordVerifyCodeState.Loading
+            )
         )
         .snackbar(
-            show: $showSnackbar, bgColor: isSuccessSnackbar ? .green : .red,
+            show: $showSnackbar,
+            bgColor: isSuccessSnackbar ? .green : .red,
             txtColor: .white,
-            icon: "xmark", iconColor: .white,
+            icon: "xmark",
+            iconColor: .white,
             message: snackbarMessage
         )
     }

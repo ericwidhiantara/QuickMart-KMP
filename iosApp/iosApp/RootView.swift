@@ -11,6 +11,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var rootView: AppScreen = .login
     @State private var email: String = ""
+    @State private var otpId: String = ""
 
     var body: some View {
         NavigationView {
@@ -29,6 +30,8 @@ struct ContentView: View {
                 EmailConfirmationView(rootView: $rootView)
             case .forgot_password_verify_code:
                 VerifyCodeView(rootView: $rootView, email: $email)
+            case .create_password:
+                CreatePasswordView(rootView: $rootView, otpId: $otpId)
             case .main:
                 Text("app_name")
             }
