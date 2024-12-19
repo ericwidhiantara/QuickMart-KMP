@@ -1,23 +1,30 @@
-import Shared
-
 //
-//  EmailVerification.swift
+//  VerifyCodeView.swift
 //  iosApp
 //
-//  Created by Eric on 17/12/24.
+//  Created by Eric on 19/12/24.
 //  Copyright © 2024 orgName. All rights reserved.
 //
 
+import Shared
 import SwiftUI
 
-struct EmailVerificationView: View {
+struct VerifyCodeView: View {
     @Binding var rootView: AppScreen
+    @Binding var email: String
 
-    @ObservedObject var viewModel: EmailVerificationViewModel = KoinHelper()
-        .getEmailVerificationViewModel()
+    @ObservedObject var viewModel: ForgotPasswordVerifyCodeViewModel =
+        KoinHelper()
+        .getForgotPasswordVerifyCodeViewModel()
+    @ObservedObject var emailViewModel:
+        ForgotPasswordEmailConfirmationViewModel =
+            KoinHelper()
+            .getForgotPasswordEmailConfirmationViewModel()
 
-    @State private var uiState: EmailVerificationState =
-        EmailVerificationState.Idle()
+    @State private var uiState: ForgotPasswordVerifyCodeState =
+        ForgotPasswordVerifyCodeState.Idle()
+    @State private var emailUiState: ForgotPasswordEmailConfirmationState =
+        ForgotPasswordEmailConfirmationState.Idle()
     @State private var otpCode = ""
     @State private var remainingTime: Int = 60
     @State private var isTimerFinished = false
@@ -26,32 +33,50 @@ struct EmailVerificationView: View {
     @State private var showSnackbar: Bool = false
     @State private var isSuccessSnackbar: Bool = false
     @State private var snackbarMessage: String = ""
-    @State private var isSubscribed = false
-    @State private var isTimerStarted = false
-    @State private var isFirstLaunch = true
+    @State private var isSubscribed: Bool = false
+    @State private var isTimerStarted: Bool = false
+    @State private var isFirstLaunch: Bool = true
+    @State private var otpId: String = ""
+    @State private var isVerifySuccess: Bool? = false
 
     let timerDuration = 60  // seconds
 
-    private func handleVerificationState(_ state: EmailVerificationState) {
+    private func handleVerificationState(
+        _ state: ForgotPasswordVerifyCodeState
+    ) {
         switch state {
-        case let success as EmailVerificationState.Success:
-            showSnackbar = true
-            isSuccessSnackbar = true
-            snackbarMessage = success.data.message ?? ""
-
+        case let success as ForgotPasswordVerifyCodeState.Success:
+            isVerifySuccess = true
+            
+            // ToDO: pass otpId to creaatePassword screen
+            otpId = success.data.otpId!
             break
 
-        case let success as EmailVerificationState.VerifySuccess:
-            // Navigate to main screen on successful verification
+        case let errorState as ForgotPasswordVerifyCodeState.Error:
             showSnackbar = true
-            isSuccessSnackbar = true
-            snackbarMessage = success.data.message ?? ""
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                rootView = .main
+            isVerifySuccess = false
+            isSuccessSnackbar = false
+            snackbarMessage = errorState.message
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                showSnackbar = false
             }
+        default:
+            showSnackbar = false
+        }
+    }
+
+    private func handleSendOTPState(
+        _ state: ForgotPasswordEmailConfirmationState
+    ) {
+        switch state {
+        case let success as ForgotPasswordEmailConfirmationState.Success:
+            showSnackbar = true
+            isSuccessSnackbar = true
+            snackbarMessage = success.data.message ?? ""
 
             break
-        case let errorState as EmailVerificationState.Error:
+
+        case let errorState as ForgotPasswordEmailConfirmationState.Error:
             showSnackbar = true
             isSuccessSnackbar = false
             snackbarMessage = errorState.message
@@ -69,14 +94,10 @@ struct EmailVerificationView: View {
         return String(format: "%02d:%02d", minutes, seconds)
     }
 
-    private func startTimer(sendInitialOTP: Bool) {
+    private func startTimer() {
         remainingTime = timerDuration
         isTimerStarted = true
         isTimerFinished = false
-
-        if sendInitialOTP {
-            viewModel.sendOTP()  // Send OTP only if it's the first launch or explicitly required
-        }
 
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             if remainingTime > 0 {
@@ -89,15 +110,19 @@ struct EmailVerificationView: View {
         }
     }
 
-    private func resendOTP() {
-        viewModel.sendOTP()
-        startTimer(sendInitialOTP: true)
+    private func resendOTP(email: String) {
+        let params = ForgotPasswordSendOTPFormRequestDto(email: email)
+
+        emailViewModel.sendOTP(params: params)
+        startTimer()
     }
 
     private func verifyOTP() {
-        let params = VerifyOTPFormRequestDto(
+        let params = ForgotPasswordVerifyOTPFormRequestDto(
+            email: email,
             otpCode: otpCode
         )
+
         viewModel.verifyOTP(params: params)
     }
 
@@ -126,7 +151,7 @@ struct EmailVerificationView: View {
                     HStack {
                         if isTimerFinished {
                             Button("resend_code") {
-                                resendOTP()
+                                resendOTP(email: email)
                             }
                             .foregroundColor(.colorCyan)
                         } else {
@@ -139,6 +164,13 @@ struct EmailVerificationView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.horizontal)
 
+                    NavigationLink(
+                        destination: VerifyCodeView(rootView: $rootView, email: $email),
+                        tag: true,
+                        selection: $isVerifySuccess
+                    ) {
+                        EmptyView()
+                    }
                     CustomOutlinedButton(
                         buttonText: NSLocalizedString(
                             "proceed",
@@ -151,7 +183,9 @@ struct EmailVerificationView: View {
                         }
 
                     )
-                    .disabled(uiState is EmailVerificationState.Loading)
+                    .disabled(
+                        uiState is ForgotPasswordVerifyCodeState.Loading
+                    )
                     .padding(.horizontal)
 
                     Spacer()
@@ -171,22 +205,31 @@ struct EmailVerificationView: View {
                         self.uiState = state
                     }
                 }
+                emailViewModel.state.subscribe { state in
+                    if let state = state {
+                        self.emailUiState = state
+                    }
+                }
             }
 
             // Handle first launch
             if isFirstLaunch {
                 isFirstLaunch = false
-                startTimer(sendInitialOTP: true)  // Send OTP initially
+                startTimer()
             } else if !isTimerStarted {
-                startTimer(sendInitialOTP: false)  // No OTP resend for subsequent appearances
+                startTimer()
             }
         }
         .onChange(of: uiState) { state in
             handleVerificationState(state)
         }
+        .onChange(of: emailUiState) { state in
+            handleSendOTPState(state)
+        }
         .modifier(
             CustomActivityIndicatorModifier(
-                isLoading: uiState is EmailVerificationState.Loading)
+                isLoading: uiState
+                    is ForgotPasswordVerifyCodeState.Loading)
         )
         .snackbar(
             show: $showSnackbar, bgColor: isSuccessSnackbar ? .green : .red,

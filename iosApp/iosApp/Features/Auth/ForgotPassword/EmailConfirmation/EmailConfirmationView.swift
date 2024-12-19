@@ -99,7 +99,7 @@ struct EmailConfirmationView: View {
                     ).padding(.horizontal)
 
                     NavigationLink(
-                        destination: EmailVerificationView(rootView: $rootView),
+                        destination: VerifyCodeView(rootView: $rootView, email: $email),
                         tag: true,
                         selection: $isConfirmSuccess
                     ) {
