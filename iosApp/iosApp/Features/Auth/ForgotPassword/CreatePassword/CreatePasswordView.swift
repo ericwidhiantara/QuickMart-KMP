@@ -37,14 +37,10 @@ struct CreatePasswordView: View {
     private func handleState(_ state: CreatePasswordState) {
         switch state {
         case is CreatePasswordState.Success:
-//            showSnackbar = true
-//            isSuccessSnackbar = true
-//            snackbarMessage = success.data.message ?? ""
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.isConfirmSuccess = true
-                showSnackbar = false
-
+                rootView = .password_created
             }
             break
         case let errorState as CreatePasswordState.Error:

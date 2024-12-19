@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var rootView: AppScreen = .login
+    @State private var rootView: AppScreen = .splash
     @State private var email: String = ""
     @State private var otpId: String = ""
 
@@ -32,6 +32,8 @@ struct ContentView: View {
                 VerifyCodeView(rootView: $rootView, email: $email)
             case .create_password:
                 CreatePasswordView(rootView: $rootView, otpId: $otpId)
+            case .password_created:
+                PasswordCreatedView(rootView: $rootView)
             case .main:
                 Text("app_name")
             }
