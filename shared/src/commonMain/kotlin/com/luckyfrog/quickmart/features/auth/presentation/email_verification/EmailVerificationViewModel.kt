@@ -16,6 +16,7 @@ sealed class EmailVerificationState {
     data object Idle : EmailVerificationState()
     data object Loading : EmailVerificationState()
     data class Success(val data: MetaEntity) : EmailVerificationState()
+    data class VerifySuccess(val data: MetaEntity) : EmailVerificationState()
     data class Error(val message: String) : EmailVerificationState()
 }
 
@@ -58,7 +59,7 @@ class EmailVerificationViewModel(
 
                     is ApiResponse.Success -> {
                         _state.value =
-                            EmailVerificationState.Success(response.data.meta?.toEntity()!!)
+                            EmailVerificationState.VerifySuccess(response.data.meta?.toEntity()!!)
                     }
 
                     is ApiResponse.Failure -> {

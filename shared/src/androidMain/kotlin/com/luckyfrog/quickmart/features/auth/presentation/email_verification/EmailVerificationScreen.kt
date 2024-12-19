@@ -35,6 +35,7 @@ import com.luckyfrog.quickmart.core.widgets.CustomOTPInput
 import com.luckyfrog.quickmart.core.widgets.CustomOutlinedButton
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
 import com.luckyfrog.quickmart.features.profile.data.models.request.VerifyOTPFormRequestDto
+import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 import kotlinx.coroutines.delay
@@ -91,6 +92,26 @@ fun EmailVerificationScreen(
                 padding = PaddingValues(top = 16.dp),
                 contentAlignment = Alignment.TopCenter
             )
+
+        }
+
+        is EmailVerificationState.VerifySuccess -> {
+            showDialog.value = false
+            // Show a toast with the success message
+            // on below line we are displaying a custom toast message on below line
+            SweetSuccess(
+                message = state.data.message ?: "",
+                duration = Toast.LENGTH_LONG,
+                padding = PaddingValues(top = 16.dp),
+                contentAlignment = Alignment.TopCenter
+            )
+            LaunchedEffect(Unit) {
+                navController.navigate(AppScreen.MainScreen.route) {
+                    popUpTo(AppScreen.EmailVerificationScreen.route) {
+                        inclusive = true
+                    }  // Clear back stack
+                }
+            }
 
         }
 
