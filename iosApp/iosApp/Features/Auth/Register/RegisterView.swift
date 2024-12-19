@@ -16,11 +16,11 @@ struct RegisterView: View {
 
     @State var uiState: RegisterState = RegisterState.Idle()
 
-    @State private var fullname: String = ""
-    @State private var username: String = ""
-    @State private var email: String = ""
-    @State private var password: String = ""
-    @State private var passwordConfirm: String = ""
+    @State private var fullname: String = "Jhon Doe"
+    @State private var username: String = "jhon"
+    @State private var email: String = "crashcyber20@gmail.com"
+    @State private var password: String = "!_Ash008"
+    @State private var passwordConfirm: String = "!_Ash008"
     @State private var isPasswordVisible: Bool = false
     @State private var isPasswordConfirmVisible: Bool = false
     @State private var shouldValidate: Bool = false
@@ -28,6 +28,7 @@ struct RegisterView: View {
     @State private var showLoadingDialog: Bool = false
     @State private var showSnackbar: Bool = false
     @State private var snackbarMessage: String = ""
+    @State private var isRegisterSuccess: Bool? = false
 
     @Environment(\.colorScheme) var colorScheme
 
@@ -39,7 +40,8 @@ struct RegisterView: View {
             _ = AppPreferences.shared.setRefreshToken(
                 success.data.refreshToken ?? "")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                rootView = .main
+                self.isRegisterSuccess = true
+                //                rootView = .main
             }
             break
         case let errorState as RegisterState.Error:
@@ -61,12 +63,12 @@ struct RegisterView: View {
 
         VStack {
             ScrollView {
+
                 VStack(
                     alignment: .leading,
                     spacing: 16
                 ) {
 
-                    // Title and Signup Link
                     Text("signup")
                         .font(.title)
                         .fontWeight(.bold)
@@ -131,7 +133,8 @@ struct RegisterView: View {
 
                     CustomTextField(
                         type: .password,
-                        titleLabel: NSLocalizedString("password", comment: ""),
+                        titleLabel: NSLocalizedString(
+                            "password", comment: ""),
                         value: $password,
                         validator: { password in
                             // Minimum 8 characters, at least one uppercase, one lowercase, and one number
@@ -169,7 +172,13 @@ struct RegisterView: View {
                     )
 
                     Spacer().frame(height: 16)
-
+                    NavigationLink(
+                        destination: EmailVerificationView(rootView: $rootView),
+                        tag: true,
+                        selection: $isRegisterSuccess
+                    ) {
+                        EmptyView()
+                    }
                     CustomOutlinedButton(
                         buttonText: NSLocalizedString(
                             "create_account",
@@ -178,7 +187,6 @@ struct RegisterView: View {
                         buttonTextColor: .white,
                         buttonContainerColor: .colorCyan,
                         onClick: {
-
                             let emailRegex =
                                 "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
                             let emailPredicate = NSPredicate(
@@ -250,7 +258,6 @@ struct RegisterView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 32)
-
             }
         }
 

@@ -22,10 +22,14 @@ struct ContentView: View {
                 LoginView(rootView: $rootView)
             case .register:
                 RegisterView(rootView: $rootView)
+            case .verify_email:
+                EmailVerificationView(rootView: $rootView)
             case .main:
                 Text("app_name")
             }
-        }.navigationViewStyle(StackNavigationViewStyle()).appTheme(.default)  // or .light, .dark
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .appTheme(.default)  // or .light, .dark
     }
 }
 

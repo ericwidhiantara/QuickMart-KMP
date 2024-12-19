@@ -13,5 +13,6 @@ enum AppScreen: Hashable {
     case onboarding
     case login
     case register
+    case verify_email
     case main
 }

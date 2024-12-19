@@ -7,129 +7,108 @@
 //
 import Foundation
 import SwiftUI
+import Shared
+
+class StringSettingConfig {
+    private let settings: Settings
+    private let key: String
+    private let defaultValue: String
+    
+    init(settings: Settings, key: String, defaultValue: String) {
+        self.settings = settings
+        self.key = key
+        self.defaultValue = defaultValue
+    }
+    
+    func remove() {
+        settings.remove(key: key)
+    }
+    
+    func exists() -> Bool {
+        return settings.hasKey(key: key)
+    }
+    
+    func get() -> String {
+        return settings.getString(key: key, defaultValue: defaultValue)
+    }
+    
+    func set(_ value: String) -> Bool {
+        do {
+            settings.putString(key: key, value: value)
+            return true
+        } catch {
+            return false
+        }
+    }
+}
 
 class AppPreferences {
+    private var settings: Settings
+    
     // Singleton instance
     static let shared = AppPreferences()
-
+    
     // Private initializer to ensure singleton pattern
-    private init() {}
-
-    // Keychain Service
-    private struct KeychainKeys {
-        static let accessToken = "com.app.accessToken"
-        static let refreshToken = "com.app.refreshToken"
+    private init() {
+        // This is where you'd use NSUserDefaults settings
+        settings = NSUserDefaultsSettings(delegate: UserDefaults.standard)
     }
-
-    // UserDefaults keys for non-sensitive data
-    private struct UserDefaultsKeys {
-        static let appTheme = "APP_THEME"
-        static let firstTime = "FIRST_TIME"
+    
+    // Theme Management
+    func setTheme(_ value: AppTheme) -> Bool {
+        settings.putString(key: "app_theme", value: value.rawValue)
+        return (settings.getString(key: "app_theme", defaultValue: AppTheme.default.rawValue)) == value.rawValue
     }
-
-    // Theme Management (using UserDefaults)
-    func setTheme(_ theme: AppTheme) -> Bool {
-        UserDefaults.standard.set(
-            theme.rawValue, forKey: UserDefaultsKeys.appTheme)
-        return getTheme() == theme
-    }
-
+    
     func getTheme() -> AppTheme {
-        let themeString = UserDefaults.standard.string(
-            forKey: UserDefaultsKeys.appTheme)
-        return AppTheme(rawValue: themeString ?? AppTheme.default.rawValue)
-            ?? .default
+        settings.putString(key: "app_theme", value: AppTheme.default.rawValue)
+        return AppTheme(rawValue: settings.getString(key: "app_theme", defaultValue: AppTheme.default.rawValue)) ?? .default
     }
-
-    // First Time Flag (using UserDefaults)
+    
+    // First Time Flag
     func setFirstTime(_ value: String = "1") -> String {
-        UserDefaults.standard.set(value, forKey: UserDefaultsKeys.firstTime)
-        return getFirstTime()
+        let config = StringSettingConfig(settings: settings, key: "first_time", defaultValue: "")
+        _ = config.set(value)
+        return config.get()
     }
-
+    
     func getFirstTime() -> String {
-        return UserDefaults.standard.string(forKey: UserDefaultsKeys.firstTime)
-            ?? ""
+        let config = StringSettingConfig(settings: settings, key: "first_time", defaultValue: "")
+        return config.get()
     }
-
-    // Secure Token Management (using Keychain)
-    func setToken(_ value: String) -> Bool {
-        return saveToKeychain(value, forKey: KeychainKeys.accessToken)
+    
+    // Access Token Management
+    func setToken(_ value: String) -> String {
+        let config = StringSettingConfig(settings: settings, key: "access_token", defaultValue: "")
+        _ = config.set(value)
+        return config.get()
     }
-
+    
     func getToken() -> String {
-        return retrieveFromKeychain(forKey: KeychainKeys.accessToken) ?? ""
+        let config = StringSettingConfig(settings: settings, key: "access_token", defaultValue: "")
+        return config.get()
     }
-
-    func setRefreshToken(_ value: String) -> Bool {
-        return saveToKeychain(value, forKey: KeychainKeys.refreshToken)
+    
+    // Refresh Token Management
+    func setRefreshToken(_ value: String) -> String {
+        let config = StringSettingConfig(settings: settings, key: "refresh_token", defaultValue: "")
+        _ = config.set(value)
+        return config.get()
     }
-
+    
     func getRefreshToken() -> String {
-        return retrieveFromKeychain(forKey: KeychainKeys.refreshToken) ?? ""
+        let config = StringSettingConfig(settings: settings, key: "refresh_token", defaultValue: "")
+        return config.get()
     }
-
+    
     // Clear Tokens
     func clearToken() -> Bool {
-        let accessTokenDeleted = deleteFromKeychain(
-            forKey: KeychainKeys.accessToken)
-        let refreshTokenDeleted = deleteFromKeychain(
-            forKey: KeychainKeys.refreshToken)
-        return accessTokenDeleted && refreshTokenDeleted
-    }
-
-    // Private Keychain Helper Methods
-    private func saveToKeychain(_ value: String, forKey key: String) -> Bool {
-        guard let data = value.data(using: .utf8) else { return false }
-
-        // Delete existing item if it exists
-        let deleteDictionary: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key,
-        ]
-        SecItemDelete(deleteDictionary as CFDictionary)
-
-        // Create dictionary for new item
-        let dictionary: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key,
-            kSecValueData as String: data,
-            kSecAttrAccessible as String: kSecAttrAccessibleWhenUnlocked,
-        ]
-
-        // Add new item
-        let status = SecItemAdd(dictionary as CFDictionary, nil)
-        return status == errSecSuccess
-    }
-
-    private func retrieveFromKeychain(forKey key: String) -> String? {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key,
-            kSecReturnData as String: true,
-            kSecMatchLimit as String: kSecMatchLimitOne,
-        ]
-
-        var result: AnyObject?
-        let status = SecItemCopyMatching(query as CFDictionary, &result)
-
-        guard status == errSecSuccess,
-            let data = result as? Data,
-            let value = String(data: data, encoding: .utf8)
-        else {
-            return nil
-        }
-
-        return value
-    }
-
-    private func deleteFromKeychain(forKey key: String) -> Bool {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key,
-        ]
-
-        let status = SecItemDelete(query as CFDictionary)
-        return status == errSecSuccess || status == errSecItemNotFound
+        let accessTokenConfig = StringSettingConfig(settings: settings, key: "access_token", defaultValue: "")
+        let refreshTokenConfig = StringSettingConfig(settings: settings, key: "refresh_token", defaultValue: "")
+        
+        accessTokenConfig.remove()
+        refreshTokenConfig.remove()
+        
+        return true
     }
 }
