@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var rootView: AppScreen = .splash
+    @State private var rootView: AppScreen = .login
 
     var body: some View {
         NavigationView {
@@ -24,6 +24,8 @@ struct ContentView: View {
                 RegisterView(rootView: $rootView)
             case .verify_email:
                 EmailVerificationView(rootView: $rootView)
+            case .forgot_password_confirm_email:
+                EmailConfirmationView(rootView: $rootView)
             case .main:
                 Text("app_name")
             }

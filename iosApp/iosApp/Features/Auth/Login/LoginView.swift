@@ -106,16 +106,17 @@ struct LoginView: View {
                     Spacer().frame(height: 12)
                     HStack {
                         Spacer()
-                        Button(action: {
-                            // Implement Skip action
-                        }) {
+                        NavigationLink(destination: {
+                            EmailConfirmationView(rootView: $rootView)
+                        }, label: {
                             Text(
                                 NSLocalizedString(
                                     "forgot_password",
                                     comment: "Forgot Password")
                             )
                             .foregroundColor(.colorCyan)
-                        }
+                        })
+                        
                     }
                     Spacer().frame(height: 16)
 
