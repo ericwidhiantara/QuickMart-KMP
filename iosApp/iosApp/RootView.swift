@@ -35,7 +35,7 @@ struct ContentView: View {
             case .password_created:
                 PasswordCreatedView(rootView: $rootView)
             case .main:
-                Text("app_name")
+                BottomNavBar(rootView: $rootView)
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
