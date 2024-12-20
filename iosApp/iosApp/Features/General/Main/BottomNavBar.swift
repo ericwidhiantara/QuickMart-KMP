@@ -19,40 +19,45 @@ class BottomNavViewModel: ObservableObject {
 struct BottomNavBar: View {
     @Binding var rootView: AppScreen
     @StateObject private var viewModel = BottomNavViewModel()
-
-    let navbarItems: [BottomNavigationItem] = [
-        BottomNavigationItem(
-            title: "menu_home",
-            icon: "MenuHome",
-            iconActive: "MenuHomeActive",
-            view: AnyView(HomeScreen())
-        ),
-        BottomNavigationItem(
-            title: "menu_categories",
-            icon: "MenuCategories",
-            iconActive: "MenuCategoriesActive",
-            view: AnyView(CategoryListScreen())
-        ),
-        BottomNavigationItem(
-            title: "menu_my_cart",
-            icon: "MenuMyCart",
-            iconActive: "MenuMyCartActive",
-            view: AnyView(MyCartScreen())
-        ),
-        BottomNavigationItem(
-            title: "menu_wishlist",
-            icon: "MenuWishlist",
-            iconActive: "MenuWishlistActive",
-            view: AnyView(WishlistScreen())
-        ),
-        BottomNavigationItem(
-            title: "menu_profile",
-            icon: "MenuProfile",
-            iconActive: "MenuProfileActive",
-            view: AnyView(ProfileScreen())
-        ),
-    ]
-
+    
+    let navbarItems: [BottomNavigationItem]
+    
+    init(rootView: Binding<AppScreen>) {
+        _rootView = rootView
+        navbarItems = [
+            BottomNavigationItem(
+                title: "menu_home",
+                icon: "MenuHome",
+                iconActive: "MenuHomeActive",
+                view: AnyView(HomeScreen())
+            ),
+            BottomNavigationItem(
+                title: "menu_categories",
+                icon: "MenuCategories",
+                iconActive: "MenuCategoriesActive",
+                view: AnyView(CategoryListScreen())
+            ),
+            BottomNavigationItem(
+                title: "menu_my_cart",
+                icon: "MenuMyCart",
+                iconActive: "MenuMyCartActive",
+                view: AnyView(MyCartScreen())
+            ),
+            BottomNavigationItem(
+                title: "menu_wishlist",
+                icon: "MenuWishlist",
+                iconActive: "MenuWishlistActive",
+                view: AnyView(WishlistScreen())
+            ),
+            BottomNavigationItem(
+                title: "menu_profile",
+                icon: "MenuProfile",
+                iconActive: "MenuProfileActive",
+                view: AnyView(ProfileScreen(rootView: rootView))
+            ),
+        ]
+    }
+    
     var body: some View {
         TabView(selection: $viewModel.currentIndex) {
             ForEach(Array(navbarItems.enumerated()), id: \.element.id) { index, item in

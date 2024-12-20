@@ -10,11 +10,12 @@ import Shared
 import SwiftUI
 
 struct ProfileScreen: View {
+    @Binding var rootView: AppScreen
     @State private var showLogoutDialog = false
     @ObservedObject var userViewModel: UserViewModel = KoinHelper()
         .getUserViewModel()
 
-    @State var userState: UserState = UserState.Idle()
+    @State private var userState: UserState = UserState.Idle()
 
     let settingsSections: [SettingsSection] = [
         SettingsSection(
@@ -126,7 +127,9 @@ struct ProfileScreen: View {
                 isPresented: $showLogoutDialog, titleVisibility: .visible
             ) {
                 Button(LocalizedStringKey("logout"), role: .destructive) {
-                    // Handle logout logic
+                    _ = AppPreferences.shared.clearToken()
+                    rootView = .login
+
                 }
                 Button("Cancel", role: .cancel) {}
             }
@@ -199,7 +202,6 @@ struct ProfileTopBarContent: View {
 
     var body: some View {
         HStack {
-
             AsyncImage(
                 url: URL(string: image),
                 content: { image in
@@ -227,7 +229,6 @@ struct ProfileTopBarContent: View {
                     .font(.subheadline)
                     .foregroundColor(.colorWhite)
             }
-
             Spacer()
             Button(action: onLogoutClick) {
                 Image("Logout")
