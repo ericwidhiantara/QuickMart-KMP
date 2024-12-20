@@ -94,9 +94,3 @@ struct WishlistScreen: View {
         Text("Wishlist Screen")
     }
 }
-
-struct ProfileScreen: View {
-    var body: some View {
-        Text("Profile Screen")
-    }
-}
