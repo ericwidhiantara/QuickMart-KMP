@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.luckyfrog.quickmart.R
+import com.luckyfrog.quickmart.core.resources.Images
 import com.luckyfrog.quickmart.core.widgets.ConfirmationDialog
 import com.luckyfrog.quickmart.core.widgets.CustomTopBar
 import com.luckyfrog.quickmart.core.widgets.EmptyState
@@ -64,6 +65,7 @@ fun MyWishlistScreen(
         ) { paddingValues ->
         if (isWishlistEmpty) {
             EmptyState(
+                imageUrl = Images.icEmptyWishlist,
                 title = stringResource(id = R.string.empty_wishlist),
                 description = stringResource(id = R.string.empty_wishlist_desc),
                 buttonText = stringResource(id = R.string.explore_products),

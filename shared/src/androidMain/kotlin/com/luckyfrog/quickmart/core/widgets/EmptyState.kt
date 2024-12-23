@@ -20,7 +20,7 @@ import com.luckyfrog.quickmart.core.resources.Images
 
 @Composable
 fun EmptyState(
-    imageUrl: Int = Images.icEmptyCart,
+    imageUrl: Int? = Images.icEmptyCart,
     title: String,
     description: String,
     buttonText: String,
@@ -34,7 +34,7 @@ fun EmptyState(
             .fillMaxSize()
     ) {
         Image(
-            painter = painterResource(id = imageUrl),
+            painter = painterResource(id = imageUrl ?: Images.icEmptyCart),
             contentDescription = title,
         )
         Spacer(modifier = Modifier.height(16.dp))
