@@ -16,67 +16,70 @@ struct ProfileScreen: View {
         .getUserViewModel()
 
     @State private var userState: UserState = UserState.Idle()
-
-    let settingsSections: [SettingsSection] = [
-        SettingsSection(
-            title: "personal_information",
-            items: [
-                SettingsItem(
-                    title: "shipping_address", icon: "Shipping",
-                    action: {
-                        // Navigate to Shipping Address screen
-                    }),
-                SettingsItem(
-                    title: "order_history", icon: "OrderHistory",
-                    action: {
-                        // Navigate to Order History screen
-                    }),
-            ]
-        ),
-        SettingsSection(
-            title: "support_and_information",
-            items: [
-                SettingsItem(
-                    title: "privacy_policy", icon: "PrivacyPolicy",
-                    action: {
-                        // Navigate to Privacy Policy screen
-                    }),
-                SettingsItem(
-                    title: "terms_and_conditions", icon: "TermsAndCondition",
-                    action: {
-                        // Navigate to Terms and Conditions screen
-                    }),
-                SettingsItem(
-                    title: "faqs", icon: "Faq",
-                    action: {
-                        // Navigate to FAQs screen
-                    }),
-            ]
-        ),
-        SettingsSection(
-            title: "account_management",
-            items: [
-                SettingsItem(
-                    title: "change_password", icon: "ChangePassword",
-                    action: {
-                        // Navigate to Change Password screen
-                    }
-                ),
-                SettingsItem(
-                    title: "theme", icon: "DarkTheme",
-                    action: {
-                        // Navigate to Theme settings
-                    }),
-                SettingsItem(
-                    title: "language", icon: "Language",
-                    action: {
-                        // Navigate to Language settings
-                    }),
-            ]
-        ),
-    ]
+    @State private var isChangePasswordMenu: Bool? = false
+    
+    
 
     var body: some View {
+        
+        let settingsSections: [SettingsSection] = [
+            SettingsSection(
+                title: "personal_information",
+                items: [
+                    SettingsItem(
+                        title: "shipping_address", icon: "Shipping",
+                        action: {
+                            // Navigate to Shipping Address screen
+                        }),
+                    SettingsItem(
+                        title: "order_history", icon: "OrderHistory",
+                        action: {
+                            // Navigate to Order History screen
+                        }),
+                ]
+            ),
+            SettingsSection(
+                title: "support_and_information",
+                items: [
+                    SettingsItem(
+                        title: "privacy_policy", icon: "PrivacyPolicy",
+                        action: {
+                            // Navigate to Privacy Policy screen
+                        }),
+                    SettingsItem(
+                        title: "terms_and_conditions", icon: "TermsAndCondition",
+                        action: {
+                            // Navigate to Terms and Conditions screen
+                        }),
+                    SettingsItem(
+                        title: "faqs", icon: "Faq",
+                        action: {
+                            // Navigate to FAQs screen
+                        }),
+                ]
+            ),
+            SettingsSection(
+                title: "account_management",
+                items: [
+                    SettingsItem(
+                        title: "change_password", icon: "ChangePassword",
+                        action: {
+                            isChangePasswordMenu = true
+                        }
+                    ),
+                    SettingsItem(
+                        title: "theme", icon: "DarkTheme",
+                        action: {
+                            // Navigate to Theme settings
+                        }),
+                    SettingsItem(
+                        title: "language", icon: "Language",
+                        action: {
+                            // Navigate to Language settings
+                        }),
+                ]
+            ),
+        ]
 
         let appUiState = userViewModel.userState
 
@@ -89,6 +92,13 @@ struct ProfileScreen: View {
                     }
                 )
                 .background(Color.colorCyan)
+                NavigationLink(
+                    destination: CheckPasswordView(rootView: $rootView),
+                    tag: true,
+                    selection: $isChangePasswordMenu
+                ) {
+                    EmptyView()
+                }
                 List {
                     ForEach(settingsSections, id: \.title) { section in
                         Section(

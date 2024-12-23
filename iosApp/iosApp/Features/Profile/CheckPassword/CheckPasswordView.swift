@@ -1,28 +1,25 @@
 //
-//  EmailConfirmationView.swift
+//  CheckPasswordView.swift
 //  iosApp
 //
-//  Created by Eric on 19/12/24.
+//  Created by Eric on 23/12/24.
 //  Copyright © 2024 orgName. All rights reserved.
 //
 
 import Shared
 import SwiftUI
 
-struct CreatePasswordView: View {
+struct CheckPasswordView: View {
     @Binding var rootView: AppScreen
-    @Binding var otpId: String
-    @ObservedObject var viewModel: CreatePasswordViewModel =
+    @ObservedObject var viewModel: CheckPasswordViewModel =
         KoinHelper()
-        .getCreatePasswordViewModel()
+        .getCheckPasswordViewModel()
 
-    @State var uiState: CreatePasswordState =
-        CreatePasswordState.Idle()
+    @State var uiState: CheckPasswordState =
+        CheckPasswordState.Idle()
 
     @State private var password: String = "!_Ash008"
-    @State private var passwordConfirm: String = "!_Ash008"
     @State private var isPasswordVisible: Bool = false
-    @State private var isPasswordConfirmVisible: Bool = false
 
     @State private var shouldValidate: Bool = false
     @State private var showErrorDialog: Bool = false
@@ -34,16 +31,15 @@ struct CreatePasswordView: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    private func handleState(_ state: CreatePasswordState) {
+    private func handleState(_ state: CheckPasswordState) {
         switch state {
-        case is CreatePasswordState.Success:
+        case is CheckPasswordState.Success:
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.isConfirmSuccess = true
-                rootView = .password_created
             }
             break
-        case let errorState as CreatePasswordState.Error:
+        case let errorState as CheckPasswordState.Error:
             showSnackbar = true
             isSuccessSnackbar = false
             snackbarMessage = errorState.message
@@ -66,96 +62,65 @@ struct CreatePasswordView: View {
                 VStack(alignment: .leading, spacing: 16) {
 
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("new_password")
+                        Text("old_password")
                             .font(.title)
                             .fontWeight(.bold)
 
-                        Text("new_password_desc")
+                        Text("old_password_desc")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
                     .padding(.top, 20)
                     .padding(.horizontal)
-
+                    NavigationLink(
+                        destination: ChangePasswordView(rootView: $rootView),
+                        tag: true,
+                        selection: $isConfirmSuccess
+                    ) {
+                        EmptyView()
+                    }
                     CustomTextField(
                         type: .password,
                         titleLabel: NSLocalizedString(
-                            "password", comment: ""),
+                            "old_password", comment: ""),
                         value: $password,
-                        validator: { password in
-                            // Minimum 8 characters, at least one uppercase, one lowercase, and one number
-                            let passwordRegex =
-                                "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,}$"
-                            let predicate = NSPredicate(
-                                format: "SELF MATCHES %@", passwordRegex)
-                            return predicate.evaluate(with: password)
-                        },
+                        validator: { $0.count >= 8 },
                         shouldValidate: shouldValidate,
-                        errorMessage: String(
-                            format: NSLocalizedString(
-                                "field_password",
-                                comment:
-                                    "This field must be at least %1$d characters, including at least one uppercase letter, one lowercase letter, and one number"
-                            ), 8),
                         placeholder: NSLocalizedString(
                             "password_placeholder", comment: ""),
                         textInputAutocapitalization: .never
                     ).padding(.horizontal)
 
-                    CustomTextField(
-                        type: .password,
-                        titleLabel: NSLocalizedString(
-                            "confirm_password", comment: ""),
-                        value: $passwordConfirm,
-                        validator: { $0 == password && $0.count >= 8 },
-                        shouldValidate: shouldValidate,
-                        errorMessage: NSLocalizedString(
-                            "field_confirm_password",
-                            comment: "Passwords do not match"),
-                        placeholder: NSLocalizedString(
-                            "confirm_password_placeholder", comment: ""),
-                        textInputAutocapitalization: .never
-                    ).padding(.horizontal)
-
                     CustomOutlinedButton(
                         buttonText: NSLocalizedString(
-                            "save",
+                            "continue_text",
                             comment: ""
                         ),
                         buttonTextColor: .white,
                         buttonContainerColor: .colorCyan,
                         onClick: {
-                            let passwordRegex =
-                                "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,}$"
-                            let passwordPredicate = NSPredicate(
-                                format: "SELF MATCHES %@", passwordRegex)
 
                             guard
-                                !password.isEmpty,
-                                passwordPredicate.evaluate(with: password),
-                                !passwordConfirm.isEmpty,
-                                password == passwordConfirm
+                                !password.isEmpty
                             else {
                                 shouldValidate = true
                                 return
                             }
 
                             let params =
-                                ForgotPasswordChangePasswordFormRequestDto(
-                                    otpId: otpId,
-                                    newPassword: password,
-                                    confirmPassword: passwordConfirm
+                                CheckPasswordFormRequestDto(
+                                    password: password
                                 )
 
                             appUiState.subscribe { state in
                                 self.uiState = state!
                             }
-                            viewModel.changePassword(params: params)
+                            viewModel.checkPassword(params: params)
                         }
                     ).padding(.horizontal)
 
                         .disabled(
-                            uiState is CreatePasswordState.Loading)
+                            uiState is CheckPasswordState.Loading)
 
                     Spacer()
                 }
@@ -179,7 +144,7 @@ struct CreatePasswordView: View {
         }
         .modifier(
             CustomActivityIndicatorModifier(
-                isLoading: uiState is CreatePasswordState.Loading)
+                isLoading: uiState is CheckPasswordState.Loading)
         )
         .snackbar(
             show: $showSnackbar, bgColor: isSuccessSnackbar ? .green : .red,

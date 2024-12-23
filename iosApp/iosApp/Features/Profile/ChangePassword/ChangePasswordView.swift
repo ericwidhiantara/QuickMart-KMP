@@ -1,23 +1,22 @@
 //
-//  EmailConfirmationView.swift
+//  ChangePasswordView.swift
 //  iosApp
 //
-//  Created by Eric on 19/12/24.
+//  Created by Eric on 23/12/24.
 //  Copyright © 2024 orgName. All rights reserved.
 //
 
 import Shared
 import SwiftUI
 
-struct CreatePasswordView: View {
+struct ChangePasswordView: View {
     @Binding var rootView: AppScreen
-    @Binding var otpId: String
-    @ObservedObject var viewModel: CreatePasswordViewModel =
+    @ObservedObject var viewModel: ChangePasswordViewModel =
         KoinHelper()
-        .getCreatePasswordViewModel()
+        .getChangePasswordViewModel()
 
-    @State var uiState: CreatePasswordState =
-        CreatePasswordState.Idle()
+    @State var uiState: ChangePasswordState =
+        ChangePasswordState.Idle()
 
     @State private var password: String = "!_Ash008"
     @State private var passwordConfirm: String = "!_Ash008"
@@ -34,16 +33,16 @@ struct CreatePasswordView: View {
 
     @Environment(\.colorScheme) var colorScheme
 
-    private func handleState(_ state: CreatePasswordState) {
+    private func handleState(_ state: ChangePasswordState) {
         switch state {
-        case is CreatePasswordState.Success:
+        case is ChangePasswordState.Success:
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.isConfirmSuccess = true
-                rootView = .password_created
+                rootView = .login
             }
             break
-        case let errorState as CreatePasswordState.Error:
+        case let errorState as ChangePasswordState.Error:
             showSnackbar = true
             isSuccessSnackbar = false
             snackbarMessage = errorState.message
@@ -141,8 +140,7 @@ struct CreatePasswordView: View {
                             }
 
                             let params =
-                                ForgotPasswordChangePasswordFormRequestDto(
-                                    otpId: otpId,
+                                ChangePasswordFormRequestDto(
                                     newPassword: password,
                                     confirmPassword: passwordConfirm
                                 )
@@ -155,7 +153,7 @@ struct CreatePasswordView: View {
                     ).padding(.horizontal)
 
                         .disabled(
-                            uiState is CreatePasswordState.Loading)
+                            uiState is ChangePasswordState.Loading)
 
                     Spacer()
                 }
@@ -179,7 +177,7 @@ struct CreatePasswordView: View {
         }
         .modifier(
             CustomActivityIndicatorModifier(
-                isLoading: uiState is CreatePasswordState.Loading)
+                isLoading: uiState is ChangePasswordState.Loading)
         )
         .snackbar(
             show: $showSnackbar, bgColor: isSuccessSnackbar ? .green : .red,

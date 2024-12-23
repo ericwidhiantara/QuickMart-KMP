@@ -19,4 +19,6 @@ enum AppScreen: Hashable {
     case create_password
     case password_created
     case main
+    case check_password
+    case change_password
 }

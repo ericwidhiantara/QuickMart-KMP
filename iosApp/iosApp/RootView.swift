@@ -36,6 +36,10 @@ struct ContentView: View {
                 PasswordCreatedView(rootView: $rootView)
             case .main:
                 BottomNavBar(rootView: $rootView)
+            case .check_password:
+                CheckPasswordView(rootView: $rootView)
+            case .change_password:
+                ChangePasswordView(rootView: $rootView)
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
