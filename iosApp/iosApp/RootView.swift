@@ -40,6 +40,8 @@ struct ContentView: View {
                 CheckPasswordView(rootView: $rootView)
             case .change_password:
                 ChangePasswordView(rootView: $rootView)
+            case .wishlist:
+                MyWishlistView(rootView: $rootView)
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())

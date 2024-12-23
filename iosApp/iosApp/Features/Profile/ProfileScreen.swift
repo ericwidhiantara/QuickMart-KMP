@@ -18,8 +18,6 @@ struct ProfileScreen: View {
     @State private var userState: UserState = UserState.Idle()
     @State private var isChangePasswordMenu: Bool? = false
     
-    
-
     var body: some View {
         
         let settingsSections: [SettingsSection] = [

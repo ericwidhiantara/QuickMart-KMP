@@ -47,7 +47,7 @@ struct BottomNavBar: View {
                 title: "menu_wishlist",
                 icon: "MenuWishlist",
                 iconActive: "MenuWishlistActive",
-                view: AnyView(WishlistScreen())
+                view: AnyView(MyWishlistView(rootView: rootView))
             ),
             BottomNavigationItem(
                 title: "menu_profile",
@@ -91,11 +91,5 @@ struct CategoryListScreen: View {
 struct MyCartScreen: View {
     var body: some View {
         Text("Cart Screen")
-    }
-}
-
-struct WishlistScreen: View {
-    var body: some View {
-        Text("Wishlist Screen")
     }
 }
