@@ -95,6 +95,8 @@ struct MyWishlistView: View {
                     wishlistListView
                 }
             }
+            .navigationTitle("menu_wishlist")
+            .navigationBarTitleDisplayMode(.inline)
             .confirmationDialog(
                 "confirm_delete_desc",
                 isPresented: $showDeleteDialog,
@@ -110,6 +112,7 @@ struct MyWishlistView: View {
                 }
             )
         }
+        
         .onAppear {
             userUiState.subscribe { state in
                 self.userState = state!

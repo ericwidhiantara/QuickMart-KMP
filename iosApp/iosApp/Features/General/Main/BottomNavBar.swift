@@ -18,10 +18,10 @@ class BottomNavViewModel: ObservableObject {
 
 struct BottomNavBar: View {
     @Binding var rootView: AppScreen
+
     @StateObject private var viewModel = BottomNavViewModel()
 
     let navbarItems: [BottomNavigationItem]
-
     init(rootView: Binding<AppScreen>) {
         _rootView = rootView
         navbarItems = [
@@ -35,7 +35,7 @@ struct BottomNavBar: View {
                 title: "menu_categories",
                 icon: "MenuCategories",
                 iconActive: "MenuCategoriesActive",
-                view: AnyView(CategoryListScreen())
+                view: AnyView(CategoryView(rootView: rootView))
             ),
             BottomNavigationItem(
                 title: "menu_my_cart",

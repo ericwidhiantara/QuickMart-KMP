@@ -44,7 +44,10 @@ struct ContentView: View {
                 MyWishlistView(rootView: $rootView)
             case .cart:
                 MyCartView(rootView: $rootView)
+            case .category:
+                CategoryView(rootView: $rootView)
             }
+
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .appTheme(.default)  // or .light, .dark

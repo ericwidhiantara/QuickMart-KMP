@@ -115,6 +115,8 @@ struct MyCartView: View {
                     cartlistListView
                 }
             }
+            .navigationTitle("my_cart")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 if !cartItems.isEmpty {
                     Button(action: {
@@ -145,6 +147,7 @@ struct MyCartView: View {
                 }
             )
         }
+        
         .onAppear {
             userUiState.subscribe { state in
                 self.userState = state!
