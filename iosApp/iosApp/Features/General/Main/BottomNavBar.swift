@@ -19,9 +19,9 @@ class BottomNavViewModel: ObservableObject {
 struct BottomNavBar: View {
     @Binding var rootView: AppScreen
     @StateObject private var viewModel = BottomNavViewModel()
-    
+
     let navbarItems: [BottomNavigationItem]
-    
+
     init(rootView: Binding<AppScreen>) {
         _rootView = rootView
         navbarItems = [
@@ -41,7 +41,7 @@ struct BottomNavBar: View {
                 title: "menu_my_cart",
                 icon: "MenuMyCart",
                 iconActive: "MenuMyCartActive",
-                view: AnyView(MyCartScreen())
+                view: AnyView(MyCartView(rootView: rootView))
             ),
             BottomNavigationItem(
                 title: "menu_wishlist",
@@ -57,10 +57,11 @@ struct BottomNavBar: View {
             ),
         ]
     }
-    
+
     var body: some View {
         TabView(selection: $viewModel.currentIndex) {
-            ForEach(Array(navbarItems.enumerated()), id: \.element.id) { index, item in
+            ForEach(Array(navbarItems.enumerated()), id: \.element.id) {
+                index, item in
                 item.view
                     .tabItem {
                         Label(
@@ -85,11 +86,5 @@ struct HomeScreen: View {
 struct CategoryListScreen: View {
     var body: some View {
         Text("Category Screen")
-    }
-}
-
-struct MyCartScreen: View {
-    var body: some View {
-        Text("Cart Screen")
     }
 }

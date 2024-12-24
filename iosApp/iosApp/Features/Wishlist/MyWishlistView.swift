@@ -6,10 +6,9 @@
 //  Copyright © 2024 orgName. All rights reserved.
 //
 
+import Combine
 import Shared
 import SwiftUI
-import Combine
-
 
 struct MyWishlistView: View {
     @Binding var rootView: AppScreen
@@ -35,19 +34,19 @@ struct MyWishlistView: View {
             break
         }
     }
-    
+
     private func observeWishlistItems() {
-            let publisher = createPublisher(viewModel.wishlistItems)
-            
-            publisher
-                .receive(on: DispatchQueue.main)
-                .sink { items in
-                    if let wishlistItems = items as? [WishlistLocalItemDto] {
-                        self.wishlistItems = wishlistItems
-                    }
+        let publisher = createPublisher(viewModel.wishlistItems)
+
+        publisher
+            .receive(on: DispatchQueue.main)
+            .sink { items in
+                if let wishlistItems = items as? [WishlistLocalItemDto] {
+                    self.wishlistItems = wishlistItems
                 }
-                .store(in: &cancellables)
-        }
+            }
+            .store(in: &cancellables)
+    }
 
     private var emptyStateView: some View {
         EmptyState(
