@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ProductEntity(
     val id: String?,
-    val createdAt: Int?,
-    val updatedAt: Int?,
+    val createdAt: String?,
+    val updatedAt: String?,
     val createdBy: String?,
     val updatedBy: String?,
     val categoryId: String?,
@@ -24,8 +24,8 @@ data class ProductEntity(
 @Serializable
 data class VariantEntity(
     val id: String?,
-    val createdAt: Int?,
-    val updatedAt: Int?,
+    val createdAt: String?,
+    val updatedAt: String?,
     val createdBy: String?,
     val updatedBy: String?,
     val isMain: Boolean?,
