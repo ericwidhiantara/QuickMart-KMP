@@ -47,6 +47,7 @@ import com.luckyfrog.quickmart.core.widgets.ConfirmationDialog
 import com.luckyfrog.quickmart.features.profile.presentation.profile.component.ProfileTopBar
 import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import org.koin.androidx.compose.koinViewModel
+import com.luckyfrog.quickmart.features.profile.presentation.profile.DeleteAccountState
 
 @Composable
 fun ProfileScreen(
@@ -54,9 +55,21 @@ fun ProfileScreen(
     userViewModel: UserViewModel = koinViewModel<UserViewModel>(),
 ) {
     val userState by userViewModel.userState.collectAsState()
+    val deleteAccountState by userViewModel.deleteAccountState.collectAsState()
     var showLogoutDialog by remember { mutableStateOf(false) }
+    var showDeleteAccountDialog by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
+
+    LaunchedEffect(deleteAccountState) {
+        if (deleteAccountState is DeleteAccountState.Success) {
+            userViewModel.resetDeleteAccountState()
+            AppPreferences.clearToken(context)
+            navController.navigate(AppScreen.LoginScreen.route) {
+                popUpTo(AppScreen.MainScreen.route) { inclusive = true }
+            }
+        }
+    }
 
     val settingsSections = listOf(
         SettingsSection(
@@ -65,14 +78,22 @@ fun ProfileScreen(
                 SettingsItem(
                     title = stringResource(id = R.string.shipping_address),
                     icon = Images.icShipping,
-                    onClick = {
-                        navController.navigate(AppScreen.ShippingAddressScreen.route)
-                    }
+                    onClick = { navController.navigate(AppScreen.ShippingAddressScreen.route) }
                 ),
                 SettingsItem(
                     title = stringResource(id = R.string.order_history),
                     icon = Images.icOrderHistory,
-                    onClick = {}
+                    onClick = { navController.navigate(AppScreen.OrderListScreen.route) }
+                ),
+                SettingsItem(
+                    title = "My Wallet",
+                    icon = Images.icShipping, // reuse closest icon
+                    onClick = { navController.navigate(AppScreen.WalletScreen.route) }
+                ),
+                SettingsItem(
+                    title = "Edit Profile",
+                    icon = Images.icChangePassword,
+                    onClick = { navController.navigate(AppScreen.EditProfileScreen.route) }
                 ),
             )
         ),
@@ -102,19 +123,12 @@ fun ProfileScreen(
                 SettingsItem(
                     title = stringResource(id = R.string.change_password),
                     icon = Images.icChangePassword,
-                    onClick = {
-                        navController.navigate(AppScreen.CheckPasswordScreen.route)
-                    }
+                    onClick = { navController.navigate(AppScreen.CheckPasswordScreen.route) }
                 ),
                 SettingsItem(
-                    title = stringResource(id = R.string.theme),
-                    icon = Images.icTheme,
-                    onClick = {}
-                ),
-                SettingsItem(
-                    title = stringResource(id = R.string.language),
-                    icon = Images.icLanguage,
-                    onClick = {}
+                    title = "Delete Account",
+                    icon = Images.icPrivacyPolicy,
+                    onClick = { showDeleteAccountDialog = true }
                 ),
             )
         ),
@@ -122,6 +136,19 @@ fun ProfileScreen(
 
     LaunchedEffect(Unit) {
         userViewModel.getUserLogin()
+    }
+
+    if (showDeleteAccountDialog) {
+        ConfirmationDialog(
+            title = "Delete Account",
+            description = "Your account and all data will be permanently deleted. This cannot be undone.",
+            confirmText = "Delete",
+            onConfirm = {
+                showDeleteAccountDialog = false
+                userViewModel.deleteAccount()
+            },
+            onDismiss = { showDeleteAccountDialog = false }
+        )
     }
 
     Scaffold(
@@ -137,17 +164,12 @@ fun ProfileScreen(
                     confirmText = stringResource(id = R.string.logout),
                     onConfirm = {
                         showLogoutDialog = false
-                        // Add logout logic here
                         AppPreferences.clearToken(context)
                         navController.navigate(AppScreen.LoginScreen.route) {
-                            popUpTo(AppScreen.MainScreen.route) {
-                                inclusive = true
-                            }  // Clear back stack
+                            popUpTo(AppScreen.MainScreen.route) { inclusive = true }
                         }
                     },
-                    onDismiss = {
-                        showLogoutDialog = false
-                    }
+                    onDismiss = { showLogoutDialog = false }
                 )
             }
         },

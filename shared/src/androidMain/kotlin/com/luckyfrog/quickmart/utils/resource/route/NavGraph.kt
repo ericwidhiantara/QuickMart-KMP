@@ -25,9 +25,11 @@ import com.luckyfrog.quickmart.features.product.presentation.product_list_by_cat
 import com.luckyfrog.quickmart.features.product.presentation.search.SearchScreen
 import com.luckyfrog.quickmart.features.profile.presentation.change_password.ChangePasswordScreen
 import com.luckyfrog.quickmart.features.profile.presentation.check_password.CheckPasswordScreen
+import com.luckyfrog.quickmart.features.profile.presentation.edit_profile.EditProfileScreen
 import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScreen
 import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingAddressFormScreen
 import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingAddressScreen
+import com.luckyfrog.quickmart.features.wallet.presentation.WalletScreen
 import com.luckyfrog.quickmart.features.wishlist.presentation.my_wishlist.MyWishlistScreen
 
 @Composable
@@ -40,78 +42,51 @@ fun NavGraph() {
 
         // GENERAL
         composable(route = AppScreen.SplashScreen.route) {
-            SplashScreen(
-                navController = navController
-            )
+            SplashScreen(navController = navController)
         }
         composable(route = AppScreen.OnboardingScreen.route) {
-            OnboardingScreen(
-                navController = navController
-            )
+            OnboardingScreen(navController = navController)
         }
-
         composable(route = AppScreen.MainScreen.route) {
-            BottomNavBar(
-                navController = navController,
-            )
+            BottomNavBar(navController = navController)
         }
 
-        /// AUTH
+        // AUTH
         composable(route = AppScreen.LoginScreen.route) {
-            LoginScreen(
-                navController = navController
-            )
+            LoginScreen(navController = navController)
         }
         composable(route = AppScreen.RegisterScreen.route) {
-            RegisterScreen(
-                navController = navController
-            )
+            RegisterScreen(navController = navController)
         }
         composable(route = AppScreen.EmailVerificationScreen.route) {
-            EmailVerificationScreen(
-                navController = navController
-            )
+            EmailVerificationScreen(navController = navController)
         }
-
         composable(route = AppScreen.ForgotPasswordEmailConfirmationScreen.route) {
-            ForgotPasswordEmailConfirmationScreen(
-                navController = navController
-            )
+            ForgotPasswordEmailConfirmationScreen(navController = navController)
         }
-
         composable(route = AppScreen.ForgotPasswordVerifyCodeScreen.route + "?email={email}") {
             ForgotPasswordVerifyCodeScreen(
                 navController = navController,
                 email = it.arguments?.getString("email") ?: "",
             )
         }
-
         composable(route = AppScreen.CreatePasswordScreen.route + "?otp_id={otpId}") {
             CreatePasswordScreen(
                 navController = navController,
                 otpId = it.arguments?.getString("otpId") ?: "",
             )
         }
-
         composable(route = AppScreen.PasswordCreatedScreen.route) {
-            PasswordCreatedScreen(
-                navController = navController
-            )
+            PasswordCreatedScreen(navController = navController)
         }
 
-        /// PROFILE
+        // PROFILE
         composable(route = AppScreen.ProfileScreen.route) {
-            ProfileScreen(
-                navController = navController
-            )
+            ProfileScreen(navController = navController)
         }
-
         composable(route = AppScreen.ShippingAddressScreen.route) {
-            ShippingAddressScreen(
-                navController = navController
-            )
+            ShippingAddressScreen(navController = navController)
         }
-
         composable(route = AppScreen.ShippingAddressFormScreen.route + "?isEdit={isEdit}&addressId={addressId}") {
             val isEdit = it.arguments?.getString("isEdit")?.toBoolean() ?: false
             val addressId = it.arguments?.getString("addressId")
@@ -121,31 +96,28 @@ fun NavGraph() {
                 addressId = addressId
             )
         }
-
         composable(route = AppScreen.CheckPasswordScreen.route) {
-            CheckPasswordScreen(
-                navController = navController,
-            )
+            CheckPasswordScreen(navController = navController)
         }
-
         composable(route = AppScreen.ChangePasswordScreen.route) {
-            ChangePasswordScreen(
-                navController = navController,
-            )
+            ChangePasswordScreen(navController = navController)
+        }
+        composable(route = AppScreen.EditProfileScreen.route) {
+            EditProfileScreen(navController = navController)
+        }
+        composable(route = AppScreen.WalletScreen.route) {
+            WalletScreen(navController = navController)
         }
 
-        /// CATEGORY
+        // CATEGORY
         composable(route = AppScreen.CategoryListScreen.route) {
-            CategoryListScreen(
-                navController = navController
-            )
+            CategoryListScreen(navController = navController)
         }
 
         // ORDER
         composable(route = AppScreen.OrderListScreen.route) {
             OrderListScreen(navController = navController)
         }
-
         composable(route = AppScreen.OrderDetailScreen.route + "/{orderId}") {
             val orderId = it.arguments?.getString("orderId") ?: ""
             OrderDetailScreen(orderId = orderId, navController = navController)
@@ -153,64 +125,35 @@ fun NavGraph() {
 
         // CART
         composable(route = AppScreen.MyCartScreen.route) {
-            MyCartScreen(
-                navController = navController
-            )
+            MyCartScreen(navController = navController)
         }
 
         // WISHLIST
         composable(route = AppScreen.MyWishlistScreen.route) {
-            MyWishlistScreen(
-                navController = navController
-            )
+            MyWishlistScreen(navController = navController)
         }
 
-        /// PRODUCT
+        // PRODUCT
         composable(route = AppScreen.ProductListScreen.route + "?title={title}") {
-            val title = it.arguments?.getString("title")
-                ?: ""
-            ProductListScreen(
-                navController = navController,
-                topBarTitle = title,
-            )
+            val title = it.arguments?.getString("title") ?: ""
+            ProductListScreen(navController = navController, topBarTitle = title)
         }
-
         composable(route = AppScreen.ProductListByCategoryScreen.route + "?id={id}&title={title}") {
-            val id = it.arguments?.getString("id")
-                ?: ""
-            val title = it.arguments?.getString("title")
-                ?: ""
-            ProductListByCategoryScreen(
-                navController = navController,
-                topBarTitle = title,
-                categoryId = id,
-            )
+            val id = it.arguments?.getString("id") ?: ""
+            val title = it.arguments?.getString("title") ?: ""
+            ProductListByCategoryScreen(navController = navController, topBarTitle = title, categoryId = id)
         }
-
-        composable(
-            route = AppScreen.ProductDetailScreen.route + "/{productId}", // Assuming your route contains a productId
-        ) {
-            val productId = it.arguments?.getString("productId")
-                ?: ""
-
-            ProductDetailScreen(
-                productId = productId,
-                navController = navController
-            )
+        composable(route = AppScreen.ProductDetailScreen.route + "/{productId}") {
+            val productId = it.arguments?.getString("productId") ?: ""
+            ProductDetailScreen(productId = productId, navController = navController)
         }
-
         composable(route = AppScreen.SearchScreen.route) {
-            SearchScreen(
-                navController = navController
-            )
+            SearchScreen(navController = navController)
         }
 
-        /// HOME
+        // HOME
         composable(route = AppScreen.HomeScreen.route) {
-            HomeScreen(
-                navController = navController,
-            )
+            HomeScreen(navController = navController)
         }
     }
-
 }

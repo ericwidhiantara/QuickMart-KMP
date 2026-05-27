@@ -18,63 +18,39 @@ struct ProfileScreen: View {
     @State private var userState: UserState = UserState.Idle()
     @State private var isChangePasswordMenu: Bool? = false
     
+    @State private var showDeleteAccountDialog = false
+
     var body: some View {
-        
+
         let settingsSections: [SettingsSection] = [
             SettingsSection(
                 title: "personal_information",
                 items: [
-                    SettingsItem(
-                        title: "shipping_address", icon: "Shipping",
-                        action: {
-                            // Navigate to Shipping Address screen
-                        }),
-                    SettingsItem(
-                        title: "order_history", icon: "OrderHistory",
-                        action: {
-                            // Navigate to Order History screen
-                        }),
+                    SettingsItem(title: "shipping_address", icon: "Shipping",
+                        action: { rootView = .shipping_address_list }),
+                    SettingsItem(title: "order_history", icon: "OrderHistory",
+                        action: { rootView = .order_list }),
+                    SettingsItem(title: "My Wallet", icon: "Shipping",
+                        action: { rootView = .wallet }),
+                    SettingsItem(title: "Edit Profile", icon: "ChangePassword",
+                        action: { rootView = .edit_profile }),
                 ]
             ),
             SettingsSection(
                 title: "support_and_information",
                 items: [
-                    SettingsItem(
-                        title: "privacy_policy", icon: "PrivacyPolicy",
-                        action: {
-                            // Navigate to Privacy Policy screen
-                        }),
-                    SettingsItem(
-                        title: "terms_and_conditions", icon: "TermsAndCondition",
-                        action: {
-                            // Navigate to Terms and Conditions screen
-                        }),
-                    SettingsItem(
-                        title: "faqs", icon: "Faq",
-                        action: {
-                            // Navigate to FAQs screen
-                        }),
+                    SettingsItem(title: "privacy_policy", icon: "PrivacyPolicy", action: {}),
+                    SettingsItem(title: "terms_and_conditions", icon: "TermsAndCondition", action: {}),
+                    SettingsItem(title: "faqs", icon: "Faq", action: {}),
                 ]
             ),
             SettingsSection(
                 title: "account_management",
                 items: [
-                    SettingsItem(
-                        title: "change_password", icon: "ChangePassword",
-                        action: {
-                            isChangePasswordMenu = true
-                        }
-                    ),
-                    SettingsItem(
-                        title: "theme", icon: "DarkTheme",
-                        action: {
-                            // Navigate to Theme settings
-                        }),
-                    SettingsItem(
-                        title: "language", icon: "Language",
-                        action: {
-                            // Navigate to Language settings
-                        }),
+                    SettingsItem(title: "change_password", icon: "ChangePassword",
+                        action: { isChangePasswordMenu = true }),
+                    SettingsItem(title: "Delete Account", icon: "PrivacyPolicy",
+                        action: { showDeleteAccountDialog = true }),
                 ]
             ),
         ]
@@ -128,6 +104,14 @@ struct ProfileScreen: View {
                 appUiState.subscribe { state in
                     self.userState = state!
                 }
+                userViewModel.deleteAccountState.subscribe { s in
+                    DispatchQueue.main.async {
+                        if let s = s, s is DeleteAccountState.Success {
+                            _ = AppPreferences.shared.clearToken()
+                            self.rootView = .login
+                        }
+                    }
+                }
                 userViewModel.getUserLogin()
             }
             .confirmationDialog(
@@ -137,9 +121,14 @@ struct ProfileScreen: View {
                 Button(LocalizedStringKey("logout"), role: .destructive) {
                     _ = AppPreferences.shared.clearToken()
                     rootView = .login
-
                 }
                 Button("Cancel", role: .cancel) {}
+            }
+            .confirmationDialog("Delete Account", isPresented: $showDeleteAccountDialog, titleVisibility: .visible) {
+                Button("Delete", role: .destructive) { userViewModel.deleteAccount() }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Your account and all data will be permanently deleted.")
             }
             .navigationBarHidden(true)
         }

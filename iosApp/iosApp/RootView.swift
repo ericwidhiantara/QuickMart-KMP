@@ -62,6 +62,10 @@ struct ContentView: View {
                 ShippingAddressView(rootView: $rootView)
             case .shipping_address_form(let addressId):
                 ShippingAddressFormView(rootView: $rootView, editAddressId: addressId)
+            case .wallet:
+                WalletView(rootView: $rootView)
+            case .edit_profile:
+                EditProfileView(rootView: $rootView)
             }
         }
         .appTheme(.default)  // or .light, .dark

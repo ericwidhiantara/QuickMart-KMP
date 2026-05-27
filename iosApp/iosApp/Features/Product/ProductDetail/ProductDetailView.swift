@@ -15,6 +15,7 @@ struct ProductDetailView: View {
     @StateObject private var cartViewModel: MyCartViewModel = KoinHelper().getMyCartViewModel()
     @StateObject private var wishlistViewModel: MyWishlistViewModel = KoinHelper().getMyWishlistViewModel()
     @StateObject private var userViewModel: UserViewModel = KoinHelper().getUserViewModel()
+    @StateObject private var reviewViewModel: ProductReviewViewModel = KoinHelper().getProductReviewViewModel()
 
     @State private var state: ProductDetailState = ProductDetailState.Idle()
     @State private var userState: UserState = UserState.Idle()
@@ -43,11 +44,12 @@ struct ProductDetailView: View {
                     isFavorite: isFavorite,
                     currentPage: $currentImagePage,
                     onBack: { rootView = .main },
-                    onToggleWishlist: { toggleWishlist(product: s.data) }
+                    onToggleWishlist: { toggleWishlist(product: s.data) },
+                    currentUserId: userId
                 )
                 ProductDetailBottomBar(
                     product: s.data,
-                    onBuyNow: { /* TODO: checkout */ },
+                    onBuyNow: { buyNow(product: s.data) },
                     onAddToCart: { addToCart(product: s.data) }
                 )
 
@@ -153,6 +155,11 @@ struct ProductDetailView: View {
             withAnimation { showAddedToCart = false }
         }
     }
+
+    private func buyNow(product: ProductEntity) {
+        addToCart(product: product)
+        rootView = .cart
+    }
 }
 
 // MARK: - Content
@@ -163,6 +170,7 @@ private struct ProductDetailContent: View {
     @Binding var currentPage: Int
     let onBack: () -> Void
     let onToggleWishlist: () -> Void
+    let currentUserId: String
 
     @State private var isDescExpanded = false
 
@@ -230,6 +238,11 @@ private struct ProductDetailContent: View {
                 .glassCard(cornerRadius: 24, fallback: Color(.systemBackground))
                 .padding(.horizontal, 12)
                 .offset(y: -24)
+
+                // Reviews
+                ReviewSectionView(productId: product.id ?? "", currentUserId: currentUserId)
+                    .padding(.horizontal, 12)
+                    .padding(.top, 4)
 
                 Spacer(minLength: 100) // space for bottom bar
             }

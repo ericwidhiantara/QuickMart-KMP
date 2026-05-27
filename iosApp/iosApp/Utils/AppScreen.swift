@@ -32,6 +32,8 @@ enum AppScreen: Hashable {
     case order_detail(String)               // orderId
     case shipping_address_list
     case shipping_address_form(String?)     // addressId? (nil = create, non-nil = edit)
+    case wallet
+    case edit_profile
 
     func hash(into hasher: inout Hasher) {
         switch self {

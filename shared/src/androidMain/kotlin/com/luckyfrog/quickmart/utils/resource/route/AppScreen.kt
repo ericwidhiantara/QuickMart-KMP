@@ -55,6 +55,12 @@ sealed class AppScreen(val route: String) {
 
     data object ChangePasswordScreen :
         AppScreen(ConstantAppScreenName.CHANGE_PASSWORD_SCREEN)
+
+    data object EditProfileScreen :
+        AppScreen(ConstantAppScreenName.EDIT_PROFILE_SCREEN)
+
+    data object WalletScreen :
+        AppScreen(ConstantAppScreenName.WALLET_SCREEN)
 }
 
 object ConstantAppScreenName {
@@ -101,5 +107,6 @@ object ConstantAppScreenName {
     const val SHIPPING_ADDRESS_FORM_SCREEN = "shipping_address_form_screen"
     const val CHECK_PASSWORD_SCREEN = "check_password_screen"
     const val CHANGE_PASSWORD_SCREEN = "change_password_screen"
-
+    const val EDIT_PROFILE_SCREEN = "edit_profile_screen"
+    const val WALLET_SCREEN = "wallet_screen"
 }

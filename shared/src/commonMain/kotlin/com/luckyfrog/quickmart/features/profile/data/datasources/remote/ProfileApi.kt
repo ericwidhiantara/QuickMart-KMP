@@ -4,6 +4,7 @@ import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
 import com.luckyfrog.quickmart.features.auth.data.models.response.UserResponseDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.delete
 import io.ktor.client.request.forms.MultiPartFormDataContent
 import io.ktor.client.request.forms.formData
 import io.ktor.client.request.get
@@ -12,23 +13,17 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 
 interface ProfileApi {
-    suspend fun getUserLogin(
-    ): ResponseDto<UserResponseDto>
-
-    suspend fun postCheckPassword(
-        password: String,
-    ): ResponseDto<Unit>
-
-    suspend fun postChangePassword(
-        newPassword: String,
-        confirmPassword: String,
-    ): ResponseDto<Unit>
-
+    suspend fun getUserLogin(): ResponseDto<UserResponseDto>
+    suspend fun postCheckPassword(password: String): ResponseDto<Unit>
+    suspend fun postChangePassword(newPassword: String, confirmPassword: String): ResponseDto<Unit>
     suspend fun postSendOTP(): ResponseDto<Unit>
-
-    suspend fun postVerifyOTP(
-        otpCode: String
-    ): ResponseDto<Unit>
+    suspend fun postVerifyOTP(otpCode: String): ResponseDto<Unit>
+    suspend fun updateProfile(
+        fullname: String?, username: String?, email: String?,
+        phoneNumber: String?, gender: String?, birthDate: String?,
+        language: String?, currency: String?
+    ): ResponseDto<UserResponseDto>
+    suspend fun deleteAccount(): ResponseDto<Unit>
 }
 
 class ProfileApiImpl(private val client: HttpClient) : ProfileApi {
@@ -82,4 +77,27 @@ class ProfileApiImpl(private val client: HttpClient) : ProfileApi {
         }
         return response.body()
     }
+
+    override suspend fun updateProfile(
+        fullname: String?, username: String?, email: String?,
+        phoneNumber: String?, gender: String?, birthDate: String?,
+        language: String?, currency: String?
+    ): ResponseDto<UserResponseDto> {
+        val response = client.patch("user/me/profile") {
+            setBody(MultiPartFormDataContent(formData {
+                fullname?.let { append("fullname", it) }
+                username?.let { append("username", it) }
+                email?.let { append("email", it) }
+                phoneNumber?.let { append("phone_number", it) }
+                gender?.let { append("gender", it) }
+                birthDate?.let { append("birth_date", it) }
+                language?.let { append("language", it) }
+                currency?.let { append("currency", it) }
+            }))
+        }
+        return response.body()
+    }
+
+    override suspend fun deleteAccount(): ResponseDto<Unit> =
+        client.delete("user/me").body()
 }

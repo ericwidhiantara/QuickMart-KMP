@@ -16,6 +16,8 @@ import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductR
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductRemoteDataSourceImpl
 import com.luckyfrog.quickmart.features.profile.data.datasources.remote.ProfileRemoteDataSource
 import com.luckyfrog.quickmart.features.profile.data.datasources.remote.ProfileRemoteDataSourceImpl
+import com.luckyfrog.quickmart.features.wallet.data.datasources.remote.WalletRemoteDataSource
+import com.luckyfrog.quickmart.features.wallet.data.datasources.remote.WalletRemoteDataSourceImpl
 import com.luckyfrog.quickmart.features.wishlist.data.datasources.local.WishlistLocalDataSource
 import com.luckyfrog.quickmart.features.wishlist.data.datasources.local.WishlistLocalDataSourceImpl
 import org.koin.dsl.module
@@ -63,16 +65,15 @@ val dataSourceModule = module {
         )
     }
 
+    factory<WalletRemoteDataSource> {
+        WalletRemoteDataSourceImpl(api = get())
+    }
+
     factory<CartLocalDataSource> {
-        CartLocalDataSourceImpl(
-            database = get()
-        )
+        CartLocalDataSourceImpl(database = get())
     }
 
     factory<WishlistLocalDataSource> {
-        WishlistLocalDataSourceImpl(
-            database = get()
-        )
+        WishlistLocalDataSourceImpl(database = get())
     }
-
 }

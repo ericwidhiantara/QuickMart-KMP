@@ -19,6 +19,7 @@ import com.luckyfrog.quickmart.features.order.presentation.order_detail.OrderDet
 import com.luckyfrog.quickmart.features.order.presentation.order_list.OrderListViewModel
 import com.luckyfrog.quickmart.features.review.presentation.product_review.ProductReviewViewModel
 import com.luckyfrog.quickmart.features.shipping_address.presentation.address_list.ShippingAddressListViewModel
+import com.luckyfrog.quickmart.features.wallet.presentation.WalletViewModel
 import com.luckyfrog.quickmart.features.wishlist.presentation.my_wishlist.MyWishlistViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -36,9 +37,7 @@ class KoinHelper : KoinComponent {
     fun getRegisterViewModel() = get<RegisterViewModel>()
     fun getEmailVerificationViewModel() = get<EmailVerificationViewModel>()
     fun getCreatePasswordViewModel() = get<CreatePasswordViewModel>()
-    fun getForgotPasswordEmailConfirmationViewModel() =
-        get<ForgotPasswordEmailConfirmationViewModel>()
-
+    fun getForgotPasswordEmailConfirmationViewModel() = get<ForgotPasswordEmailConfirmationViewModel>()
     fun getForgotPasswordVerifyCodeViewModel() = get<ForgotPasswordVerifyCodeViewModel>()
 
     // General
@@ -72,4 +71,6 @@ class KoinHelper : KoinComponent {
     // Shipping Address
     fun getShippingAddressListViewModel() = get<ShippingAddressListViewModel>()
 
+    // Wallet
+    fun getWalletViewModel() = get<WalletViewModel>()
 }

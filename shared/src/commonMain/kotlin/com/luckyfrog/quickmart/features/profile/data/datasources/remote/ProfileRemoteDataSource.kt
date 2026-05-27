@@ -8,13 +8,14 @@ import com.luckyfrog.quickmart.features.profile.data.models.request.VerifyOTPFor
 
 interface ProfileRemoteDataSource {
     suspend fun getUserLogin(): ResponseDto<UserResponseDto>
-
     suspend fun checkPassword(params: CheckPasswordFormRequestDto): ResponseDto<Unit>
-
     suspend fun changePassword(params: ChangePasswordFormRequestDto): ResponseDto<Unit>
-
     suspend fun sendOTP(): ResponseDto<Unit>
-
     suspend fun verifyOTP(params: VerifyOTPFormRequestDto): ResponseDto<Unit>
-
+    suspend fun updateProfile(
+        fullname: String?, username: String?, email: String?,
+        phoneNumber: String?, gender: String?, birthDate: String?,
+        language: String?, currency: String?
+    ): ResponseDto<UserResponseDto>
+    suspend fun deleteAccount(): ResponseDto<Unit>
 }

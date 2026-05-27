@@ -20,9 +20,13 @@ import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductDetail
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.ChangePasswordUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.CheckPasswordUseCase
+import com.luckyfrog.quickmart.features.profile.domain.usecases.DeleteAccountUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.GetUserUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.SendOTPUseCase
+import com.luckyfrog.quickmart.features.profile.domain.usecases.UpdateProfileUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.VerifyOTPUseCase
+import com.luckyfrog.quickmart.features.wallet.domain.usecases.GetWalletUseCase
+import com.luckyfrog.quickmart.features.wallet.domain.usecases.TopUpWalletUseCase
 import com.luckyfrog.quickmart.features.review.domain.usecases.CreateReviewUseCase
 import com.luckyfrog.quickmart.features.review.domain.usecases.DeleteReviewUseCase
 import com.luckyfrog.quickmart.features.review.domain.usecases.GetProductReviewsUseCase
@@ -54,6 +58,12 @@ val useCaseModule = module {
     factory { ChangePasswordUseCase(repository = get()) }
     factory { SendOTPUseCase(repository = get()) }
     factory { VerifyOTPUseCase(repository = get()) }
+    factory { UpdateProfileUseCase(repository = get()) }
+    factory { DeleteAccountUseCase(repository = get()) }
+
+    // WALLET
+    factory { GetWalletUseCase(repository = get()) }
+    factory { TopUpWalletUseCase(repository = get()) }
 
     // CATEGORY
     factory { GetCategoriesUseCase(repository = get()) }

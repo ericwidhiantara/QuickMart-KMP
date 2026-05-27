@@ -65,8 +65,10 @@ import com.luckyfrog.quickmart.features.cart.presentation.my_cart.MyCartViewMode
 import com.luckyfrog.quickmart.features.product.domain.entities.ProductEntity
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserState
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
+import com.luckyfrog.quickmart.features.review.presentation.product_review.ReviewSection
 import com.luckyfrog.quickmart.features.wishlist.data.models.WishlistLocalItemDto
 import com.luckyfrog.quickmart.features.wishlist.presentation.my_wishlist.MyWishlistViewModel
+import com.luckyfrog.quickmart.utils.resource.route.AppScreen
 import com.luckyfrog.quickmart.utils.PageLoader
 import com.luckyfrog.quickmart.utils.helper.capitalizeWords
 import com.luckyfrog.quickmart.utils.resource.theme.colorBlue
@@ -104,7 +106,7 @@ fun ProductDetailScreen(
         is ProductDetailState.Success -> {
             Scaffold(
                 bottomBar = {
-                    ProductDetailBottomSection(state.data, userId = userId)
+                    ProductDetailBottomSection(state.data, userId = userId, navController = navController)
                 }
             ) { paddingValues ->
                 ProductDetailContent(
@@ -252,7 +254,11 @@ fun ProductDetailContent(
                     maxLines = 4
                 )
 
-                // Add more content as needed
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Reviews
+                ReviewSection(productId = product.id ?: "", currentUserId = userId)
+
                 Spacer(modifier = Modifier.height(100.dp))
             }
 
@@ -437,6 +443,7 @@ fun ProductDetailBottomSection(
     product: ProductEntity,
     cartModel: MyCartViewModel = koinViewModel<MyCartViewModel>(),
     userId: String,
+    navController: NavController? = null,
 ) {
     // Get the screen height from LocalConfiguration
     val configuration = LocalConfiguration.current
@@ -460,8 +467,21 @@ fun ProductDetailBottomSection(
                 buttonTextColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onPrimaryContainer,
                 modifier = Modifier.width(screenWidth * 0.45F),
                 onClick = {
-
-
+                    val item = CartLocalItemDto(
+                        productId = product.id ?: "",
+                        productName = product.name ?: "",
+                        productPrice = product.variants?.get(0)?.price ?: 0.0,
+                        discountPercentage = product.variants?.get(0)?.discountPercentage ?: 0.0,
+                        qty = 1,
+                        selected = true,
+                        productImage = product.images?.get(0) ?: "",
+                        userId = userId
+                    )
+                    coroutineScope.launch {
+                        cartModel.addItem(item)
+                        Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show()
+                    }
+                    navController?.navigate(AppScreen.MyCartScreen.route)
                 },
                 buttonBorderColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 buttonContainerColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.onPrimaryContainer else Color.Transparent,

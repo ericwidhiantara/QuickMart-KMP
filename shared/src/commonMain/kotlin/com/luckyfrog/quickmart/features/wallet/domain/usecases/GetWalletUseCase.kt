@@ -1,0 +1,13 @@
+package com.luckyfrog.quickmart.features.wallet.domain.usecases
+
+import com.luckyfrog.quickmart.core.generic.dto.ResponseDto
+import com.luckyfrog.quickmart.features.wallet.domain.entities.WalletEntity
+import com.luckyfrog.quickmart.features.wallet.domain.repositories.WalletRepository
+import com.luckyfrog.quickmart.utils.ApiResponse
+import com.luckyfrog.quickmart.utils.UseCase
+import kotlinx.coroutines.flow.Flow
+
+class GetWalletUseCase(private val repository: WalletRepository) :
+    UseCase<Unit, Flow<ApiResponse<ResponseDto<WalletEntity>>>> {
+    override suspend fun execute(params: Unit) = repository.getWallet()
+}
