@@ -6,6 +6,8 @@ import com.luckyfrog.quickmart.features.cart.data.datasources.local.CartLocalDat
 import com.luckyfrog.quickmart.features.cart.data.datasources.local.CartLocalDataSourceImpl
 import com.luckyfrog.quickmart.features.category.data.datasources.remote.CategoryRemoteDataSource
 import com.luckyfrog.quickmart.features.category.data.datasources.remote.CategoryRemoteDataSourceImpl
+import com.luckyfrog.quickmart.features.order.data.datasources.remote.OrderRemoteDataSource
+import com.luckyfrog.quickmart.features.order.data.datasources.remote.OrderRemoteDataSourceImpl
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductRemoteDataSource
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductRemoteDataSourceImpl
 import com.luckyfrog.quickmart.features.profile.data.datasources.remote.ProfileRemoteDataSource
@@ -35,6 +37,12 @@ val dataSourceModule = module {
 
     factory<CategoryRemoteDataSource> {
         CategoryRemoteDataSourceImpl(
+            api = get(),
+        )
+    }
+
+    factory<OrderRemoteDataSource> {
+        OrderRemoteDataSourceImpl(
             api = get(),
         )
     }

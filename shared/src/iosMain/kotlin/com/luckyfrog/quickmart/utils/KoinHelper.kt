@@ -15,6 +15,8 @@ import com.luckyfrog.quickmart.features.product.presentation.product_list.Produc
 import com.luckyfrog.quickmart.features.profile.presentation.change_password.ChangePasswordViewModel
 import com.luckyfrog.quickmart.features.profile.presentation.check_password.CheckPasswordViewModel
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
+import com.luckyfrog.quickmart.features.order.presentation.order_detail.OrderDetailViewModel
+import com.luckyfrog.quickmart.features.order.presentation.order_list.OrderListViewModel
 import com.luckyfrog.quickmart.features.wishlist.presentation.my_wishlist.MyWishlistViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -57,5 +59,9 @@ class KoinHelper : KoinComponent {
     // Product
     fun getProductDetailViewModel() = get<ProductDetailViewModel>()
     fun getProductListViewModel() = get<ProductListViewModel>()
+
+    // Order
+    fun getOrderListViewModel() = get<OrderListViewModel>()
+    fun getOrderDetailViewModel() = get<OrderDetailViewModel>()
 
 }

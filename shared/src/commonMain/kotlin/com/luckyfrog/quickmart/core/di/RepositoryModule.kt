@@ -6,6 +6,8 @@ import com.luckyfrog.quickmart.features.cart.data.repositories.CartLocalReposito
 import com.luckyfrog.quickmart.features.cart.domain.repositories.CartLocalRepository
 import com.luckyfrog.quickmart.features.category.data.repositories.CategoryRepositoryImpl
 import com.luckyfrog.quickmart.features.category.domain.repositories.CategoryRepository
+import com.luckyfrog.quickmart.features.order.data.repositories.OrderRepositoryImpl
+import com.luckyfrog.quickmart.features.order.domain.repositories.OrderRepository
 import com.luckyfrog.quickmart.features.product.data.repositories.ProductRepositoryImpl
 import com.luckyfrog.quickmart.features.product.domain.repositories.ProductRepository
 import com.luckyfrog.quickmart.features.profile.data.repositories.ProfileRepositoryImpl
@@ -22,6 +24,8 @@ val repositoryModule = module {
     factory<ProfileRepository> { ProfileRepositoryImpl(remoteDataSource = get()) }
 
     factory<CategoryRepository> { CategoryRepositoryImpl(remoteDataSource = get()) }
+
+    factory<OrderRepository> { OrderRepositoryImpl(remoteDataSource = get()) }
 
     factory<CartLocalRepository> { CartLocalRepositoryImpl(localDataSource = get()) }
    

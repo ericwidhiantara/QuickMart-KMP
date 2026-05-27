@@ -12,6 +12,10 @@ import com.luckyfrog.quickmart.features.cart.domain.usecases.local.GetSelectedCa
 import com.luckyfrog.quickmart.features.cart.domain.usecases.local.InsertCartItemUseCase
 import com.luckyfrog.quickmart.features.cart.domain.usecases.local.UpdateCartItemUseCase
 import com.luckyfrog.quickmart.features.category.domain.usecases.GetCategoriesUseCase
+import com.luckyfrog.quickmart.features.order.domain.usecases.CancelOrderUseCase
+import com.luckyfrog.quickmart.features.order.domain.usecases.CheckoutUseCase
+import com.luckyfrog.quickmart.features.order.domain.usecases.GetOrderDetailUseCase
+import com.luckyfrog.quickmart.features.order.domain.usecases.GetOrdersUseCase
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductDetailUseCase
 import com.luckyfrog.quickmart.features.product.domain.usecases.GetProductsUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.ChangePasswordUseCase
@@ -45,6 +49,12 @@ val useCaseModule = module {
 
     // CATEGORY
     factory { GetCategoriesUseCase(repository = get()) }
+
+    // ORDER
+    factory { CheckoutUseCase(repository = get()) }
+    factory { GetOrdersUseCase(repository = get()) }
+    factory { GetOrderDetailUseCase(repository = get()) }
+    factory { CancelOrderUseCase(repository = get()) }
 
     // CART
     factory { CalculateSubtotalUseCase(repository = get()) }

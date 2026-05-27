@@ -4,6 +4,8 @@ import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthApi
 import com.luckyfrog.quickmart.features.auth.data.datasources.remote.AuthApiImpl
 import com.luckyfrog.quickmart.features.category.data.datasources.remote.CategoryApi
 import com.luckyfrog.quickmart.features.category.data.datasources.remote.CategoryApiImpl
+import com.luckyfrog.quickmart.features.order.data.datasources.remote.OrderApi
+import com.luckyfrog.quickmart.features.order.data.datasources.remote.OrderApiImpl
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductApi
 import com.luckyfrog.quickmart.features.product.data.datasources.remote.ProductApiImpl
 import com.luckyfrog.quickmart.features.profile.data.datasources.remote.ProfileApi
@@ -34,6 +36,12 @@ val apiModule = module {
 
     factory<CategoryApi> {
         CategoryApiImpl(
+            get()
+        )
+    }
+
+    factory<OrderApi> {
+        OrderApiImpl(
             get()
         )
     }

@@ -12,6 +12,8 @@ import com.luckyfrog.quickmart.features.auth.presentation.forgot_password.verify
 import com.luckyfrog.quickmart.features.auth.presentation.login.LoginScreen
 import com.luckyfrog.quickmart.features.auth.presentation.register.RegisterScreen
 import com.luckyfrog.quickmart.features.cart.presentation.my_cart.MyCartScreen
+import com.luckyfrog.quickmart.features.order.presentation.order_detail.OrderDetailScreen
+import com.luckyfrog.quickmart.features.order.presentation.order_list.OrderListScreen
 import com.luckyfrog.quickmart.features.category.presentation.categories.CategoryListScreen
 import com.luckyfrog.quickmart.features.general.presentation.main.BottomNavBar
 import com.luckyfrog.quickmart.features.general.presentation.onboarding.OnboardingScreen
@@ -142,6 +144,16 @@ fun NavGraph() {
             CategoryListScreen(
                 navController = navController
             )
+        }
+
+        // ORDER
+        composable(route = AppScreen.OrderListScreen.route) {
+            OrderListScreen(navController = navController)
+        }
+
+        composable(route = AppScreen.OrderDetailScreen.route + "/{orderId}") {
+            val orderId = it.arguments?.getString("orderId") ?: ""
+            OrderDetailScreen(orderId = orderId, navController = navController)
         }
 
         // CART
