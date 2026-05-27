@@ -33,76 +33,73 @@ struct HomeView: View {
     )
 
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack(spacing: 0) {
-                    // Custom Navigation Bar
-                    CustomNavigationBar(
-                        userState: userState,
-                        onSearchTap: {
-                        },
-                        onProfileTap: {
-                            // Handle profile tap
-                        }
-                    )
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
+        ScrollView {
+            VStack(spacing: 0) {
+                // Custom Navigation Bar
+                CustomNavigationBar(
+                    userState: userState,
+                    onSearchTap: {
+                    },
+                    onProfileTap: {
+                        // Handle profile tap
+                    }
+                )
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
 
-                    // Content
-                    VStack(spacing: 24) {
-                        // Carousel Section
-                        Carousel().padding()
+                // Content
+                VStack(spacing: 24) {
+                    // Carousel Section
+                    Carousel().padding()
 
-                        // Categories Section
-                        VStack(spacing: 12) {
-                            HeaderRow(
-                                title: "categories",
-                                onSeeAllTap: {
-                                    navBarViewModel.updateIndex(index: 1)
-                                }
-                            )
+                    // Categories Section
+                    VStack(spacing: 12) {
+                        HeaderRow(
+                            title: "categories",
+                            onSeeAllTap: {
+                                navBarViewModel.updateIndex(index: 1)
+                            }
+                        )
 
-                            CategoryList(rootView: $rootView)
-                        }.frame(height: 120)
-                            .padding(.horizontal, 16)
-
-                        // Latest Products Section
-                        VStack(spacing: 12) {
-                            HeaderRow(
-                                title: "latest_products",
-                                onSeeAllTap: {
-                                }
-                            )
-
-                            ProductGrid(
-                                state: productState,
-                                onProductTap: { productId in
-                                }
-                            )
-                        }
+                        CategoryList(rootView: $rootView)
+                    }.frame(height: 120)
                         .padding(.horizontal, 16)
 
-                        Spacer(minLength: 24)
+                    // Latest Products Section
+                    VStack(spacing: 12) {
+                        HeaderRow(
+                            title: "latest_products",
+                            onSeeAllTap: {
+                            }
+                        )
+
+                        ProductGrid(
+                            state: productState,
+                            onProductTap: { productId in
+                            }
+                        )
                     }
+                    .padding(.horizontal, 16)
+
+                    Spacer(minLength: 24)
                 }
             }
-            .background(Color(.systemBackground))
-            .task {
-                // Subscribe to user state
-                userViewModel.userState.subscribe { state in
-                    self.userState = state!
-                }
-
-                // Subscribe to product state
-                productViewModel.state.subscribe { state in
-                    self.productState = state!
-                }
-
-                // Initial data fetching
-                userViewModel.getUserLogin()
-                productViewModel.fetchProducts(
-                    params: params, isFirstLoad: true)
+        }
+        .task {
+            // Subscribe to user state
+            userViewModel.userState.subscribe { state in
+                self.userState = state!
             }
+
+            // Subscribe to product state
+            productViewModel.state.subscribe { state in
+                self.productState = state!
+            }
+
+            // Initial data fetching
+            userViewModel.getUserLogin()
+            productViewModel.fetchProducts(
+                params: params, isFirstLoad: true)
         }
     }
 }

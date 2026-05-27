@@ -1,4 +1,5 @@
 import SwiftUI
+import Shared
 
 struct BottomNavigationItem: Identifiable {
     let id = UUID()
@@ -8,28 +9,38 @@ struct BottomNavigationItem: Identifiable {
     let view: AnyView
 }
 
-class BottomNavViewModel: ObservableObject {
-    @Published var currentIndex: Int = 0
+// Separate view for tab item
+struct TabItemView: View {
+    let item: BottomNavigationItem
+    let isSelected: Bool
 
-    func updateIndex(_ index: Int) {
-        currentIndex = index
+    var body: some View {
+        item.view
+            .tabItem {
+                Label {
+                    Text(NSLocalizedString(item.title, comment: ""))
+                } icon: {
+                    Image(isSelected ? item.iconActive : item.icon)
+                }
+            }
+            .tag(isSelected ? 0 : 1) // Ensure consistent tagging
     }
 }
 
+
 struct BottomNavBar: View {
     @Binding var rootView: AppScreen
+    @StateObject private var viewModel: NavBarViewModel = KoinHelper().getNavBarViewModel()
+    private let navbarItems: [BottomNavigationItem]
 
-    @StateObject private var viewModel = BottomNavViewModel()
-
-    let navbarItems: [BottomNavigationItem]
     init(rootView: Binding<AppScreen>) {
         _rootView = rootView
-        navbarItems = [
+        self.navbarItems = [
             BottomNavigationItem(
                 title: "menu_home",
                 icon: "MenuHome",
                 iconActive: "MenuHomeActive",
-                view: AnyView(HomeScreen())
+                view: AnyView(HomeView(rootView: rootView))
             ),
             BottomNavigationItem(
                 title: "menu_categories",
@@ -54,37 +65,33 @@ struct BottomNavBar: View {
                 icon: "MenuProfile",
                 iconActive: "MenuProfileActive",
                 view: AnyView(ProfileScreen(rootView: rootView))
-            ),
+            )
         ]
     }
 
+    private var selection: Binding<Int> {
+        Binding(
+            get: {
+                Int(truncating: viewModel.currentIndex.value ?? 0)
+            },
+            set: { newValue in
+                viewModel.updateIndex(index: Int32(newValue))
+            }
+        )
+    }
+
+
     var body: some View {
-        TabView(selection: $viewModel.currentIndex) {
-            ForEach(Array(navbarItems.enumerated()), id: \.element.id) {
-                index, item in
-                item.view
-                    .tabItem {
-                        Label(
-                            NSLocalizedString(item.title, comment: ""),
-                            image: viewModel.currentIndex == index
-                                ? item.iconActive : item.icon
-                        )
-                    }
-                    .tag(index)
+        TabView(selection: selection) {
+            ForEach(0..<navbarItems.count, id: \.self) { index in
+                TabItemView(
+                    item: navbarItems[index],
+                    isSelected: Int(truncating: viewModel.currentIndex.value ?? 0) == index
+                )
+                .tag(index)
             }
         }
         .tint(.colorCyan)
     }
-}
 
-struct HomeScreen: View {
-    var body: some View {
-        Text("Home Screen")
-    }
-}
-
-struct CategoryListScreen: View {
-    var body: some View {
-        Text("Category Screen")
-    }
 }

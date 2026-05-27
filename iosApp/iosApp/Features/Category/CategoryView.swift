@@ -60,7 +60,7 @@ struct CategoryView: View {
     var body: some View {
         let appUiState = viewModel.state
 
-        NavigationView {
+        NavigationStack {
             VStack {
                 switch state {
                 case is CategoryState.LoadingFirstPage:
@@ -93,7 +93,6 @@ struct CategoryView: View {
                                     ProgressView()
                                         .frame(maxWidth: .infinity)
                                         .padding()
-                                        .gridCellColumns(2)
                                 }
                             }
                         }
@@ -121,12 +120,5 @@ struct CategoryView: View {
                 viewModel.fetchCategories(params: params, isFirstLoad: true)
             }
         }
-    }
-}
-
-// Helper extension to make the grid row implementation cleaner
-extension View {
-    func gridRow() -> some View {
-        GridRow { self }
     }
 }

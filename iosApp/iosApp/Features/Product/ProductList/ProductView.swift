@@ -62,7 +62,7 @@ struct ProductView: View {
     var body: some View {
         let appUiState = viewModel.state
 
-        NavigationView {
+        NavigationStack {
             VStack {
                 switch state {
                 case is ProductState.LoadingFirstPage:

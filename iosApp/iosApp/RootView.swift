@@ -14,7 +14,7 @@ struct ContentView: View {
     @State private var otpId: String = ""
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             switch rootView {
             case .splash:
                 SplashView(rootView: $rootView)
@@ -46,10 +46,10 @@ struct ContentView: View {
                 MyCartView(rootView: $rootView)
             case .category:
                 CategoryView(rootView: $rootView)
+            case .product:
+                ProductView(rootView: $rootView)
             }
-
         }
-        .navigationViewStyle(StackNavigationViewStyle())
         .appTheme(.default)  // or .light, .dark
     }
 }

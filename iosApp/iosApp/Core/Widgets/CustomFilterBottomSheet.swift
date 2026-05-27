@@ -84,6 +84,6 @@ struct CustomFilterBottomSheet: View {
             .padding(.horizontal, 16)
             .padding(.top, 24)
         }
-        .background(Color(uiColor: .systemBackground))
+        .glassSheet(topCornerRadius: 16)
     }
 }

@@ -42,18 +42,28 @@ struct CustomOutlinedButton: View {
             }
             .padding()
             .frame(maxWidth: .infinity, minHeight: height)
-            .background(
-                isButtonEnabled ? buttonContainerColor : disabledContainerColor
+            .glassButton(
+                tint: buttonContainerColor,
+                cornerRadius: 10,
+                isEnabled: isButtonEnabled,
+                fallback: buttonContainerColor,
+                fallbackDisabled: disabledContainerColor
             )
-            .cornerRadius(10)
         }
         .disabled(!isButtonEnabled)
+        // Border only on older iOS — glass provides visual boundary on iOS 26+
         .overlay(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(
-                    isButtonEnabled ? buttonBorderColor : disabledBorderColor,
-                    lineWidth: 1
-                )
+            Group {
+                if #available(iOS 26, *) {
+                    EmptyView()
+                } else {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(
+                            isButtonEnabled ? buttonBorderColor : disabledBorderColor,
+                            lineWidth: 1
+                        )
+                }
+            }
         )
     }
 }

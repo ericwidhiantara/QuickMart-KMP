@@ -37,19 +37,25 @@ struct CustomTopBar: View {
                             .foregroundColor(.primary)
                     }
                 }
-                
+
                 // Title Section
                 Spacer()
                 Text(title)
                     .font(.headline)
                 Spacer()
-                
+
                 // Actions Section
                 actions ?? AnyView(EmptyView())
             }
             .padding()
-            
-            Divider()
+
+            // Divider only on older iOS — glass provides visual separation on iOS 26+
+            if #available(iOS 26, *) {
+                EmptyView()
+            } else {
+                Divider()
+            }
         }
+        .glassBar()
     }
 }
