@@ -48,6 +48,12 @@ struct ContentView: View {
                 CategoryView(rootView: $rootView)
             case .product:
                 ProductView(rootView: $rootView)
+            case .product_detail(let productId):
+                ProductDetailView(rootView: $rootView, productId: productId)
+            case .product_by_category(let categoryId, let categoryName):
+                ProductListByCategoryView(rootView: $rootView, categoryId: categoryId, categoryName: categoryName)
+            case .search:
+                SearchView(rootView: $rootView)
             }
         }
         .appTheme(.default)  // or .light, .dark

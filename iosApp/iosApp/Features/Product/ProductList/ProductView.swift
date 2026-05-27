@@ -81,9 +81,7 @@ struct ProductView: View {
                             ForEach(successState.data, id: \.self) { product in
                                 ProductCard(
                                     product: product,
-                                    onClick: {
-                                        // Handle navigation here
-                                    }
+                                    onClick: { rootView = .product_detail(product.id ?? "") }
                                 )
                                 .onAppear {
                                     onItemAppear(product)

@@ -38,11 +38,8 @@ struct HomeView: View {
                 // Custom Navigation Bar
                 CustomNavigationBar(
                     userState: userState,
-                    onSearchTap: {
-                    },
-                    onProfileTap: {
-                        // Handle profile tap
-                    }
+                    onSearchTap: { rootView = .search },
+                    onProfileTap: { navBarViewModel.updateIndex(index: 4) }
                 )
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
@@ -69,14 +66,12 @@ struct HomeView: View {
                     VStack(spacing: 12) {
                         HeaderRow(
                             title: "latest_products",
-                            onSeeAllTap: {
-                            }
+                            onSeeAllTap: { rootView = .product }
                         )
 
                         ProductGrid(
                             state: productState,
-                            onProductTap: { productId in
-                            }
+                            onProductTap: { productId in rootView = .product_detail(productId) }
                         )
                     }
                     .padding(.horizontal, 16)

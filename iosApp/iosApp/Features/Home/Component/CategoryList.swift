@@ -29,25 +29,25 @@ struct CategoryList: View {
     var body: some View {
         let appUiState = viewModel.state
         
-        NavigationView {
-            VStack {
-                CategoryContentView(
-                    state: state,
-                    onItemAppear: onItemAppear,
-                    onCategoryClick: { category in
-                        
-                    }
-                )
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .task {
-                appUiState.subscribe { state in
-                    self.state = state!
+        VStack {
+            CategoryContentView(
+                state: state,
+                onItemAppear: onItemAppear,
+                onCategoryClick: { category in
+                    rootView = .product_by_category(
+                        category.id ?? "",
+                        category.name ?? "Products"
+                    )
                 }
+            )
+        }
+        .task {
+            appUiState.subscribe { state in
+                self.state = state!
             }
-            .onAppear {
-                viewModel.fetchCategories(params: params, isFirstLoad: true)
-            }
+        }
+        .onAppear {
+            viewModel.fetchCategories(params: params, isFirstLoad: true)
         }
     }
     

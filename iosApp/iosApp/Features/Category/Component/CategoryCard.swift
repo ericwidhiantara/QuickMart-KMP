@@ -34,9 +34,7 @@ struct CategoryCard: View {
             }
             .padding(8)
             .frame(maxWidth: .infinity)
-            .background(Color(.secondarySystemBackground))
-            .cornerRadius(8)
-            .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+            .glassCard(cornerRadius: 8, fallback: Color(.secondarySystemBackground))
 
         }
     }

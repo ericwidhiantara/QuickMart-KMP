@@ -80,7 +80,10 @@ struct CategoryView: View {
                                 CategoryCard(
                                     category: category,
                                     onClick: {
-                                        // Handle navigation here
+                                        rootView = .product_by_category(
+                                            category.id ?? "",
+                                            category.name ?? "Products"
+                                        )
                                     }
                                 )
                                 .onAppear {
