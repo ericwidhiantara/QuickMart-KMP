@@ -24,4 +24,5 @@ enum AppScreen: Hashable {
     case wishlist
     case cart
     case category
+    case product
 }

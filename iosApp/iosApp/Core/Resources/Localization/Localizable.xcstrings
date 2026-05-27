@@ -2,7 +2,14 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-
+      "localizations" : {
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "  "
+          }
+        }
+      }
     },
     "*" : {
       "localizations" : {
@@ -19,6 +26,21 @@
           }
         }
       }
+    },
+    "%lld" : {
+
+    },
+    "+" : {
+
+    },
+    "−" : {
+
+    },
+    "$%.2f" : {
+
+    },
+    "30% OFF" : {
+
     },
     "account_management" : {
       "extractionState" : "manual",
@@ -207,6 +229,9 @@
         }
       }
     },
+    "Cancel" : {
+
+    },
     "categories" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -223,6 +248,9 @@
           }
         }
       }
+    },
+    "Categories" : {
+
     },
     "change_password" : {
       "extractionState" : "manual",
@@ -665,6 +693,9 @@
           }
         }
       }
+    },
+    "Enter Voucher Code" : {
+
     },
     "enter_verification_code" : {
       "extractionState" : "manual",
@@ -1618,6 +1649,9 @@
         }
       }
     },
+    "products" : {
+
+    },
     "read_more" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2178,6 +2212,9 @@
           }
         }
       }
+    },
+    "Voucher Code" : {
+
     },
     "voucher_code" : {
       "extractionState" : "manual",

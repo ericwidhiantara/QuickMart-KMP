@@ -7,5 +7,5 @@ object Constants {
     const val APP_THEME = "app_theme"
     const val MAX_PAGE_SIZE = 10
 
-    const val SERVER_URL = "nothing-dealt-generation-buffalo.trycloudflare.com"
+    const val SERVER_URL = "rotation-melbourne-config-admission.trycloudflare.com"
 }

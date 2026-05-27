@@ -11,6 +11,8 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode
@@ -34,8 +36,7 @@ fun BottomNavBar(
     navBarViewModel: NavBarViewModel = koinViewModel<NavBarViewModel>(), // Inject NavBarViewModel
 
 ) {
-    val currentIndex = navBarViewModel.currentIndex.intValue // Observe currentIndex
-
+    val currentIndex by navBarViewModel.currentIndex.collectAsState()
 
     val navbarItems: Array<BottomNavigationItem> = arrayOf(
         BottomNavigationItem(
