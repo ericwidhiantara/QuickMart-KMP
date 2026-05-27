@@ -23,6 +23,9 @@ import com.luckyfrog.quickmart.features.profile.domain.usecases.CheckPasswordUse
 import com.luckyfrog.quickmart.features.profile.domain.usecases.GetUserUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.SendOTPUseCase
 import com.luckyfrog.quickmart.features.profile.domain.usecases.VerifyOTPUseCase
+import com.luckyfrog.quickmart.features.review.domain.usecases.CreateReviewUseCase
+import com.luckyfrog.quickmart.features.review.domain.usecases.DeleteReviewUseCase
+import com.luckyfrog.quickmart.features.review.domain.usecases.GetProductReviewsUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.DeleteWishlistItemUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.GetWishlistItemsUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.InsertWishlistItemUseCase
@@ -55,6 +58,11 @@ val useCaseModule = module {
     factory { GetOrdersUseCase(repository = get()) }
     factory { GetOrderDetailUseCase(repository = get()) }
     factory { CancelOrderUseCase(repository = get()) }
+
+    // REVIEW
+    factory { GetProductReviewsUseCase(repository = get()) }
+    factory { CreateReviewUseCase(repository = get()) }
+    factory { DeleteReviewUseCase(repository = get()) }
 
     // CART
     factory { CalculateSubtotalUseCase(repository = get()) }

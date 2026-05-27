@@ -16,6 +16,7 @@ import com.luckyfrog.quickmart.features.profile.presentation.check_password.Chec
 import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewModel
 import com.luckyfrog.quickmart.features.order.presentation.order_detail.OrderDetailViewModel
 import com.luckyfrog.quickmart.features.order.presentation.order_list.OrderListViewModel
+import com.luckyfrog.quickmart.features.review.presentation.product_review.ProductReviewViewModel
 import com.luckyfrog.quickmart.features.wishlist.presentation.my_wishlist.MyWishlistViewModel
 import org.koin.dsl.module
 
@@ -52,4 +53,7 @@ val viewModelModule = module {
     // Order
     factory { OrderListViewModel(get(), get()) }
     factory { OrderDetailViewModel(get(), get()) }
+
+    // Review
+    factory { ProductReviewViewModel(get(), get(), get()) }
 }
