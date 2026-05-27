@@ -26,6 +26,11 @@ import com.luckyfrog.quickmart.features.profile.domain.usecases.VerifyOTPUseCase
 import com.luckyfrog.quickmart.features.review.domain.usecases.CreateReviewUseCase
 import com.luckyfrog.quickmart.features.review.domain.usecases.DeleteReviewUseCase
 import com.luckyfrog.quickmart.features.review.domain.usecases.GetProductReviewsUseCase
+import com.luckyfrog.quickmart.features.shipping_address.domain.usecases.CreateShippingAddressUseCase
+import com.luckyfrog.quickmart.features.shipping_address.domain.usecases.DeleteShippingAddressUseCase
+import com.luckyfrog.quickmart.features.shipping_address.domain.usecases.GetShippingAddressesUseCase
+import com.luckyfrog.quickmart.features.shipping_address.domain.usecases.SetDefaultShippingAddressUseCase
+import com.luckyfrog.quickmart.features.shipping_address.domain.usecases.UpdateShippingAddressUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.DeleteWishlistItemUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.GetWishlistItemsUseCase
 import com.luckyfrog.quickmart.features.wishlist.domain.usecases.local.InsertWishlistItemUseCase
@@ -63,6 +68,13 @@ val useCaseModule = module {
     factory { GetProductReviewsUseCase(repository = get()) }
     factory { CreateReviewUseCase(repository = get()) }
     factory { DeleteReviewUseCase(repository = get()) }
+
+    // SHIPPING ADDRESS
+    factory { GetShippingAddressesUseCase(repository = get()) }
+    factory { CreateShippingAddressUseCase(repository = get()) }
+    factory { UpdateShippingAddressUseCase(repository = get()) }
+    factory { DeleteShippingAddressUseCase(repository = get()) }
+    factory { SetDefaultShippingAddressUseCase(repository = get()) }
 
     // CART
     factory { CalculateSubtotalUseCase(repository = get()) }

@@ -58,6 +58,10 @@ struct ContentView: View {
                 OrderListView(rootView: $rootView)
             case .order_detail(let orderId):
                 OrderDetailView(rootView: $rootView, orderId: orderId)
+            case .shipping_address_list:
+                ShippingAddressView(rootView: $rootView)
+            case .shipping_address_form(let addressId):
+                ShippingAddressFormView(rootView: $rootView, editAddressId: addressId)
             }
         }
         .appTheme(.default)  // or .light, .dark

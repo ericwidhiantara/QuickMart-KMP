@@ -28,9 +28,7 @@ import com.luckyfrog.quickmart.features.profile.presentation.check_password.Chec
 import com.luckyfrog.quickmart.features.profile.presentation.profile.ProfileScreen
 import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingAddressFormScreen
 import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingAddressScreen
-import com.luckyfrog.quickmart.features.profile.presentation.shipping_address.ShippingItem
 import com.luckyfrog.quickmart.features.wishlist.presentation.my_wishlist.MyWishlistScreen
-import kotlinx.serialization.json.Json
 
 @Composable
 fun NavGraph() {
@@ -114,16 +112,13 @@ fun NavGraph() {
             )
         }
 
-        composable(route = AppScreen.ShippingAddressFormScreen.route + "?isEdit={isEdit}&item={item}") {
+        composable(route = AppScreen.ShippingAddressFormScreen.route + "?isEdit={isEdit}&addressId={addressId}") {
             val isEdit = it.arguments?.getString("isEdit")?.toBoolean() ?: false
-            val itemJson = it.arguments?.getString("item")
-            val shippingItem: ShippingItem? = itemJson?.let { json ->
-                Json.decodeFromString<ShippingItem>(json)
-            }
+            val addressId = it.arguments?.getString("addressId")
             ShippingAddressFormScreen(
                 navController = navController,
                 isEdit = isEdit,
-                item = shippingItem
+                addressId = addressId
             )
         }
 

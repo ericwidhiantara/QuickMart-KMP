@@ -18,6 +18,7 @@ import com.luckyfrog.quickmart.features.profile.presentation.profile.UserViewMod
 import com.luckyfrog.quickmart.features.order.presentation.order_detail.OrderDetailViewModel
 import com.luckyfrog.quickmart.features.order.presentation.order_list.OrderListViewModel
 import com.luckyfrog.quickmart.features.review.presentation.product_review.ProductReviewViewModel
+import com.luckyfrog.quickmart.features.shipping_address.presentation.address_list.ShippingAddressListViewModel
 import com.luckyfrog.quickmart.features.wishlist.presentation.my_wishlist.MyWishlistViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -67,5 +68,8 @@ class KoinHelper : KoinComponent {
 
     // Review
     fun getProductReviewViewModel() = get<ProductReviewViewModel>()
+
+    // Shipping Address
+    fun getShippingAddressListViewModel() = get<ShippingAddressListViewModel>()
 
 }

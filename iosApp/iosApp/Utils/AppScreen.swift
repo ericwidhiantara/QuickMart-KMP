@@ -30,6 +30,8 @@ enum AppScreen: Hashable {
     case search
     case order_list
     case order_detail(String)               // orderId
+    case shipping_address_list
+    case shipping_address_form(String?)     // addressId? (nil = create, non-nil = edit)
 
     func hash(into hasher: inout Hasher) {
         switch self {
@@ -39,6 +41,8 @@ enum AppScreen: Hashable {
             hasher.combine("product_by_category"); hasher.combine(id); hasher.combine(name)
         case .order_detail(let id):
             hasher.combine("order_detail"); hasher.combine(id)
+        case .shipping_address_form(let id):
+            hasher.combine("shipping_address_form"); hasher.combine(id ?? "")
         default:
             hasher.combine(String(describing: self))
         }
@@ -51,6 +55,8 @@ enum AppScreen: Hashable {
         case (.product_by_category(let a1, let a2), .product_by_category(let b1, let b2)):
             return a1 == b1 && a2 == b2
         case (.order_detail(let a), .order_detail(let b)):
+            return a == b
+        case (.shipping_address_form(let a), .shipping_address_form(let b)):
             return a == b
         default:
             return String(describing: lhs) == String(describing: rhs)
